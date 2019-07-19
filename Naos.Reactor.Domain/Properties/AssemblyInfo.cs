@@ -6,7 +6,6 @@
 
 using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
@@ -15,9 +14,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Naos.Reactor.Domain")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Naos Project")]
 [assembly: AssemblyProduct("Naos.Reactor.Domain")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCopyright("Copyright © Naos Project 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -27,7 +26,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9a4a28e9-2c1c-452d-a231-bf1ea22c8f48")]
+[assembly: Guid("38ba8d56-1c45-4c4e-b09f-776e414a566e")]
 
 // Version information for an assembly consists of the following four values:
 //
