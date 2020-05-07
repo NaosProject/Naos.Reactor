@@ -12,11 +12,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Naos.Reactor.Domain")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Naos.Reactor.Domain")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Naos Project")]
 [assembly: AssemblyProduct("Naos.Reactor.Domain")]
-[assembly: AssemblyCopyright("Copyright © Naos Project 2019")]
+[assembly: AssemblyCopyright("Copyright © Naos Project 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("38ba8d56-1c45-4c4e-b09f-776e414a566e")]
+[assembly: Guid("6ea73db9-e5bb-4411-a88b-34cd6b85f3ed")]
 
 // Version information for an assembly consists of the following four values:
 //
