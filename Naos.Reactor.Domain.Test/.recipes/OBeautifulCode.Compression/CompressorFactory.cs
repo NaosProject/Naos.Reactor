@@ -9,18 +9,16 @@
 
 namespace OBeautifulCode.Compression.Recipes
 {
-    using System;
+    using global::System;
 
-    using OBeautifulCode.Assertion.Recipes;
-
-    using static System.FormattableString;
+    using static global::System.FormattableString;
 
     /// <summary>
     /// Get the correct <see cref="ICompressAndDecompress" /> implementation based on the kind.
     /// </summary>
-#if !OBeautifulCodeCompressionRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Compression.Recipes", "See package version number")]
+#if !OBeautifulCodeCompressionSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Compression.Recipes", "See package version number")]
     internal
 #else
     public
@@ -40,12 +38,15 @@ namespace OBeautifulCode.Compression.Recipes
         public static ICompressorFactory Instance => InternalInstance;
 
         /// <inheritdoc />
-        public ICompressAndDecompress BuildCompressor(
+        public ICompressor BuildCompressor(
             CompressionKind compressionKind)
         {
-            new { compressionKind }.AsArg().Must().NotBeEqualTo(CompressionKind.Invalid);
+            if (compressionKind == CompressionKind.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(compressionKind)}' == '{CompressionKind.Invalid}'"), (Exception)null);
+            }
 
-            ICompressAndDecompress result;
+            ICompressor result;
 
             switch (compressionKind)
             {

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>6ea73db9-e5bb-4411-a88b-34cd6b85f3ed</ProjectGuid>
+    <ProjectGuid>{6EA73DB9-E5BB-4411-A88B-34CD6B85F3ED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Naos.Reactor.Domain</RootNamespace>
@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,6 +26,7 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DocumentationFile>bin\Debug\Naos.Reactor.Domain.xml</DocumentationFile>
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,17 +38,85 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DocumentationFile>bin\Release\Naos.Reactor.Domain.xml</DocumentationFile>
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System"/>
-    <Reference Include="Microsoft.CSharp"/>
+    <Reference Include="OBeautifulCode.Representation.System, Version=1.0.60.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.60\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.103.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.103\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Actions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\ApplyBecause.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\AssertionKind.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\AssertionTracker.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\AssertionTrackerShould.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\AssertionVerificationFailedException.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Delegates.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\ImproperUseOfAssertionFrameworkException.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Range.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\TestAssertionVerificationFailedException.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\TypeValidation.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\ValidatedNotNullAttribute.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\VerifiableItem.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verification.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\VerificationParameter.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.Helpers.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.Internal.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.Strings.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.TypeValidation.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.Workflow.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\WorkflowExtensions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeAnalysis\ObcSuppressBecause.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Collection\EnumerableExtensions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ByteArrayEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ColorEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\DateTimeEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparerStrategy.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\EqualityComparerHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\EqualityExtensions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\LambdaBackedEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\NativeMethods.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\NullableColorEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\NullableDateTimeEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ObjectEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ReferenceEqualityComparer{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Math\ThreadSafeRandom.cs" />
+    <Compile Include=".recipes\OBeautifulCode.String\StringExtensions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Type\ArrayKind.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="ProcessReactionsOp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Properties\ProjectInfo.cs" />
+    <Compile Include="RegisterSagaOp.cs" />
+    <AdditionalFiles Include=".analyzers\stylecop.json" />
+    <None Include=".analyzers\release.ruleset" />
     <None Include="Naos.Reactor.Domain.override-nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- </Project>
-
+  <Import Project="..\packages\Naos.Build.Analyzers.1.55.54\build\Naos.Build.Analyzers.targets" Condition="Exists('..\packages\Naos.Build.Analyzers.1.55.54\build\Naos.Build.Analyzers.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Naos.Build.Analyzers.1.55.54\build\Naos.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Naos.Build.Analyzers.1.55.54\build\Naos.Build.Analyzers.targets'))" />
+  </Target>
+</Project>

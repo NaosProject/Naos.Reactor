@@ -9,25 +9,25 @@
 
 namespace OBeautifulCode.Compression.Recipes
 {
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.IO.Compression;
+    using global::System;
+    using global::System.Diagnostics.CodeAnalysis;
+    using global::System.IO;
+    using global::System.IO.Compression;
 
-    using OBeautifulCode.Assertion.Recipes;
-    using OBeautifulCode.Compression.Recipes.Internal;
+    using OBeautifulCode.CodeAnalysis.Recipes;
 
     /// <summary>
     /// Build in dot net implementation of <see cref="ICompressAndDecompress"/>.
     /// Implementation from: <a href="https://stackoverflow.com/questions/40909052/using-gzip-to-compress-decompress-an-array-of-bytes" />.
     /// </summary>
-#if !OBeautifulCodeCompressionRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Compression.Recipes", "See package version number")]
+#if !OBeautifulCodeCompressionSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Compression.Recipes", "See package version number")]
     internal
 #else
     public
 #endif
-    class DotNetZipCompressor : ICompressAndDecompress
+    class DotNetZipCompressor : ICompressor
     {
         /// <inheritdoc />
         public CompressionKind CompressionKind => CompressionKind.DotNetZip;
@@ -44,7 +44,10 @@ namespace OBeautifulCode.Compression.Recipes
         public static byte[] CompressBytes(
             byte[] uncompressedBytes)
         {
-            new { uncompressedBytes }.AsArg().Must().NotBeNull();
+            if (uncompressedBytes == null)
+            {
+                throw new ArgumentNullException(nameof(uncompressedBytes));
+            }
 
             byte[] result;
 
@@ -75,7 +78,10 @@ namespace OBeautifulCode.Compression.Recipes
         public static byte[] DecompressBytes(
             byte[] compressedBytes)
         {
-            new { compressedBytes }.AsArg().Must().NotBeNull();
+            if (compressedBytes == null)
+            {
+                throw new ArgumentNullException(nameof(compressedBytes));
+            }
 
             byte[] result;
 
@@ -99,7 +105,10 @@ namespace OBeautifulCode.Compression.Recipes
         byte[] ICompress.CompressBytes(
             byte[] uncompressedBytes)
         {
-            new { uncompressedBytes }.AsArg().Must().NotBeNull();
+            if (uncompressedBytes == null)
+            {
+                throw new ArgumentNullException(nameof(uncompressedBytes));
+            }
 
             var result = CompressBytes(uncompressedBytes);
 
@@ -110,7 +119,10 @@ namespace OBeautifulCode.Compression.Recipes
         byte[] IDecompress.DecompressBytes(
             byte[] compressedBytes)
         {
-            new { compressedBytes }.AsArg().Must().NotBeNull();
+            if (compressedBytes == null)
+            {
+                throw new ArgumentNullException(nameof(compressedBytes));
+            }
 
             var result = DecompressBytes(compressedBytes);
 

@@ -28,6 +28,7 @@ namespace Naos.Bootstrapper
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Collection.Recipes;
     using OBeautifulCode.Representation.System;
+    using OBeautifulCode.Serialization;
     using static System.FormattableString;
 
     /// <summary>
@@ -141,7 +142,7 @@ namespace Naos.Bootstrapper
     #pragma warning restore CS3001 // Argument type is not CLS-compliant
         {
             new { context }.Must().NotBeNull();
-            var typeDescriptionComparer = new TypeComparer(TypeMatchStrategy.NamespaceAndName);
+            var typeDescriptionComparer = new VersionlessTypeRepresentationEqualityComparer();
 
             // change color to red
             var originalColor = Console.ForegroundColor;
@@ -234,7 +235,11 @@ namespace Naos.Bootstrapper
              * swapped out to send all Its.Log messages to another logging framework if  *
              * there is already one in place.                                            *
              *---------------------------------------------------------------------------*/
-            var localLogProcessorSettings = logWritingSettings ?? Config.Get<LogWritingSettings>(typeof(LoggingJsonConfiguration));
+            var localLogProcessorSettings = logWritingSettings
+                                         ?? Config.Get<LogWritingSettings>(
+                                                new SerializerRepresentation(
+                                                    SerializationKind.Json,
+                                                    typeof(LoggingJsonSerializationConfiguration).ToRepresentation()));
             if (localLogProcessorSettings == null)
             {
                 localAnnouncer("No LogProcessorSettings provided or found in config; using Null Object susbstitue.");

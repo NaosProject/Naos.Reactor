@@ -9,15 +9,16 @@
 
 namespace OBeautifulCode.Serialization.Recipes
 {
-    using OBeautifulCode.Compression.Recipes;
-    using OBeautifulCode.Representation.System;
+    using global::System.Diagnostics.CodeAnalysis;
+
+    using OBeautifulCode.Type;
 
     /// <summary>
     /// Extension methods.
     /// </summary>
-#if !OBeautifulCodeSerializationRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Serialization.Recipes", "See package version number")]
+#if !OBeautifulCodeSerializationSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Serialization.Recipes", "See package version number")]
     internal
 #else
     public
@@ -29,67 +30,66 @@ namespace OBeautifulCode.Serialization.Recipes
         /// </summary>
         /// <typeparam name="T">Type of object to serialize.</typeparam>
         /// <param name="objectToPackageIntoDescribedSerialization">Object to serialize.</param>
-        /// <param name="serializationDescription">Description of the serializer to use.</param>
-        /// <param name="typeMatchStrategy">Optional type match strategy for resolving the type of object as well as the configuration type if any; DEFAULT is <see cref="TypeMatchStrategy.NamespaceAndName" />.</param>
-        /// <param name="multipleMatchStrategy">Optional multiple match strategy for resolving the type of object as well as the configuration type if any; DEFAULT is <see cref="MultipleMatchStrategy.ThrowOnMultiple" />.</param>
-        /// <param name="unregisteredTypeEncounteredStrategy">Optional strategy of what to do when encountering a type that has never been registered; DEFAULT is <see cref="UnregisteredTypeEncounteredStrategy.Throw" />.</param>
-        /// <returns>Self described serialization.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "object", Justification = "Spelling/name is correct.")]
-        public static DescribedSerialization ToDescribedSerialization<T>(
+        /// <param name="serializerRepresentation">Description of the serializer to use.</param>
+        /// <param name="serializationFormat">The serialization format to use.</param>
+        /// <param name="assemblyVersionMatchStrategy">Optional assembly match strategy for resolving the type of object as well as the configuration type if any; DEFAULT is <see cref="VersionMatchStrategy.AnySingleVersion" />.</param>
+        /// <returns>
+        /// Self described serialization.
+        /// </returns>
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "object", Justification = "Spelling/name is correct.")]
+        public static DescribedSerializationBase ToDescribedSerialization<T>(
             this T objectToPackageIntoDescribedSerialization,
-            SerializationDescription serializationDescription,
-            TypeMatchStrategy typeMatchStrategy = TypeMatchStrategy.NamespaceAndName,
-            MultipleMatchStrategy multipleMatchStrategy = MultipleMatchStrategy.ThrowOnMultiple,
-            UnregisteredTypeEncounteredStrategy unregisteredTypeEncounteredStrategy = UnregisteredTypeEncounteredStrategy.Default)
+            SerializerRepresentation serializerRepresentation,
+            SerializationFormat serializationFormat,
+            VersionMatchStrategy assemblyVersionMatchStrategy = VersionMatchStrategy.AnySingleVersion)
         {
-            return DomainExtensions.ToDescribedSerializationUsingSpecificFactory(
-                objectToPackageIntoDescribedSerialization,
-                serializationDescription,
+            var result = objectToPackageIntoDescribedSerialization.ToDescribedSerializationUsingSpecificFactory(
+                serializerRepresentation,
                 SerializerFactory.Instance,
-                CompressorFactory.Instance,
-                typeMatchStrategy,
-                multipleMatchStrategy,
-                unregisteredTypeEncounteredStrategy);
+                serializationFormat,
+                assemblyVersionMatchStrategy);
+
+            return result;
         }
 
         /// <summary>
         /// Converts a self described serialization back into it's object.
         /// </summary>
         /// <param name="describedSerialization">Self described serialized object.</param>
-        /// <param name="typeMatchStrategy">Optional type match strategy for resolving the type of object as well as the configuration type if any; DEFAULT is <see cref="TypeMatchStrategy.NamespaceAndName" />.</param>
-        /// <param name="multipleMatchStrategy">Optional multiple match strategy for resolving the type of object as well as the configuration type if any; DEFAULT is <see cref="MultipleMatchStrategy.ThrowOnMultiple" />.</param>
-        /// <param name="unregisteredTypeEncounteredStrategy">Optional strategy of what to do when encountering a type that has never been registered; DEFAULT is <see cref="UnregisteredTypeEncounteredStrategy.Throw" />.</param>
-        /// <returns>Originally serialized object.</returns>
-        public static object DeserializePayload(this DescribedSerialization describedSerialization, TypeMatchStrategy typeMatchStrategy = TypeMatchStrategy.NamespaceAndName, MultipleMatchStrategy multipleMatchStrategy = MultipleMatchStrategy.ThrowOnMultiple, UnregisteredTypeEncounteredStrategy unregisteredTypeEncounteredStrategy = UnregisteredTypeEncounteredStrategy.Default)
+        /// <param name="assemblyVersionMatchStrategy">Optional assembly match strategy for resolving the type of object as well as the configuration type if any; DEFAULT is <see cref="VersionMatchStrategy.AnySingleVersion" />.</param>
+        /// <returns>
+        /// Originally serialized object.
+        /// </returns>
+        public static object DeserializePayload(
+            this DescribedSerializationBase describedSerialization,
+            VersionMatchStrategy assemblyVersionMatchStrategy = VersionMatchStrategy.AnySingleVersion)
         {
-            return DomainExtensions.DeserializePayloadUsingSpecificFactory(
-                describedSerialization,
+            var result =  describedSerialization.DeserializePayloadUsingSpecificFactory(
                 SerializerFactory.Instance,
-                CompressorFactory.Instance,
-                typeMatchStrategy,
-                multipleMatchStrategy,
-                unregisteredTypeEncounteredStrategy);
+                assemblyVersionMatchStrategy);
+
+            return result;
         }
 
         /// <summary>
         /// Converts a self described serialization back into it's object.
         /// </summary>
         /// <param name="describedSerialization">Self described serialized object.</param>
-        /// <param name="typeMatchStrategy">Optional type match strategy for resolving the type of object as well as the configuration type if any; DEFAULT is <see cref="TypeMatchStrategy.NamespaceAndName" />.</param>
-        /// <param name="multipleMatchStrategy">Optional multiple match strategy for resolving the type of object as well as the configuration type if any; DEFAULT is <see cref="MultipleMatchStrategy.ThrowOnMultiple" />.</param>
-        /// <param name="unregisteredTypeEncounteredStrategy">Optional strategy of what to do when encountering a type that has never been registered; DEFAULT is <see cref="UnregisteredTypeEncounteredStrategy.Throw" />.</param>
+        /// <param name="assemblyVersionMatchStrategy">Optional assembly match strategy for resolving the type of object as well as the configuration type if any; DEFAULT is <see cref="VersionMatchStrategy.AnySingleVersion" />.</param>
         /// <typeparam name="T">Expected return type.</typeparam>
-        /// <returns>Originally serialized object.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "Checked with Must and tested.")]
-        public static T DeserializePayload<T>(this DescribedSerialization describedSerialization, TypeMatchStrategy typeMatchStrategy = TypeMatchStrategy.NamespaceAndName, MultipleMatchStrategy multipleMatchStrategy = MultipleMatchStrategy.ThrowOnMultiple, UnregisteredTypeEncounteredStrategy unregisteredTypeEncounteredStrategy = UnregisteredTypeEncounteredStrategy.Default)
+        /// <returns>
+        /// Originally serialized object.
+        /// </returns>
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "Checked with Must and tested.")]
+        public static T DeserializePayload<T>(
+            this DescribedSerializationBase describedSerialization,
+            VersionMatchStrategy assemblyVersionMatchStrategy = VersionMatchStrategy.AnySingleVersion)
         {
-            return DomainExtensions.DeserializePayloadUsingSpecificFactory<T>(
-                describedSerialization,
+            var result = describedSerialization.DeserializePayloadUsingSpecificFactory<T>(
                 SerializerFactory.Instance,
-                CompressorFactory.Instance,
-                typeMatchStrategy,
-                multipleMatchStrategy,
-                unregisteredTypeEncounteredStrategy);
+                assemblyVersionMatchStrategy);
+
+            return result;
         }
     }
 }

@@ -9,23 +9,39 @@
 
 namespace OBeautifulCode.Equality.Recipes
 {
-    using System;
-    using System.Collections.Generic;
+    using global::System;
+    using global::System.Collections.Concurrent;
+    using global::System.Collections.Generic;
+    using global::System.Drawing;
 
     using OBeautifulCode.Type.Recipes;
 
     /// <summary>
     /// Helper methods related to <see cref="IEqualityComparer{T}"/>.
     /// </summary>
-#if !OBeautifulCodeEqualityRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Equality.Recipes", "See package version number")]
+#if !OBeautifulCodeEqualitySolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Equality.Recipes", "See package version number")]
     internal
 #else
     public
 #endif
-        static class EqualityComparerHelper
+    static class EqualityComparerHelper
     {
+        private static readonly ConcurrentDictionary<Type, object> CachedTypeToEqualityComparerMap = new ConcurrentDictionary<Type, object>();
+
+        private static readonly ObjectEqualityComparer ObjectEqualityComparer = new ObjectEqualityComparer();
+
+        private static readonly ByteArrayEqualityComparer ByteArrayEqualityComparer = new ByteArrayEqualityComparer();
+
+        private static readonly DateTimeEqualityComparer DateTimeEqualityComparer = new DateTimeEqualityComparer();
+
+        private static readonly NullableDateTimeEqualityComparer NullableDateTimeEqualityComparer = new NullableDateTimeEqualityComparer();
+        
+        private static readonly ColorEqualityComparer ColorEqualityComparer = new ColorEqualityComparer();
+
+        private static readonly NullableColorEqualityComparer NullableColorEqualityComparer = new NullableColorEqualityComparer();
+
         /// <summary>
         /// Gets the equality comparer to use for the specified type.
         /// </summary>
@@ -39,11 +55,21 @@ namespace OBeautifulCode.Equality.Recipes
         {
             var type = typeof(T);
 
-            IEqualityComparer<T> result;
-
             if (comparer != null)
             {
-                result = comparer;
+                return comparer;
+            }
+            
+            if (CachedTypeToEqualityComparerMap.TryGetValue(type, out object cachedResult))
+            {
+                return (IEqualityComparer<T>)cachedResult;
+            }
+
+            IEqualityComparer<T> result;
+
+            if (type == typeof(object))
+            {
+                result = (IEqualityComparer<T>)ObjectEqualityComparer;
             }
             else if (type.IsClosedSystemDictionaryType())
             {
@@ -58,10 +84,17 @@ namespace OBeautifulCode.Equality.Recipes
             }
             else if (type.IsArray)
             {
-                var constructorInfo = typeof(EnumerableEqualityComparer<>).MakeGenericType(type.GetElementType()).GetConstructor(new[] { typeof(EnumerableEqualityComparerStrategy) });
+                if (type == typeof(byte[]))
+                {
+                    result = (IEqualityComparer<T>)ByteArrayEqualityComparer;
+                }
+                else
+                {
+                    var constructorInfo = typeof(EnumerableEqualityComparer<>).MakeGenericType(type.GetElementType()).GetConstructor(new[] { typeof(EnumerableEqualityComparerStrategy) });
 
-                // ReSharper disable once PossibleNullReferenceException
-                result = (IEqualityComparer<T>)constructorInfo.Invoke(new object[] { EnumerableEqualityComparerStrategy.SequenceEqual });
+                    // ReSharper disable once PossibleNullReferenceException
+                    result = (IEqualityComparer<T>)constructorInfo.Invoke(new object[] { EnumerableEqualityComparerStrategy.SequenceEqual });
+                }
             }
             else if (type.IsClosedSystemCollectionType())
             {
@@ -81,12 +114,26 @@ namespace OBeautifulCode.Equality.Recipes
             }
             else if (type == typeof(DateTime))
             {
-                result = (IEqualityComparer<T>)new DateTimeEqualityComparer();
+                result = (IEqualityComparer<T>)DateTimeEqualityComparer;
+            }
+            else if (type == typeof(DateTime?))
+            {
+                result = (IEqualityComparer<T>)NullableDateTimeEqualityComparer;
+            }
+            else if (type == typeof(Color))
+            {
+                result = (IEqualityComparer<T>)ColorEqualityComparer;
+            }
+            else if (type == typeof(Color?))
+            {
+                result = (IEqualityComparer<T>)NullableColorEqualityComparer;
             }
             else
             {
                 result = EqualityComparer<T>.Default;
             }
+
+            CachedTypeToEqualityComparerMap.TryAdd(type, result);
 
             return result;
         }

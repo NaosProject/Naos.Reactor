@@ -12,14 +12,14 @@ namespace OBeautifulCode.Compression.Recipes
     /// <summary>
     /// Null implementation of <see cref="ICompressAndDecompress"/>.
     /// </summary>
-#if !OBeautifulCodeCompressionRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Compression.Recipes", "See package version number")]
+#if !OBeautifulCodeCompressionSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Compression.Recipes", "See package version number")]
     internal
 #else
     public
 #endif
-    class NullCompressor : ICompressAndDecompress
+    class NullCompressor : ICompressor
     {
         /// <inheritdoc cref="ICompressAndDecompress"/>
         public CompressionKind CompressionKind => CompressionKind.None;
