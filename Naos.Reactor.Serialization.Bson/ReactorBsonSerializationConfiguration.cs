@@ -9,6 +9,7 @@ namespace Naos.Reactor.Serialization.Bson
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Naos.Database.Serialization.Bson;
     using OBeautifulCode.Serialization.Bson;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
@@ -16,6 +17,13 @@ namespace Naos.Reactor.Serialization.Bson
     /// <inheritdoc />
     public class ReactorBsonSerializationConfiguration : BsonSerializationConfigurationBase
     {
+        /// <inheritdoc />
+        protected override IReadOnlyCollection<BsonSerializationConfigurationType> DependentBsonSerializationConfigurationTypes =>
+            new[]
+            {
+                new BsonSerializationConfigurationType(typeof(DatabaseBsonSerializationConfiguration)),
+            };
+
         /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForBson> TypesToRegisterForBson =>
             new Type[0]

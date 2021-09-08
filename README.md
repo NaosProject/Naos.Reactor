@@ -1,1 +1,2 @@
 # Naos.Reactor
+Naos.Reactor is a set of protocols for job scheduling.  Jobs can depend on new events in a stream or completion of other jobs to trigger a run.  Sagas may also be registered with a set of jobs that are related and the job set can be depended on as well.

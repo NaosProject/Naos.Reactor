@@ -9,6 +9,7 @@ namespace Naos.Reactor.Serialization.Json
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Naos.Database.Serialization.Json;
     using OBeautifulCode.Serialization.Json;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
@@ -16,6 +17,13 @@ namespace Naos.Reactor.Serialization.Json
     /// <inheritdoc />
     public class ReactorJsonSerializationConfiguration : JsonSerializationConfigurationBase
     {
+        /// <inheritdoc />
+        protected override IReadOnlyCollection<JsonSerializationConfigurationType> DependentJsonSerializationConfigurationTypes =>
+            new[]
+            {
+                new JsonSerializationConfigurationType(typeof(DatabaseJsonSerializationConfiguration)),
+            };
+
         /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForJson> TypesToRegisterForJson =>
             new Type[0]
