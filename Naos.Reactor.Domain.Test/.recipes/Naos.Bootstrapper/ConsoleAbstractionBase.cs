@@ -12,6 +12,7 @@ namespace Naos.Bootstrapper
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -40,9 +41,26 @@ namespace Naos.Bootstrapper
     public abstract class ConsoleAbstractionBase
     {
         /// <summary>
-        /// Gets the exception types that should fail but NOT print the stack trace as the message is sufficient to understand the issue (useful for input failures). 
+        /// The default prefix used in <see cref="PrefixAnnounce"/>.
         /// </summary>
-        protected static IReadOnlyCollection<TypeRepresentation> ExceptionTypeRepresentationsToOnlyPrintMessage { get; set; } = new TypeRepresentation[0];
+        public const string DefaultAnnouncementPrefix = "- ";
+
+        /// <summary>
+        /// The padding used by the <see cref="PrefixAnnounce"/>.
+        /// </summary>
+        public const string DefaultAnnouncementPadding = "    ";
+
+        private static IReadOnlyCollection<TypeRepresentation> globalTypeRepresentationsOfExceptionsToOmitStackTraceFrom = new List<TypeRepresentation>();
+
+        /// <summary>
+        /// Updates the type representations of exceptions to omit stack trace from.
+        /// </summary>
+        /// <param name="typeRepresentationsOfExceptionsToOmitStackTraceFrom">The type representations of exceptions to omit stack trace from.</param>
+        public static void UpdateTypeRepresentationsOfExceptionsToOmitStackTraceFrom(
+            IReadOnlyCollection<TypeRepresentation> typeRepresentationsOfExceptionsToOmitStackTraceFrom)
+        {
+            globalTypeRepresentationsOfExceptionsToOmitStackTraceFrom = typeRepresentationsOfExceptionsToOmitStackTraceFrom;
+        }
 
         /// <summary>
         /// Performs the entry point pre-checks; custom as well as 'RequiresElevatedPrivileges'.
@@ -61,17 +79,22 @@ namespace Naos.Bootstrapper
         }
 
         /// <summary>
+        /// Gets the exception types that should fail but NOT print the stack trace as the message is sufficient to understand the issue (useful for input failures). 
+        /// </summary>
+        public virtual IReadOnlyCollection<TypeRepresentation> ExceptionTypeRepresentationsToOnlyPrintMessage => new TypeRepresentation[0];
+
+        /// <summary>
+        /// Gets a value indicating whether or not the application requires elevated privileges (ADMIN).
+        /// </summary>
+        protected virtual bool RequiresElevatedPrivileges => false;
+
+        /// <summary>
         /// Extensible item to add additional pre-checks to be evaluated before the CLAP interface launches.
         /// </summary>
         protected virtual void CustomPerformEntryPointPreChecks()
         {
             /* no-op but can be overridden in order to perform checks before activating the CLAP interface and throw an exception. */
         }
-
-        /// <summary>
-        /// Gets a value indicating whether or not the application requires elevated privileges (ADMIN).
-        /// </summary>
-        protected virtual bool RequiresElevatedPrivileges => false;
 
         /// <summary>
         /// Entry point to simulate a failure.
@@ -142,7 +165,7 @@ namespace Naos.Bootstrapper
     #pragma warning restore CS3001 // Argument type is not CLS-compliant
         {
             new { context }.Must().NotBeNull();
-            var typeDescriptionComparer = new VersionlessTypeRepresentationEqualityComparer();
+            var typeRepresentationEqualityComparer = new VersionlessTypeRepresentationEqualityComparer();
 
             // change color to red
             var originalColor = Console.ForegroundColor;
@@ -154,7 +177,7 @@ namespace Naos.Bootstrapper
                 Console.WriteLine("Failure parsing command line arguments.  Run the exe with the 'help' command for usage.");
                 Console.WriteLine("   " + context.Exception.Message);
             }
-            else if ((ExceptionTypeRepresentationsToOnlyPrintMessage ?? new TypeRepresentation[0]).Any(_ => typeDescriptionComparer.Equals(_, context.Exception.GetType().ToRepresentation())))
+            else if ((globalTypeRepresentationsOfExceptionsToOmitStackTraceFrom ?? new TypeRepresentation[0]).Any(_ => typeRepresentationEqualityComparer.Equals(_, context.Exception.GetType().ToRepresentation())))
             {
                 Console.WriteLine("Failure during execution; configured to omit stack trace.");
                 Console.WriteLine(string.Empty);
@@ -204,7 +227,10 @@ namespace Naos.Bootstrapper
         /// <param name="announcer">Optional announcer; DEFAULT is null which will go to <see cref="Console.WriteLine(string)" />.<see cref="Console.WriteLine(string)" />.</param>
         protected static void CommonSetup(bool debug, string environment = null, LogWritingSettings logWritingSettings = null, IReadOnlyCollection<LogWriterBase> configuredAndManagedLogProcessors = null, Action<string> announcer = null)
         {
-            var localAnnouncer = announcer ?? Console.WriteLine;
+            var launchTime = DateTime.UtcNow;
+            var localAnnouncer = BuildPrefixingAnnouncer(announcer);
+            localAnnouncer(Invariant($"Launched at {launchTime.ToLocalTime().TimeOfDay} on {launchTime.ToLocalTime().Date} (Local) | {launchTime.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)}Z (UTC)."));
+            localAnnouncer(Invariant($"> Common Setup"));
 
             /*---------------------------------------------------------------------------*
              * Useful for launching the debugger from the command line and making sure   *
@@ -212,6 +238,7 @@ namespace Naos.Bootstrapper
              *---------------------------------------------------------------------------*/
             if (debug)
             {
+                localAnnouncer(Invariant($"Debugger was set to be launched (debug=true option provide).{Environment.NewLine}{DefaultAnnouncementPadding}{DefaultAnnouncementPadding}- If the VisualStudio debugger menu is not shown check your 'Just-In-Time debugger' settings.{Environment.NewLine}{DefaultAnnouncementPadding}{DefaultAnnouncementPadding}- Go to (Visual Studio Menu Bar)->Tools->Options{Environment.NewLine}{DefaultAnnouncementPadding}{DefaultAnnouncementPadding}- then (Options Left Pane Navigation)->Debugging->Just-In-Time{Environment.NewLine}{DefaultAnnouncementPadding}{DefaultAnnouncementPadding}- then (Just-In-Time Debugging Settings on right pane)->Make sure the 'Managed' check box is checked."));
                 Debugger.Launch();
             }
 
@@ -220,12 +247,13 @@ namespace Naos.Bootstrapper
              * config files from the '.config' directory with 'environment' sub folders  *
              * the chain of responsibility is set in the App.config file using the       *
              * 'Naos.Configuration.Settings.Precedence' setting.  You can override the    *
-             * way this is used by specifying a different diretory for the config or     *
-             * providing additonal precedence values using                               *
+             * way this is used by specifying a different directory for the config or     *
+             * providing additional precedence values using                               *
              * ResetConfigureSerializationAndSetValues.                                  *
              *---------------------------------------------------------------------------*/
             if (!string.IsNullOrWhiteSpace(environment))
             {
+                localAnnouncer(Invariant($"Set Config Precedence to: '{environment}'."));
                 Config.SetPrecedence(environment, Config.CommonPrecedence);
             }
 
@@ -235,19 +263,56 @@ namespace Naos.Bootstrapper
              * swapped out to send all Its.Log messages to another logging framework if  *
              * there is already one in place.                                            *
              *---------------------------------------------------------------------------*/
-            var localLogProcessorSettings = logWritingSettings
-                                         ?? Config.Get<LogWritingSettings>(
-                                                new SerializerRepresentation(
-                                                    SerializationKind.Json,
-                                                    typeof(LoggingJsonSerializationConfiguration).ToRepresentation()));
+            var localLogProcessorSettings = logWritingSettings ?? Config.Get<LogWritingSettings>(new SerializerRepresentation(SerializationKind.Json, typeof(LoggingJsonSerializationConfiguration).ToRepresentation()));
             if (localLogProcessorSettings == null)
             {
-                localAnnouncer("No LogProcessorSettings provided or found in config; using Null Object susbstitue.");
+                localAnnouncer(Invariant($"{DefaultAnnouncementPadding}- No LogProcessorSettings provided or found in config; using Null Object substitute."));
                 localLogProcessorSettings = new LogWritingSettings();
             }
 
             LogWriting.Instance.Setup(localLogProcessorSettings, localAnnouncer, configuredAndManagedLogProcessors, errorCodeKeys: new[] { "__OBC_ErrorCode__" });
+            localAnnouncer(Invariant($"< Common Setup"));
+        }
 
+        /// <summary>
+        /// Prefixes the announcement using the provided announcer.
+        /// </summary>
+        /// <param name="announcement">The announcement.</param>
+        /// <param name="announcer">Optional announcer; DEFAULT is Console.WriteLine.</param>
+        /// <param name="padding">Optional padding to use; DEFAULT is '    '.</param>
+        /// <param name="defaultPrefix">Optional prefix to use on announcements that have none; DEFAULT is hyphen/minus/'-'.</param>
+        protected static void PrefixAnnounce(
+            string announcement,
+            Action<string> announcer = null,
+            string padding = null,
+            string defaultPrefix = null)
+        {
+            var prefix =
+                (announcement.StartsWith(">") || announcement.StartsWith("<") || announcement.StartsWith("-") || announcement.StartsWith("!"))
+                    ? string.Empty
+                    : defaultPrefix ?? DefaultAnnouncementPrefix;
+
+            var prefixed = (padding ?? DefaultAnnouncementPadding) + prefix + announcement;
+            (announcer ?? Console.WriteLine)(prefixed);
+        }
+
+        /// <summary>
+        /// Builds an announcer wrapper that will call <see cref="PrefixAnnounce"/> with the announcement and provided values.
+        /// </summary>
+        /// <param name="announcer">Optional announcer; DEFAULT is Console.WriteLine.</param>
+        /// <param name="padding">Optional padding to use; DEFAULT is '    '.</param>
+        /// <param name="defaultPrefix">Optional prefix to use on announcements that have none; DEFAULT is hyphen/minus/'-'.</param>
+        /// <returns>An announcer that does the prefixing.</returns>
+        protected static Action<string> BuildPrefixingAnnouncer(
+            Action<string> announcer = null,
+            string padding = null,
+            string defaultPrefix = null)
+        {
+            void ResultAction(
+                string _)
+                => PrefixAnnounce(_, announcer, padding, defaultPrefix);
+
+            return ResultAction;
         }
 
         /// <summary>
@@ -308,7 +373,7 @@ namespace Naos.Bootstrapper
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "object", Justification = "Prefer this name for clarity.")]
         protected static void PrintArguments(object anonymousObjectWithArguments = null, string description = null, string method = null, Action<string> announcer = null)
         {
-            var localAnnouncer = announcer ?? Console.WriteLine;
+            var localAnnouncer = BuildPrefixingAnnouncer(announcer);
             var localMethod = method ?? new StackTrace().GetFrame(1).GetMethod().Name;
             var lines = new List<string>();
 
@@ -423,7 +488,7 @@ namespace Naos.Bootstrapper
             /*---------------------------------------------------------------------------*
              * Any method should run this logic to write telemetry info to the log.      *
              *---------------------------------------------------------------------------*/
-            WriteStandardTelemetry();
+            // WriteStandardTelemetry(); // removing this for now because it's not being collected well enough
 
             /*---------------------------------------------------------------------------*
              * This is not necessary but often very useful to print out the arguments.   *

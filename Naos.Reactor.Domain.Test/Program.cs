@@ -14,10 +14,9 @@ namespace Naos.Reactor.Domain.Test
 #endif
 {
     using System;
-
     using CLAP;
-
     using Its.Log.Instrumentation;
+    using Naos.Bootstrapper;
 
     /// <summary>
     /// Main entry point of application.
@@ -38,8 +37,13 @@ namespace Naos.Reactor.Domain.Test
             {
                 WriteAsciiArt(Console.WriteLine);
 
+                var consoleAbstraction = new ConsoleAbstraction();
+
                 // ConsoleAbstraction must derive from ConsoleAbstractionBase which is provided in the Bootstrapper recipes, it contains the implementation of this method.
-                new ConsoleAbstraction().PerformEntryPointPreChecks();
+                consoleAbstraction.PerformEntryPointPreChecks();
+
+                // Need to register the exception types to the static context.
+                ConsoleAbstractionBase.UpdateTypeRepresentationsOfExceptionsToOmitStackTraceFrom(consoleAbstraction.ExceptionTypeRepresentationsToOnlyPrintMessage);
 
                 /*---------------------------------------------------------------------------*
                  * This is just a pass through to the CLAP implementation of the harness,    *
