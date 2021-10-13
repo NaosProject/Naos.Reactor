@@ -13,22 +13,25 @@ namespace Naos.Reactor.Domain
     /// <summary>
     /// Registered reaction criteria to evaluate for possible <see cref="Reaction"/>'s.
     /// </summary>
-    public partial class RegisteredReaction : IModelViaCodeGen, IHaveStringId
+    public partial class RegisteredReaction : IModelViaCodeGen, IHaveStringId, IHaveTags
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RegisteredReaction"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="dependencies">The dependencies.</param>
+        /// <param name="dependencies">The dependencies to check.</param>
+        /// <param name="tags">The tags to write on the <see cref="Reaction"/>.</param>
         public RegisteredReaction(
             string id,
-            IReadOnlyList<IReactorDependency> dependencies)
+            IReadOnlyList<IReactorDependency> dependencies,
+            IReadOnlyCollection<NamedValue<string>> tags = null)
         {
             id.MustForArg(nameof(id)).NotBeNullNorWhiteSpace();
             dependencies.MustForArg(nameof(dependencies)).NotBeNullNorEmptyEnumerable();
 
             this.Id = id;
             this.Dependencies = dependencies;
+            this.Tags = tags;
         }
 
         /// <inheritdoc />
@@ -39,5 +42,8 @@ namespace Naos.Reactor.Domain
         /// </summary>
         /// <value>The dependencies.</value>
         public IReadOnlyList<IReactorDependency> Dependencies { get; private set; }
+
+        /// <inheritdoc />
+        public IReadOnlyCollection<NamedValue<string>> Tags { get; private set; }
     }
 }

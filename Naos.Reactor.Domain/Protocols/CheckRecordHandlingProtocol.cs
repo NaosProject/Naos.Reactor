@@ -37,11 +37,16 @@ namespace Naos.Reactor.Domain
 
             var concernToHandlingStatusMap = new Dictionary<string, HandlingStatus>();
             var stream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(operation.StreamRepresentation));
-            stream.MustForOp("streamMustBeIProtocol").BeOfType<IProtocol>();
+            stream.MustForOp(nameof(stream))
+                  .BeOfType<ISyncReturningProtocol<GetHandlingStatusOfRecordByInternalRecordIdOp, HandlingStatus>>();
+            var streamProtocol = (ISyncReturningProtocol<GetHandlingStatusOfRecordByInternalRecordIdOp, HandlingStatus>)stream;
+
             foreach (var concern in operation.Concerns)
             {
-                var status = ((IProtocol)stream).ExecuteViaReflection<HandlingStatus>(
-                    new GetHandlingStatusOfRecordByInternalRecordIdOp(operation.InternalRecordId, concern));
+                var getStatusOp = new GetHandlingStatusOfRecordByInternalRecordIdOp(
+                    operation.InternalRecordId,
+                    concern);
+                var status = streamProtocol.Execute(getStatusOp);
                 concernToHandlingStatusMap.Add(concern, status);
             }
 

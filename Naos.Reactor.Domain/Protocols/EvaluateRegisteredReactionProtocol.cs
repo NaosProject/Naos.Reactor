@@ -19,7 +19,7 @@ namespace Naos.Reactor.Domain
     /// Process all new reactions.
     /// </summary>
     public partial class EvaluateRegisteredReactionProtocol
-        : ISyncAndAsyncReturningProtocol<EvaluateRegisteredReactionOp, Reaction>
+        : SyncSpecificReturningProtocolBase<EvaluateRegisteredReactionOp, Reaction>
     {
         private readonly ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory;
 
@@ -36,7 +36,7 @@ namespace Naos.Reactor.Domain
         }
 
         /// <inheritdoc />
-        public Reaction Execute(
+        public override Reaction Execute(
             EvaluateRegisteredReactionOp operation)
         {
             var id = DateTime.UtcNow.ToStringInvariantPreferred();
@@ -45,12 +45,15 @@ namespace Naos.Reactor.Domain
             foreach (var dependency in operation.RegisteredReaction.Dependencies)
             {
                 var stream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(dependency.StreamRepresentation));
-                stream.MustForOp("streamMustBeIProtocol").BeOfType<IProtocol>();
+                stream.MustForOp(nameof(stream)).BeOfType<ISyncReturningProtocol<TryHandleRecordOp, TryHandleRecordResult>>();
+                var streamProtocol = ((ISyncReturningProtocol<TryHandleRecordOp, TryHandleRecordResult>)stream);
+
                 var handledIds = new List<long>();
                 StreamRecord currentRecord = null;
                 do
                 {
-                    currentRecord = ((IProtocol)stream).ExecuteViaReflection<StreamRecord>(dependency.TryHandleRecordOp);
+                    var tryHandleRecordResult = streamProtocol.Execute(dependency.TryHandleRecordOp);
+                    currentRecord = tryHandleRecordResult?.RecordToHandle;
                     if (currentRecord != null)
                     {
                         handledIds.Add(currentRecord.InternalRecordId);
@@ -65,41 +68,7 @@ namespace Naos.Reactor.Domain
             }
 
 
-            var result = records.Any() ? new Reaction(id, records) : null;
-            return result;
-        }
-
-        /// <inheritdoc />
-        public async Task<Reaction> ExecuteAsync(
-            EvaluateRegisteredReactionOp operation)
-        {
-            var id = DateTime.UtcNow.ToStringInvariantPreferred();
-            var records = new Dictionary<IStreamRepresentation, IReadOnlyList<long>>();
-
-            foreach (var dependency in operation.RegisteredReaction.Dependencies)
-            {
-                var stream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(dependency.StreamRepresentation));
-                stream.MustForOp("streamMustBeIProtocol").BeOfType<IProtocol>();
-                var handledIds = new List<long>();
-                StreamRecord currentRecord = null;
-                do
-                {
-                    currentRecord = await ((IProtocol)stream).ExecuteViaReflectionAsync<StreamRecord>(dependency.TryHandleRecordOp);
-                    if (currentRecord != null)
-                    {
-                        handledIds.Add(currentRecord.InternalRecordId);
-                    }
-                }
-                while (currentRecord != null);
-
-                if (handledIds.Any())
-                {
-                    records.Add(dependency.StreamRepresentation, handledIds);
-                }
-            }
-
-
-            var result = records.Any() ? new Reaction(id, records) : null;
+            var result = records.Any() ? new Reaction(id, operation.RegisteredReaction.Id, records, operation.RegisteredReaction.Tags) : null;
             return result;
         }
     }
