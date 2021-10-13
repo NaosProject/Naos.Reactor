@@ -123,6 +123,7 @@
     <Compile Include="Properties\ProjectInfo.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <Compile Include="Protocols\EvaluateRegisteredReactionProtocol.cs" />
+    <Compile Include="Protocols\HandleAndReQueueExecuteOpRequestedProtocol{TOperation}.cs" />
     <Compile Include="Protocols\RunReactorProtocol.cs" />
     <Compile Include="Protocols\CheckRecordHandlingProtocol.cs" />
     <Compile Include="Protocols\WriteRecordOnHandlingCompletedProtocol{TId}.cs" />
