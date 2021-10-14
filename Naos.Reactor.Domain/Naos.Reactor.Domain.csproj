@@ -111,6 +111,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="Events\ReactionEvent.cs" />
     <Compile Include="Model\CheckRecordHandlingResult.cs" />
+    <Compile Include="Model\StringIdentifiedReactorDependency.cs" />
     <Compile Include="Model\ObjectToPutWithId{TId}.cs" />
     <Compile Include="Operations\CheckRecordHandlingOp.cs" />
     <Compile Include="Model\RegisteredReaction.cs" />
