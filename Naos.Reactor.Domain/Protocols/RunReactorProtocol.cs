@@ -21,7 +21,7 @@ namespace Naos.Reactor.Domain
 
         private readonly IStandardReadWriteStream registeredReactionStream;
         private readonly IStandardReadWriteStream reactionStream;
-        private readonly ISyncAndAsyncReturningProtocol<EvaluateRegisteredReactionOp, Reaction> evaluateRegisteredReactionProtocol;
+        private readonly ISyncAndAsyncReturningProtocol<EvaluateRegisteredReactionOp, ReactionEvent> evaluateRegisteredReactionProtocol;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RunReactorProtocol"/> class.
@@ -32,7 +32,7 @@ namespace Naos.Reactor.Domain
         public RunReactorProtocol(
             IStandardReadWriteStream registeredReactionStream,
             IStandardReadWriteStream reactionStream,
-            ISyncAndAsyncReturningProtocol<EvaluateRegisteredReactionOp, Reaction> evaluateRegisteredReactionProtocol)
+            ISyncAndAsyncReturningProtocol<EvaluateRegisteredReactionOp, ReactionEvent> evaluateRegisteredReactionProtocol)
         {
             registeredReactionStream.MustForArg(nameof(registeredReactionStream)).NotBeNull();
             reactionStream.MustForArg(nameof(reactionStream)).NotBeNull();

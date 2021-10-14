@@ -11,7 +11,7 @@ namespace Naos.Reactor.Domain
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Registered reaction criteria to evaluate for possible <see cref="Reaction"/>'s.
+    /// Registered reaction criteria to evaluate for possible <see cref="ReactionEvent"/>'s.
     /// </summary>
     public partial class RegisteredReaction : IModelViaCodeGen, IHaveStringId, IHaveTags
     {
@@ -20,7 +20,7 @@ namespace Naos.Reactor.Domain
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="dependencies">The dependencies to check.</param>
-        /// <param name="tags">The tags to write on the <see cref="Reaction"/>.</param>
+        /// <param name="tags">The tags to write on the <see cref="ReactionEvent"/>.</param>
         public RegisteredReaction(
             string id,
             IReadOnlyList<IReactorDependency> dependencies,

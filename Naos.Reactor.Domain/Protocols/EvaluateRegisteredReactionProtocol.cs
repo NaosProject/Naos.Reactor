@@ -19,7 +19,7 @@ namespace Naos.Reactor.Domain
     /// Process all new reactions.
     /// </summary>
     public partial class EvaluateRegisteredReactionProtocol
-        : SyncSpecificReturningProtocolBase<EvaluateRegisteredReactionOp, Reaction>
+        : SyncSpecificReturningProtocolBase<EvaluateRegisteredReactionOp, ReactionEvent>
     {
         private readonly ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory;
 
@@ -36,7 +36,7 @@ namespace Naos.Reactor.Domain
         }
 
         /// <inheritdoc />
-        public override Reaction Execute(
+        public override ReactionEvent Execute(
             EvaluateRegisteredReactionOp operation)
         {
             var id = DateTime.UtcNow.ToStringInvariantPreferred();
@@ -68,7 +68,14 @@ namespace Naos.Reactor.Domain
             }
 
 
-            var result = records.Any() ? new Reaction(id, operation.RegisteredReaction.Id, records, operation.RegisteredReaction.Tags) : null;
+            var result = records.Any()
+                ? new ReactionEvent(
+                    id,
+                    operation.RegisteredReaction.Id,
+                    records,
+                    DateTime.UtcNow,
+                    operation.RegisteredReaction.Tags)
+                : null;
             return result;
         }
     }

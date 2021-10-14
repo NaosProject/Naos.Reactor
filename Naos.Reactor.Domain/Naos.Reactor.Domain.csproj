@@ -109,7 +109,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="Model\Reaction.cs" />
+    <Compile Include="Events\ReactionEvent.cs" />
     <Compile Include="Model\CheckRecordHandlingResult.cs" />
     <Compile Include="Model\ObjectToPutWithId{TId}.cs" />
     <Compile Include="Operations\CheckRecordHandlingOp.cs" />
