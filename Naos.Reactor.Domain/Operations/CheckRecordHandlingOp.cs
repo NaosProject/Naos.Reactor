@@ -23,7 +23,7 @@ namespace Naos.Reactor.Domain
         /// <param name="concerns">The concerns that require handling.</param>
         /// <param name="internalRecordId">The internal record identifier of the record to examine.</param>
         public CheckRecordHandlingOp(
-            StreamRepresentation streamRepresentation,
+            IStreamRepresentation streamRepresentation,
             IReadOnlyCollection<string> concerns,
             long internalRecordId)
         {
@@ -39,7 +39,7 @@ namespace Naos.Reactor.Domain
         /// Gets the <see cref="IStreamRepresentation"/> to resolve the <see cref="IStream"/> to check handling on.
         /// </summary>
         /// <value>The <see cref="IStreamRepresentation"/> to resolve the <see cref="IStream"/> to check handling on.</value>
-        public StreamRepresentation StreamRepresentation { get; private set; }
+        public IStreamRepresentation StreamRepresentation { get; private set; }
 
         /// <summary>
         /// Gets the concerns that require handling.
