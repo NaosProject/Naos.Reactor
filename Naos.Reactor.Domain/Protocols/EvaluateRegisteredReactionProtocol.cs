@@ -45,13 +45,14 @@ namespace Naos.Reactor.Domain
             foreach (var dependency in operation.RegisteredReaction.Dependencies)
             {
                 var stream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(dependency.StreamRepresentation));
-                stream.MustForOp(nameof(stream)).BeOfType<ISyncReturningProtocol<TryHandleRecordOp, TryHandleRecordResult>>();
-                var streamProtocol = ((ISyncReturningProtocol<TryHandleRecordOp, TryHandleRecordResult>)stream);
+                stream.MustForOp(nameof(stream)).BeOfType<ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>>();
+                var streamProtocol = ((ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>)stream);
 
                 var handledIds = new List<long>();
                 StreamRecord currentRecord = null;
                 do
                 {
+                    //TODO: When does then get mark 'handled'? here or in RunReactorProtocol
                     var tryHandleRecordResult = streamProtocol.Execute(dependency.TryHandleRecordOp);
                     currentRecord = tryHandleRecordResult?.RecordToHandle;
                     if (currentRecord != null)

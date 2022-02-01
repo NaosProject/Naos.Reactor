@@ -6,6 +6,7 @@
 
 namespace Naos.Reactor.Domain
 {
+    using System.Threading;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Representation.System;
@@ -13,14 +14,12 @@ namespace Naos.Reactor.Domain
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Process all new reactions.
+    /// Process all new reactions, this is the entry point for all produced events.
     /// </summary>
     public partial class RunReactorProtocol : SyncSpecificVoidProtocolBase<RunReactorOp>
     {
-        private static readonly TypeRepresentation DeprecatedIdStringTypeRepresentation = typeof(IdDeprecatedEvent<string>).ToRepresentation();
-
-        private readonly IStandardReadWriteStream registeredReactionStream;
-        private readonly IStandardReadWriteStream reactionStream;
+        private readonly IStandardStream registeredReactionStream;
+        private readonly IStandardStream reactionStream;
         private readonly ISyncAndAsyncReturningProtocol<EvaluateRegisteredReactionOp, ReactionEvent> evaluateRegisteredReactionProtocol;
 
         /// <summary>
@@ -30,8 +29,8 @@ namespace Naos.Reactor.Domain
         /// <param name="reactionStream">The reaction stream.</param>
         /// <param name="evaluateRegisteredReactionProtocol">The evaluate registered reaction protocol.</param>
         public RunReactorProtocol(
-            IStandardReadWriteStream registeredReactionStream,
-            IStandardReadWriteStream reactionStream,
+            IStandardStream registeredReactionStream,
+            IStandardStream reactionStream,
             ISyncAndAsyncReturningProtocol<EvaluateRegisteredReactionOp, ReactionEvent> evaluateRegisteredReactionProtocol)
         {
             registeredReactionStream.MustForArg(nameof(registeredReactionStream)).NotBeNull();
@@ -44,27 +43,45 @@ namespace Naos.Reactor.Domain
         }
 
         /// <inheritdoc />
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
         public override void Execute(
             RunReactorOp operation)
         {
-            var distinctIds = this.registeredReactionStream.Execute(new GetDistinctStringSerializedIdsOp());
+            operation.MustForArg(nameof(operation)).NotBeNull();
+
+            var getDistinctStringSerializedIdsOp = new StandardGetDistinctStringSerializedIdsOp(
+                new RecordFilter(
+                    deprecatedIdTypes: new[]
+                                       {
+                                           operation.DeprecatedIdentifierType
+                                       }));
+            var distinctIds = this.registeredReactionStream.Execute(getDistinctStringSerializedIdsOp);
             foreach (var distinctId in distinctIds)
             {
-                var latestRecord = this.registeredReactionStream
-                                       .Execute(new GetLatestRecordByIdOp(distinctId));
-                if (!latestRecord.Payload.PayloadTypeRepresentation.Equals(DeprecatedIdStringTypeRepresentation))
+                var getLatestRecordOp = new StandardGetLatestRecordOp(
+                    new RecordFilter(
+                        ids: new[]
+                             {
+                                 distinctId,
+                             }));
+
+                var registeredReactionRecord = this.registeredReactionStream.Execute(getLatestRecordOp);
+                registeredReactionRecord
+                   .Payload
+                   .PayloadTypeRepresentation
+                   .MustForOp("recordInRegisteredReactionStreamMustBeRegisteredReactionIfNotDeprecatedId")
+                   .BeEqualTo(typeof(RegisteredReaction).ToRepresentation());
+
+                var registeredReaction =
+                    registeredReactionRecord.Payload.DeserializePayloadUsingSpecificFactory<RegisteredReaction>(
+                        this.registeredReactionStream.SerializerFactory);
+
+                var reaction = this.evaluateRegisteredReactionProtocol.Execute(new EvaluateRegisteredReactionOp(registeredReaction));
+                if (reaction != null)
                 {
-                    latestRecord.Payload.PayloadTypeRepresentation
-                                .MustForOp("recordInRegisteredReactionStreamMustBeRegisteredReactionIfNotDeprecatedId")
-                                .BeEqualTo(typeof(RegisteredReaction).ToRepresentation());
-                    var registeredReaction =
-                        latestRecord.Payload.DeserializePayloadUsingSpecificFactory<RegisteredReaction>(
-                            this.registeredReactionStream.SerializerFactory);
-                    var reaction = this.evaluateRegisteredReactionProtocol.Execute(new EvaluateRegisteredReactionOp(registeredReaction));
-                    if (reaction != null)
-                    {
-                        this.reactionStream.PutWithId(reaction.Id, reaction);
-                    }
+                    this.reactionStream.PutWithId(reaction.Id, reaction, reaction.Tags);
+
+                    //TODO: complete handling here? or do it in the this.evaluateRegisteredReactionProtocol.Execute
                 }
             }
         }

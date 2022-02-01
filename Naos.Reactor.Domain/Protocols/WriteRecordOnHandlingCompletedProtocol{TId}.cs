@@ -6,6 +6,7 @@
 
 namespace Naos.Reactor.Domain
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Naos.Database.Domain;
@@ -41,7 +42,7 @@ namespace Naos.Reactor.Domain
             operation.MustForArg(nameof(operation)).NotBeNull();
 
             var results = new Dictionary<CheckRecordHandlingOp, CheckRecordHandlingResult>();
-            foreach (var operationCheckSingleRecordHandlingOp in operation.CheckSingleRecordHandlingOps)
+            foreach (var operationCheckSingleRecordHandlingOp in operation.CheckRecordHandlingOps)
             {
                 var result = this.checkSingleRecordHandlingProtocol.Execute(operationCheckSingleRecordHandlingOp);
                 results.Add(operationCheckSingleRecordHandlingOp, result);
@@ -49,22 +50,18 @@ namespace Naos.Reactor.Domain
 
             if (results.Any())
             {
-                var statusByRecordMap = results.Select(
-                                                    _ =>
-                                                        new KeyValuePair<CheckRecordHandlingOp, HandlingStatus>(
-                                                            _.Key,
-                                                            _.Value.ConcernToHandlingStatusMap.Values.ToList()
-                                                             .ReduceToCompositeHandlingStatus(operation.HandlingStatusCompositionStrategyForConcerns)))
-                                               .ToDictionary(k => k.Key, v => v.Value);
+                var compositeHandlingStatus = results
+                                             .SelectMany(_ => _.Value.InternalRecordIdToHandlingStatusMap.Values)
+                                             .ToList()
+                                             .ToCompositeHandlingStatus();
 
-                var singleStatus = statusByRecordMap.Values.ReduceToCompositeHandlingStatus(operation.HandlingStatusCompositionStrategyForRecords);
-
-                if (operation.StatusToRecordToWriteMap.TryGetValue(singleStatus, out var action))
+                if (operation.StatusToRecordToWriteMap.TryGetValue(compositeHandlingStatus, out var action))
                 {
                     var targetStream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(action.StreamRepresentation));
                     targetStream.MustForOp("targetStreamMustBeIWriteOnlyStream").BeOfType<IWriteOnlyStream>();
 
-                    ((IWriteOnlyStream)targetStream).PutWithId(action.Id, action.ObjectToPut, action.Tags);
+                    var objectToPut = action.UpdateTimestampOnPut ? action.EventToPut.DeepCloneWithTimestampUtc(DateTime.UtcNow) : action.EventToPut;
+                    ((IWriteOnlyStream)targetStream).PutWithId(action.Id, objectToPut, action.Tags);
                 }
             }
         }

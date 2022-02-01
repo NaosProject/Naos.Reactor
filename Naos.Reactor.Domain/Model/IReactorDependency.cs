@@ -23,6 +23,6 @@ namespace Naos.Reactor.Domain
         /// Gets the <see cref="TryHandleRecordOp"/> to execute against the <see cref="IStream"/> which, if any events are handled, will produce a <see cref="ReactionEvent"/>.
         /// </summary>
         /// <value>The <see cref="TryHandleRecordOp"/> to execute against the <see cref="IStream"/> which, if any events are handled, will produce a <see cref="ReactionEvent"/>.</value>
-        TryHandleRecordOp TryHandleRecordOp { get; }
+        StandardTryHandleRecordOp TryHandleRecordOp { get; }
     }
 }

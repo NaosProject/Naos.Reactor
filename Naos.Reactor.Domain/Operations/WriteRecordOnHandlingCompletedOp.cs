@@ -20,47 +20,29 @@ namespace Naos.Reactor.Domain
         /// <summary>
         /// Initializes a new instance of the <see cref="WriteRecordOnHandlingCompletedOp{TId}"/> class.
         /// </summary>
-        /// <param name="checkSingleRecordHandlingOps">The <see cref="CheckRecordHandlingOp"/>'s to execute.</param>
-        /// <param name="statusToRecordToWriteMap">The map of <see cref="HandlingStatus"/> to a <see cref="ObjectToPutWithId{TId}"/> to write.</param>
-        /// <param name="handlingStatusCompositionStrategyForConcerns">The optional <see cref="HandlingStatusCompositionStrategy"/> to use when reducing the strategies of all concerns on a record.</param>
-        /// <param name="handlingStatusCompositionStrategyForRecords">The optional <see cref="HandlingStatusCompositionStrategy"/> to use when reducing the strategies of all records (after reduced by concerns).</param>
+        /// <param name="checkRecordHandlingOps">The <see cref="CheckRecordHandlingOp"/>'s to execute.</param>
+        /// <param name="statusToRecordToWriteMap">The map of <see cref="CompositeHandlingStatus"/> to a <see cref="ObjectToPutWithId{TId}"/> to write.</param>
         public WriteRecordOnHandlingCompletedOp(
-            IReadOnlyCollection<CheckRecordHandlingOp> checkSingleRecordHandlingOps,
-            IReadOnlyDictionary<HandlingStatus, ObjectToPutWithId<TId>> statusToRecordToWriteMap,
-            HandlingStatusCompositionStrategy handlingStatusCompositionStrategyForConcerns = null,
-            HandlingStatusCompositionStrategy handlingStatusCompositionStrategyForRecords = null)
+            IReadOnlyCollection<CheckRecordHandlingOp> checkRecordHandlingOps,
+            IReadOnlyDictionary<CompositeHandlingStatus, ObjectToPutWithId<TId>> statusToRecordToWriteMap)
         {
-            checkSingleRecordHandlingOps.MustForArg(nameof(checkSingleRecordHandlingOps)).NotBeNullNorEmptyEnumerable();
+            checkRecordHandlingOps.MustForArg(nameof(checkRecordHandlingOps)).NotBeNullNorEmptyEnumerable();
             statusToRecordToWriteMap.MustForArg(nameof(statusToRecordToWriteMap)).NotBeNullNorEmptyDictionaryNorContainAnyNullValues();
 
-            this.CheckSingleRecordHandlingOps = checkSingleRecordHandlingOps;
+            this.CheckRecordHandlingOps = checkRecordHandlingOps;
             this.StatusToRecordToWriteMap = statusToRecordToWriteMap;
-            this.HandlingStatusCompositionStrategyForConcerns = handlingStatusCompositionStrategyForConcerns;
-            this.HandlingStatusCompositionStrategyForRecords = handlingStatusCompositionStrategyForRecords;
         }
 
         /// <summary>
         /// Gets the <see cref="CheckRecordHandlingOp"/>'s to execute.
         /// </summary>
         /// <value>The <see cref="CheckRecordHandlingOp"/>'s to execute.</value>
-        public IReadOnlyCollection<CheckRecordHandlingOp> CheckSingleRecordHandlingOps { get; private set; }
+        public IReadOnlyCollection<CheckRecordHandlingOp> CheckRecordHandlingOps { get; private set; }
 
         /// <summary>
-        /// Gets the map of <see cref="HandlingStatus"/> to a <see cref="ObjectToPutWithId{TId}"/> to write.
+        /// Gets the map of <see cref="CompositeHandlingStatus"/> to a <see cref="ObjectToPutWithId{TId}"/> to write.
         /// </summary>
-        /// <value>The map of <see cref="HandlingStatus"/> to a <see cref="ObjectToPutWithId{TId}"/> to write.</value>
-        public IReadOnlyDictionary<HandlingStatus, ObjectToPutWithId<TId>> StatusToRecordToWriteMap { get; private set; }
-
-        /// <summary>
-        /// Gets the <see cref="HandlingStatusCompositionStrategy"/> to use when reducing the strategies of all concerns on a record.
-        /// </summary>
-        /// <value>The <see cref="HandlingStatusCompositionStrategy"/> to use when reducing the strategies of all concerns on a record.</value>
-        public HandlingStatusCompositionStrategy HandlingStatusCompositionStrategyForConcerns { get; private set; }
-
-        /// <summary>
-        /// Gets the <see cref="HandlingStatusCompositionStrategy"/> to use when reducing the strategies of all records (after reduced by concerns).
-        /// </summary>
-        /// <value>The <see cref="HandlingStatusCompositionStrategy"/> to use when reducing the strategies of all records (after reduced by concerns).</value>
-        public HandlingStatusCompositionStrategy HandlingStatusCompositionStrategyForRecords { get; private set; }
+        /// <value>The map of <see cref="CompositeHandlingStatus"/> to a <see cref="ObjectToPutWithId{TId}"/> to write.</value>
+        public IReadOnlyDictionary<CompositeHandlingStatus, ObjectToPutWithId<TId>> StatusToRecordToWriteMap { get; private set; }
     }
 }

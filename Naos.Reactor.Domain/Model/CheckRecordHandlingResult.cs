@@ -19,19 +19,27 @@ namespace Naos.Reactor.Domain
         /// <summary>
         /// Initializes a new instance of the <see cref="CheckRecordHandlingResult"/> class.
         /// </summary>
-        /// <param name="concernToHandlingStatusMap">The map of the handling concern to <see cref="HandlingStatus"/>.</param>
+        /// <param name="streamRepresentation"></param>
+        /// <param name="internalRecordIdToHandlingStatusMap">The map of the handling concern to <see cref="HandlingStatus"/>.</param>
         public CheckRecordHandlingResult(
-            IReadOnlyDictionary<string, HandlingStatus> concernToHandlingStatusMap)
+            IStreamRepresentation streamRepresentation,
+            IReadOnlyDictionary<long, HandlingStatus> internalRecordIdToHandlingStatusMap)
         {
-            concernToHandlingStatusMap.MustForArg(nameof(concernToHandlingStatusMap)).NotBeNullNorEmptyDictionary();
+            internalRecordIdToHandlingStatusMap.MustForArg(nameof(internalRecordIdToHandlingStatusMap)).NotBeNullNorEmptyDictionary();
 
-            this.ConcernToHandlingStatusMap = concernToHandlingStatusMap;
+            this.StreamRepresentation = streamRepresentation;
+            this.InternalRecordIdToHandlingStatusMap = internalRecordIdToHandlingStatusMap;
         }
+
+        /// <summary>
+        /// Gets the stream representation.
+        /// </summary>
+        public IStreamRepresentation StreamRepresentation { get; private set; }
 
         /// <summary>
         /// Gets the map of the handling concern to <see cref="HandlingStatus"/>.
         /// </summary>
         /// <value>The map of the handling concern to <see cref="HandlingStatus"/>.</value>
-        public IReadOnlyDictionary<string, HandlingStatus> ConcernToHandlingStatusMap { get; private set; }
+        public IReadOnlyDictionary<long, HandlingStatus> InternalRecordIdToHandlingStatusMap { get; private set; }
     }
 }

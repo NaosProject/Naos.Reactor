@@ -7,6 +7,7 @@
 namespace Naos.Reactor.Domain
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
@@ -35,22 +36,17 @@ namespace Naos.Reactor.Domain
         {
             operation.MustForArg(nameof(operation)).NotBeNull();
 
-            var concernToHandlingStatusMap = new Dictionary<string, HandlingStatus>();
             var stream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(operation.StreamRepresentation));
             stream.MustForOp(nameof(stream))
-                  .BeOfType<ISyncReturningProtocol<GetHandlingStatusOfRecordByInternalRecordIdOp, HandlingStatus>>();
-            var streamProtocol = (ISyncReturningProtocol<GetHandlingStatusOfRecordByInternalRecordIdOp, HandlingStatus>)stream;
+                  .BeOfType<ISyncReturningProtocol<StandardGetHandlingStatusOp, IReadOnlyDictionary<long, HandlingStatus>>>();
+            var streamProtocol = (ISyncReturningProtocol<StandardGetHandlingStatusOp, IReadOnlyDictionary<long, HandlingStatus>>)stream;
 
-            foreach (var concern in operation.Concerns)
-            {
-                var getStatusOp = new GetHandlingStatusOfRecordByInternalRecordIdOp(
-                    operation.InternalRecordId,
-                    concern);
-                var status = streamProtocol.Execute(getStatusOp);
-                concernToHandlingStatusMap.Add(concern, status);
-            }
+            var getStatusOp = new StandardGetHandlingStatusOp(
+                operation.Concern,
+                operation.RecordFilter);
+            var statuses = streamProtocol.Execute(getStatusOp);
 
-            var result = new CheckRecordHandlingResult(concernToHandlingStatusMap);
+            var result = new CheckRecordHandlingResult(operation.StreamRepresentation, statuses);
             return result;
         }
     }

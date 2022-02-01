@@ -50,7 +50,8 @@ namespace Naos.Reactor.Domain
             var operationToExecute = operation.RecordToHandle.Payload.Operation;
             this.executeOperationProtocol.Execute(operationToExecute);
             Thread.Sleep(this.waitTimeBeforeQueuing);
-            this.requeueStream.Put(operation);
+            var operationClone = operation.DeepClone();
+            this.requeueStream.Put(operationClone);
         }
     }
 }

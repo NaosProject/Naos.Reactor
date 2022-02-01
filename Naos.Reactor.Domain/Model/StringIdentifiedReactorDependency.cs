@@ -24,7 +24,7 @@ namespace Naos.Reactor.Domain
         public StringIdentifiedReactorDependency(
             string id,
             IStreamRepresentation streamRepresentation,
-            TryHandleRecordOp tryHandleRecordOp)
+            StandardTryHandleRecordOp tryHandleRecordOp)
         {
             id.MustForArg(nameof(id)).NotBeNullNorWhiteSpace();
             streamRepresentation.MustForArg(nameof(streamRepresentation)).NotBeNull();
@@ -42,6 +42,6 @@ namespace Naos.Reactor.Domain
         public IStreamRepresentation StreamRepresentation { get; private set; }
 
         /// <inheritdoc />
-        public TryHandleRecordOp TryHandleRecordOp { get; private set; }
+        public StandardTryHandleRecordOp TryHandleRecordOp { get; private set; }
     }
 }

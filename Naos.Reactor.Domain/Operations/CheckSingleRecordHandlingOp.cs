@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CheckRecordHandlingOp.cs" company="Naos Project">
+// <copyright file="CheckSingleRecordHandlingOp.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -12,7 +12,7 @@ namespace Naos.Reactor.Domain
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Operation to check the handling status of a record.
+    /// Operation to check the handling status of a single record.
     /// </summary>
     public class CheckRecordHandlingOp : ReturningOperationBase<CheckRecordHandlingResult>
     {
@@ -20,19 +20,20 @@ namespace Naos.Reactor.Domain
         /// Initializes a new instance of the <see cref="CheckRecordHandlingOp"/> class.
         /// </summary>
         /// <param name="streamRepresentation">The <see cref="IStreamRepresentation"/> to resolve the <see cref="IStream"/> to check handling on.</param>
-        /// <param name="concerns">The concerns that require handling.</param>
-        /// <param name="internalRecordId">The internal record identifier of the record to examine.</param>
+        /// <param name="concern">The concerns that require handling.</param>
+        /// <param name="recordFilter">The filter for the records to examine.</param>
         public CheckRecordHandlingOp(
             IStreamRepresentation streamRepresentation,
-            IReadOnlyCollection<string> concerns,
-            long internalRecordId)
+            string concern,
+            RecordFilter recordFilter)
         {
             streamRepresentation.MustForArg(nameof(streamRepresentation)).NotBeNull();
-            concerns.MustForArg(nameof(concerns)).NotBeNullNorEmptyEnumerable();
+            concern.MustForArg(nameof(concern)).NotBeNullNorWhiteSpace();
+            recordFilter.MustForArg(nameof(recordFilter)).NotBeNull();
 
             this.StreamRepresentation = streamRepresentation;
-            this.Concerns = concerns;
-            this.InternalRecordId = internalRecordId;
+            this.Concern = concern;
+            this.RecordFilter = recordFilter;
         }
 
         /// <summary>
@@ -44,13 +45,11 @@ namespace Naos.Reactor.Domain
         /// <summary>
         /// Gets the concerns that require handling.
         /// </summary>
-        /// <value>The concerns that require handling.</value>
-        public IReadOnlyCollection<string> Concerns { get; private set; }
+        public string Concern { get; private set; }
 
         /// <summary>
-        /// Gets the internal record identifier of the record to examine.
+        /// Gets the filter for the records to examine.
         /// </summary>
-        /// <value>The internal record identifier of the record to examine.</value>
-        public long InternalRecordId { get; private set; }
+        public RecordFilter RecordFilter { get; private set; }
     }
 }
