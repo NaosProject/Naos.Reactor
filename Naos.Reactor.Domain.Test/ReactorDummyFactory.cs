@@ -18,11 +18,14 @@ namespace Naos.Reactor.Domain.Test
     /// <summary>
     /// A Dummy Factory for types in <see cref="Naos.Reactor.Domain"/>.
     /// </summary>
-#if !NaosReactorRecipesProject
+#if !NaosReactorSolution
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("Naos.Reactor.Domain.Test", "See package version number")]
+    internal
+#else
+    public
 #endif
-    public class ReactorDummyFactory : DefaultReactorDummyFactory
+    class ReactorDummyFactory : DefaultReactorDummyFactory
     {
         public ReactorDummyFactory()
         {

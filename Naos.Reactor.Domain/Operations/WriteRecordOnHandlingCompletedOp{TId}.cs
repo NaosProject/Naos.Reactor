@@ -21,10 +21,10 @@ namespace Naos.Reactor.Domain
         /// Initializes a new instance of the <see cref="WriteRecordOnHandlingCompletedOp{TId}"/> class.
         /// </summary>
         /// <param name="checkRecordHandlingOps">The <see cref="CheckRecordHandlingOp"/>'s to execute.</param>
-        /// <param name="statusToRecordToWriteMap">The map of <see cref="CompositeHandlingStatus"/> to a <see cref="ObjectToPutWithId{TId}"/> to write.</param>
+        /// <param name="statusToRecordToWriteMap">The map of <see cref="CompositeHandlingStatus"/> to a <see cref="EventToPutWithId{TId}"/> to write.</param>
         public WriteRecordOnHandlingCompletedOp(
             IReadOnlyCollection<CheckRecordHandlingOp> checkRecordHandlingOps,
-            IReadOnlyDictionary<CompositeHandlingStatus, ObjectToPutWithId<TId>> statusToRecordToWriteMap)
+            IReadOnlyDictionary<CompositeHandlingStatus, EventToPutWithId<TId>> statusToRecordToWriteMap)
         {
             checkRecordHandlingOps.MustForArg(nameof(checkRecordHandlingOps)).NotBeNullNorEmptyEnumerable();
             statusToRecordToWriteMap.MustForArg(nameof(statusToRecordToWriteMap)).NotBeNullNorEmptyDictionaryNorContainAnyNullValues();
@@ -40,9 +40,9 @@ namespace Naos.Reactor.Domain
         public IReadOnlyCollection<CheckRecordHandlingOp> CheckRecordHandlingOps { get; private set; }
 
         /// <summary>
-        /// Gets the map of <see cref="CompositeHandlingStatus"/> to a <see cref="ObjectToPutWithId{TId}"/> to write.
+        /// Gets the map of <see cref="CompositeHandlingStatus"/> to a <see cref="EventToPutWithId{TId}"/> to write.
         /// </summary>
-        /// <value>The map of <see cref="CompositeHandlingStatus"/> to a <see cref="ObjectToPutWithId{TId}"/> to write.</value>
-        public IReadOnlyDictionary<CompositeHandlingStatus, ObjectToPutWithId<TId>> StatusToRecordToWriteMap { get; private set; }
+        /// <value>The map of <see cref="CompositeHandlingStatus"/> to a <see cref="EventToPutWithId{TId}"/> to write.</value>
+        public IReadOnlyDictionary<CompositeHandlingStatus, EventToPutWithId<TId>> StatusToRecordToWriteMap { get; private set; }
     }
 }

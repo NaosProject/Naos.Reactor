@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CheckSingleRecordHandlingOp.cs" company="Naos Project">
+// <copyright file="CheckRecordHandlingOp.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ namespace Naos.Reactor.Domain
     /// <summary>
     /// Operation to check the handling status of a single record.
     /// </summary>
-    public class CheckRecordHandlingOp : ReturningOperationBase<CheckRecordHandlingResult>
+    public partial class CheckRecordHandlingOp : ReturningOperationBase<CheckRecordHandlingResult>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CheckRecordHandlingOp"/> class.

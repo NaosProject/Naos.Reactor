@@ -19,10 +19,10 @@ namespace Naos.Reactor.Domain
     /// <summary>
     /// An object with associated information to be put into a stream using the <see cref="IStreamRepresentation"/> as the target.
     /// </summary>
-    public partial class ObjectToPutWithId<TId> : IModelViaCodeGen, IHaveId<TId>
+    public partial class EventToPutWithId<TId> : IModelViaCodeGen, IHaveId<TId>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectToPutWithId{TId}"/> class.
+        /// Initializes a new instance of the <see cref="EventToPutWithId{TId}"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="eventToPut">The event to put in the stream retrieved by <see cref="StreamRepresentation"/>.</param>
@@ -30,7 +30,7 @@ namespace Naos.Reactor.Domain
         /// <param name="updateTimestampOnPut">The optional switch to deep clone the <paramref name="eventToPut"/> with a new <see cref="DateTime.UtcNow"/>.</param>
         /// <param name="tags">The optional tags.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "object", Justification = NaosSuppressBecause.CA1720_IdentifiersShouldNotContainTypeNames_TypeNameAddsClarityToIdentifierAndAlternativesDegradeClarity)]
-        public ObjectToPutWithId(
+        public EventToPutWithId(
             TId id,
             EventBase eventToPut,
             IStreamRepresentation streamRepresentation,

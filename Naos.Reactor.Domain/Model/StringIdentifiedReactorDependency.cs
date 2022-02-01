@@ -13,7 +13,7 @@ namespace Naos.Reactor.Domain
     /// <summary>
     /// Job dependency interface.
     /// </summary>
-    public class StringIdentifiedReactorDependency : IReactorDependency, IHaveStringId, IModelViaCodeGen
+    public partial class StringIdentifiedReactorDependency : IReactorDependency, IHaveStringId, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StringIdentifiedReactorDependency"/> class.

@@ -268,11 +268,49 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="CheckRecordHandlingOpTest.cs" />
+    <Compile Include="CheckRecordHandlingOpTest.designer.cs">
+      <DependentUpon>CheckRecordHandlingOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CheckRecordHandlingResultTest.cs" />
+    <Compile Include="CheckRecordHandlingResultTest.designer.cs">
+      <DependentUpon>CheckRecordHandlingResultTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConsoleAbstraction.cs" />
+    <Compile Include="EvaluateRegisteredReactionOpTest.cs" />
+    <Compile Include="EvaluateRegisteredReactionOpTest.designer.cs">
+      <DependentUpon>EvaluateRegisteredReactionOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EventToPutWithId{TId}Test.cs" />
+    <Compile Include="EventToPutWithId{TId}Test.designer.cs">
+      <DependentUpon>EventToPutWithId{TId}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Class1Test.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
+    <Compile Include="ReactionCompletedEventTest.cs" />
+    <Compile Include="ReactionCompletedEventTest.designer.cs">
+      <DependentUpon>ReactionCompletedEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReactionEventTest.cs" />
+    <Compile Include="ReactionEventTest.designer.cs">
+      <DependentUpon>ReactionEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReactionFailedEventTest.cs" />
+    <Compile Include="ReactionFailedEventTest.designer.cs">
+      <DependentUpon>ReactionFailedEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReactorDummyFactoryTest.designer.cs">
+      <DependentUpon>ReactorDummyFactoryTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegisteredReactionTest.cs" />
+    <Compile Include="RegisteredReactionTest.designer.cs">
+      <DependentUpon>RegisteredReactionTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RunReactorOpTest.cs" />
+    <Compile Include="RunReactorOpTest.designer.cs">
+      <DependentUpon>RunReactorOpTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="SerializationConfigurationTypes.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ReactorDummyFactory.cs" />
@@ -281,6 +319,14 @@
     </Compile>
     <Compile Include="ReactorDummyFactoryTest.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
+    <Compile Include="StringIdentifiedReactorDependencyTest.cs" />
+    <Compile Include="StringIdentifiedReactorDependencyTest.designer.cs">
+      <DependentUpon>StringIdentifiedReactorDependencyTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WriteRecordOnHandlingCompletedOp{TId}Test.cs" />
+    <Compile Include="WriteRecordOnHandlingCompletedOp{TId}Test.designer.cs">
+      <DependentUpon>WriteRecordOnHandlingCompletedOp{TId}Test.cs</DependentUpon>
+    </Compile>
     <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />
     <None Include="packages.config" />
