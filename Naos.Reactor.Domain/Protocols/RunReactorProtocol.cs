@@ -51,6 +51,10 @@ namespace Naos.Reactor.Domain
 
             var getDistinctStringSerializedIdsOp = new StandardGetDistinctStringSerializedIdsOp(
                 new RecordFilter(
+                    objectTypes: new[]
+                                 {
+                                     typeof(RegisteredReaction).ToRepresentation(),
+                                 },
                     deprecatedIdTypes: new[]
                                        {
                                            operation.DeprecatedIdentifierType
@@ -80,7 +84,7 @@ namespace Naos.Reactor.Domain
                 if (reaction != null)
                 {
                     this.reactionStream.PutWithId(reaction.Id, reaction, reaction.Tags);
-
+                    // probably should be void and just write reaction from evaluation
                     //TODO: complete handling here? or do it in the this.evaluateRegisteredReactionProtocol.Execute
                 }
             }

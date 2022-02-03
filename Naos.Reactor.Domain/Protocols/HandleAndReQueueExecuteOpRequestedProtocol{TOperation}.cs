@@ -10,6 +10,7 @@ namespace Naos.Reactor.Domain
     using System.Threading;
     using Naos.CodeAnalysis.Recipes;
     using Naos.Database.Domain;
+    using OBeautifulCode.Representation.System;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -24,7 +25,7 @@ namespace Naos.Reactor.Domain
     {
         private readonly ISyncVoidProtocol<TOperation> executeOperationProtocol;
         private readonly TimeSpan waitTimeBeforeQueuing;
-        private readonly IWriteOnlyStream requeueStream;
+        private readonly IStandardStream requeueStream;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RunReactorProtocol"/> class.
@@ -34,7 +35,7 @@ namespace Naos.Reactor.Domain
         /// <param name="waitTimeBeforeQueuing">The time to wait before requeue the .</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "requeue", Justification = NaosSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
         public HandleAndReQueueExecuteOpRequestedProtocol(
-            IWriteOnlyStream requeueStream,
+            IStandardStream requeueStream,
             ISyncVoidProtocol<TOperation> executeOperationProtocol,
             TimeSpan waitTimeBeforeQueuing)
         {
@@ -50,6 +51,7 @@ namespace Naos.Reactor.Domain
             var operationToExecute = operation.RecordToHandle.Payload.Operation;
             this.executeOperationProtocol.Execute(operationToExecute);
             Thread.Sleep(this.waitTimeBeforeQueuing);
+
             var operationClone = operation.DeepClone();
             this.requeueStream.Put(operationClone);
         }

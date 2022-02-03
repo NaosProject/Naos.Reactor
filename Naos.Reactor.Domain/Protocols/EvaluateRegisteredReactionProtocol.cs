@@ -77,6 +77,10 @@ namespace Naos.Reactor.Domain
                     DateTime.UtcNow,
                     operation.RegisteredReaction.Tags)
                 : null;
+
+            //put reaction event to reaction stream
+            //foreach marked completed
+            //global catch and mark all failed on failure to write, on failure elsewhere cancelrunning
             return result;
         }
     }
