@@ -8,10 +8,14 @@ namespace Naos.Reactor.Domain
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using Naos.CodeAnalysis.Recipes;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
+    using OBeautifulCode.Type.Recipes;
+    using static System.FormattableString;
 
     /// <summary>
     /// Check on sagas, write records under certain handling scenarios of groups of records.
@@ -36,6 +40,7 @@ namespace Naos.Reactor.Domain
         }
 
         /// <inheritdoc />
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = NaosSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
         public override void Execute(
             WriteRecordOnHandlingCompletedOp<TId> operation)
         {
@@ -60,8 +65,23 @@ namespace Naos.Reactor.Domain
                     var targetStream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(action.StreamRepresentation));
                     targetStream.MustForOp("targetStreamMustBeIWriteOnlyStream").BeOfType<IWriteOnlyStream>();
 
-                    var objectToPut = action.UpdateTimestampOnPut ? action.EventToPut.DeepCloneWithTimestampUtc(DateTime.UtcNow) : action.EventToPut;
-                    ((IWriteOnlyStream)targetStream).PutWithId(action.Id, objectToPut, action.Tags);
+                    IEvent eventToPut;
+                    if (action.UpdateTimestampOnPut)
+                    {
+                        var eventBase = action.EventToPut as EventBase;
+                        eventBase
+                           .MustForOp(Invariant($"{nameof(action)}.{nameof(action.EventToPut)}"))
+                           .NotBeNull(Invariant($"Only {nameof(EventBase)} is supported, this was {action.EventToPut.GetType().ToStringReadable()}."));
+
+                        // ReSharper disable once PossibleNullReferenceException - checked with Must above
+                        eventToPut = eventBase.DeepCloneWithTimestampUtc(DateTime.Now);
+                    }
+                    else
+                    {
+                        eventToPut = action.EventToPut;
+                    }
+
+                    ((IWriteOnlyStream)targetStream).PutWithId(action.Id, eventToPut, action.Tags);
                 }
             }
         }

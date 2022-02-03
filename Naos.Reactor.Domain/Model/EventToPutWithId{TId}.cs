@@ -32,7 +32,7 @@ namespace Naos.Reactor.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "object", Justification = NaosSuppressBecause.CA1720_IdentifiersShouldNotContainTypeNames_TypeNameAddsClarityToIdentifierAndAlternativesDegradeClarity)]
         public EventToPutWithId(
             TId id,
-            EventBase eventToPut,
+            IEvent eventToPut,
             IStreamRepresentation streamRepresentation,
             bool updateTimestampOnPut = true,
             IReadOnlyCollection<NamedValue<string>> tags = null)
@@ -53,7 +53,7 @@ namespace Naos.Reactor.Domain
         /// <summary>
         /// Gets the event to put in the stream retrieved by <see cref="StreamRepresentation"/>.
         /// </summary>
-        public EventBase EventToPut { get; private set; }
+        public IEvent EventToPut { get; private set; }
 
         /// <summary>
         /// Gets the stream representation to retrieve the stream to write the <see cref="EventToPut"/> into.
