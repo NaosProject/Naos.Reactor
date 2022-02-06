@@ -30,6 +30,9 @@ namespace Naos.Reactor.Domain.Test
         public ReactorDummyFactory()
         {
             /* Add any overriding or custom registrations here. */
+
+            // ------------------------------- ENUMS --------------------------------------
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(CompositeHandlingStatusMatchStrategy.Unknown);
         }
     }
 }

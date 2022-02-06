@@ -10,9 +10,11 @@ namespace Naos.Reactor.Domain
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using System.Threading;
     using Naos.CodeAnalysis.Recipes;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Enum.Recipes;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
     using static System.FormattableString;
@@ -55,34 +57,63 @@ namespace Naos.Reactor.Domain
 
             if (results.Any())
             {
-                var compositeHandlingStatus = results
+                var actualCompositeHandlingStatus = results
                                              .SelectMany(_ => _.Value.InternalRecordIdToHandlingStatusMap.Values)
                                              .ToList()
                                              .ToCompositeHandlingStatus();
 
-                if (operation.StatusToRecordToWriteMap.TryGetValue(compositeHandlingStatus, out var action))
+                foreach (var eventToPutWithIdOnMatch in operation.EventToPutOnMatchChainOfResponsibility)
                 {
-                    var targetStream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(action.StreamRepresentation));
-                    targetStream.MustForOp("targetStreamMustBeIWriteOnlyStream").BeOfType<IWriteOnlyStream>();
+                    var matches = actualCompositeHandlingStatus.MatchesAccordingToStrategy(
+                        eventToPutWithIdOnMatch.StatusToMatch,
+                        eventToPutWithIdOnMatch.CompositeHandlingStatusMatchStrategy);
 
-                    IEvent eventToPut;
-                    if (action.UpdateTimestampOnPut)
+                    if (matches)
                     {
-                        var eventBase = action.EventToPut as EventBase;
-                        eventBase
-                           .MustForOp(Invariant($"{nameof(action)}.{nameof(action.EventToPut)}"))
-                           .NotBeNull(Invariant($"Only {nameof(EventBase)} is supported, this was {action.EventToPut.GetType().ToStringReadable()}."));
+                        var eventToPutWithId = eventToPutWithIdOnMatch.EventToPut;
+                        var targetStream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(eventToPutWithId.StreamRepresentation));
+                        targetStream.MustForOp("targetStreamMustBeIWriteOnlyStream").BeOfType<IWriteOnlyStream>();
 
-                        // ReSharper disable once PossibleNullReferenceException - checked with Must above
-                        eventToPut = eventBase.DeepCloneWithTimestampUtc(DateTime.Now);
-                    }
-                    else
-                    {
-                        eventToPut = action.EventToPut;
-                    }
+                        IEvent eventToPut;
+                        if (eventToPutWithId.UpdateTimestampOnPut)
+                        {
+                            var eventBase = eventToPutWithId.EventToPut as EventBase;
+                            eventBase
+                               .MustForOp(Invariant($"{nameof(eventToPutWithId)}.{nameof(eventToPutWithId.EventToPut)}"))
+                               .NotBeNull(
+                                    Invariant(
+                                        $"Only {nameof(EventBase)} is supported, this was {eventToPutWithId.EventToPut.GetType().ToStringReadable()}."));
 
-                    ((IWriteOnlyStream)targetStream).PutWithId(action.Id, eventToPut, action.Tags);
+                            // ReSharper disable once PossibleNullReferenceException - checked with Must above
+                            eventToPut = eventBase.DeepCloneWithTimestampUtc(DateTime.Now);
+                        }
+                        else
+                        {
+                            eventToPut = eventToPutWithId.EventToPut;
+                        }
+
+                        ((IWriteOnlyStream)targetStream).PutWithId(eventToPutWithId.Id, eventToPut, eventToPutWithId.Tags);
+
+                        if (!eventToPutWithIdOnMatch.MatchTerminatesExecution)
+                        {
+                            return;
+                        }
+
+                        if (eventToPutWithIdOnMatch.MatchTerminatesChain)
+                        {
+                            Thread.Sleep(operation.WaitTimeBeforeRetry);
+                            throw new SelfCancelRunningExecutionException("Matched status and wrote record, terminating chain but not terminating.");
+                        }
+                    }
                 }
+
+                Thread.Sleep(operation.WaitTimeBeforeRetry);
+                throw new SelfCancelRunningExecutionException("No matches found or the matches did not terminate the chain or execution.");
+            }
+            else
+            {
+                Thread.Sleep(operation.WaitTimeBeforeRetry);
+                throw new SelfCancelRunningExecutionException("No records found to test.");
             }
         }
     }

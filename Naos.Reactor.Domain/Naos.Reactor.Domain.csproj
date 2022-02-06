@@ -140,9 +140,15 @@
     <Compile Include="Events\ReactionFailedEvent.designer.cs">
       <DependentUpon>ReactionFailedEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\CompositeHandlingStatusMatchStrategyExtensions.cs" />
     <Compile Include="Model\CheckRecordHandlingResult.cs" />
     <Compile Include="Model\CheckRecordHandlingResult.designer.cs">
       <DependentUpon>CheckRecordHandlingResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Enum\CompositeHandlingStatusMatchStrategy.cs" />
+    <Compile Include="Model\EventToPutWithIdOnMatch{TId}.cs" />
+    <Compile Include="Model\EventToPutWithIdOnMatch{TId}.designer.cs">
+      <DependentUpon>EventToPutWithIdOnMatch{TId}.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\EventToPutWithId{TId}.designer.cs">
       <DependentUpon>EventToPutWithId{TId}.cs</DependentUpon>
@@ -188,6 +194,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Naos.Build.Analyzers.1.55.57\build\Naos.Build.Analyzers.targets" Condition="Exists('..\packages\Naos.Build.Analyzers.1.55.57\build\Naos.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

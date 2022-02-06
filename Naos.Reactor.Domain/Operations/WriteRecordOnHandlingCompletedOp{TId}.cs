@@ -6,8 +6,8 @@
 
 namespace Naos.Reactor.Domain
 {
+    using System;
     using System.Collections.Generic;
-    using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
 
@@ -21,28 +21,34 @@ namespace Naos.Reactor.Domain
         /// Initializes a new instance of the <see cref="WriteRecordOnHandlingCompletedOp{TId}"/> class.
         /// </summary>
         /// <param name="checkRecordHandlingOps">The <see cref="CheckRecordHandlingOp"/>'s to execute.</param>
-        /// <param name="statusToRecordToWriteMap">The map of <see cref="CompositeHandlingStatus"/> to a <see cref="EventToPutWithId{TId}"/> to write.</param>
+        /// <param name="eventToPutOnMatchChainOfResponsibility">The list of <see cref="EventToPutWithIdOnMatch{TId}"/> links to check for a match and write event as appropriate.</param>
+        /// <param name="waitTimeBeforeRetry">The wait time before retry checking statuses.</param>
         public WriteRecordOnHandlingCompletedOp(
             IReadOnlyCollection<CheckRecordHandlingOp> checkRecordHandlingOps,
-            IReadOnlyDictionary<CompositeHandlingStatus, EventToPutWithId<TId>> statusToRecordToWriteMap)
+            IReadOnlyList<EventToPutWithIdOnMatch<TId>> eventToPutOnMatchChainOfResponsibility,
+            TimeSpan waitTimeBeforeRetry)
         {
             checkRecordHandlingOps.MustForArg(nameof(checkRecordHandlingOps)).NotBeNullNorEmptyEnumerable();
-            statusToRecordToWriteMap.MustForArg(nameof(statusToRecordToWriteMap)).NotBeNullNorEmptyDictionaryNorContainAnyNullValues();
+            eventToPutOnMatchChainOfResponsibility.MustForArg(nameof(eventToPutOnMatchChainOfResponsibility)).NotBeNullNorEmptyDictionaryNorContainAnyNullValues();
 
             this.CheckRecordHandlingOps = checkRecordHandlingOps;
-            this.StatusToRecordToWriteMap = statusToRecordToWriteMap;
+            this.EventToPutOnMatchChainOfResponsibility = eventToPutOnMatchChainOfResponsibility;
+            this.WaitTimeBeforeRetry = waitTimeBeforeRetry;
         }
 
         /// <summary>
         /// Gets the <see cref="CheckRecordHandlingOp"/>'s to execute.
         /// </summary>
-        /// <value>The <see cref="CheckRecordHandlingOp"/>'s to execute.</value>
         public IReadOnlyCollection<CheckRecordHandlingOp> CheckRecordHandlingOps { get; private set; }
 
         /// <summary>
-        /// Gets the map of <see cref="CompositeHandlingStatus"/> to a <see cref="EventToPutWithId{TId}"/> to write.
+        /// Gets the list of <see cref="EventToPutWithIdOnMatch{TId}"/> links to check for a match and write event as appropriate.
         /// </summary>
-        /// <value>The map of <see cref="CompositeHandlingStatus"/> to a <see cref="EventToPutWithId{TId}"/> to write.</value>
-        public IReadOnlyDictionary<CompositeHandlingStatus, EventToPutWithId<TId>> StatusToRecordToWriteMap { get; private set; }
+        public IReadOnlyList<EventToPutWithIdOnMatch<TId>> EventToPutOnMatchChainOfResponsibility { get; private set; }
+
+        /// <summary>
+        /// Gets the wait time before retry checking statuses.
+        /// </summary>
+        public TimeSpan WaitTimeBeforeRetry { get; private set; }
     }
 }

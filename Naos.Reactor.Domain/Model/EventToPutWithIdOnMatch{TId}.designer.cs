@@ -25,15 +25,15 @@ namespace Naos.Reactor.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class EventToPutWithId<TId> : IModel<EventToPutWithId<TId>>
+    public partial class EventToPutWithIdOnMatch<TId> : IModel<EventToPutWithIdOnMatch<TId>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="EventToPutWithId{TId}"/> are equal.
+        /// Determines whether two objects of type <see cref="EventToPutWithIdOnMatch{TId}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(EventToPutWithId<TId> left, EventToPutWithId<TId> right)
+        public static bool operator ==(EventToPutWithIdOnMatch<TId> left, EventToPutWithIdOnMatch<TId> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -51,15 +51,15 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="EventToPutWithId{TId}"/> are not equal.
+        /// Determines whether two objects of type <see cref="EventToPutWithIdOnMatch{TId}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(EventToPutWithId<TId> left, EventToPutWithId<TId> right) => !(left == right);
+        public static bool operator !=(EventToPutWithIdOnMatch<TId> left, EventToPutWithIdOnMatch<TId> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(EventToPutWithId<TId> other)
+        public bool Equals(EventToPutWithIdOnMatch<TId> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -71,48 +71,48 @@ namespace Naos.Reactor.Domain
                 return false;
             }
 
-            var result = this.Id.IsEqualTo(other.Id)
+            var result = this.StatusToMatch.IsEqualTo(other.StatusToMatch)
+                      && this.CompositeHandlingStatusMatchStrategy.IsEqualTo(other.CompositeHandlingStatusMatchStrategy)
                       && this.EventToPut.IsEqualTo(other.EventToPut)
-                      && this.StreamRepresentation.IsEqualTo(other.StreamRepresentation)
-                      && this.UpdateTimestampOnPut.IsEqualTo(other.UpdateTimestampOnPut)
-                      && this.Tags.IsEqualTo(other.Tags);
+                      && this.MatchTerminatesChain.IsEqualTo(other.MatchTerminatesChain)
+                      && this.MatchTerminatesExecution.IsEqualTo(other.MatchTerminatesExecution);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as EventToPutWithId<TId>);
+        public override bool Equals(object obj) => this == (obj as EventToPutWithIdOnMatch<TId>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Id)
+            .Hash(this.StatusToMatch)
+            .Hash(this.CompositeHandlingStatusMatchStrategy)
             .Hash(this.EventToPut)
-            .Hash(this.StreamRepresentation)
-            .Hash(this.UpdateTimestampOnPut)
-            .Hash(this.Tags)
+            .Hash(this.MatchTerminatesChain)
+            .Hash(this.MatchTerminatesExecution)
             .Value;
 
         /// <inheritdoc />
         public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        public EventToPutWithId<TId> DeepClone()
+        public EventToPutWithIdOnMatch<TId> DeepClone()
         {
-            var result = new EventToPutWithId<TId>(
-                                 this.Id == null ? default : this.Id.DeepClone(),
+            var result = new EventToPutWithIdOnMatch<TId>(
+                                 this.StatusToMatch.DeepClone(),
+                                 this.CompositeHandlingStatusMatchStrategy.DeepClone(),
                                  this.EventToPut?.DeepClone(),
-                                 this.StreamRepresentation?.DeepClone(),
-                                 this.UpdateTimestampOnPut.DeepClone(),
-                                 this.Tags?.DeepClone());
+                                 this.MatchTerminatesChain.DeepClone(),
+                                 this.MatchTerminatesExecution.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Id" />.
+        /// Deep clones this object with a new <see cref="StatusToMatch" />.
         /// </summary>
-        /// <param name="id">The new <see cref="Id" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EventToPutWithId{TId}" /> using the specified <paramref name="id" /> for <see cref="Id" /> and a deep clone of every other property.</returns>
+        /// <param name="statusToMatch">The new <see cref="StatusToMatch" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="EventToPutWithIdOnMatch{TId}" /> using the specified <paramref name="statusToMatch" /> for <see cref="StatusToMatch" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -130,14 +130,48 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EventToPutWithId<TId> DeepCloneWithId(TId id)
+        public EventToPutWithIdOnMatch<TId> DeepCloneWithStatusToMatch(CompositeHandlingStatus statusToMatch)
         {
-            var result = new EventToPutWithId<TId>(
-                                 id,
+            var result = new EventToPutWithIdOnMatch<TId>(
+                                 statusToMatch,
+                                 this.CompositeHandlingStatusMatchStrategy.DeepClone(),
                                  this.EventToPut?.DeepClone(),
-                                 this.StreamRepresentation?.DeepClone(),
-                                 this.UpdateTimestampOnPut.DeepClone(),
-                                 this.Tags?.DeepClone());
+                                 this.MatchTerminatesChain.DeepClone(),
+                                 this.MatchTerminatesExecution.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="CompositeHandlingStatusMatchStrategy" />.
+        /// </summary>
+        /// <param name="compositeHandlingStatusMatchStrategy">The new <see cref="CompositeHandlingStatusMatchStrategy" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="EventToPutWithIdOnMatch{TId}" /> using the specified <paramref name="compositeHandlingStatusMatchStrategy" /> for <see cref="CompositeHandlingStatusMatchStrategy" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public EventToPutWithIdOnMatch<TId> DeepCloneWithCompositeHandlingStatusMatchStrategy(CompositeHandlingStatusMatchStrategy compositeHandlingStatusMatchStrategy)
+        {
+            var result = new EventToPutWithIdOnMatch<TId>(
+                                 this.StatusToMatch.DeepClone(),
+                                 compositeHandlingStatusMatchStrategy,
+                                 this.EventToPut?.DeepClone(),
+                                 this.MatchTerminatesChain.DeepClone(),
+                                 this.MatchTerminatesExecution.DeepClone());
 
             return result;
         }
@@ -146,7 +180,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="EventToPut" />.
         /// </summary>
         /// <param name="eventToPut">The new <see cref="EventToPut" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EventToPutWithId{TId}" /> using the specified <paramref name="eventToPut" /> for <see cref="EventToPut" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="EventToPutWithIdOnMatch{TId}" /> using the specified <paramref name="eventToPut" /> for <see cref="EventToPut" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -164,23 +198,23 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EventToPutWithId<TId> DeepCloneWithEventToPut(IEvent eventToPut)
+        public EventToPutWithIdOnMatch<TId> DeepCloneWithEventToPut(EventToPutWithId<TId> eventToPut)
         {
-            var result = new EventToPutWithId<TId>(
-                                 this.Id == null ? default : this.Id.DeepClone(),
+            var result = new EventToPutWithIdOnMatch<TId>(
+                                 this.StatusToMatch.DeepClone(),
+                                 this.CompositeHandlingStatusMatchStrategy.DeepClone(),
                                  eventToPut,
-                                 this.StreamRepresentation?.DeepClone(),
-                                 this.UpdateTimestampOnPut.DeepClone(),
-                                 this.Tags?.DeepClone());
+                                 this.MatchTerminatesChain.DeepClone(),
+                                 this.MatchTerminatesExecution.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="StreamRepresentation" />.
+        /// Deep clones this object with a new <see cref="MatchTerminatesChain" />.
         /// </summary>
-        /// <param name="streamRepresentation">The new <see cref="StreamRepresentation" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EventToPutWithId{TId}" /> using the specified <paramref name="streamRepresentation" /> for <see cref="StreamRepresentation" /> and a deep clone of every other property.</returns>
+        /// <param name="matchTerminatesChain">The new <see cref="MatchTerminatesChain" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="EventToPutWithIdOnMatch{TId}" /> using the specified <paramref name="matchTerminatesChain" /> for <see cref="MatchTerminatesChain" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -198,23 +232,23 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EventToPutWithId<TId> DeepCloneWithStreamRepresentation(IStreamRepresentation streamRepresentation)
+        public EventToPutWithIdOnMatch<TId> DeepCloneWithMatchTerminatesChain(bool matchTerminatesChain)
         {
-            var result = new EventToPutWithId<TId>(
-                                 this.Id == null ? default : this.Id.DeepClone(),
+            var result = new EventToPutWithIdOnMatch<TId>(
+                                 this.StatusToMatch.DeepClone(),
+                                 this.CompositeHandlingStatusMatchStrategy.DeepClone(),
                                  this.EventToPut?.DeepClone(),
-                                 streamRepresentation,
-                                 this.UpdateTimestampOnPut.DeepClone(),
-                                 this.Tags?.DeepClone());
+                                 matchTerminatesChain,
+                                 this.MatchTerminatesExecution.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="UpdateTimestampOnPut" />.
+        /// Deep clones this object with a new <see cref="MatchTerminatesExecution" />.
         /// </summary>
-        /// <param name="updateTimestampOnPut">The new <see cref="UpdateTimestampOnPut" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EventToPutWithId{TId}" /> using the specified <paramref name="updateTimestampOnPut" /> for <see cref="UpdateTimestampOnPut" /> and a deep clone of every other property.</returns>
+        /// <param name="matchTerminatesExecution">The new <see cref="MatchTerminatesExecution" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="EventToPutWithIdOnMatch{TId}" /> using the specified <paramref name="matchTerminatesExecution" /> for <see cref="MatchTerminatesExecution" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -232,48 +266,14 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EventToPutWithId<TId> DeepCloneWithUpdateTimestampOnPut(bool updateTimestampOnPut)
+        public EventToPutWithIdOnMatch<TId> DeepCloneWithMatchTerminatesExecution(bool matchTerminatesExecution)
         {
-            var result = new EventToPutWithId<TId>(
-                                 this.Id == null ? default : this.Id.DeepClone(),
+            var result = new EventToPutWithIdOnMatch<TId>(
+                                 this.StatusToMatch.DeepClone(),
+                                 this.CompositeHandlingStatusMatchStrategy.DeepClone(),
                                  this.EventToPut?.DeepClone(),
-                                 this.StreamRepresentation?.DeepClone(),
-                                 updateTimestampOnPut,
-                                 this.Tags?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="Tags" />.
-        /// </summary>
-        /// <param name="tags">The new <see cref="Tags" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EventToPutWithId{TId}" /> using the specified <paramref name="tags" /> for <see cref="Tags" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EventToPutWithId<TId> DeepCloneWithTags(IReadOnlyCollection<NamedValue<string>> tags)
-        {
-            var result = new EventToPutWithId<TId>(
-                                 this.Id == null ? default : this.Id.DeepClone(),
-                                 this.EventToPut?.DeepClone(),
-                                 this.StreamRepresentation?.DeepClone(),
-                                 this.UpdateTimestampOnPut.DeepClone(),
-                                 tags);
+                                 this.MatchTerminatesChain.DeepClone(),
+                                 matchTerminatesExecution);
 
             return result;
         }
@@ -282,7 +282,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString() ?? "<null>"}, EventToPut = {this.EventToPut?.ToString() ?? "<null>"}, StreamRepresentation = {this.StreamRepresentation?.ToString() ?? "<null>"}, UpdateTimestampOnPut = {this.UpdateTimestampOnPut.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.{this.GetType().ToStringReadable()}: StatusToMatch = {this.StatusToMatch.ToString() ?? "<null>"}, CompositeHandlingStatusMatchStrategy = {this.CompositeHandlingStatusMatchStrategy.ToString() ?? "<null>"}, EventToPut = {this.EventToPut?.ToString() ?? "<null>"}, MatchTerminatesChain = {this.MatchTerminatesChain.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, MatchTerminatesExecution = {this.MatchTerminatesExecution.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

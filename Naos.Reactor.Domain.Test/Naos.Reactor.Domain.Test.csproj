@@ -281,6 +281,10 @@
     <Compile Include="EvaluateRegisteredReactionOpTest.designer.cs">
       <DependentUpon>EvaluateRegisteredReactionOpTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="EventToPutWithIdOnMatch{TId}Test.cs" />
+    <Compile Include="EventToPutWithIdOnMatch{TId}Test.designer.cs">
+      <DependentUpon>EventToPutWithIdOnMatch{TId}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="EventToPutWithId{TId}Test.cs" />
     <Compile Include="EventToPutWithId{TId}Test.designer.cs">
       <DependentUpon>EventToPutWithId{TId}Test.cs</DependentUpon>

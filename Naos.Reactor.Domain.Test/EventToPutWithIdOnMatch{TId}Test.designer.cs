@@ -18,6 +18,8 @@ namespace Naos.Reactor.Domain.Test
 
     using global::FakeItEasy;
 
+    using global::Naos.Database.Domain;
+
     using global::OBeautifulCode.Assertion.Recipes;
     using global::OBeautifulCode.AutoFakeItEasy;
     using global::OBeautifulCode.CodeGen.ModelObject.Recipes;
@@ -33,293 +35,317 @@ namespace Naos.Reactor.Domain.Test
 
     using static global::System.FormattableString;
 
-    public static partial class WriteRecordOnHandlingCompletedOpTIdTest
+    public static partial class EventToPutWithIdOnMatchTIdTest
     {
-        private static readonly StringRepresentationTestScenarios<WriteRecordOnHandlingCompletedOp<Version>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<WriteRecordOnHandlingCompletedOp<Version>>()
+        private static readonly StringRepresentationTestScenarios<EventToPutWithIdOnMatch<Version>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<EventToPutWithIdOnMatch<Version>>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
+                new StringRepresentationTestScenario<EventToPutWithIdOnMatch<Version>>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                        var systemUnderTest = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<WriteRecordOnHandlingCompletedOp<Version>>
+                        var result = new SystemUnderTestExpectedStringRepresentation<EventToPutWithIdOnMatch<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.WriteRecordOnHandlingCompletedOp<Version>: CheckRecordHandlingOps = {systemUnderTest.CheckRecordHandlingOps?.ToString() ?? "<null>"}, EventToPutOnMatchChainOfResponsibility = {systemUnderTest.EventToPutOnMatchChainOfResponsibility?.ToString() ?? "<null>"}, WaitTimeBeforeRetry = {systemUnderTest.WaitTimeBeforeRetry.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.EventToPutWithIdOnMatch<Version>: StatusToMatch = {systemUnderTest.StatusToMatch.ToString() ?? "<null>"}, CompositeHandlingStatusMatchStrategy = {systemUnderTest.CompositeHandlingStatusMatchStrategy.ToString() ?? "<null>"}, EventToPut = {systemUnderTest.EventToPut?.ToString() ?? "<null>"}, MatchTerminatesChain = {systemUnderTest.MatchTerminatesChain.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, MatchTerminatesExecution = {systemUnderTest.MatchTerminatesExecution.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<WriteRecordOnHandlingCompletedOp<Version>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<WriteRecordOnHandlingCompletedOp<Version>>()
+        private static readonly ConstructorArgumentValidationTestScenarios<EventToPutWithIdOnMatch<Version>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<EventToPutWithIdOnMatch<Version>>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
+                new ConstructorArgumentValidationTestScenario<EventToPutWithIdOnMatch<Version>>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'checkRecordHandlingOps' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'eventToPut' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                        var referenceObject = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
-                        var result = new WriteRecordOnHandlingCompletedOp<Version>(
+                        var result = new EventToPutWithIdOnMatch<Version>(
+                                             referenceObject.StatusToMatch,
+                                             referenceObject.CompositeHandlingStatusMatchStrategy,
                                              null,
-                                             referenceObject.EventToPutOnMatchChainOfResponsibility,
-                                             referenceObject.WaitTimeBeforeRetry);
+                                             referenceObject.MatchTerminatesChain,
+                                             referenceObject.MatchTerminatesExecution);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "checkRecordHandlingOps", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'checkRecordHandlingOps' is an empty enumerable scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
-
-                        var result = new WriteRecordOnHandlingCompletedOp<Version>(
-                                             new List<CheckRecordHandlingOp>(),
-                                             referenceObject.EventToPutOnMatchChainOfResponsibility,
-                                             referenceObject.WaitTimeBeforeRetry);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "checkRecordHandlingOps", "is an empty enumerable", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'checkRecordHandlingOps' contains a null element scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
-
-                        var result = new WriteRecordOnHandlingCompletedOp<Version>(
-                                             new CheckRecordHandlingOp[0].Concat(referenceObject.CheckRecordHandlingOps).Concat(new CheckRecordHandlingOp[] { null }).Concat(referenceObject.CheckRecordHandlingOps).ToList(),
-                                             referenceObject.EventToPutOnMatchChainOfResponsibility,
-                                             referenceObject.WaitTimeBeforeRetry);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "checkRecordHandlingOps", "contains at least one null element", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'eventToPutOnMatchChainOfResponsibility' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
-
-                        var result = new WriteRecordOnHandlingCompletedOp<Version>(
-                                             referenceObject.CheckRecordHandlingOps,
-                                             null,
-                                             referenceObject.WaitTimeBeforeRetry);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "eventToPutOnMatchChainOfResponsibility", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'eventToPutOnMatchChainOfResponsibility' is an empty enumerable scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
-
-                        var result = new WriteRecordOnHandlingCompletedOp<Version>(
-                                             referenceObject.CheckRecordHandlingOps,
-                                             new List<EventToPutWithIdOnMatch<Version>>(),
-                                             referenceObject.WaitTimeBeforeRetry);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "eventToPutOnMatchChainOfResponsibility", "is an empty enumerable", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'eventToPutOnMatchChainOfResponsibility' contains a null element scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
-
-                        var result = new WriteRecordOnHandlingCompletedOp<Version>(
-                                             referenceObject.CheckRecordHandlingOps,
-                                             new EventToPutWithIdOnMatch<Version>[0].Concat(referenceObject.EventToPutOnMatchChainOfResponsibility).Concat(new EventToPutWithIdOnMatch<Version>[] { null }).Concat(referenceObject.EventToPutOnMatchChainOfResponsibility).ToList(),
-                                             referenceObject.WaitTimeBeforeRetry);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "eventToPutOnMatchChainOfResponsibility", "contains at least one null element", },
+                    ExpectedExceptionMessageContains = new[] { "eventToPut", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<WriteRecordOnHandlingCompletedOp<Version>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<WriteRecordOnHandlingCompletedOp<Version>>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<EventToPutWithIdOnMatch<Version>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<EventToPutWithIdOnMatch<Version>>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
+                new ConstructorPropertyAssignmentTestScenario<EventToPutWithIdOnMatch<Version>>
                 {
-                    Name = "CheckRecordHandlingOps should return same 'checkRecordHandlingOps' parameter passed to constructor when getting",
+                    Name = "StatusToMatch should return same 'statusToMatch' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                        var referenceObject = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<WriteRecordOnHandlingCompletedOp<Version>>
+                        var result = new SystemUnderTestExpectedPropertyValue<EventToPutWithIdOnMatch<Version>>
                         {
-                            SystemUnderTest = new WriteRecordOnHandlingCompletedOp<Version>(
-                                                      referenceObject.CheckRecordHandlingOps,
-                                                      referenceObject.EventToPutOnMatchChainOfResponsibility,
-                                                      referenceObject.WaitTimeBeforeRetry),
-                            ExpectedPropertyValue = referenceObject.CheckRecordHandlingOps,
+                            SystemUnderTest = new EventToPutWithIdOnMatch<Version>(
+                                                      referenceObject.StatusToMatch,
+                                                      referenceObject.CompositeHandlingStatusMatchStrategy,
+                                                      referenceObject.EventToPut,
+                                                      referenceObject.MatchTerminatesChain,
+                                                      referenceObject.MatchTerminatesExecution),
+                            ExpectedPropertyValue = referenceObject.StatusToMatch,
                         };
 
                         return result;
                     },
-                    PropertyName = "CheckRecordHandlingOps",
+                    PropertyName = "StatusToMatch",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
+                new ConstructorPropertyAssignmentTestScenario<EventToPutWithIdOnMatch<Version>>
                 {
-                    Name = "EventToPutOnMatchChainOfResponsibility should return same 'eventToPutOnMatchChainOfResponsibility' parameter passed to constructor when getting",
+                    Name = "CompositeHandlingStatusMatchStrategy should return same 'compositeHandlingStatusMatchStrategy' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                        var referenceObject = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<WriteRecordOnHandlingCompletedOp<Version>>
+                        var result = new SystemUnderTestExpectedPropertyValue<EventToPutWithIdOnMatch<Version>>
                         {
-                            SystemUnderTest = new WriteRecordOnHandlingCompletedOp<Version>(
-                                                      referenceObject.CheckRecordHandlingOps,
-                                                      referenceObject.EventToPutOnMatchChainOfResponsibility,
-                                                      referenceObject.WaitTimeBeforeRetry),
-                            ExpectedPropertyValue = referenceObject.EventToPutOnMatchChainOfResponsibility,
+                            SystemUnderTest = new EventToPutWithIdOnMatch<Version>(
+                                                      referenceObject.StatusToMatch,
+                                                      referenceObject.CompositeHandlingStatusMatchStrategy,
+                                                      referenceObject.EventToPut,
+                                                      referenceObject.MatchTerminatesChain,
+                                                      referenceObject.MatchTerminatesExecution),
+                            ExpectedPropertyValue = referenceObject.CompositeHandlingStatusMatchStrategy,
                         };
 
                         return result;
                     },
-                    PropertyName = "EventToPutOnMatchChainOfResponsibility",
+                    PropertyName = "CompositeHandlingStatusMatchStrategy",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
+                new ConstructorPropertyAssignmentTestScenario<EventToPutWithIdOnMatch<Version>>
                 {
-                    Name = "WaitTimeBeforeRetry should return same 'waitTimeBeforeRetry' parameter passed to constructor when getting",
+                    Name = "EventToPut should return same 'eventToPut' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                        var referenceObject = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<WriteRecordOnHandlingCompletedOp<Version>>
+                        var result = new SystemUnderTestExpectedPropertyValue<EventToPutWithIdOnMatch<Version>>
                         {
-                            SystemUnderTest = new WriteRecordOnHandlingCompletedOp<Version>(
-                                                      referenceObject.CheckRecordHandlingOps,
-                                                      referenceObject.EventToPutOnMatchChainOfResponsibility,
-                                                      referenceObject.WaitTimeBeforeRetry),
-                            ExpectedPropertyValue = referenceObject.WaitTimeBeforeRetry,
+                            SystemUnderTest = new EventToPutWithIdOnMatch<Version>(
+                                                      referenceObject.StatusToMatch,
+                                                      referenceObject.CompositeHandlingStatusMatchStrategy,
+                                                      referenceObject.EventToPut,
+                                                      referenceObject.MatchTerminatesChain,
+                                                      referenceObject.MatchTerminatesExecution),
+                            ExpectedPropertyValue = referenceObject.EventToPut,
                         };
 
                         return result;
                     },
-                    PropertyName = "WaitTimeBeforeRetry",
+                    PropertyName = "EventToPut",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<EventToPutWithIdOnMatch<Version>>
+                {
+                    Name = "MatchTerminatesChain should return same 'matchTerminatesChain' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<EventToPutWithIdOnMatch<Version>>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<EventToPutWithIdOnMatch<Version>>
+                        {
+                            SystemUnderTest = new EventToPutWithIdOnMatch<Version>(
+                                                      referenceObject.StatusToMatch,
+                                                      referenceObject.CompositeHandlingStatusMatchStrategy,
+                                                      referenceObject.EventToPut,
+                                                      referenceObject.MatchTerminatesChain,
+                                                      referenceObject.MatchTerminatesExecution),
+                            ExpectedPropertyValue = referenceObject.MatchTerminatesChain,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "MatchTerminatesChain",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<EventToPutWithIdOnMatch<Version>>
+                {
+                    Name = "MatchTerminatesExecution should return same 'matchTerminatesExecution' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<EventToPutWithIdOnMatch<Version>>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<EventToPutWithIdOnMatch<Version>>
+                        {
+                            SystemUnderTest = new EventToPutWithIdOnMatch<Version>(
+                                                      referenceObject.StatusToMatch,
+                                                      referenceObject.CompositeHandlingStatusMatchStrategy,
+                                                      referenceObject.EventToPut,
+                                                      referenceObject.MatchTerminatesChain,
+                                                      referenceObject.MatchTerminatesExecution),
+                            ExpectedPropertyValue = referenceObject.MatchTerminatesExecution,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "MatchTerminatesExecution",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<WriteRecordOnHandlingCompletedOp<Version>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<WriteRecordOnHandlingCompletedOp<Version>>()
+        private static readonly DeepCloneWithTestScenarios<EventToPutWithIdOnMatch<Version>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<EventToPutWithIdOnMatch<Version>>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
+                new DeepCloneWithTestScenario<EventToPutWithIdOnMatch<Version>>
                 {
-                    Name = "DeepCloneWithCheckRecordHandlingOps should deep clone object and replace CheckRecordHandlingOps with the provided checkRecordHandlingOps",
-                    WithPropertyName = "CheckRecordHandlingOps",
+                    Name = "DeepCloneWithStatusToMatch should deep clone object and replace StatusToMatch with the provided statusToMatch",
+                    WithPropertyName = "StatusToMatch",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                        var systemUnderTest = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
-                        var referenceObject = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>().ThatIs(_ => !systemUnderTest.CheckRecordHandlingOps.IsEqualTo(_.CheckRecordHandlingOps));
+                        var referenceObject = A.Dummy<EventToPutWithIdOnMatch<Version>>().ThatIs(_ => !systemUnderTest.StatusToMatch.IsEqualTo(_.StatusToMatch));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<WriteRecordOnHandlingCompletedOp<Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<EventToPutWithIdOnMatch<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.CheckRecordHandlingOps,
+                            DeepCloneWithValue = referenceObject.StatusToMatch,
                         };
 
                         return result;
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
+                new DeepCloneWithTestScenario<EventToPutWithIdOnMatch<Version>>
                 {
-                    Name = "DeepCloneWithEventToPutOnMatchChainOfResponsibility should deep clone object and replace EventToPutOnMatchChainOfResponsibility with the provided eventToPutOnMatchChainOfResponsibility",
-                    WithPropertyName = "EventToPutOnMatchChainOfResponsibility",
+                    Name = "DeepCloneWithCompositeHandlingStatusMatchStrategy should deep clone object and replace CompositeHandlingStatusMatchStrategy with the provided compositeHandlingStatusMatchStrategy",
+                    WithPropertyName = "CompositeHandlingStatusMatchStrategy",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                        var systemUnderTest = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
-                        var referenceObject = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>().ThatIs(_ => !systemUnderTest.EventToPutOnMatchChainOfResponsibility.IsEqualTo(_.EventToPutOnMatchChainOfResponsibility));
+                        var referenceObject = A.Dummy<EventToPutWithIdOnMatch<Version>>().ThatIs(_ => !systemUnderTest.CompositeHandlingStatusMatchStrategy.IsEqualTo(_.CompositeHandlingStatusMatchStrategy));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<WriteRecordOnHandlingCompletedOp<Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<EventToPutWithIdOnMatch<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.EventToPutOnMatchChainOfResponsibility,
+                            DeepCloneWithValue = referenceObject.CompositeHandlingStatusMatchStrategy,
                         };
 
                         return result;
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
+                new DeepCloneWithTestScenario<EventToPutWithIdOnMatch<Version>>
                 {
-                    Name = "DeepCloneWithWaitTimeBeforeRetry should deep clone object and replace WaitTimeBeforeRetry with the provided waitTimeBeforeRetry",
-                    WithPropertyName = "WaitTimeBeforeRetry",
+                    Name = "DeepCloneWithEventToPut should deep clone object and replace EventToPut with the provided eventToPut",
+                    WithPropertyName = "EventToPut",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                        var systemUnderTest = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
-                        var referenceObject = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>().ThatIs(_ => !systemUnderTest.WaitTimeBeforeRetry.IsEqualTo(_.WaitTimeBeforeRetry));
+                        var referenceObject = A.Dummy<EventToPutWithIdOnMatch<Version>>().ThatIs(_ => !systemUnderTest.EventToPut.IsEqualTo(_.EventToPut));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<WriteRecordOnHandlingCompletedOp<Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<EventToPutWithIdOnMatch<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.WaitTimeBeforeRetry,
+                            DeepCloneWithValue = referenceObject.EventToPut,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<EventToPutWithIdOnMatch<Version>>
+                {
+                    Name = "DeepCloneWithMatchTerminatesChain should deep clone object and replace MatchTerminatesChain with the provided matchTerminatesChain",
+                    WithPropertyName = "MatchTerminatesChain",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<EventToPutWithIdOnMatch<Version>>();
+
+                        var referenceObject = A.Dummy<EventToPutWithIdOnMatch<Version>>().ThatIs(_ => !systemUnderTest.MatchTerminatesChain.IsEqualTo(_.MatchTerminatesChain));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<EventToPutWithIdOnMatch<Version>>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.MatchTerminatesChain,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<EventToPutWithIdOnMatch<Version>>
+                {
+                    Name = "DeepCloneWithMatchTerminatesExecution should deep clone object and replace MatchTerminatesExecution with the provided matchTerminatesExecution",
+                    WithPropertyName = "MatchTerminatesExecution",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<EventToPutWithIdOnMatch<Version>>();
+
+                        var referenceObject = A.Dummy<EventToPutWithIdOnMatch<Version>>().ThatIs(_ => !systemUnderTest.MatchTerminatesExecution.IsEqualTo(_.MatchTerminatesExecution));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<EventToPutWithIdOnMatch<Version>>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.MatchTerminatesExecution,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly WriteRecordOnHandlingCompletedOp<Version> ReferenceObjectForEquatableTestScenarios = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+        private static readonly EventToPutWithIdOnMatch<Version> ReferenceObjectForEquatableTestScenarios = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
-        private static readonly EquatableTestScenarios<WriteRecordOnHandlingCompletedOp<Version>> EquatableTestScenarios = new EquatableTestScenarios<WriteRecordOnHandlingCompletedOp<Version>>()
+        private static readonly EquatableTestScenarios<EventToPutWithIdOnMatch<Version>> EquatableTestScenarios = new EquatableTestScenarios<EventToPutWithIdOnMatch<Version>>()
             .AddScenario(() =>
-                new EquatableTestScenario<WriteRecordOnHandlingCompletedOp<Version>>
+                new EquatableTestScenario<EventToPutWithIdOnMatch<Version>>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new WriteRecordOnHandlingCompletedOp<Version>[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new EventToPutWithIdOnMatch<Version>[]
                     {
-                        new WriteRecordOnHandlingCompletedOp<Version>(
-                                ReferenceObjectForEquatableTestScenarios.CheckRecordHandlingOps,
-                                ReferenceObjectForEquatableTestScenarios.EventToPutOnMatchChainOfResponsibility,
-                                ReferenceObjectForEquatableTestScenarios.WaitTimeBeforeRetry),
+                        new EventToPutWithIdOnMatch<Version>(
+                                ReferenceObjectForEquatableTestScenarios.StatusToMatch,
+                                ReferenceObjectForEquatableTestScenarios.CompositeHandlingStatusMatchStrategy,
+                                ReferenceObjectForEquatableTestScenarios.EventToPut,
+                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
+                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new WriteRecordOnHandlingCompletedOp<Version>[]
+                    ObjectsThatAreNotEqualToReferenceObject = new EventToPutWithIdOnMatch<Version>[]
                     {
-                        new WriteRecordOnHandlingCompletedOp<Version>(
-                                A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>().Whose(_ => !_.CheckRecordHandlingOps.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CheckRecordHandlingOps)).CheckRecordHandlingOps,
-                                ReferenceObjectForEquatableTestScenarios.EventToPutOnMatchChainOfResponsibility,
-                                ReferenceObjectForEquatableTestScenarios.WaitTimeBeforeRetry),
-                        new WriteRecordOnHandlingCompletedOp<Version>(
-                                ReferenceObjectForEquatableTestScenarios.CheckRecordHandlingOps,
-                                A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>().Whose(_ => !_.EventToPutOnMatchChainOfResponsibility.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EventToPutOnMatchChainOfResponsibility)).EventToPutOnMatchChainOfResponsibility,
-                                ReferenceObjectForEquatableTestScenarios.WaitTimeBeforeRetry),
-                        new WriteRecordOnHandlingCompletedOp<Version>(
-                                ReferenceObjectForEquatableTestScenarios.CheckRecordHandlingOps,
-                                ReferenceObjectForEquatableTestScenarios.EventToPutOnMatchChainOfResponsibility,
-                                A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>().Whose(_ => !_.WaitTimeBeforeRetry.IsEqualTo(ReferenceObjectForEquatableTestScenarios.WaitTimeBeforeRetry)).WaitTimeBeforeRetry),
+                        new EventToPutWithIdOnMatch<Version>(
+                                A.Dummy<EventToPutWithIdOnMatch<Version>>().Whose(_ => !_.StatusToMatch.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StatusToMatch)).StatusToMatch,
+                                ReferenceObjectForEquatableTestScenarios.CompositeHandlingStatusMatchStrategy,
+                                ReferenceObjectForEquatableTestScenarios.EventToPut,
+                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
+                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
+                        new EventToPutWithIdOnMatch<Version>(
+                                ReferenceObjectForEquatableTestScenarios.StatusToMatch,
+                                A.Dummy<EventToPutWithIdOnMatch<Version>>().Whose(_ => !_.CompositeHandlingStatusMatchStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CompositeHandlingStatusMatchStrategy)).CompositeHandlingStatusMatchStrategy,
+                                ReferenceObjectForEquatableTestScenarios.EventToPut,
+                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
+                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
+                        new EventToPutWithIdOnMatch<Version>(
+                                ReferenceObjectForEquatableTestScenarios.StatusToMatch,
+                                ReferenceObjectForEquatableTestScenarios.CompositeHandlingStatusMatchStrategy,
+                                A.Dummy<EventToPutWithIdOnMatch<Version>>().Whose(_ => !_.EventToPut.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EventToPut)).EventToPut,
+                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
+                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
+                        new EventToPutWithIdOnMatch<Version>(
+                                ReferenceObjectForEquatableTestScenarios.StatusToMatch,
+                                ReferenceObjectForEquatableTestScenarios.CompositeHandlingStatusMatchStrategy,
+                                ReferenceObjectForEquatableTestScenarios.EventToPut,
+                                A.Dummy<EventToPutWithIdOnMatch<Version>>().Whose(_ => !_.MatchTerminatesChain.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain)).MatchTerminatesChain,
+                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
+                        new EventToPutWithIdOnMatch<Version>(
+                                ReferenceObjectForEquatableTestScenarios.StatusToMatch,
+                                ReferenceObjectForEquatableTestScenarios.CompositeHandlingStatusMatchStrategy,
+                                ReferenceObjectForEquatableTestScenarios.EventToPut,
+                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
+                                A.Dummy<EventToPutWithIdOnMatch<Version>>().Whose(_ => !_.MatchTerminatesExecution.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution)).MatchTerminatesExecution),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -328,9 +354,6 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<CheckRecordHandlingOp>(),
-                        A.Dummy<EvaluateRegisteredReactionOp>(),
-                        A.Dummy<RunReactorOp>(),
                     },
                 });
 
@@ -352,12 +375,12 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void WriteRecordOnHandlingCompletedOp_of_Version___Should_implement_IModel_of_WriteRecordOnHandlingCompletedOp_of_Version___When_reflecting()
+            public static void EventToPutWithIdOnMatch_of_Version___Should_implement_IModel_of_EventToPutWithIdOnMatch_of_Version___When_reflecting()
             {
                 // Arrange
-                var type = typeof(WriteRecordOnHandlingCompletedOp<Version>);
+                var type = typeof(EventToPutWithIdOnMatch<Version>);
 
-                var expectedModelMethods = typeof(IModel<WriteRecordOnHandlingCompletedOp<Version>>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<EventToPutWithIdOnMatch<Version>>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -367,7 +390,7 @@ namespace Naos.Reactor.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<WriteRecordOnHandlingCompletedOp<Version>>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<EventToPutWithIdOnMatch<Version>>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -385,10 +408,10 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void WriteRecordOnHandlingCompletedOp_of_Version___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void EventToPutWithIdOnMatch_of_Version___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(WriteRecordOnHandlingCompletedOp<Version>);
+                var type = typeof(EventToPutWithIdOnMatch<Version>);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -568,10 +591,10 @@ namespace Naos.Reactor.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                var systemUnderTest = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
                 // Act
-                var actual = (WriteRecordOnHandlingCompletedOp<Version>)systemUnderTest.Clone();
+                var actual = (EventToPutWithIdOnMatch<Version>)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -595,7 +618,7 @@ namespace Naos.Reactor.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                var systemUnderTest = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -604,28 +627,16 @@ namespace Naos.Reactor.Domain.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.CheckRecordHandlingOps == null)
+                if (systemUnderTest.EventToPut == null)
                 {
-                    actual.CheckRecordHandlingOps.AsTest().Must().BeNull();
+                    actual.EventToPut.AsTest().Must().BeNull();
                 }
-                else if (!actual.CheckRecordHandlingOps.GetType().IsValueType)
+                else if (!actual.EventToPut.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.CheckRecordHandlingOps.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CheckRecordHandlingOps);
-                }
-
-                if (systemUnderTest.EventToPutOnMatchChainOfResponsibility == null)
-                {
-                    actual.EventToPutOnMatchChainOfResponsibility.AsTest().Must().BeNull();
-                }
-                else if (!actual.EventToPutOnMatchChainOfResponsibility.GetType().IsValueType)
-                {
-                    // When the declared type is a reference type, we still have to check the runtime type.
-                    // The object could be a boxed value type, which will fail this asseration because
-                    // a deep clone of a value type object is the same object.
-                    actual.EventToPutOnMatchChainOfResponsibility.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.EventToPutOnMatchChainOfResponsibility);
+                    actual.EventToPut.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.EventToPut);
                 }
             }
 
@@ -645,7 +656,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "CheckRecordHandlingOps", "EventToPutOnMatchChainOfResponsibility", "WaitTimeBeforeRetry" };
+                var propertyNames = new string[] { "StatusToMatch", "CompositeHandlingStatusMatchStrategy", "EventToPut", "MatchTerminatesChain", "MatchTerminatesExecution" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -658,12 +669,12 @@ namespace Naos.Reactor.Domain.Test
                     }
 
                     // Act
-                    var actual = (WriteRecordOnHandlingCompletedOp<Version>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (EventToPutWithIdOnMatch<Version>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(WriteRecordOnHandlingCompletedOp<Version>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(EventToPutWithIdOnMatch<Version>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -725,7 +736,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                var expected = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -754,7 +765,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                var expected = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -783,7 +794,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                var expected = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -812,7 +823,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>();
+                var expected = A.Dummy<EventToPutWithIdOnMatch<Version>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -846,8 +857,8 @@ namespace Naos.Reactor.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                WriteRecordOnHandlingCompletedOp<Version> systemUnderTest1 = null;
-                WriteRecordOnHandlingCompletedOp<Version> systemUnderTest2 = null;
+                EventToPutWithIdOnMatch<Version> systemUnderTest1 = null;
+                EventToPutWithIdOnMatch<Version> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -877,7 +888,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    WriteRecordOnHandlingCompletedOp<Version> systemUnderTest = null;
+                    EventToPutWithIdOnMatch<Version> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -1026,8 +1037,8 @@ namespace Naos.Reactor.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                WriteRecordOnHandlingCompletedOp<Version> systemUnderTest1 = null;
-                WriteRecordOnHandlingCompletedOp<Version> systemUnderTest2 = null;
+                EventToPutWithIdOnMatch<Version> systemUnderTest1 = null;
+                EventToPutWithIdOnMatch<Version> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -1057,7 +1068,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    WriteRecordOnHandlingCompletedOp<Version> systemUnderTest = null;
+                    EventToPutWithIdOnMatch<Version> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1203,300 +1214,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_OperationBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_EventToPutWithIdOnMatch_of_Version___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    OperationBase systemUnderTest = null;
-
-                    // Act
-                    var actual = scenario.ReferenceObject.Equals((OperationBase)systemUnderTest);
-
-                    // Assert
-                    actual.AsTest().Must().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_OperationBase___Should_return_true___When_parameter_other_is_same_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((OperationBase)scenario.ReferenceObject);
-
-                    // Assert
-                    actual.AsTest().Must().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_OperationBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((OperationBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_OperationBase___Should_return_false___When_objects_being_compared_have_different_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((OperationBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_OperationBase___Should_return_true___When_objects_being_compared_have_same_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((OperationBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_VoidOperationBase___Should_return_false___When_parameter_other_is_null()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange
-                    VoidOperationBase systemUnderTest = null;
-
-                    // Act
-                    var actual = scenario.ReferenceObject.Equals((VoidOperationBase)systemUnderTest);
-
-                    // Assert
-                    actual.AsTest().Must().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_VoidOperationBase___Should_return_true___When_parameter_other_is_same_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((VoidOperationBase)scenario.ReferenceObject);
-
-                    // Assert
-                    actual.AsTest().Must().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_VoidOperationBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((VoidOperationBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_VoidOperationBase___Should_return_false___When_objects_being_compared_have_different_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((VoidOperationBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_VoidOperationBase___Should_return_true___When_objects_being_compared_have_same_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((VoidOperationBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_WriteRecordOnHandlingCompletedOp_of_Version___Should_return_false___When_parameter_other_is_null()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange
-                    WriteRecordOnHandlingCompletedOp<Version> systemUnderTest = null;
+                    EventToPutWithIdOnMatch<Version> systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1520,7 +1245,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_WriteRecordOnHandlingCompletedOp_of_Version___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_EventToPutWithIdOnMatch_of_Version___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1548,7 +1273,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_WriteRecordOnHandlingCompletedOp_of_Version___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_EventToPutWithIdOnMatch_of_Version___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1576,7 +1301,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_WriteRecordOnHandlingCompletedOp_of_Version___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_EventToPutWithIdOnMatch_of_Version___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1604,7 +1329,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_WriteRecordOnHandlingCompletedOp_of_Version___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_EventToPutWithIdOnMatch_of_Version___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

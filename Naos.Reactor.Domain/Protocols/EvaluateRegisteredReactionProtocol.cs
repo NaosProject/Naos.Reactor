@@ -15,6 +15,8 @@ namespace Naos.Reactor.Domain
     using OBeautifulCode.String.Recipes;
     using OBeautifulCode.Type;
 
+    using static System.FormattableString;
+    
     /// <summary>
     /// Process all new reactions.
     /// </summary>
@@ -39,7 +41,6 @@ namespace Naos.Reactor.Domain
         public override ReactionEvent Execute(
             EvaluateRegisteredReactionOp operation)
         {
-            var id = DateTime.UtcNow.ToStringInvariantPreferred();
             var records = new Dictionary<IStreamRepresentation, IReadOnlyList<long>>();
 
             foreach (var dependency in operation.RegisteredReaction.Dependencies)
@@ -68,10 +69,10 @@ namespace Naos.Reactor.Domain
                 }
             }
 
-
+            var reactionId = Invariant($"{operation.RegisteredReaction.Id}___{DateTime.UtcNow.ToStringInvariantPreferred()}");
             var result = records.Any()
                 ? new ReactionEvent(
-                    id,
+                    reactionId,
                     operation.RegisteredReaction.Id,
                     records,
                     DateTime.UtcNow,
