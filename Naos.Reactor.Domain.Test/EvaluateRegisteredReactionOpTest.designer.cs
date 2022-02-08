@@ -140,7 +140,7 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<Guid>(),
                         A.Dummy<CheckRecordHandlingOp>(),
                         A.Dummy<RunReactorOp>(),
-                        A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>(),
+                        A.Dummy<WriteRecordOnMatchingHandlingStatusOp<Version>>(),
                     },
                 });
 

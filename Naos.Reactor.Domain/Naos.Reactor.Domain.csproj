@@ -128,18 +128,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="Events\ReactionCompletedEvent.cs" />
-    <Compile Include="Events\ReactionCompletedEvent.designer.cs">
-      <DependentUpon>ReactionCompletedEvent.cs</DependentUpon>
-    </Compile>
     <Compile Include="Events\ReactionEvent.designer.cs">
       <DependentUpon>ReactionEvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\ReactionFailedEvent.cs" />
     <Compile Include="Events\ReactionEvent.cs" />
-    <Compile Include="Events\ReactionFailedEvent.designer.cs">
-      <DependentUpon>ReactionFailedEvent.cs</DependentUpon>
-    </Compile>
     <Compile Include="Logic\CompositeHandlingStatusMatchStrategyExtensions.cs" />
     <Compile Include="Model\CheckRecordHandlingResult.cs" />
     <Compile Include="Model\CheckRecordHandlingResult.designer.cs">
@@ -174,10 +166,10 @@
     <Compile Include="Operations\RunReactorOp.designer.cs">
       <DependentUpon>RunReactorOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\WriteRecordOnHandlingCompletedOp{TId}.cs" />
+    <Compile Include="Operations\WriteRecordOnMatchingHandlingStatusOp{TId}.cs" />
     <Compile Include="Operations\RunReactorOp.cs" />
-    <Compile Include="Operations\WriteRecordOnHandlingCompletedOp{TId}.designer.cs">
-      <DependentUpon>WriteRecordOnHandlingCompletedOp{TId}.cs</DependentUpon>
+    <Compile Include="Operations\WriteRecordOnMatchingHandlingStatusOp{TId}.designer.cs">
+      <DependentUpon>WriteRecordOnMatchingHandlingStatusOp{TId}.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />

@@ -540,8 +540,6 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<ReactionCompletedEvent>(),
-                        A.Dummy<ReactionFailedEvent>(),
                     },
                 });
 

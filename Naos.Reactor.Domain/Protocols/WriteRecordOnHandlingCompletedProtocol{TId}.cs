@@ -23,7 +23,7 @@ namespace Naos.Reactor.Domain
     /// Check on sagas, write records under certain handling scenarios of groups of records.
     /// </summary>
     /// <typeparam name="TId">Type of the identifier.</typeparam>
-    public partial class WriteRecordOnHandlingCompletedProtocol<TId> : SyncSpecificVoidProtocolBase<WriteRecordOnHandlingCompletedOp<TId>>
+    public partial class WriteRecordOnHandlingCompletedProtocol<TId> : SyncSpecificVoidProtocolBase<WriteRecordOnMatchingHandlingStatusOp<TId>>
     {
         private readonly ISyncAndAsyncReturningProtocol<CheckRecordHandlingOp, CheckRecordHandlingResult> checkSingleRecordHandlingProtocol;
         private readonly ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory;
@@ -44,7 +44,7 @@ namespace Naos.Reactor.Domain
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = NaosSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
         public override void Execute(
-            WriteRecordOnHandlingCompletedOp<TId> operation)
+            WriteRecordOnMatchingHandlingStatusOp<TId> operation)
         {
             operation.MustForArg(nameof(operation)).NotBeNull();
 

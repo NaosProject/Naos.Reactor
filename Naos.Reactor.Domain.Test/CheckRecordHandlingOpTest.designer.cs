@@ -296,7 +296,7 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<Guid>(),
                         A.Dummy<EvaluateRegisteredReactionOp>(),
                         A.Dummy<RunReactorOp>(),
-                        A.Dummy<WriteRecordOnHandlingCompletedOp<Version>>(),
+                        A.Dummy<WriteRecordOnMatchingHandlingStatusOp<Version>>(),
                     },
                 });
 

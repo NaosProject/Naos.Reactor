@@ -70,22 +70,10 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<bool>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ReactionCompletedEvent(
-                                 A.Dummy<string>(),
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ReactionEvent(
                                  A.Dummy<string>(),
                                  A.Dummy<string>(),
                                  A.Dummy<IReadOnlyDictionary<IStreamRepresentation, IReadOnlyList<long>>>(),
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ReactionFailedEvent(
-                                 A.Dummy<string>(),
                                  A.Dummy<DateTime>(),
                                  A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
 
@@ -106,7 +94,7 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<StandardTryHandleRecordOp>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new WriteRecordOnHandlingCompletedOp<Version>(
+                () => new WriteRecordOnMatchingHandlingStatusOp<Version>(
                                  A.Dummy<IReadOnlyCollection<CheckRecordHandlingOp>>(),
                                  A.Dummy<IReadOnlyList<EventToPutWithIdOnMatch<Version>>>(),
                                  A.Dummy<TimeSpan>()));

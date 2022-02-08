@@ -292,17 +292,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
-    <Compile Include="ReactionCompletedEventTest.cs" />
-    <Compile Include="ReactionCompletedEventTest.designer.cs">
-      <DependentUpon>ReactionCompletedEventTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="ReactionEventTest.cs" />
     <Compile Include="ReactionEventTest.designer.cs">
       <DependentUpon>ReactionEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ReactionFailedEventTest.cs" />
-    <Compile Include="ReactionFailedEventTest.designer.cs">
-      <DependentUpon>ReactionFailedEventTest.cs</DependentUpon>
     </Compile>
     <Compile Include="ReactorDummyFactoryTest.designer.cs">
       <DependentUpon>ReactorDummyFactoryTest.cs</DependentUpon>
@@ -327,9 +319,9 @@
     <Compile Include="StringIdentifiedReactorDependencyTest.designer.cs">
       <DependentUpon>StringIdentifiedReactorDependencyTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="WriteRecordOnHandlingCompletedOp{TId}Test.cs" />
-    <Compile Include="WriteRecordOnHandlingCompletedOp{TId}Test.designer.cs">
-      <DependentUpon>WriteRecordOnHandlingCompletedOp{TId}Test.cs</DependentUpon>
+    <Compile Include="WriteRecordOnMatchingHandlingStatusOp{TId}Test.cs" />
+    <Compile Include="WriteRecordOnMatchingHandlingStatusOp{TId}Test.designer.cs">
+      <DependentUpon>WriteRecordOnMatchingHandlingStatusOp{TId}Test.cs</DependentUpon>
     </Compile>
     <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />
