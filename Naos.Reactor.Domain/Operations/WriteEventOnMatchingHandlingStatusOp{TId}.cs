@@ -15,15 +15,15 @@ namespace Naos.Reactor.Domain
     /// Saga in effect, an operation to check on handling status of record(s) and write event(s) based on matching criteria.
     /// </summary>
     /// <typeparam name="TId">The type of the identifier.</typeparam>
-    public partial class WriteRecordOnMatchingHandlingStatusOp<TId> : VoidOperationBase
+    public partial class WriteEventOnMatchingHandlingStatusOp<TId> : VoidOperationBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WriteRecordOnMatchingHandlingStatusOp{TId}"/> class.
+        /// Initializes a new instance of the <see cref="WriteEventOnMatchingHandlingStatusOp{TId}"/> class.
         /// </summary>
         /// <param name="checkRecordHandlingOps">The <see cref="CheckRecordHandlingOp"/>'s to execute.</param>
         /// <param name="eventToPutOnMatchChainOfResponsibility">The list of <see cref="EventToPutWithIdOnMatch{TId}"/> links to check for a match and write event as appropriate.</param>
         /// <param name="waitTimeBeforeRetry">The wait time before retry checking statuses.</param>
-        public WriteRecordOnMatchingHandlingStatusOp(
+        public WriteEventOnMatchingHandlingStatusOp(
             IReadOnlyCollection<CheckRecordHandlingOp> checkRecordHandlingOps,
             IReadOnlyList<EventToPutWithIdOnMatch<TId>> eventToPutOnMatchChainOfResponsibility,
             TimeSpan waitTimeBeforeRetry)

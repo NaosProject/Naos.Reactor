@@ -23,15 +23,15 @@ namespace Naos.Reactor.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class WriteRecordOnMatchingHandlingStatusOp<TId> : IModel<WriteRecordOnMatchingHandlingStatusOp<TId>>
+    public partial class WriteEventOnMatchingHandlingStatusOp<TId> : IModel<WriteEventOnMatchingHandlingStatusOp<TId>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="WriteRecordOnMatchingHandlingStatusOp{TId}"/> are equal.
+        /// Determines whether two objects of type <see cref="WriteEventOnMatchingHandlingStatusOp{TId}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(WriteRecordOnMatchingHandlingStatusOp<TId> left, WriteRecordOnMatchingHandlingStatusOp<TId> right)
+        public static bool operator ==(WriteEventOnMatchingHandlingStatusOp<TId> left, WriteEventOnMatchingHandlingStatusOp<TId> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="WriteRecordOnMatchingHandlingStatusOp{TId}"/> are not equal.
+        /// Determines whether two objects of type <see cref="WriteEventOnMatchingHandlingStatusOp{TId}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(WriteRecordOnMatchingHandlingStatusOp<TId> left, WriteRecordOnMatchingHandlingStatusOp<TId> right) => !(left == right);
+        public static bool operator !=(WriteEventOnMatchingHandlingStatusOp<TId> left, WriteEventOnMatchingHandlingStatusOp<TId> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(WriteRecordOnMatchingHandlingStatusOp<TId> other)
+        public bool Equals(WriteEventOnMatchingHandlingStatusOp<TId> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -77,7 +77,7 @@ namespace Naos.Reactor.Domain
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as WriteRecordOnMatchingHandlingStatusOp<TId>);
+        public override bool Equals(object obj) => this == (obj as WriteEventOnMatchingHandlingStatusOp<TId>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
@@ -87,13 +87,13 @@ namespace Naos.Reactor.Domain
             .Value;
 
         /// <inheritdoc />
-        public new WriteRecordOnMatchingHandlingStatusOp<TId> DeepClone() => (WriteRecordOnMatchingHandlingStatusOp<TId>)this.DeepCloneInternal();
+        public new WriteEventOnMatchingHandlingStatusOp<TId> DeepClone() => (WriteEventOnMatchingHandlingStatusOp<TId>)this.DeepCloneInternal();
 
         /// <summary>
         /// Deep clones this object with a new <see cref="CheckRecordHandlingOps" />.
         /// </summary>
         /// <param name="checkRecordHandlingOps">The new <see cref="CheckRecordHandlingOps" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="WriteRecordOnMatchingHandlingStatusOp{TId}" /> using the specified <paramref name="checkRecordHandlingOps" /> for <see cref="CheckRecordHandlingOps" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="WriteEventOnMatchingHandlingStatusOp{TId}" /> using the specified <paramref name="checkRecordHandlingOps" /> for <see cref="CheckRecordHandlingOps" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -111,9 +111,9 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public WriteRecordOnMatchingHandlingStatusOp<TId> DeepCloneWithCheckRecordHandlingOps(IReadOnlyCollection<CheckRecordHandlingOp> checkRecordHandlingOps)
+        public WriteEventOnMatchingHandlingStatusOp<TId> DeepCloneWithCheckRecordHandlingOps(IReadOnlyCollection<CheckRecordHandlingOp> checkRecordHandlingOps)
         {
-            var result = new WriteRecordOnMatchingHandlingStatusOp<TId>(
+            var result = new WriteEventOnMatchingHandlingStatusOp<TId>(
                                  checkRecordHandlingOps,
                                  this.EventToPutOnMatchChainOfResponsibility?.DeepClone(),
                                  this.WaitTimeBeforeRetry.DeepClone());
@@ -125,7 +125,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="EventToPutOnMatchChainOfResponsibility" />.
         /// </summary>
         /// <param name="eventToPutOnMatchChainOfResponsibility">The new <see cref="EventToPutOnMatchChainOfResponsibility" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="WriteRecordOnMatchingHandlingStatusOp{TId}" /> using the specified <paramref name="eventToPutOnMatchChainOfResponsibility" /> for <see cref="EventToPutOnMatchChainOfResponsibility" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="WriteEventOnMatchingHandlingStatusOp{TId}" /> using the specified <paramref name="eventToPutOnMatchChainOfResponsibility" /> for <see cref="EventToPutOnMatchChainOfResponsibility" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -143,9 +143,9 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public WriteRecordOnMatchingHandlingStatusOp<TId> DeepCloneWithEventToPutOnMatchChainOfResponsibility(IReadOnlyList<EventToPutWithIdOnMatch<TId>> eventToPutOnMatchChainOfResponsibility)
+        public WriteEventOnMatchingHandlingStatusOp<TId> DeepCloneWithEventToPutOnMatchChainOfResponsibility(IReadOnlyList<EventToPutWithIdOnMatch<TId>> eventToPutOnMatchChainOfResponsibility)
         {
-            var result = new WriteRecordOnMatchingHandlingStatusOp<TId>(
+            var result = new WriteEventOnMatchingHandlingStatusOp<TId>(
                                  this.CheckRecordHandlingOps?.DeepClone(),
                                  eventToPutOnMatchChainOfResponsibility,
                                  this.WaitTimeBeforeRetry.DeepClone());
@@ -157,7 +157,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="WaitTimeBeforeRetry" />.
         /// </summary>
         /// <param name="waitTimeBeforeRetry">The new <see cref="WaitTimeBeforeRetry" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="WriteRecordOnMatchingHandlingStatusOp{TId}" /> using the specified <paramref name="waitTimeBeforeRetry" /> for <see cref="WaitTimeBeforeRetry" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="WriteEventOnMatchingHandlingStatusOp{TId}" /> using the specified <paramref name="waitTimeBeforeRetry" /> for <see cref="WaitTimeBeforeRetry" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -175,9 +175,9 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public WriteRecordOnMatchingHandlingStatusOp<TId> DeepCloneWithWaitTimeBeforeRetry(TimeSpan waitTimeBeforeRetry)
+        public WriteEventOnMatchingHandlingStatusOp<TId> DeepCloneWithWaitTimeBeforeRetry(TimeSpan waitTimeBeforeRetry)
         {
-            var result = new WriteRecordOnMatchingHandlingStatusOp<TId>(
+            var result = new WriteEventOnMatchingHandlingStatusOp<TId>(
                                  this.CheckRecordHandlingOps?.DeepClone(),
                                  this.EventToPutOnMatchChainOfResponsibility?.DeepClone(),
                                  waitTimeBeforeRetry);
@@ -189,7 +189,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override OperationBase DeepCloneInternal()
         {
-            var result = new WriteRecordOnMatchingHandlingStatusOp<TId>(
+            var result = new WriteEventOnMatchingHandlingStatusOp<TId>(
                                  this.CheckRecordHandlingOps?.DeepClone(),
                                  this.EventToPutOnMatchChainOfResponsibility?.DeepClone(),
                                  this.WaitTimeBeforeRetry.DeepClone());

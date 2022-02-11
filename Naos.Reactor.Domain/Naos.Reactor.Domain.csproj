@@ -166,10 +166,10 @@
     <Compile Include="Operations\RunReactorOp.designer.cs">
       <DependentUpon>RunReactorOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\WriteRecordOnMatchingHandlingStatusOp{TId}.cs" />
+    <Compile Include="Operations\WriteEventOnMatchingHandlingStatusOp{TId}.cs" />
     <Compile Include="Operations\RunReactorOp.cs" />
-    <Compile Include="Operations\WriteRecordOnMatchingHandlingStatusOp{TId}.designer.cs">
-      <DependentUpon>WriteRecordOnMatchingHandlingStatusOp{TId}.cs</DependentUpon>
+    <Compile Include="Operations\WriteEventOnMatchingHandlingStatusOp{TId}.designer.cs">
+      <DependentUpon>WriteEventOnMatchingHandlingStatusOp{TId}.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
@@ -177,7 +177,7 @@
     <Compile Include="Protocols\HandleAndReQueueExecuteOpRequestedProtocol{TOperation}.cs" />
     <Compile Include="Protocols\RunReactorProtocol.cs" />
     <Compile Include="Protocols\CheckRecordHandlingProtocol.cs" />
-    <Compile Include="Protocols\WriteRecordOnHandlingCompletedProtocol{TId}.cs" />
+    <Compile Include="Protocols\WriteEventOnMatchingHandlingStatusProtocol{TId}.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\release.ruleset" />
     <None Include="Naos.Reactor.Domain.override-nuspec" />

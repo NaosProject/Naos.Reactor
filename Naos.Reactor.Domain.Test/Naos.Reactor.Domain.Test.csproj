@@ -319,9 +319,9 @@
     <Compile Include="StringIdentifiedReactorDependencyTest.designer.cs">
       <DependentUpon>StringIdentifiedReactorDependencyTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="WriteRecordOnMatchingHandlingStatusOp{TId}Test.cs" />
-    <Compile Include="WriteRecordOnMatchingHandlingStatusOp{TId}Test.designer.cs">
-      <DependentUpon>WriteRecordOnMatchingHandlingStatusOp{TId}Test.cs</DependentUpon>
+    <Compile Include="WriteEventOnMatchingHandlingStatusOp{TId}Test.cs" />
+    <Compile Include="WriteEventOnMatchingHandlingStatusOp{TId}Test.designer.cs">
+      <DependentUpon>WriteEventOnMatchingHandlingStatusOp{TId}Test.cs</DependentUpon>
     </Compile>
     <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />

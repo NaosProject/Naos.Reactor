@@ -23,17 +23,17 @@ namespace Naos.Reactor.Domain
     /// Check on sagas, write records under certain handling scenarios of groups of records.
     /// </summary>
     /// <typeparam name="TId">Type of the identifier.</typeparam>
-    public partial class WriteRecordOnHandlingCompletedProtocol<TId> : SyncSpecificVoidProtocolBase<WriteRecordOnMatchingHandlingStatusOp<TId>>
+    public partial class WriteEventOnMatchingHandlingStatusProtocol<TId> : SyncSpecificVoidProtocolBase<WriteEventOnMatchingHandlingStatusOp<TId>>
     {
         private readonly ISyncAndAsyncReturningProtocol<CheckRecordHandlingOp, CheckRecordHandlingResult> checkSingleRecordHandlingProtocol;
         private readonly ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WriteRecordOnHandlingCompletedProtocol{TId}"/> class.
+        /// Initializes a new instance of the <see cref="WriteEventOnMatchingHandlingStatusProtocol{TId}"/> class.
         /// </summary>
         /// <param name="checkSingleRecordHandlingProtocol">The check single record handling protocol.</param>
         /// <param name="streamFactory">The protocol to get <see cref="IStream"/> from a <see cref="StreamRepresentation"/>.</param>
-        public WriteRecordOnHandlingCompletedProtocol(
+        public WriteEventOnMatchingHandlingStatusProtocol(
             ISyncAndAsyncReturningProtocol<CheckRecordHandlingOp, CheckRecordHandlingResult> checkSingleRecordHandlingProtocol,
             ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory)
         {
@@ -44,7 +44,7 @@ namespace Naos.Reactor.Domain
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = NaosSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
         public override void Execute(
-            WriteRecordOnMatchingHandlingStatusOp<TId> operation)
+            WriteEventOnMatchingHandlingStatusOp<TId> operation)
         {
             operation.MustForArg(nameof(operation)).NotBeNull();
 

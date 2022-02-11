@@ -94,7 +94,7 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<StandardTryHandleRecordOp>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new WriteRecordOnMatchingHandlingStatusOp<Version>(
+                () => new WriteEventOnMatchingHandlingStatusOp<Version>(
                                  A.Dummy<IReadOnlyCollection<CheckRecordHandlingOp>>(),
                                  A.Dummy<IReadOnlyList<EventToPutWithIdOnMatch<Version>>>(),
                                  A.Dummy<TimeSpan>()));
