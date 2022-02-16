@@ -33,293 +33,103 @@ namespace Naos.Reactor.Domain.Test
 
     using static global::System.FormattableString;
 
-    public static partial class WriteEventOnMatchingHandlingStatusOpTIdTest
+    public static partial class EvaluateRegisteredReactionOpTest
     {
-        private static readonly StringRepresentationTestScenarios<WriteEventOnMatchingHandlingStatusOp<Version>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<WriteEventOnMatchingHandlingStatusOp<Version>>()
+        private static readonly StringRepresentationTestScenarios<EvaluateRegisteredReactionOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<EvaluateRegisteredReactionOp>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
+                new StringRepresentationTestScenario<EvaluateRegisteredReactionOp>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
+                        var systemUnderTest = A.Dummy<EvaluateRegisteredReactionOp>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<WriteEventOnMatchingHandlingStatusOp<Version>>
+                        var result = new SystemUnderTestExpectedStringRepresentation<EvaluateRegisteredReactionOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.WriteEventOnMatchingHandlingStatusOp<Version>: CheckRecordHandlingOps = {systemUnderTest.CheckRecordHandlingOps?.ToString() ?? "<null>"}, EventToPutOnMatchChainOfResponsibility = {systemUnderTest.EventToPutOnMatchChainOfResponsibility?.ToString() ?? "<null>"}, WaitTimeBeforeRetry = {systemUnderTest.WaitTimeBeforeRetry.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.EvaluateRegisteredReactionOp: RegisteredReaction = {systemUnderTest.RegisteredReaction?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<WriteEventOnMatchingHandlingStatusOp<Version>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<WriteEventOnMatchingHandlingStatusOp<Version>>()
+        private static readonly ConstructorArgumentValidationTestScenarios<EvaluateRegisteredReactionOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<EvaluateRegisteredReactionOp>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
+                new ConstructorArgumentValidationTestScenario<EvaluateRegisteredReactionOp>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'checkRecordHandlingOps' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'registeredReaction' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
-
-                        var result = new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                             null,
-                                             referenceObject.EventToPutOnMatchChainOfResponsibility,
-                                             referenceObject.WaitTimeBeforeRetry);
+                        var result = new EvaluateRegisteredReactionOp(
+                                             null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "checkRecordHandlingOps", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'checkRecordHandlingOps' is an empty enumerable scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
-
-                        var result = new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                             new List<CheckRecordHandlingOp>(),
-                                             referenceObject.EventToPutOnMatchChainOfResponsibility,
-                                             referenceObject.WaitTimeBeforeRetry);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "checkRecordHandlingOps", "is an empty enumerable", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'checkRecordHandlingOps' contains a null element scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
-
-                        var result = new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                             new CheckRecordHandlingOp[0].Concat(referenceObject.CheckRecordHandlingOps).Concat(new CheckRecordHandlingOp[] { null }).Concat(referenceObject.CheckRecordHandlingOps).ToList(),
-                                             referenceObject.EventToPutOnMatchChainOfResponsibility,
-                                             referenceObject.WaitTimeBeforeRetry);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "checkRecordHandlingOps", "contains at least one null element", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'eventToPutOnMatchChainOfResponsibility' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
-
-                        var result = new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                             referenceObject.CheckRecordHandlingOps,
-                                             null,
-                                             referenceObject.WaitTimeBeforeRetry);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "eventToPutOnMatchChainOfResponsibility", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'eventToPutOnMatchChainOfResponsibility' is an empty enumerable scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
-
-                        var result = new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                             referenceObject.CheckRecordHandlingOps,
-                                             new List<EventToPutWithIdOnMatch<Version>>(),
-                                             referenceObject.WaitTimeBeforeRetry);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "eventToPutOnMatchChainOfResponsibility", "is an empty enumerable", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'eventToPutOnMatchChainOfResponsibility' contains a null element scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
-
-                        var result = new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                             referenceObject.CheckRecordHandlingOps,
-                                             new EventToPutWithIdOnMatch<Version>[0].Concat(referenceObject.EventToPutOnMatchChainOfResponsibility).Concat(new EventToPutWithIdOnMatch<Version>[] { null }).Concat(referenceObject.EventToPutOnMatchChainOfResponsibility).ToList(),
-                                             referenceObject.WaitTimeBeforeRetry);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "eventToPutOnMatchChainOfResponsibility", "contains at least one null element", },
+                    ExpectedExceptionMessageContains = new[] { "registeredReaction", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<WriteEventOnMatchingHandlingStatusOp<Version>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<WriteEventOnMatchingHandlingStatusOp<Version>>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<EvaluateRegisteredReactionOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<EvaluateRegisteredReactionOp>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
+                new ConstructorPropertyAssignmentTestScenario<EvaluateRegisteredReactionOp>
                 {
-                    Name = "CheckRecordHandlingOps should return same 'checkRecordHandlingOps' parameter passed to constructor when getting",
+                    Name = "RegisteredReaction should return same 'registeredReaction' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
+                        var referenceObject = A.Dummy<EvaluateRegisteredReactionOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<WriteEventOnMatchingHandlingStatusOp<Version>>
+                        var result = new SystemUnderTestExpectedPropertyValue<EvaluateRegisteredReactionOp>
                         {
-                            SystemUnderTest = new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                                      referenceObject.CheckRecordHandlingOps,
-                                                      referenceObject.EventToPutOnMatchChainOfResponsibility,
-                                                      referenceObject.WaitTimeBeforeRetry),
-                            ExpectedPropertyValue = referenceObject.CheckRecordHandlingOps,
+                            SystemUnderTest = new EvaluateRegisteredReactionOp(
+                                                      referenceObject.RegisteredReaction),
+                            ExpectedPropertyValue = referenceObject.RegisteredReaction,
                         };
 
                         return result;
                     },
-                    PropertyName = "CheckRecordHandlingOps",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
-                {
-                    Name = "EventToPutOnMatchChainOfResponsibility should return same 'eventToPutOnMatchChainOfResponsibility' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<WriteEventOnMatchingHandlingStatusOp<Version>>
-                        {
-                            SystemUnderTest = new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                                      referenceObject.CheckRecordHandlingOps,
-                                                      referenceObject.EventToPutOnMatchChainOfResponsibility,
-                                                      referenceObject.WaitTimeBeforeRetry),
-                            ExpectedPropertyValue = referenceObject.EventToPutOnMatchChainOfResponsibility,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "EventToPutOnMatchChainOfResponsibility",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
-                {
-                    Name = "WaitTimeBeforeRetry should return same 'waitTimeBeforeRetry' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<WriteEventOnMatchingHandlingStatusOp<Version>>
-                        {
-                            SystemUnderTest = new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                                      referenceObject.CheckRecordHandlingOps,
-                                                      referenceObject.EventToPutOnMatchChainOfResponsibility,
-                                                      referenceObject.WaitTimeBeforeRetry),
-                            ExpectedPropertyValue = referenceObject.WaitTimeBeforeRetry,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "WaitTimeBeforeRetry",
+                    PropertyName = "RegisteredReaction",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<WriteEventOnMatchingHandlingStatusOp<Version>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<WriteEventOnMatchingHandlingStatusOp<Version>>()
+        private static readonly DeepCloneWithTestScenarios<EvaluateRegisteredReactionOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<EvaluateRegisteredReactionOp>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
+                new DeepCloneWithTestScenario<EvaluateRegisteredReactionOp>
                 {
-                    Name = "DeepCloneWithCheckRecordHandlingOps should deep clone object and replace CheckRecordHandlingOps with the provided checkRecordHandlingOps",
-                    WithPropertyName = "CheckRecordHandlingOps",
+                    Name = "DeepCloneWithRegisteredReaction should deep clone object and replace RegisteredReaction with the provided registeredReaction",
+                    WithPropertyName = "RegisteredReaction",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
+                        var systemUnderTest = A.Dummy<EvaluateRegisteredReactionOp>();
 
-                        var referenceObject = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>().ThatIs(_ => !systemUnderTest.CheckRecordHandlingOps.IsEqualTo(_.CheckRecordHandlingOps));
+                        var referenceObject = A.Dummy<EvaluateRegisteredReactionOp>().ThatIs(_ => !systemUnderTest.RegisteredReaction.IsEqualTo(_.RegisteredReaction));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<WriteEventOnMatchingHandlingStatusOp<Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<EvaluateRegisteredReactionOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.CheckRecordHandlingOps,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
-                {
-                    Name = "DeepCloneWithEventToPutOnMatchChainOfResponsibility should deep clone object and replace EventToPutOnMatchChainOfResponsibility with the provided eventToPutOnMatchChainOfResponsibility",
-                    WithPropertyName = "EventToPutOnMatchChainOfResponsibility",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
-
-                        var referenceObject = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>().ThatIs(_ => !systemUnderTest.EventToPutOnMatchChainOfResponsibility.IsEqualTo(_.EventToPutOnMatchChainOfResponsibility));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<WriteEventOnMatchingHandlingStatusOp<Version>>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.EventToPutOnMatchChainOfResponsibility,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
-                {
-                    Name = "DeepCloneWithWaitTimeBeforeRetry should deep clone object and replace WaitTimeBeforeRetry with the provided waitTimeBeforeRetry",
-                    WithPropertyName = "WaitTimeBeforeRetry",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
-
-                        var referenceObject = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>().ThatIs(_ => !systemUnderTest.WaitTimeBeforeRetry.IsEqualTo(_.WaitTimeBeforeRetry));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<WriteEventOnMatchingHandlingStatusOp<Version>>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.WaitTimeBeforeRetry,
+                            DeepCloneWithValue = referenceObject.RegisteredReaction,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly WriteEventOnMatchingHandlingStatusOp<Version> ReferenceObjectForEquatableTestScenarios = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
+        private static readonly EvaluateRegisteredReactionOp ReferenceObjectForEquatableTestScenarios = A.Dummy<EvaluateRegisteredReactionOp>();
 
-        private static readonly EquatableTestScenarios<WriteEventOnMatchingHandlingStatusOp<Version>> EquatableTestScenarios = new EquatableTestScenarios<WriteEventOnMatchingHandlingStatusOp<Version>>()
+        private static readonly EquatableTestScenarios<EvaluateRegisteredReactionOp> EquatableTestScenarios = new EquatableTestScenarios<EvaluateRegisteredReactionOp>()
             .AddScenario(() =>
-                new EquatableTestScenario<WriteEventOnMatchingHandlingStatusOp<Version>>
+                new EquatableTestScenario<EvaluateRegisteredReactionOp>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new WriteEventOnMatchingHandlingStatusOp<Version>[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new EvaluateRegisteredReactionOp[]
                     {
-                        new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                ReferenceObjectForEquatableTestScenarios.CheckRecordHandlingOps,
-                                ReferenceObjectForEquatableTestScenarios.EventToPutOnMatchChainOfResponsibility,
-                                ReferenceObjectForEquatableTestScenarios.WaitTimeBeforeRetry),
+                        new EvaluateRegisteredReactionOp(
+                                ReferenceObjectForEquatableTestScenarios.RegisteredReaction),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new WriteEventOnMatchingHandlingStatusOp<Version>[]
+                    ObjectsThatAreNotEqualToReferenceObject = new EvaluateRegisteredReactionOp[]
                     {
-                        new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>().Whose(_ => !_.CheckRecordHandlingOps.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CheckRecordHandlingOps)).CheckRecordHandlingOps,
-                                ReferenceObjectForEquatableTestScenarios.EventToPutOnMatchChainOfResponsibility,
-                                ReferenceObjectForEquatableTestScenarios.WaitTimeBeforeRetry),
-                        new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                ReferenceObjectForEquatableTestScenarios.CheckRecordHandlingOps,
-                                A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>().Whose(_ => !_.EventToPutOnMatchChainOfResponsibility.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EventToPutOnMatchChainOfResponsibility)).EventToPutOnMatchChainOfResponsibility,
-                                ReferenceObjectForEquatableTestScenarios.WaitTimeBeforeRetry),
-                        new WriteEventOnMatchingHandlingStatusOp<Version>(
-                                ReferenceObjectForEquatableTestScenarios.CheckRecordHandlingOps,
-                                ReferenceObjectForEquatableTestScenarios.EventToPutOnMatchChainOfResponsibility,
-                                A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>().Whose(_ => !_.WaitTimeBeforeRetry.IsEqualTo(ReferenceObjectForEquatableTestScenarios.WaitTimeBeforeRetry)).WaitTimeBeforeRetry),
+                        new EvaluateRegisteredReactionOp(
+                                A.Dummy<EvaluateRegisteredReactionOp>().Whose(_ => !_.RegisteredReaction.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RegisteredReaction)).RegisteredReaction),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -328,9 +138,11 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<CheckRecordExistsOp>(),
                         A.Dummy<CheckRecordHandlingOp>(),
-                        A.Dummy<EvaluateRegisteredReactionOp>(),
                         A.Dummy<RunReactorOp>(),
+                        A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>(),
+                        A.Dummy<WriteEventOnMatchingRecordFilterOp<Version>>(),
                     },
                 });
 
@@ -352,12 +164,12 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void WriteEventOnMatchingHandlingStatusOp_of_Version___Should_implement_IModel_of_WriteEventOnMatchingHandlingStatusOp_of_Version___When_reflecting()
+            public static void EvaluateRegisteredReactionOp___Should_implement_IModel_of_EvaluateRegisteredReactionOp___When_reflecting()
             {
                 // Arrange
-                var type = typeof(WriteEventOnMatchingHandlingStatusOp<Version>);
+                var type = typeof(EvaluateRegisteredReactionOp);
 
-                var expectedModelMethods = typeof(IModel<WriteEventOnMatchingHandlingStatusOp<Version>>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<EvaluateRegisteredReactionOp>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -367,7 +179,7 @@ namespace Naos.Reactor.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<WriteEventOnMatchingHandlingStatusOp<Version>>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<EvaluateRegisteredReactionOp>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -385,10 +197,10 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void WriteEventOnMatchingHandlingStatusOp_of_Version___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void EvaluateRegisteredReactionOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(WriteEventOnMatchingHandlingStatusOp<Version>);
+                var type = typeof(EvaluateRegisteredReactionOp);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -568,10 +380,10 @@ namespace Naos.Reactor.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
+                var systemUnderTest = A.Dummy<EvaluateRegisteredReactionOp>();
 
                 // Act
-                var actual = (WriteEventOnMatchingHandlingStatusOp<Version>)systemUnderTest.Clone();
+                var actual = (EvaluateRegisteredReactionOp)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -595,7 +407,7 @@ namespace Naos.Reactor.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
+                var systemUnderTest = A.Dummy<EvaluateRegisteredReactionOp>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -604,28 +416,16 @@ namespace Naos.Reactor.Domain.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.CheckRecordHandlingOps == null)
+                if (systemUnderTest.RegisteredReaction == null)
                 {
-                    actual.CheckRecordHandlingOps.AsTest().Must().BeNull();
+                    actual.RegisteredReaction.AsTest().Must().BeNull();
                 }
-                else if (!actual.CheckRecordHandlingOps.GetType().IsValueType)
+                else if (!actual.RegisteredReaction.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.CheckRecordHandlingOps.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CheckRecordHandlingOps);
-                }
-
-                if (systemUnderTest.EventToPutOnMatchChainOfResponsibility == null)
-                {
-                    actual.EventToPutOnMatchChainOfResponsibility.AsTest().Must().BeNull();
-                }
-                else if (!actual.EventToPutOnMatchChainOfResponsibility.GetType().IsValueType)
-                {
-                    // When the declared type is a reference type, we still have to check the runtime type.
-                    // The object could be a boxed value type, which will fail this asseration because
-                    // a deep clone of a value type object is the same object.
-                    actual.EventToPutOnMatchChainOfResponsibility.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.EventToPutOnMatchChainOfResponsibility);
+                    actual.RegisteredReaction.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.RegisteredReaction);
                 }
             }
 
@@ -645,7 +445,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "CheckRecordHandlingOps", "EventToPutOnMatchChainOfResponsibility", "WaitTimeBeforeRetry" };
+                var propertyNames = new string[] { "RegisteredReaction" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -658,12 +458,12 @@ namespace Naos.Reactor.Domain.Test
                     }
 
                     // Act
-                    var actual = (WriteEventOnMatchingHandlingStatusOp<Version>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (EvaluateRegisteredReactionOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(WriteEventOnMatchingHandlingStatusOp<Version>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(EvaluateRegisteredReactionOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -725,7 +525,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
+                var expected = A.Dummy<EvaluateRegisteredReactionOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -754,7 +554,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
+                var expected = A.Dummy<EvaluateRegisteredReactionOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -783,7 +583,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
+                var expected = A.Dummy<EvaluateRegisteredReactionOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -812,7 +612,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>();
+                var expected = A.Dummy<EvaluateRegisteredReactionOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -846,8 +646,8 @@ namespace Naos.Reactor.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                WriteEventOnMatchingHandlingStatusOp<Version> systemUnderTest1 = null;
-                WriteEventOnMatchingHandlingStatusOp<Version> systemUnderTest2 = null;
+                EvaluateRegisteredReactionOp systemUnderTest1 = null;
+                EvaluateRegisteredReactionOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -877,7 +677,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    WriteEventOnMatchingHandlingStatusOp<Version> systemUnderTest = null;
+                    EvaluateRegisteredReactionOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -1026,8 +826,8 @@ namespace Naos.Reactor.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                WriteEventOnMatchingHandlingStatusOp<Version> systemUnderTest1 = null;
-                WriteEventOnMatchingHandlingStatusOp<Version> systemUnderTest2 = null;
+                EvaluateRegisteredReactionOp systemUnderTest1 = null;
+                EvaluateRegisteredReactionOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -1057,7 +857,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    WriteEventOnMatchingHandlingStatusOp<Version> systemUnderTest = null;
+                    EvaluateRegisteredReactionOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1346,17 +1146,17 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_VoidOperationBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_ReturningOperationBase_of_ReactionEvent___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    VoidOperationBase systemUnderTest = null;
+                    ReturningOperationBase<ReactionEvent> systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((VoidOperationBase)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<ReactionEvent>)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -1377,14 +1177,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_VoidOperationBase___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_ReturningOperationBase_of_ReactionEvent___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((VoidOperationBase)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<ReactionEvent>)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1405,14 +1205,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_VoidOperationBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_ReturningOperationBase_of_ReactionEvent___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((VoidOperationBase)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<ReactionEvent>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1433,14 +1233,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_VoidOperationBase___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_ReturningOperationBase_of_ReactionEvent___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((VoidOperationBase)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<ReactionEvent>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1461,14 +1261,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_VoidOperationBase___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_ReturningOperationBase_of_ReactionEvent___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((VoidOperationBase)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<ReactionEvent>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1489,14 +1289,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_WriteEventOnMatchingHandlingStatusOp_of_Version___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_EvaluateRegisteredReactionOp___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    WriteEventOnMatchingHandlingStatusOp<Version> systemUnderTest = null;
+                    EvaluateRegisteredReactionOp systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1520,7 +1320,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_WriteEventOnMatchingHandlingStatusOp_of_Version___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_EvaluateRegisteredReactionOp___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1548,7 +1348,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_WriteEventOnMatchingHandlingStatusOp_of_Version___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_EvaluateRegisteredReactionOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1576,7 +1376,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_WriteEventOnMatchingHandlingStatusOp_of_Version___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_EvaluateRegisteredReactionOp___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1604,7 +1404,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_WriteEventOnMatchingHandlingStatusOp_of_Version___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_EvaluateRegisteredReactionOp___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

@@ -132,30 +132,45 @@
       <DependentUpon>ReactionEvent.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\ReactionEvent.cs" />
+    <Compile Include="Logic\RecordExistsMatchStrategyExtensions.cs" />
     <Compile Include="Logic\CompositeHandlingStatusMatchStrategyExtensions.cs" />
-    <Compile Include="Model\CheckRecordHandlingResult.cs" />
-    <Compile Include="Model\CheckRecordHandlingResult.designer.cs">
+    <Compile Include="Model\Classes\CheckRecordExistsResult.cs" />
+    <Compile Include="Model\Classes\CheckRecordExistsResult.designer.cs">
+      <DependentUpon>CheckRecordExistsResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Classes\CheckRecordHandlingResult.cs" />
+    <Compile Include="Model\Classes\CheckRecordHandlingResult.designer.cs">
       <DependentUpon>CheckRecordHandlingResult.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Enum\CompositeHandlingStatusMatchStrategy.cs" />
-    <Compile Include="Model\EventToPutWithIdOnMatch{TId}.cs" />
-    <Compile Include="Model\EventToPutWithIdOnMatch{TId}.designer.cs">
-      <DependentUpon>EventToPutWithIdOnMatch{TId}.cs</DependentUpon>
+    <Compile Include="Model\Classes\EventToPutWithIdOnHandlingStatusMatch{TId}.designer.cs">
+      <DependentUpon>EventToPutWithIdOnHandlingStatusMatch{TId}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\EventToPutWithId{TId}.designer.cs">
+    <Compile Include="Model\Classes\EventToPutWithIdOnRecordFilterMatch{TId}.designer.cs">
+      <DependentUpon>EventToPutWithIdOnRecordFilterMatch{TId}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Enums\RecordExistsMatchStrategy.cs" />
+    <Compile Include="Model\Enums\CompositeHandlingStatusMatchStrategy.cs" />
+    <Compile Include="Model\Classes\EventToPutWithIdOnRecordFilterMatch{TId}.cs" />
+    <Compile Include="Model\Classes\EventToPutWithIdOnHandlingStatusMatch{TId}.cs" />
+    <Compile Include="Model\Classes\EventToPutWithId{TId}.designer.cs">
       <DependentUpon>EventToPutWithId{TId}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\RegisteredReaction.designer.cs">
+    <Compile Include="Model\Classes\RegisteredReaction.designer.cs">
       <DependentUpon>RegisteredReaction.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\StringIdentifiedReactorDependency.cs" />
-    <Compile Include="Model\EventToPutWithId{TId}.cs" />
-    <Compile Include="Model\StringIdentifiedReactorDependency.designer.cs">
+    <Compile Include="Model\Classes\StringIdentifiedReactorDependency.cs" />
+    <Compile Include="Model\Classes\EventToPutWithId{TId}.cs" />
+    <Compile Include="Model\Classes\StringIdentifiedReactorDependency.designer.cs">
       <DependentUpon>StringIdentifiedReactorDependency.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Interfaces\IChainOfResponsibilityLink.cs" />
+    <Compile Include="Operations\CheckRecordExistsOp.cs" />
+    <Compile Include="Operations\CheckRecordExistsOp.designer.cs">
+      <DependentUpon>CheckRecordExistsOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\CheckRecordHandlingOp.cs" />
-    <Compile Include="Model\RegisteredReaction.cs" />
-    <Compile Include="Model\IReactorDependency.cs" />
+    <Compile Include="Model\Classes\RegisteredReaction.cs" />
+    <Compile Include="Model\Interfaces\IReactorDependency.cs" />
     <Compile Include="Operations\CheckRecordHandlingOp.designer.cs">
       <DependentUpon>CheckRecordHandlingOp.cs</DependentUpon>
     </Compile>
@@ -166,17 +181,23 @@
     <Compile Include="Operations\RunReactorOp.designer.cs">
       <DependentUpon>RunReactorOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\WriteEventOnMatchingHandlingStatusOp{TId}.cs" />
-    <Compile Include="Operations\RunReactorOp.cs" />
     <Compile Include="Operations\WriteEventOnMatchingHandlingStatusOp{TId}.designer.cs">
       <DependentUpon>WriteEventOnMatchingHandlingStatusOp{TId}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\WriteEventOnMatchingRecordFilterOp{TId}.cs" />
+    <Compile Include="Operations\WriteEventOnMatchingHandlingStatusOp{TId}.cs" />
+    <Compile Include="Operations\RunReactorOp.cs" />
+    <Compile Include="Operations\WriteEventOnMatchingRecordFilterOp{TId}.designer.cs">
+      <DependentUpon>WriteEventOnMatchingRecordFilterOp{TId}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
+    <Compile Include="Protocols\CheckRecordExistsProtocol.cs" />
     <Compile Include="Protocols\EvaluateRegisteredReactionProtocol.cs" />
     <Compile Include="Protocols\HandleAndReQueueExecuteOpRequestedProtocol{TOperation}.cs" />
     <Compile Include="Protocols\RunReactorProtocol.cs" />
     <Compile Include="Protocols\CheckRecordHandlingProtocol.cs" />
+    <Compile Include="Protocols\WriteEventOnMatchingRecordFilter{TId}.cs" />
     <Compile Include="Protocols\WriteEventOnMatchingHandlingStatusProtocol{TId}.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\release.ruleset" />

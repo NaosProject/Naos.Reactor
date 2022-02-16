@@ -21,8 +21,8 @@ namespace Naos.Reactor.Domain
         /// <summary>
         /// Matches one <see cref="CompositeHandlingStatus"/> to another using the provided <see cref="CompositeHandlingStatusMatchStrategy"/>.
         /// </summary>
-        /// <param name="actualStatus">The to inspect.</param>
-        /// <param name="statusToMatch">The to compare it to.</param>
+        /// <param name="actualStatus">The status to inspect.</param>
+        /// <param name="statusToMatch">The status to compare it to.</param>
         /// <param name="compositeHandlingStatusMatchStrategy">The strategy to use for comparing tags.</param>
         /// <returns>
         /// <c>true</c> if the tags match, otherwise <c>false</c>.

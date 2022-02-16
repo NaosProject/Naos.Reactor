@@ -268,43 +268,55 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="CheckRecordHandlingOpTest.cs" />
-    <Compile Include="CheckRecordHandlingOpTest.designer.cs">
+    <Compile Include="Operations\CheckRecordExistsOpTest.cs" />
+    <Compile Include="Operations\CheckRecordExistsOpTest.designer.cs">
+      <DependentUpon>CheckRecordExistsOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Classes\CheckRecordExistsResultTest.cs" />
+    <Compile Include="Model\Classes\CheckRecordExistsResultTest.designer.cs">
+      <DependentUpon>CheckRecordExistsResultTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\CheckRecordHandlingOpTest.cs" />
+    <Compile Include="Operations\CheckRecordHandlingOpTest.designer.cs">
       <DependentUpon>CheckRecordHandlingOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="CheckRecordHandlingResultTest.cs" />
-    <Compile Include="CheckRecordHandlingResultTest.designer.cs">
+    <Compile Include="Model\Classes\CheckRecordHandlingResultTest.cs" />
+    <Compile Include="Model\Classes\CheckRecordHandlingResultTest.designer.cs">
       <DependentUpon>CheckRecordHandlingResultTest.cs</DependentUpon>
     </Compile>
     <Compile Include="ConsoleAbstraction.cs" />
-    <Compile Include="EvaluateRegisteredReactionOpTest.cs" />
-    <Compile Include="EvaluateRegisteredReactionOpTest.designer.cs">
+    <Compile Include="Operations\EvaluateRegisteredReactionOpTest.cs" />
+    <Compile Include="Operations\EvaluateRegisteredReactionOpTest.designer.cs">
       <DependentUpon>EvaluateRegisteredReactionOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="EventToPutWithIdOnMatch{TId}Test.cs" />
-    <Compile Include="EventToPutWithIdOnMatch{TId}Test.designer.cs">
-      <DependentUpon>EventToPutWithIdOnMatch{TId}Test.cs</DependentUpon>
+    <Compile Include="Model\Classes\EventToPutWithIdOnHandlingStatusMatch{TId}Test.cs" />
+    <Compile Include="Model\Classes\EventToPutWithIdOnHandlingStatusMatch{TId}Test.designer.cs">
+      <DependentUpon>EventToPutWithIdOnHandlingStatusMatch{TId}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="EventToPutWithId{TId}Test.cs" />
-    <Compile Include="EventToPutWithId{TId}Test.designer.cs">
+    <Compile Include="Model\Classes\EventToPutWithIdOnRecordFilterMatch{TId}Test.cs" />
+    <Compile Include="Model\Classes\EventToPutWithIdOnRecordFilterMatch{TId}Test.designer.cs">
+      <DependentUpon>EventToPutWithIdOnRecordFilterMatch{TId}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Classes\EventToPutWithId{TId}Test.cs" />
+    <Compile Include="Model\Classes\EventToPutWithId{TId}Test.designer.cs">
       <DependentUpon>EventToPutWithId{TId}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
-    <Compile Include="ReactionEventTest.cs" />
-    <Compile Include="ReactionEventTest.designer.cs">
+    <Compile Include="Events\ReactionEventTest.cs" />
+    <Compile Include="Events\ReactionEventTest.designer.cs">
       <DependentUpon>ReactionEventTest.cs</DependentUpon>
     </Compile>
     <Compile Include="ReactorDummyFactoryTest.designer.cs">
       <DependentUpon>ReactorDummyFactoryTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="RegisteredReactionTest.cs" />
-    <Compile Include="RegisteredReactionTest.designer.cs">
+    <Compile Include="Model\Classes\RegisteredReactionTest.cs" />
+    <Compile Include="Model\Classes\RegisteredReactionTest.designer.cs">
       <DependentUpon>RegisteredReactionTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="RunReactorOpTest.cs" />
-    <Compile Include="RunReactorOpTest.designer.cs">
+    <Compile Include="Operations\RunReactorOpTest.cs" />
+    <Compile Include="Operations\RunReactorOpTest.designer.cs">
       <DependentUpon>RunReactorOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="SerializationConfigurationTypes.cs" />
@@ -315,13 +327,17 @@
     </Compile>
     <Compile Include="ReactorDummyFactoryTest.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
-    <Compile Include="StringIdentifiedReactorDependencyTest.cs" />
-    <Compile Include="StringIdentifiedReactorDependencyTest.designer.cs">
+    <Compile Include="Model\Classes\StringIdentifiedReactorDependencyTest.cs" />
+    <Compile Include="Model\Classes\StringIdentifiedReactorDependencyTest.designer.cs">
       <DependentUpon>StringIdentifiedReactorDependencyTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="WriteEventOnMatchingHandlingStatusOp{TId}Test.cs" />
-    <Compile Include="WriteEventOnMatchingHandlingStatusOp{TId}Test.designer.cs">
+    <Compile Include="Operations\WriteEventOnMatchingHandlingStatusOp{TId}Test.cs" />
+    <Compile Include="Operations\WriteEventOnMatchingHandlingStatusOp{TId}Test.designer.cs">
       <DependentUpon>WriteEventOnMatchingHandlingStatusOp{TId}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\WriteEventOnMatchingRecordFilterOp{TId}Test.cs" />
+    <Compile Include="Operations\WriteEventOnMatchingRecordFilterOp{TId}Test.designer.cs">
+      <DependentUpon>WriteEventOnMatchingRecordFilterOp{TId}Test.cs</DependentUpon>
     </Compile>
     <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />
@@ -349,6 +365,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

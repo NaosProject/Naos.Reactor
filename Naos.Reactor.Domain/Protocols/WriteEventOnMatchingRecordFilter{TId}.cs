@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="WriteRecordOnHandlingCompletedProtocol{TId}.cs" company="Naos Project">
+// <copyright file="WriteRecordOnMatchingRecordFilterProtocol{TId}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -20,56 +20,52 @@ namespace Naos.Reactor.Domain
     using static System.FormattableString;
 
     /// <summary>
-    /// Check on sagas, write records under certain handling scenarios of groups of records.
+    /// Check on sagas, write records when records exists.
     /// </summary>
-    /// <typeparam name="TId">Type of the identifier.</typeparam>
-    public partial class WriteEventOnMatchingHandlingStatusProtocol<TId> : SyncSpecificVoidProtocolBase<WriteEventOnMatchingHandlingStatusOp<TId>>
+    public partial class WriteEventOnMatchingRecordFilterProtocol<TId> : SyncSpecificVoidProtocolBase<WriteEventOnMatchingRecordFilterOp<TId>>
     {
-        private readonly ISyncAndAsyncReturningProtocol<CheckRecordHandlingOp, CheckRecordHandlingResult> checkRecordHandlingProtocol;
+        private readonly ISyncAndAsyncReturningProtocol<CheckRecordExistsOp, CheckRecordExistsResult> checkRecordExistsProtocol;
         private readonly ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WriteEventOnMatchingHandlingStatusProtocol{TId}"/> class.
+        /// Initializes a new instance of the <see cref="WriteEventOnMatchingRecordFilterProtocol{TId}"/> class.
         /// </summary>
-        /// <param name="checkRecordHandlingProtocol">The check record handling protocol.</param>
+        /// <param name="checkRecordExistsProtocol">The check record exists protocol.</param>
         /// <param name="streamFactory">The protocol to get <see cref="IStream"/> from a <see cref="StreamRepresentation"/>.</param>
-        public WriteEventOnMatchingHandlingStatusProtocol(
-            ISyncAndAsyncReturningProtocol<CheckRecordHandlingOp, CheckRecordHandlingResult> checkRecordHandlingProtocol,
+        public WriteEventOnMatchingRecordFilterProtocol(
+            ISyncAndAsyncReturningProtocol<CheckRecordExistsOp, CheckRecordExistsResult> checkRecordExistsProtocol,
             ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory)
         {
-            checkRecordHandlingProtocol.MustForArg(nameof(checkRecordHandlingProtocol)).NotBeNull();
+            checkRecordExistsProtocol.MustForArg(nameof(checkRecordExistsProtocol)).NotBeNull();
             streamFactory.MustForArg(nameof(streamFactory)).NotBeNull();
 
-            this.checkRecordHandlingProtocol = checkRecordHandlingProtocol;
+            this.checkRecordExistsProtocol = checkRecordExistsProtocol;
             this.streamFactory = streamFactory;
         }
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = NaosSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
         public override void Execute(
-            WriteEventOnMatchingHandlingStatusOp<TId> operation)
+            WriteEventOnMatchingRecordFilterOp<TId> operation)
         {
             operation.MustForArg(nameof(operation)).NotBeNull();
 
-            var results = new Dictionary<CheckRecordHandlingOp, CheckRecordHandlingResult>();
-            foreach (var checkRecordHandlingOp in operation.CheckRecordHandlingOps)
+            var results = new Dictionary<CheckRecordExistsOp, CheckRecordExistsResult>();
+            foreach (var checkRecordExistsOp in operation.CheckRecordExistsOps)
             {
-                var result = this.checkRecordHandlingProtocol.Execute(checkRecordHandlingOp);
-                results.Add(checkRecordHandlingOp, result);
+                var result = this.checkRecordExistsProtocol.Execute(checkRecordExistsOp);
+                results.Add(checkRecordExistsOp, result);
             }
 
             if (results.Any())
             {
-                var actualCompositeHandlingStatus = results
-                                             .SelectMany(_ => _.Value.InternalRecordIdToHandlingStatusMap.Values)
-                                             .ToList()
-                                             .ToCompositeHandlingStatus();
+                var recordExistsSet = results.Select(_ => _.Value.RecordExists).ToList();
 
                 foreach (var eventToPutWithIdOnMatch in operation.EventToPutOnMatchChainOfResponsibility)
                 {
-                    var matches = actualCompositeHandlingStatus.MatchesAccordingToStrategy(
-                        eventToPutWithIdOnMatch.StatusToMatch,
-                        eventToPutWithIdOnMatch.CompositeHandlingStatusMatchStrategy);
+                    var matches =
+                        recordExistsSet.MatchesAccordingToStrategy(
+                        eventToPutWithIdOnMatch.RecordExistsMatchStrategy);
 
                     if (matches)
                     {
@@ -105,7 +101,7 @@ namespace Naos.Reactor.Domain
                         if (eventToPutWithIdOnMatch.MatchTerminatesChain)
                         {
                             Thread.Sleep(operation.WaitTimeBeforeRetry);
-                            throw new SelfCancelRunningExecutionException("Matched status and wrote record, terminating chain but not terminating execution.");
+                            throw new SelfCancelRunningExecutionException("Matched status and wrote record, terminating chain but not terminating.");
                         }
                     }
                 }

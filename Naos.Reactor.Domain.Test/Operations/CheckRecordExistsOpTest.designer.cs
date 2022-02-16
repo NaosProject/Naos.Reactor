@@ -35,39 +35,38 @@ namespace Naos.Reactor.Domain.Test
 
     using static global::System.FormattableString;
 
-    public static partial class CheckRecordHandlingOpTest
+    public static partial class CheckRecordExistsOpTest
     {
-        private static readonly StringRepresentationTestScenarios<CheckRecordHandlingOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<CheckRecordHandlingOp>()
+        private static readonly StringRepresentationTestScenarios<CheckRecordExistsOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<CheckRecordExistsOp>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<CheckRecordHandlingOp>
+                new StringRepresentationTestScenario<CheckRecordExistsOp>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CheckRecordHandlingOp>();
+                        var systemUnderTest = A.Dummy<CheckRecordExistsOp>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<CheckRecordHandlingOp>
+                        var result = new SystemUnderTestExpectedStringRepresentation<CheckRecordExistsOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.CheckRecordHandlingOp: StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, Concern = {systemUnderTest.Concern?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, RecordFilter = {systemUnderTest.RecordFilter?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.CheckRecordExistsOp: StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, RecordFilter = {systemUnderTest.RecordFilter?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<CheckRecordHandlingOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<CheckRecordHandlingOp>()
+        private static readonly ConstructorArgumentValidationTestScenarios<CheckRecordExistsOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<CheckRecordExistsOp>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CheckRecordHandlingOp>
+                new ConstructorArgumentValidationTestScenario<CheckRecordExistsOp>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'streamRepresentation' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CheckRecordHandlingOp>();
+                        var referenceObject = A.Dummy<CheckRecordExistsOp>();
 
-                        var result = new CheckRecordHandlingOp(
+                        var result = new CheckRecordExistsOp(
                                              null,
-                                             referenceObject.Concern,
                                              referenceObject.RecordFilter);
 
                         return result;
@@ -76,52 +75,15 @@ namespace Naos.Reactor.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "streamRepresentation", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CheckRecordHandlingOp>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'concern' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CheckRecordHandlingOp>();
-
-                        var result = new CheckRecordHandlingOp(
-                                             referenceObject.StreamRepresentation,
-                                             null,
-                                             referenceObject.RecordFilter);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "concern", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CheckRecordHandlingOp>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'concern' is white space scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CheckRecordHandlingOp>();
-
-                        var result = new CheckRecordHandlingOp(
-                                             referenceObject.StreamRepresentation,
-                                             Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.RecordFilter);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "concern", "white space", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CheckRecordHandlingOp>
+                new ConstructorArgumentValidationTestScenario<CheckRecordExistsOp>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'recordFilter' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CheckRecordHandlingOp>();
+                        var referenceObject = A.Dummy<CheckRecordExistsOp>();
 
-                        var result = new CheckRecordHandlingOp(
+                        var result = new CheckRecordExistsOp(
                                              referenceObject.StreamRepresentation,
-                                             referenceObject.Concern,
                                              null);
 
                         return result;
@@ -130,20 +92,19 @@ namespace Naos.Reactor.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "recordFilter", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<CheckRecordHandlingOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CheckRecordHandlingOp>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<CheckRecordExistsOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CheckRecordExistsOp>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CheckRecordHandlingOp>
+                new ConstructorPropertyAssignmentTestScenario<CheckRecordExistsOp>
                 {
                     Name = "StreamRepresentation should return same 'streamRepresentation' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CheckRecordHandlingOp>();
+                        var referenceObject = A.Dummy<CheckRecordExistsOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<CheckRecordHandlingOp>
+                        var result = new SystemUnderTestExpectedPropertyValue<CheckRecordExistsOp>
                         {
-                            SystemUnderTest = new CheckRecordHandlingOp(
+                            SystemUnderTest = new CheckRecordExistsOp(
                                                       referenceObject.StreamRepresentation,
-                                                      referenceObject.Concern,
                                                       referenceObject.RecordFilter),
                             ExpectedPropertyValue = referenceObject.StreamRepresentation,
                         };
@@ -153,39 +114,17 @@ namespace Naos.Reactor.Domain.Test
                     PropertyName = "StreamRepresentation",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CheckRecordHandlingOp>
-                {
-                    Name = "Concern should return same 'concern' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CheckRecordHandlingOp>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<CheckRecordHandlingOp>
-                        {
-                            SystemUnderTest = new CheckRecordHandlingOp(
-                                                      referenceObject.StreamRepresentation,
-                                                      referenceObject.Concern,
-                                                      referenceObject.RecordFilter),
-                            ExpectedPropertyValue = referenceObject.Concern,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Concern",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CheckRecordHandlingOp>
+                new ConstructorPropertyAssignmentTestScenario<CheckRecordExistsOp>
                 {
                     Name = "RecordFilter should return same 'recordFilter' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CheckRecordHandlingOp>();
+                        var referenceObject = A.Dummy<CheckRecordExistsOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<CheckRecordHandlingOp>
+                        var result = new SystemUnderTestExpectedPropertyValue<CheckRecordExistsOp>
                         {
-                            SystemUnderTest = new CheckRecordHandlingOp(
+                            SystemUnderTest = new CheckRecordExistsOp(
                                                       referenceObject.StreamRepresentation,
-                                                      referenceObject.Concern,
                                                       referenceObject.RecordFilter),
                             ExpectedPropertyValue = referenceObject.RecordFilter,
                         };
@@ -195,19 +134,19 @@ namespace Naos.Reactor.Domain.Test
                     PropertyName = "RecordFilter",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<CheckRecordHandlingOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CheckRecordHandlingOp>()
+        private static readonly DeepCloneWithTestScenarios<CheckRecordExistsOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CheckRecordExistsOp>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CheckRecordHandlingOp>
+                new DeepCloneWithTestScenario<CheckRecordExistsOp>
                 {
                     Name = "DeepCloneWithStreamRepresentation should deep clone object and replace StreamRepresentation with the provided streamRepresentation",
                     WithPropertyName = "StreamRepresentation",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CheckRecordHandlingOp>();
+                        var systemUnderTest = A.Dummy<CheckRecordExistsOp>();
 
-                        var referenceObject = A.Dummy<CheckRecordHandlingOp>().ThatIs(_ => !systemUnderTest.StreamRepresentation.IsEqualTo(_.StreamRepresentation));
+                        var referenceObject = A.Dummy<CheckRecordExistsOp>().ThatIs(_ => !systemUnderTest.StreamRepresentation.IsEqualTo(_.StreamRepresentation));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CheckRecordHandlingOp>
+                        var result = new SystemUnderTestDeepCloneWithValue<CheckRecordExistsOp>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.StreamRepresentation,
@@ -217,37 +156,17 @@ namespace Naos.Reactor.Domain.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CheckRecordHandlingOp>
-                {
-                    Name = "DeepCloneWithConcern should deep clone object and replace Concern with the provided concern",
-                    WithPropertyName = "Concern",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<CheckRecordHandlingOp>();
-
-                        var referenceObject = A.Dummy<CheckRecordHandlingOp>().ThatIs(_ => !systemUnderTest.Concern.IsEqualTo(_.Concern));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<CheckRecordHandlingOp>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Concern,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<CheckRecordHandlingOp>
+                new DeepCloneWithTestScenario<CheckRecordExistsOp>
                 {
                     Name = "DeepCloneWithRecordFilter should deep clone object and replace RecordFilter with the provided recordFilter",
                     WithPropertyName = "RecordFilter",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CheckRecordHandlingOp>();
+                        var systemUnderTest = A.Dummy<CheckRecordExistsOp>();
 
-                        var referenceObject = A.Dummy<CheckRecordHandlingOp>().ThatIs(_ => !systemUnderTest.RecordFilter.IsEqualTo(_.RecordFilter));
+                        var referenceObject = A.Dummy<CheckRecordExistsOp>().ThatIs(_ => !systemUnderTest.RecordFilter.IsEqualTo(_.RecordFilter));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CheckRecordHandlingOp>
+                        var result = new SystemUnderTestDeepCloneWithValue<CheckRecordExistsOp>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.RecordFilter,
@@ -257,35 +176,28 @@ namespace Naos.Reactor.Domain.Test
                     },
                 });
 
-        private static readonly CheckRecordHandlingOp ReferenceObjectForEquatableTestScenarios = A.Dummy<CheckRecordHandlingOp>();
+        private static readonly CheckRecordExistsOp ReferenceObjectForEquatableTestScenarios = A.Dummy<CheckRecordExistsOp>();
 
-        private static readonly EquatableTestScenarios<CheckRecordHandlingOp> EquatableTestScenarios = new EquatableTestScenarios<CheckRecordHandlingOp>()
+        private static readonly EquatableTestScenarios<CheckRecordExistsOp> EquatableTestScenarios = new EquatableTestScenarios<CheckRecordExistsOp>()
             .AddScenario(() =>
-                new EquatableTestScenario<CheckRecordHandlingOp>
+                new EquatableTestScenario<CheckRecordExistsOp>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CheckRecordHandlingOp[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CheckRecordExistsOp[]
                     {
-                        new CheckRecordHandlingOp(
+                        new CheckRecordExistsOp(
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.Concern,
                                 ReferenceObjectForEquatableTestScenarios.RecordFilter),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new CheckRecordHandlingOp[]
+                    ObjectsThatAreNotEqualToReferenceObject = new CheckRecordExistsOp[]
                     {
-                        new CheckRecordHandlingOp(
-                                A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.StreamRepresentation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StreamRepresentation)).StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.Concern,
+                        new CheckRecordExistsOp(
+                                A.Dummy<CheckRecordExistsOp>().Whose(_ => !_.StreamRepresentation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StreamRepresentation)).StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.RecordFilter),
-                        new CheckRecordHandlingOp(
+                        new CheckRecordExistsOp(
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.Concern.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Concern)).Concern,
-                                ReferenceObjectForEquatableTestScenarios.RecordFilter),
-                        new CheckRecordHandlingOp(
-                                ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.Concern,
-                                A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.RecordFilter.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RecordFilter)).RecordFilter),
+                                A.Dummy<CheckRecordExistsOp>().Whose(_ => !_.RecordFilter.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RecordFilter)).RecordFilter),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -294,9 +206,11 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<CheckRecordHandlingOp>(),
                         A.Dummy<EvaluateRegisteredReactionOp>(),
                         A.Dummy<RunReactorOp>(),
                         A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>(),
+                        A.Dummy<WriteEventOnMatchingRecordFilterOp<Version>>(),
                     },
                 });
 
@@ -318,12 +232,12 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CheckRecordHandlingOp___Should_implement_IModel_of_CheckRecordHandlingOp___When_reflecting()
+            public static void CheckRecordExistsOp___Should_implement_IModel_of_CheckRecordExistsOp___When_reflecting()
             {
                 // Arrange
-                var type = typeof(CheckRecordHandlingOp);
+                var type = typeof(CheckRecordExistsOp);
 
-                var expectedModelMethods = typeof(IModel<CheckRecordHandlingOp>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<CheckRecordExistsOp>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -333,7 +247,7 @@ namespace Naos.Reactor.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CheckRecordHandlingOp>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CheckRecordExistsOp>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -351,10 +265,10 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CheckRecordHandlingOp___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void CheckRecordExistsOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(CheckRecordHandlingOp);
+                var type = typeof(CheckRecordExistsOp);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -534,10 +448,10 @@ namespace Naos.Reactor.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CheckRecordHandlingOp>();
+                var systemUnderTest = A.Dummy<CheckRecordExistsOp>();
 
                 // Act
-                var actual = (CheckRecordHandlingOp)systemUnderTest.Clone();
+                var actual = (CheckRecordExistsOp)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -561,7 +475,7 @@ namespace Naos.Reactor.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CheckRecordHandlingOp>();
+                var systemUnderTest = A.Dummy<CheckRecordExistsOp>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -611,7 +525,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "StreamRepresentation", "Concern", "RecordFilter" };
+                var propertyNames = new string[] { "StreamRepresentation", "RecordFilter" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -624,12 +538,12 @@ namespace Naos.Reactor.Domain.Test
                     }
 
                     // Act
-                    var actual = (CheckRecordHandlingOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (CheckRecordExistsOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(CheckRecordHandlingOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(CheckRecordExistsOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -691,7 +605,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CheckRecordHandlingOp>();
+                var expected = A.Dummy<CheckRecordExistsOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -720,7 +634,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CheckRecordHandlingOp>();
+                var expected = A.Dummy<CheckRecordExistsOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -749,7 +663,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CheckRecordHandlingOp>();
+                var expected = A.Dummy<CheckRecordExistsOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -778,7 +692,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CheckRecordHandlingOp>();
+                var expected = A.Dummy<CheckRecordExistsOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -812,8 +726,8 @@ namespace Naos.Reactor.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CheckRecordHandlingOp systemUnderTest1 = null;
-                CheckRecordHandlingOp systemUnderTest2 = null;
+                CheckRecordExistsOp systemUnderTest1 = null;
+                CheckRecordExistsOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -843,7 +757,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CheckRecordHandlingOp systemUnderTest = null;
+                    CheckRecordExistsOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -992,8 +906,8 @@ namespace Naos.Reactor.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CheckRecordHandlingOp systemUnderTest1 = null;
-                CheckRecordHandlingOp systemUnderTest2 = null;
+                CheckRecordExistsOp systemUnderTest1 = null;
+                CheckRecordExistsOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -1023,7 +937,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CheckRecordHandlingOp systemUnderTest = null;
+                    CheckRecordExistsOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1312,17 +1226,17 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_CheckRecordHandlingResult___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_ReturningOperationBase_of_CheckRecordExistsResult___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ReturningOperationBase<CheckRecordHandlingResult> systemUnderTest = null;
+                    ReturningOperationBase<CheckRecordExistsResult> systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordHandlingResult>)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordExistsResult>)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -1343,14 +1257,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_CheckRecordHandlingResult___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_ReturningOperationBase_of_CheckRecordExistsResult___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordHandlingResult>)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordExistsResult>)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1371,14 +1285,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_CheckRecordHandlingResult___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_ReturningOperationBase_of_CheckRecordExistsResult___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordHandlingResult>)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordExistsResult>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1399,14 +1313,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_CheckRecordHandlingResult___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_ReturningOperationBase_of_CheckRecordExistsResult___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordHandlingResult>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordExistsResult>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1427,14 +1341,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_CheckRecordHandlingResult___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_ReturningOperationBase_of_CheckRecordExistsResult___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordHandlingResult>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordExistsResult>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1455,14 +1369,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckRecordHandlingOp___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_CheckRecordExistsOp___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CheckRecordHandlingOp systemUnderTest = null;
+                    CheckRecordExistsOp systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1486,7 +1400,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckRecordHandlingOp___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_CheckRecordExistsOp___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1514,7 +1428,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckRecordHandlingOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_CheckRecordExistsOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1542,7 +1456,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckRecordHandlingOp___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_CheckRecordExistsOp___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1570,7 +1484,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckRecordHandlingOp___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_CheckRecordExistsOp___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

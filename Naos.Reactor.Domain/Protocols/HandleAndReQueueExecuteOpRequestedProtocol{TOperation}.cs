@@ -10,6 +10,7 @@ namespace Naos.Reactor.Domain
     using System.Threading;
     using Naos.CodeAnalysis.Recipes;
     using Naos.Database.Domain;
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Representation.System;
     using OBeautifulCode.Type;
 
@@ -39,6 +40,9 @@ namespace Naos.Reactor.Domain
             ISyncVoidProtocol<TOperation> executeOperationProtocol,
             TimeSpan waitTimeBeforeQueuing)
         {
+            requeueStream.MustForArg(nameof(requeueStream)).NotBeNull();
+            executeOperationProtocol.MustForArg(nameof(executeOperationProtocol)).NotBeNull();
+
             this.requeueStream = requeueStream;
             this.executeOperationProtocol = executeOperationProtocol;
             this.waitTimeBeforeQueuing = waitTimeBeforeQueuing;

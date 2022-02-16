@@ -15,8 +15,6 @@ namespace Naos.Reactor.Domain
     using global::System.Globalization;
     using global::System.Linq;
 
-    using global::Naos.Database.Domain;
-
     using global::OBeautifulCode.Cloning.Recipes;
     using global::OBeautifulCode.Equality.Recipes;
     using global::OBeautifulCode.Type;
@@ -25,15 +23,15 @@ namespace Naos.Reactor.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class EventToPutWithIdOnMatch<TId> : IModel<EventToPutWithIdOnMatch<TId>>
+    public partial class EventToPutWithIdOnRecordFilterMatch<TId> : IModel<EventToPutWithIdOnRecordFilterMatch<TId>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="EventToPutWithIdOnMatch{TId}"/> are equal.
+        /// Determines whether two objects of type <see cref="EventToPutWithIdOnRecordFilterMatch{TId}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(EventToPutWithIdOnMatch<TId> left, EventToPutWithIdOnMatch<TId> right)
+        public static bool operator ==(EventToPutWithIdOnRecordFilterMatch<TId> left, EventToPutWithIdOnRecordFilterMatch<TId> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -51,15 +49,15 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="EventToPutWithIdOnMatch{TId}"/> are not equal.
+        /// Determines whether two objects of type <see cref="EventToPutWithIdOnRecordFilterMatch{TId}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(EventToPutWithIdOnMatch<TId> left, EventToPutWithIdOnMatch<TId> right) => !(left == right);
+        public static bool operator !=(EventToPutWithIdOnRecordFilterMatch<TId> left, EventToPutWithIdOnRecordFilterMatch<TId> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(EventToPutWithIdOnMatch<TId> other)
+        public bool Equals(EventToPutWithIdOnRecordFilterMatch<TId> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -71,8 +69,7 @@ namespace Naos.Reactor.Domain
                 return false;
             }
 
-            var result = this.StatusToMatch.IsEqualTo(other.StatusToMatch)
-                      && this.CompositeHandlingStatusMatchStrategy.IsEqualTo(other.CompositeHandlingStatusMatchStrategy)
+            var result = this.RecordExistsMatchStrategy.IsEqualTo(other.RecordExistsMatchStrategy)
                       && this.EventToPut.IsEqualTo(other.EventToPut)
                       && this.MatchTerminatesChain.IsEqualTo(other.MatchTerminatesChain)
                       && this.MatchTerminatesExecution.IsEqualTo(other.MatchTerminatesExecution);
@@ -81,12 +78,11 @@ namespace Naos.Reactor.Domain
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as EventToPutWithIdOnMatch<TId>);
+        public override bool Equals(object obj) => this == (obj as EventToPutWithIdOnRecordFilterMatch<TId>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.StatusToMatch)
-            .Hash(this.CompositeHandlingStatusMatchStrategy)
+            .Hash(this.RecordExistsMatchStrategy)
             .Hash(this.EventToPut)
             .Hash(this.MatchTerminatesChain)
             .Hash(this.MatchTerminatesExecution)
@@ -96,11 +92,10 @@ namespace Naos.Reactor.Domain
         public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        public EventToPutWithIdOnMatch<TId> DeepClone()
+        public EventToPutWithIdOnRecordFilterMatch<TId> DeepClone()
         {
-            var result = new EventToPutWithIdOnMatch<TId>(
-                                 this.StatusToMatch.DeepClone(),
-                                 this.CompositeHandlingStatusMatchStrategy.DeepClone(),
+            var result = new EventToPutWithIdOnRecordFilterMatch<TId>(
+                                 this.RecordExistsMatchStrategy.DeepClone(),
                                  this.EventToPut?.DeepClone(),
                                  this.MatchTerminatesChain.DeepClone(),
                                  this.MatchTerminatesExecution.DeepClone());
@@ -109,10 +104,10 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="StatusToMatch" />.
+        /// Deep clones this object with a new <see cref="RecordExistsMatchStrategy" />.
         /// </summary>
-        /// <param name="statusToMatch">The new <see cref="StatusToMatch" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EventToPutWithIdOnMatch{TId}" /> using the specified <paramref name="statusToMatch" /> for <see cref="StatusToMatch" /> and a deep clone of every other property.</returns>
+        /// <param name="recordExistsMatchStrategy">The new <see cref="RecordExistsMatchStrategy" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="EventToPutWithIdOnRecordFilterMatch{TId}" /> using the specified <paramref name="recordExistsMatchStrategy" /> for <see cref="RecordExistsMatchStrategy" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -130,45 +125,10 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EventToPutWithIdOnMatch<TId> DeepCloneWithStatusToMatch(CompositeHandlingStatus statusToMatch)
+        public EventToPutWithIdOnRecordFilterMatch<TId> DeepCloneWithRecordExistsMatchStrategy(RecordExistsMatchStrategy recordExistsMatchStrategy)
         {
-            var result = new EventToPutWithIdOnMatch<TId>(
-                                 statusToMatch,
-                                 this.CompositeHandlingStatusMatchStrategy.DeepClone(),
-                                 this.EventToPut?.DeepClone(),
-                                 this.MatchTerminatesChain.DeepClone(),
-                                 this.MatchTerminatesExecution.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="CompositeHandlingStatusMatchStrategy" />.
-        /// </summary>
-        /// <param name="compositeHandlingStatusMatchStrategy">The new <see cref="CompositeHandlingStatusMatchStrategy" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EventToPutWithIdOnMatch{TId}" /> using the specified <paramref name="compositeHandlingStatusMatchStrategy" /> for <see cref="CompositeHandlingStatusMatchStrategy" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EventToPutWithIdOnMatch<TId> DeepCloneWithCompositeHandlingStatusMatchStrategy(CompositeHandlingStatusMatchStrategy compositeHandlingStatusMatchStrategy)
-        {
-            var result = new EventToPutWithIdOnMatch<TId>(
-                                 this.StatusToMatch.DeepClone(),
-                                 compositeHandlingStatusMatchStrategy,
+            var result = new EventToPutWithIdOnRecordFilterMatch<TId>(
+                                 recordExistsMatchStrategy,
                                  this.EventToPut?.DeepClone(),
                                  this.MatchTerminatesChain.DeepClone(),
                                  this.MatchTerminatesExecution.DeepClone());
@@ -180,7 +140,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="EventToPut" />.
         /// </summary>
         /// <param name="eventToPut">The new <see cref="EventToPut" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EventToPutWithIdOnMatch{TId}" /> using the specified <paramref name="eventToPut" /> for <see cref="EventToPut" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="EventToPutWithIdOnRecordFilterMatch{TId}" /> using the specified <paramref name="eventToPut" /> for <see cref="EventToPut" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -198,11 +158,10 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EventToPutWithIdOnMatch<TId> DeepCloneWithEventToPut(EventToPutWithId<TId> eventToPut)
+        public EventToPutWithIdOnRecordFilterMatch<TId> DeepCloneWithEventToPut(EventToPutWithId<TId> eventToPut)
         {
-            var result = new EventToPutWithIdOnMatch<TId>(
-                                 this.StatusToMatch.DeepClone(),
-                                 this.CompositeHandlingStatusMatchStrategy.DeepClone(),
+            var result = new EventToPutWithIdOnRecordFilterMatch<TId>(
+                                 this.RecordExistsMatchStrategy.DeepClone(),
                                  eventToPut,
                                  this.MatchTerminatesChain.DeepClone(),
                                  this.MatchTerminatesExecution.DeepClone());
@@ -214,7 +173,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="MatchTerminatesChain" />.
         /// </summary>
         /// <param name="matchTerminatesChain">The new <see cref="MatchTerminatesChain" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EventToPutWithIdOnMatch{TId}" /> using the specified <paramref name="matchTerminatesChain" /> for <see cref="MatchTerminatesChain" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="EventToPutWithIdOnRecordFilterMatch{TId}" /> using the specified <paramref name="matchTerminatesChain" /> for <see cref="MatchTerminatesChain" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -232,11 +191,10 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EventToPutWithIdOnMatch<TId> DeepCloneWithMatchTerminatesChain(bool matchTerminatesChain)
+        public EventToPutWithIdOnRecordFilterMatch<TId> DeepCloneWithMatchTerminatesChain(bool matchTerminatesChain)
         {
-            var result = new EventToPutWithIdOnMatch<TId>(
-                                 this.StatusToMatch.DeepClone(),
-                                 this.CompositeHandlingStatusMatchStrategy.DeepClone(),
+            var result = new EventToPutWithIdOnRecordFilterMatch<TId>(
+                                 this.RecordExistsMatchStrategy.DeepClone(),
                                  this.EventToPut?.DeepClone(),
                                  matchTerminatesChain,
                                  this.MatchTerminatesExecution.DeepClone());
@@ -248,7 +206,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="MatchTerminatesExecution" />.
         /// </summary>
         /// <param name="matchTerminatesExecution">The new <see cref="MatchTerminatesExecution" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EventToPutWithIdOnMatch{TId}" /> using the specified <paramref name="matchTerminatesExecution" /> for <see cref="MatchTerminatesExecution" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="EventToPutWithIdOnRecordFilterMatch{TId}" /> using the specified <paramref name="matchTerminatesExecution" /> for <see cref="MatchTerminatesExecution" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -266,11 +224,10 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EventToPutWithIdOnMatch<TId> DeepCloneWithMatchTerminatesExecution(bool matchTerminatesExecution)
+        public EventToPutWithIdOnRecordFilterMatch<TId> DeepCloneWithMatchTerminatesExecution(bool matchTerminatesExecution)
         {
-            var result = new EventToPutWithIdOnMatch<TId>(
-                                 this.StatusToMatch.DeepClone(),
-                                 this.CompositeHandlingStatusMatchStrategy.DeepClone(),
+            var result = new EventToPutWithIdOnRecordFilterMatch<TId>(
+                                 this.RecordExistsMatchStrategy.DeepClone(),
                                  this.EventToPut?.DeepClone(),
                                  this.MatchTerminatesChain.DeepClone(),
                                  matchTerminatesExecution);
@@ -282,7 +239,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.{this.GetType().ToStringReadable()}: StatusToMatch = {this.StatusToMatch.ToString() ?? "<null>"}, CompositeHandlingStatusMatchStrategy = {this.CompositeHandlingStatusMatchStrategy.ToString() ?? "<null>"}, EventToPut = {this.EventToPut?.ToString() ?? "<null>"}, MatchTerminatesChain = {this.MatchTerminatesChain.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, MatchTerminatesExecution = {this.MatchTerminatesExecution.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.{this.GetType().ToStringReadable()}: RecordExistsMatchStrategy = {this.RecordExistsMatchStrategy.ToString() ?? "<null>"}, EventToPut = {this.EventToPut?.ToString() ?? "<null>"}, MatchTerminatesChain = {this.MatchTerminatesChain.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, MatchTerminatesExecution = {this.MatchTerminatesExecution.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

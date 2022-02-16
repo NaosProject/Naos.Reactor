@@ -19,12 +19,13 @@ namespace Naos.Reactor.Domain
         /// <summary>
         /// Initializes a new instance of the <see cref="CheckRecordHandlingResult"/> class.
         /// </summary>
-        /// <param name="streamRepresentation"></param>
+        /// <param name="streamRepresentation">Stream results are from.</param>
         /// <param name="internalRecordIdToHandlingStatusMap">The map of the handling concern to <see cref="HandlingStatus"/>.</param>
         public CheckRecordHandlingResult(
             IStreamRepresentation streamRepresentation,
             IReadOnlyDictionary<long, HandlingStatus> internalRecordIdToHandlingStatusMap)
         {
+            streamRepresentation.MustForArg(nameof(streamRepresentation)).NotBeNull();
             internalRecordIdToHandlingStatusMap.MustForArg(nameof(internalRecordIdToHandlingStatusMap)).NotBeNullNorEmptyDictionary();
 
             this.StreamRepresentation = streamRepresentation;

@@ -39,6 +39,16 @@ namespace Naos.Reactor.Domain.Test
         public DefaultReactorDummyFactory()
         {
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CheckRecordExistsOp(
+                                 A.Dummy<IStreamRepresentation>(),
+                                 A.Dummy<RecordFilter>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CheckRecordExistsResult(
+                                 A.Dummy<IStreamRepresentation>(),
+                                 A.Dummy<bool>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CheckRecordHandlingOp(
                                  A.Dummy<IStreamRepresentation>(),
                                  A.Dummy<string>(),
@@ -62,9 +72,16 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new EventToPutWithIdOnMatch<Version>(
+                () => new EventToPutWithIdOnHandlingStatusMatch<Version>(
                                  A.Dummy<CompositeHandlingStatus>(),
                                  A.Dummy<CompositeHandlingStatusMatchStrategy>(),
+                                 A.Dummy<EventToPutWithId<Version>>(),
+                                 A.Dummy<bool>(),
+                                 A.Dummy<bool>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new EventToPutWithIdOnRecordFilterMatch<Version>(
+                                 A.Dummy<RecordExistsMatchStrategy>(),
                                  A.Dummy<EventToPutWithId<Version>>(),
                                  A.Dummy<bool>(),
                                  A.Dummy<bool>()));
@@ -96,7 +113,13 @@ namespace Naos.Reactor.Domain.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new WriteEventOnMatchingHandlingStatusOp<Version>(
                                  A.Dummy<IReadOnlyCollection<CheckRecordHandlingOp>>(),
-                                 A.Dummy<IReadOnlyList<EventToPutWithIdOnMatch<Version>>>(),
+                                 A.Dummy<IReadOnlyList<EventToPutWithIdOnHandlingStatusMatch<Version>>>(),
+                                 A.Dummy<TimeSpan>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new WriteEventOnMatchingRecordFilterOp<Version>(
+                                 A.Dummy<IReadOnlyCollection<CheckRecordExistsOp>>(),
+                                 A.Dummy<IReadOnlyList<EventToPutWithIdOnRecordFilterMatch<Version>>>(),
                                  A.Dummy<TimeSpan>()));
         }
 

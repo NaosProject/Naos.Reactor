@@ -9,7 +9,7 @@ namespace Naos.Reactor.Domain
     using Naos.CodeAnalysis.Recipes;
 
     /// <summary>
-    /// Enumeration of the ways to match two <see cref="Naos.Database.Domain.CompositeHandlingStatus"/>.
+    /// Enumeration of the ways to match to <see cref="Naos.Database.Domain.CompositeHandlingStatus"/>.
     /// </summary>
     public enum CompositeHandlingStatusMatchStrategy
     {
