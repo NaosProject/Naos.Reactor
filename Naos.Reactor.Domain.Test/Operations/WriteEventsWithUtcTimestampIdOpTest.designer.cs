@@ -33,103 +33,220 @@ namespace Naos.Reactor.Domain.Test
 
     using static global::System.FormattableString;
 
-    public static partial class RunReactorOpTest
+    public static partial class WriteEventsWithUtcTimestampIdOpTest
     {
-        private static readonly StringRepresentationTestScenarios<RunReactorOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<RunReactorOp>()
+        private static readonly StringRepresentationTestScenarios<WriteEventsWithUtcTimestampIdOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<WriteEventsWithUtcTimestampIdOp>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<RunReactorOp>
+                new StringRepresentationTestScenario<WriteEventsWithUtcTimestampIdOp>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<RunReactorOp>();
+                        var systemUnderTest = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<RunReactorOp>
+                        var result = new SystemUnderTestExpectedStringRepresentation<WriteEventsWithUtcTimestampIdOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.RunReactorOp: DeprecatedIdentifierType = {systemUnderTest.DeprecatedIdentifierType?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.WriteEventsWithUtcTimestampIdOp: IdPrefix = {systemUnderTest.IdPrefix?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, EventsToPut = {systemUnderTest.EventsToPut?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<RunReactorOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<RunReactorOp>()
+        private static readonly ConstructorArgumentValidationTestScenarios<WriteEventsWithUtcTimestampIdOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<WriteEventsWithUtcTimestampIdOp>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<RunReactorOp>
+                new ConstructorArgumentValidationTestScenario<WriteEventsWithUtcTimestampIdOp>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'deprecatedIdentifierType' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'idPrefix' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var result = new RunReactorOp(
+                        var referenceObject = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
+
+                        var result = new WriteEventsWithUtcTimestampIdOp(
+                                             null,
+                                             referenceObject.EventsToPut);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "idPrefix", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<WriteEventsWithUtcTimestampIdOp>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'idPrefix' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
+
+                        var result = new WriteEventsWithUtcTimestampIdOp(
+                                             Invariant($"  {Environment.NewLine}  "),
+                                             referenceObject.EventsToPut);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "idPrefix", "white space", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<WriteEventsWithUtcTimestampIdOp>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'eventsToPut' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
+
+                        var result = new WriteEventsWithUtcTimestampIdOp(
+                                             referenceObject.IdPrefix,
                                              null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "deprecatedIdentifierType", },
+                    ExpectedExceptionMessageContains = new[] { "eventsToPut", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<WriteEventsWithUtcTimestampIdOp>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'eventsToPut' is an empty enumerable scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
+
+                        var result = new WriteEventsWithUtcTimestampIdOp(
+                                             referenceObject.IdPrefix,
+                                             new List<EventToPutWithId<string>>());
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "eventsToPut", "is an empty enumerable", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<WriteEventsWithUtcTimestampIdOp>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'eventsToPut' contains a null element scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
+
+                        var result = new WriteEventsWithUtcTimestampIdOp(
+                                             referenceObject.IdPrefix,
+                                             new EventToPutWithId<string>[0].Concat(referenceObject.EventsToPut).Concat(new EventToPutWithId<string>[] { null }).Concat(referenceObject.EventsToPut).ToList());
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "eventsToPut", "contains at least one null element", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<RunReactorOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<RunReactorOp>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<WriteEventsWithUtcTimestampIdOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<WriteEventsWithUtcTimestampIdOp>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<RunReactorOp>
+                new ConstructorPropertyAssignmentTestScenario<WriteEventsWithUtcTimestampIdOp>
                 {
-                    Name = "DeprecatedIdentifierType should return same 'deprecatedIdentifierType' parameter passed to constructor when getting",
+                    Name = "IdPrefix should return same 'idPrefix' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<RunReactorOp>();
+                        var referenceObject = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<RunReactorOp>
+                        var result = new SystemUnderTestExpectedPropertyValue<WriteEventsWithUtcTimestampIdOp>
                         {
-                            SystemUnderTest = new RunReactorOp(
-                                                      referenceObject.DeprecatedIdentifierType),
-                            ExpectedPropertyValue = referenceObject.DeprecatedIdentifierType,
+                            SystemUnderTest = new WriteEventsWithUtcTimestampIdOp(
+                                                      referenceObject.IdPrefix,
+                                                      referenceObject.EventsToPut),
+                            ExpectedPropertyValue = referenceObject.IdPrefix,
                         };
 
                         return result;
                     },
-                    PropertyName = "DeprecatedIdentifierType",
+                    PropertyName = "IdPrefix",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<WriteEventsWithUtcTimestampIdOp>
+                {
+                    Name = "EventsToPut should return same 'eventsToPut' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<WriteEventsWithUtcTimestampIdOp>
+                        {
+                            SystemUnderTest = new WriteEventsWithUtcTimestampIdOp(
+                                                      referenceObject.IdPrefix,
+                                                      referenceObject.EventsToPut),
+                            ExpectedPropertyValue = referenceObject.EventsToPut,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "EventsToPut",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<RunReactorOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<RunReactorOp>()
+        private static readonly DeepCloneWithTestScenarios<WriteEventsWithUtcTimestampIdOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<WriteEventsWithUtcTimestampIdOp>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<RunReactorOp>
+                new DeepCloneWithTestScenario<WriteEventsWithUtcTimestampIdOp>
                 {
-                    Name = "DeepCloneWithDeprecatedIdentifierType should deep clone object and replace DeprecatedIdentifierType with the provided deprecatedIdentifierType",
-                    WithPropertyName = "DeprecatedIdentifierType",
+                    Name = "DeepCloneWithIdPrefix should deep clone object and replace IdPrefix with the provided idPrefix",
+                    WithPropertyName = "IdPrefix",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<RunReactorOp>();
+                        var systemUnderTest = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
 
-                        var referenceObject = A.Dummy<RunReactorOp>().ThatIs(_ => !systemUnderTest.DeprecatedIdentifierType.IsEqualTo(_.DeprecatedIdentifierType));
+                        var referenceObject = A.Dummy<WriteEventsWithUtcTimestampIdOp>().ThatIs(_ => !systemUnderTest.IdPrefix.IsEqualTo(_.IdPrefix));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<RunReactorOp>
+                        var result = new SystemUnderTestDeepCloneWithValue<WriteEventsWithUtcTimestampIdOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.DeprecatedIdentifierType,
+                            DeepCloneWithValue = referenceObject.IdPrefix,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<WriteEventsWithUtcTimestampIdOp>
+                {
+                    Name = "DeepCloneWithEventsToPut should deep clone object and replace EventsToPut with the provided eventsToPut",
+                    WithPropertyName = "EventsToPut",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
+
+                        var referenceObject = A.Dummy<WriteEventsWithUtcTimestampIdOp>().ThatIs(_ => !systemUnderTest.EventsToPut.IsEqualTo(_.EventsToPut));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<WriteEventsWithUtcTimestampIdOp>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.EventsToPut,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly RunReactorOp ReferenceObjectForEquatableTestScenarios = A.Dummy<RunReactorOp>();
+        private static readonly WriteEventsWithUtcTimestampIdOp ReferenceObjectForEquatableTestScenarios = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
 
-        private static readonly EquatableTestScenarios<RunReactorOp> EquatableTestScenarios = new EquatableTestScenarios<RunReactorOp>()
+        private static readonly EquatableTestScenarios<WriteEventsWithUtcTimestampIdOp> EquatableTestScenarios = new EquatableTestScenarios<WriteEventsWithUtcTimestampIdOp>()
             .AddScenario(() =>
-                new EquatableTestScenario<RunReactorOp>
+                new EquatableTestScenario<WriteEventsWithUtcTimestampIdOp>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new RunReactorOp[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new WriteEventsWithUtcTimestampIdOp[]
                     {
-                        new RunReactorOp(
-                                ReferenceObjectForEquatableTestScenarios.DeprecatedIdentifierType),
+                        new WriteEventsWithUtcTimestampIdOp(
+                                ReferenceObjectForEquatableTestScenarios.IdPrefix,
+                                ReferenceObjectForEquatableTestScenarios.EventsToPut),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new RunReactorOp[]
+                    ObjectsThatAreNotEqualToReferenceObject = new WriteEventsWithUtcTimestampIdOp[]
                     {
-                        new RunReactorOp(
-                                A.Dummy<RunReactorOp>().Whose(_ => !_.DeprecatedIdentifierType.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DeprecatedIdentifierType)).DeprecatedIdentifierType),
+                        new WriteEventsWithUtcTimestampIdOp(
+                                A.Dummy<WriteEventsWithUtcTimestampIdOp>().Whose(_ => !_.IdPrefix.IsEqualTo(ReferenceObjectForEquatableTestScenarios.IdPrefix)).IdPrefix,
+                                ReferenceObjectForEquatableTestScenarios.EventsToPut),
+                        new WriteEventsWithUtcTimestampIdOp(
+                                ReferenceObjectForEquatableTestScenarios.IdPrefix,
+                                A.Dummy<WriteEventsWithUtcTimestampIdOp>().Whose(_ => !_.EventsToPut.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EventsToPut)).EventsToPut),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -143,10 +260,10 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<EvaluateRegisteredReactionOp>(),
                         A.Dummy<EvaluateScheduleOp>(),
                         A.Dummy<ExecuteOpOnScheduleOp>(),
+                        A.Dummy<RunReactorOp>(),
                         A.Dummy<RunScheduleOp>(),
                         A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>(),
                         A.Dummy<WriteEventOnMatchingRecordFilterOp<Version>>(),
-                        A.Dummy<WriteEventsWithUtcTimestampIdOp>(),
                     },
                 });
 
@@ -168,12 +285,12 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void RunReactorOp___Should_implement_IModel_of_RunReactorOp___When_reflecting()
+            public static void WriteEventsWithUtcTimestampIdOp___Should_implement_IModel_of_WriteEventsWithUtcTimestampIdOp___When_reflecting()
             {
                 // Arrange
-                var type = typeof(RunReactorOp);
+                var type = typeof(WriteEventsWithUtcTimestampIdOp);
 
-                var expectedModelMethods = typeof(IModel<RunReactorOp>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<WriteEventsWithUtcTimestampIdOp>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -183,7 +300,7 @@ namespace Naos.Reactor.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<RunReactorOp>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<WriteEventsWithUtcTimestampIdOp>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -201,10 +318,10 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void RunReactorOp___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void WriteEventsWithUtcTimestampIdOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(RunReactorOp);
+                var type = typeof(WriteEventsWithUtcTimestampIdOp);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -384,10 +501,10 @@ namespace Naos.Reactor.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<RunReactorOp>();
+                var systemUnderTest = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
 
                 // Act
-                var actual = (RunReactorOp)systemUnderTest.Clone();
+                var actual = (WriteEventsWithUtcTimestampIdOp)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -411,7 +528,7 @@ namespace Naos.Reactor.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<RunReactorOp>();
+                var systemUnderTest = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -420,16 +537,16 @@ namespace Naos.Reactor.Domain.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.DeprecatedIdentifierType == null)
+                if (systemUnderTest.EventsToPut == null)
                 {
-                    actual.DeprecatedIdentifierType.AsTest().Must().BeNull();
+                    actual.EventsToPut.AsTest().Must().BeNull();
                 }
-                else if (!actual.DeprecatedIdentifierType.GetType().IsValueType)
+                else if (!actual.EventsToPut.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.DeprecatedIdentifierType.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.DeprecatedIdentifierType);
+                    actual.EventsToPut.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.EventsToPut);
                 }
             }
 
@@ -449,7 +566,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "DeprecatedIdentifierType" };
+                var propertyNames = new string[] { "IdPrefix", "EventsToPut" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -462,12 +579,12 @@ namespace Naos.Reactor.Domain.Test
                     }
 
                     // Act
-                    var actual = (RunReactorOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (WriteEventsWithUtcTimestampIdOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(RunReactorOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(WriteEventsWithUtcTimestampIdOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -529,7 +646,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<RunReactorOp>();
+                var expected = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -558,7 +675,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<RunReactorOp>();
+                var expected = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -587,7 +704,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<RunReactorOp>();
+                var expected = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -616,7 +733,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<RunReactorOp>();
+                var expected = A.Dummy<WriteEventsWithUtcTimestampIdOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -650,8 +767,8 @@ namespace Naos.Reactor.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                RunReactorOp systemUnderTest1 = null;
-                RunReactorOp systemUnderTest2 = null;
+                WriteEventsWithUtcTimestampIdOp systemUnderTest1 = null;
+                WriteEventsWithUtcTimestampIdOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -681,7 +798,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    RunReactorOp systemUnderTest = null;
+                    WriteEventsWithUtcTimestampIdOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -830,8 +947,8 @@ namespace Naos.Reactor.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                RunReactorOp systemUnderTest1 = null;
-                RunReactorOp systemUnderTest2 = null;
+                WriteEventsWithUtcTimestampIdOp systemUnderTest1 = null;
+                WriteEventsWithUtcTimestampIdOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -861,7 +978,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    RunReactorOp systemUnderTest = null;
+                    WriteEventsWithUtcTimestampIdOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1293,14 +1410,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RunReactorOp___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_WriteEventsWithUtcTimestampIdOp___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    RunReactorOp systemUnderTest = null;
+                    WriteEventsWithUtcTimestampIdOp systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1324,7 +1441,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RunReactorOp___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_WriteEventsWithUtcTimestampIdOp___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1352,7 +1469,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RunReactorOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_WriteEventsWithUtcTimestampIdOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1380,7 +1497,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RunReactorOp___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_WriteEventsWithUtcTimestampIdOp___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1408,7 +1525,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RunReactorOp___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_WriteEventsWithUtcTimestampIdOp___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1569,7 +1686,7 @@ namespace Naos.Reactor.Domain.Test
         [SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")]
         public static class Hashing
         {
-            [Fact]
+            [Fact(Skip = "It's possible (and even probable after a few runs of this test) that two dummy, unequal models will have the same hash code.  The model being tested contains at least one property who's type (or a type nested within the generic type, or a property of the IModel type) is a dictionary with keys that are not comparable or an unordered collection with elements that are not comparable.  In these cases the hashing method cannot hash the elements and must resort to hashing the element count.  Two dummies could easily have the same element count for such a type.")]
             [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
             [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
             [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]

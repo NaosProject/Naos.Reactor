@@ -15,6 +15,7 @@ namespace Naos.Reactor.Domain.Test
 
     using global::FakeItEasy;
 
+    using global::Naos.Cron;
     using global::Naos.Database.Domain;
     using global::Naos.Reactor.Domain;
 
@@ -64,6 +65,12 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<RegisteredReaction>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new EvaluateScheduleOp(
+                                 A.Dummy<ISchedule>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<DateTime?>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new EventToPutWithId<Version>(
                                  A.Dummy<Version>(),
                                  A.Dummy<IEvent>(),
@@ -87,6 +94,11 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<bool>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ExecuteOpOnScheduleOp(
+                                 A.Dummy<IVoidOperation>(),
+                                 A.Dummy<ISchedule>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ReactionEvent(
                                  A.Dummy<string>(),
                                  A.Dummy<string>(),
@@ -102,6 +114,10 @@ namespace Naos.Reactor.Domain.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RunReactorOp(
+                                 A.Dummy<TypeRepresentation>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new RunScheduleOp(
                                  A.Dummy<TypeRepresentation>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -121,6 +137,11 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IReadOnlyCollection<CheckRecordExistsOp>>(),
                                  A.Dummy<IReadOnlyList<EventToPutWithIdOnRecordFilterMatch<Version>>>(),
                                  A.Dummy<TimeSpan>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new WriteEventsWithUtcTimestampIdOp(
+                                 A.Dummy<string>(),
+                                 A.Dummy<IReadOnlyCollection<EventToPutWithId<string>>>()));
         }
 
         /// <inheritdoc />

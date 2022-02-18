@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ProcessReactionsProtocol.cs" company="Naos Project">
+// <copyright file="RunReactorProtocol.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ namespace Naos.Reactor.Domain
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Process all new reactions, this is the entry point for all produced events.
+    /// Protocol for <see cref="RunReactorOp"/>.
     /// </summary>
     public partial class RunReactorProtocol : SyncSpecificVoidProtocolBase<RunReactorOp>
     {
@@ -73,7 +73,7 @@ namespace Naos.Reactor.Domain
                 registeredReactionRecord
                    .Payload
                    .PayloadTypeRepresentation
-                   .MustForOp("recordInRegisteredReactionStreamMustBeRegisteredReactionIfNotDeprecatedId")
+                   .MustForOp("recordFromRegisteredReactionStreamExpectedToBeRegisteredReaction")
                    .BeEqualTo(typeof(RegisteredReaction).ToRepresentation());
 
                 var registeredReaction =

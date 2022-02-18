@@ -331,8 +331,12 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<CheckRecordExistsOp>(),
                         A.Dummy<CheckRecordHandlingOp>(),
                         A.Dummy<EvaluateRegisteredReactionOp>(),
+                        A.Dummy<EvaluateScheduleOp>(),
+                        A.Dummy<ExecuteOpOnScheduleOp>(),
                         A.Dummy<RunReactorOp>(),
+                        A.Dummy<RunScheduleOp>(),
                         A.Dummy<WriteEventOnMatchingRecordFilterOp<Version>>(),
+                        A.Dummy<WriteEventsWithUtcTimestampIdOp>(),
                     },
                 });
 
