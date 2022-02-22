@@ -13,22 +13,29 @@ namespace Naos.Reactor.Domain
     /// <summary>
     /// Operation to execute another operation on a schedule.
     /// </summary>
-    public partial class ExecuteOpOnScheduleOp : VoidOperationBase
+    public partial class ExecuteOpOnScheduleOp : VoidOperationBase, IHaveStringId
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CheckRecordExistsOp"/> class.
         /// </summary>
+        /// <param name="id">The identifier of the scheduled operation.</param>
         /// <param name="operation">The operation to run on a schedule.</param>
         /// <param name="schedule">The schedule to execute the operation on.</param>
         public ExecuteOpOnScheduleOp(
-            IVoidOperation operation,// => WriteEventToStream
+            string id,
+            IVoidOperation operation,
             ISchedule schedule)
         {
-            this.Operation = operation;
-            this.Schedule = schedule;
             operation.MustForArg(nameof(operation)).NotBeNull();
             schedule.MustForArg(nameof(schedule)).NotBeNull();
+
+            this.Id = id;
+            this.Operation = operation;
+            this.Schedule = schedule;
         }
+
+        /// <inheritdoc />
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets the operation.

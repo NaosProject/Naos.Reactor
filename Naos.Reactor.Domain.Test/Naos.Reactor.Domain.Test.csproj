@@ -336,6 +336,10 @@
     <Compile Include="Operations\RunScheduleOpTest.designer.cs">
       <DependentUpon>RunScheduleOpTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\ScheduledExecutionEventTest.cs" />
+    <Compile Include="Events\ScheduledExecutionEventTest.designer.cs">
+      <DependentUpon>ScheduledExecutionEventTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="SerializationConfigurationTypes.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ReactorDummyFactory.cs" />

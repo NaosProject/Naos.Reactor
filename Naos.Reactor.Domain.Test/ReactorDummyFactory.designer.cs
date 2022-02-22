@@ -95,6 +95,7 @@ namespace Naos.Reactor.Domain.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ExecuteOpOnScheduleOp(
+                                 A.Dummy<string>(),
                                  A.Dummy<IVoidOperation>(),
                                  A.Dummy<ISchedule>()));
 
@@ -119,6 +120,15 @@ namespace Naos.Reactor.Domain.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RunScheduleOp(
                                  A.Dummy<TypeRepresentation>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ScheduledExecutionEvent(
+                                 A.Dummy<string>(),
+                                 A.Dummy<IVoidOperation>(),
+                                 A.Dummy<ISchedule>(),
+                                 A.Dummy<DateTime?>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new StringIdentifiedReactorDependency(

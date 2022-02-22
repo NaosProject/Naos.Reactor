@@ -15,31 +15,56 @@ namespace Naos.Reactor.Domain
     using static System.FormattableString;
 
     /// <summary>
-    /// Protocol for <see cref="EvaluateScheduleOp"/>.
+    /// Protocol for <see cref="ExecuteOpOnScheduleOp"/>.
     /// </summary>
-    public partial class ExecuteOpOnScheduleProtocol : SyncSpecificReturningProtocolBase<EvaluateScheduleOp, bool>
+    public partial class ExecuteOpOnScheduleProtocol : SyncSpecificVoidProtocolBase<ExecuteOpOnScheduleOp>
     {
+        private readonly IReadOnlyStream scheduleExecutionReadStream;
+        private readonly IWriteOnlyStream scheduleExecutionWriteStream;
+        private readonly IProtocolFactory protocolFactory;
+        private readonly ISyncAndAsyncReturningProtocol<EvaluateScheduleOp, bool> evaluateScheduleProtocol;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ExecuteOpOnScheduleProtocol"/> class.
         /// </summary>
-        public ExecuteOpOnScheduleProtocol()
+        /// <param name="scheduleExecutionReadStream">The schedule execution read stream.</param>
+        /// <param name="scheduleExecutionWriteStream">The schedule execution write stream.</param>
+        /// <param name="protocolFactory">The factory to determine the appropriate protocol to execute the scheduled operation.</param>
+        /// <param name="evaluateScheduleProtocol">The protocol to evaluate schedules.</param>
+        public ExecuteOpOnScheduleProtocol(
+            IReadOnlyStream scheduleExecutionReadStream,
+            IWriteOnlyStream scheduleExecutionWriteStream,
+            IProtocolFactory protocolFactory,
+            ISyncAndAsyncReturningProtocol<EvaluateScheduleOp, bool> evaluateScheduleProtocol)
         {
+            scheduleExecutionReadStream.MustForArg(nameof(scheduleExecutionReadStream)).NotBeNull();
+            scheduleExecutionWriteStream.MustForArg(nameof(scheduleExecutionWriteStream)).NotBeNull();
+            protocolFactory.MustForArg(nameof(protocolFactory)).NotBeNull();
+            evaluateScheduleProtocol.MustForArg(nameof(evaluateScheduleProtocol)).NotBeNull();
+
+            this.scheduleExecutionReadStream = scheduleExecutionReadStream;
+            this.scheduleExecutionWriteStream = scheduleExecutionWriteStream;
+            this.protocolFactory = protocolFactory;
+            this.evaluateScheduleProtocol = evaluateScheduleProtocol;
         }
 
         /// <inheritdoc />
-        public override bool Execute(
-            EvaluateScheduleOp operation)
+        public override void Execute(
+            ExecuteOpOnScheduleOp operation)
         {
             operation.MustForArg(nameof(operation)).NotBeNull();
 
-            if (operation.Schedule is DailyScheduleInUtc dailySchedule)
+            var previousExecution = this.scheduleExecutionReadStream.GetLatestObjectById<string, ScheduledExecutionEvent>(operation.Id);
+
+            var utcNow = DateTime.Now;
+            var evaluateScheduleOp = new EvaluateScheduleOp(operation.Schedule, utcNow, previousExecution?.TimestampUtc);
+            var evaluationResult = this.evaluateScheduleProtocol.Execute(evaluateScheduleOp);
+            if (evaluationResult)
             {
-                //TODO: how to calc and ensure it doesn't double publish?
-                throw new NotImplementedException();
-            }
-            else
-            {
-                throw new NotSupportedException(Invariant($"{nameof(operation)}.{nameof(operation.Schedule)} type '{operation.Schedule.GetType().ToStringReadable()}' is not a supported schedule type."));
+                var protocol = this.protocolFactory.Execute(new GetProtocolOp(operation.Operation));
+                protocol.ExecuteViaReflection(operation.Operation);
+                var executedEvent = new ScheduledExecutionEvent(operation.Id, operation.Operation, operation.Schedule, evaluateScheduleOp.PreviousExecutionTimestampUtc, utcNow);
+                this.scheduleExecutionWriteStream.PutWithId(operation.Id, executedEvent);
             }
         }
     }

@@ -131,10 +131,14 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Events\ReactionEvent.cs" />
+    <Compile Include="Events\ScheduledExecutionEvent.designer.cs">
+      <DependentUpon>ScheduledExecutionEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\ScheduledExecutionEvent.cs" />
     <Compile Include="Events\ReactionEvent.designer.cs">
       <DependentUpon>ReactionEvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\ReactionEvent.cs" />
     <Compile Include="Logic\RecordExistsMatchStrategyExtensions.cs" />
     <Compile Include="Logic\CompositeHandlingStatusMatchStrategyExtensions.cs" />
     <Compile Include="Model\Classes\CheckRecordExistsResult.cs" />
