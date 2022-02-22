@@ -20,20 +20,20 @@ namespace Naos.Reactor.Domain
         /// Initializes a new instance of the <see cref="EvaluateScheduleOp"/> class.
         /// </summary>
         /// <param name="schedule">The schedule to evaluate.</param>
-        /// <param name="utcTimeToEvaluate">The timestamp in UTC to evaluate.</param>
-        /// <param name="utcTimePreviousExecution">The timestamp in UTC of the previous execution.</param>
+        /// <param name="evaluationTimestampUtc">The timestamp in UTC to evaluate.</param>
+        /// <param name="previousExecutionTimestampUtc">The timestamp in UTC of the previous execution.</param>
         public EvaluateScheduleOp(
             ISchedule schedule,
-            DateTime utcTimeToEvaluate,
-            DateTime? utcTimePreviousExecution)
+            DateTime evaluationTimestampUtc,
+            DateTime? previousExecutionTimestampUtc)
         {
             schedule.MustForArg(nameof(schedule)).NotBeNull();
-            utcTimeToEvaluate.MustForArg(nameof(utcTimeToEvaluate)).BeUtcDateTime();
-            utcTimePreviousExecution.MustForArg(nameof(utcTimePreviousExecution)).BeUtcDateTimeWhenNotNull();
+            evaluationTimestampUtc.MustForArg(nameof(evaluationTimestampUtc)).BeUtcDateTime();
+            previousExecutionTimestampUtc.MustForArg(nameof(previousExecutionTimestampUtc)).BeUtcDateTimeWhenNotNull();
 
             this.Schedule = schedule;
-            this.UtcTimeToEvaluate = utcTimeToEvaluate;
-            this.UtcTimePreviousExecution = utcTimePreviousExecution;
+            this.EvaluationTimestampUtc = evaluationTimestampUtc;
+            this.PreviousExecutionTimestampUtc = previousExecutionTimestampUtc;
         }
 
         /// <summary>
@@ -44,11 +44,11 @@ namespace Naos.Reactor.Domain
         /// <summary>
         /// Gets the timestamp in UTC to evaluate.
         /// </summary>
-        public DateTime UtcTimeToEvaluate { get; private set; }
+        public DateTime EvaluationTimestampUtc { get; private set; }
 
         /// <summary>
         /// Gets the timestamp in UTC of the previous execution.
         /// </summary>
-        public DateTime? UtcTimePreviousExecution { get; private set; }
+        public DateTime? PreviousExecutionTimestampUtc { get; private set; }
     }
 }

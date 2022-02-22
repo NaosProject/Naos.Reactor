@@ -49,7 +49,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<EvaluateScheduleOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.EvaluateScheduleOp: Schedule = {systemUnderTest.Schedule?.ToString() ?? "<null>"}, UtcTimeToEvaluate = {systemUnderTest.UtcTimeToEvaluate.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, UtcTimePreviousExecution = {systemUnderTest.UtcTimePreviousExecution?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.EvaluateScheduleOp: Schedule = {systemUnderTest.Schedule?.ToString() ?? "<null>"}, EvaluationTimestampUtc = {systemUnderTest.EvaluationTimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, PreviousExecutionTimestampUtc = {systemUnderTest.PreviousExecutionTimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
@@ -67,8 +67,8 @@ namespace Naos.Reactor.Domain.Test
 
                         var result = new EvaluateScheduleOp(
                                              null,
-                                             referenceObject.UtcTimeToEvaluate,
-                                             referenceObject.UtcTimePreviousExecution);
+                                             referenceObject.EvaluationTimestampUtc,
+                                             referenceObject.PreviousExecutionTimestampUtc);
 
                         return result;
                     },
@@ -89,8 +89,8 @@ namespace Naos.Reactor.Domain.Test
                         {
                             SystemUnderTest = new EvaluateScheduleOp(
                                                       referenceObject.Schedule,
-                                                      referenceObject.UtcTimeToEvaluate,
-                                                      referenceObject.UtcTimePreviousExecution),
+                                                      referenceObject.EvaluationTimestampUtc,
+                                                      referenceObject.PreviousExecutionTimestampUtc),
                             ExpectedPropertyValue = referenceObject.Schedule,
                         };
 
@@ -101,7 +101,7 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<EvaluateScheduleOp>
                 {
-                    Name = "UtcTimeToEvaluate should return same 'utcTimeToEvaluate' parameter passed to constructor when getting",
+                    Name = "EvaluationTimestampUtc should return same 'evaluationTimestampUtc' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<EvaluateScheduleOp>();
@@ -110,19 +110,19 @@ namespace Naos.Reactor.Domain.Test
                         {
                             SystemUnderTest = new EvaluateScheduleOp(
                                                       referenceObject.Schedule,
-                                                      referenceObject.UtcTimeToEvaluate,
-                                                      referenceObject.UtcTimePreviousExecution),
-                            ExpectedPropertyValue = referenceObject.UtcTimeToEvaluate,
+                                                      referenceObject.EvaluationTimestampUtc,
+                                                      referenceObject.PreviousExecutionTimestampUtc),
+                            ExpectedPropertyValue = referenceObject.EvaluationTimestampUtc,
                         };
 
                         return result;
                     },
-                    PropertyName = "UtcTimeToEvaluate",
+                    PropertyName = "EvaluationTimestampUtc",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<EvaluateScheduleOp>
                 {
-                    Name = "UtcTimePreviousExecution should return same 'utcTimePreviousExecution' parameter passed to constructor when getting",
+                    Name = "PreviousExecutionTimestampUtc should return same 'previousExecutionTimestampUtc' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<EvaluateScheduleOp>();
@@ -131,14 +131,14 @@ namespace Naos.Reactor.Domain.Test
                         {
                             SystemUnderTest = new EvaluateScheduleOp(
                                                       referenceObject.Schedule,
-                                                      referenceObject.UtcTimeToEvaluate,
-                                                      referenceObject.UtcTimePreviousExecution),
-                            ExpectedPropertyValue = referenceObject.UtcTimePreviousExecution,
+                                                      referenceObject.EvaluationTimestampUtc,
+                                                      referenceObject.PreviousExecutionTimestampUtc),
+                            ExpectedPropertyValue = referenceObject.PreviousExecutionTimestampUtc,
                         };
 
                         return result;
                     },
-                    PropertyName = "UtcTimePreviousExecution",
+                    PropertyName = "PreviousExecutionTimestampUtc",
                 });
 
         private static readonly DeepCloneWithTestScenarios<EvaluateScheduleOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<EvaluateScheduleOp>()
@@ -165,18 +165,18 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<EvaluateScheduleOp>
                 {
-                    Name = "DeepCloneWithUtcTimeToEvaluate should deep clone object and replace UtcTimeToEvaluate with the provided utcTimeToEvaluate",
-                    WithPropertyName = "UtcTimeToEvaluate",
+                    Name = "DeepCloneWithEvaluationTimestampUtc should deep clone object and replace EvaluationTimestampUtc with the provided evaluationTimestampUtc",
+                    WithPropertyName = "EvaluationTimestampUtc",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<EvaluateScheduleOp>();
 
-                        var referenceObject = A.Dummy<EvaluateScheduleOp>().ThatIs(_ => !systemUnderTest.UtcTimeToEvaluate.IsEqualTo(_.UtcTimeToEvaluate));
+                        var referenceObject = A.Dummy<EvaluateScheduleOp>().ThatIs(_ => !systemUnderTest.EvaluationTimestampUtc.IsEqualTo(_.EvaluationTimestampUtc));
 
                         var result = new SystemUnderTestDeepCloneWithValue<EvaluateScheduleOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.UtcTimeToEvaluate,
+                            DeepCloneWithValue = referenceObject.EvaluationTimestampUtc,
                         };
 
                         return result;
@@ -185,18 +185,18 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<EvaluateScheduleOp>
                 {
-                    Name = "DeepCloneWithUtcTimePreviousExecution should deep clone object and replace UtcTimePreviousExecution with the provided utcTimePreviousExecution",
-                    WithPropertyName = "UtcTimePreviousExecution",
+                    Name = "DeepCloneWithPreviousExecutionTimestampUtc should deep clone object and replace PreviousExecutionTimestampUtc with the provided previousExecutionTimestampUtc",
+                    WithPropertyName = "PreviousExecutionTimestampUtc",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<EvaluateScheduleOp>();
 
-                        var referenceObject = A.Dummy<EvaluateScheduleOp>().ThatIs(_ => !systemUnderTest.UtcTimePreviousExecution.IsEqualTo(_.UtcTimePreviousExecution));
+                        var referenceObject = A.Dummy<EvaluateScheduleOp>().ThatIs(_ => !systemUnderTest.PreviousExecutionTimestampUtc.IsEqualTo(_.PreviousExecutionTimestampUtc));
 
                         var result = new SystemUnderTestDeepCloneWithValue<EvaluateScheduleOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.UtcTimePreviousExecution,
+                            DeepCloneWithValue = referenceObject.PreviousExecutionTimestampUtc,
                         };
 
                         return result;
@@ -215,23 +215,23 @@ namespace Naos.Reactor.Domain.Test
                     {
                         new EvaluateScheduleOp(
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
-                                ReferenceObjectForEquatableTestScenarios.UtcTimeToEvaluate,
-                                ReferenceObjectForEquatableTestScenarios.UtcTimePreviousExecution),
+                                ReferenceObjectForEquatableTestScenarios.EvaluationTimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.PreviousExecutionTimestampUtc),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new EvaluateScheduleOp[]
                     {
                         new EvaluateScheduleOp(
                                 A.Dummy<EvaluateScheduleOp>().Whose(_ => !_.Schedule.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Schedule)).Schedule,
-                                ReferenceObjectForEquatableTestScenarios.UtcTimeToEvaluate,
-                                ReferenceObjectForEquatableTestScenarios.UtcTimePreviousExecution),
+                                ReferenceObjectForEquatableTestScenarios.EvaluationTimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.PreviousExecutionTimestampUtc),
                         new EvaluateScheduleOp(
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
-                                A.Dummy<EvaluateScheduleOp>().Whose(_ => !_.UtcTimeToEvaluate.IsEqualTo(ReferenceObjectForEquatableTestScenarios.UtcTimeToEvaluate)).UtcTimeToEvaluate,
-                                ReferenceObjectForEquatableTestScenarios.UtcTimePreviousExecution),
+                                A.Dummy<EvaluateScheduleOp>().Whose(_ => !_.EvaluationTimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EvaluationTimestampUtc)).EvaluationTimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.PreviousExecutionTimestampUtc),
                         new EvaluateScheduleOp(
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
-                                ReferenceObjectForEquatableTestScenarios.UtcTimeToEvaluate,
-                                A.Dummy<EvaluateScheduleOp>().Whose(_ => !_.UtcTimePreviousExecution.IsEqualTo(ReferenceObjectForEquatableTestScenarios.UtcTimePreviousExecution)).UtcTimePreviousExecution),
+                                ReferenceObjectForEquatableTestScenarios.EvaluationTimestampUtc,
+                                A.Dummy<EvaluateScheduleOp>().Whose(_ => !_.PreviousExecutionTimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.PreviousExecutionTimestampUtc)).PreviousExecutionTimestampUtc),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -551,7 +551,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Schedule", "UtcTimeToEvaluate", "UtcTimePreviousExecution" };
+                var propertyNames = new string[] { "Schedule", "EvaluationTimestampUtc", "PreviousExecutionTimestampUtc" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

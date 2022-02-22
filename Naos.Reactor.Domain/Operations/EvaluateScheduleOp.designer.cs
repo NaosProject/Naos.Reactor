@@ -72,8 +72,8 @@ namespace Naos.Reactor.Domain
             }
 
             var result = this.Schedule.IsEqualTo(other.Schedule)
-                      && this.UtcTimeToEvaluate.IsEqualTo(other.UtcTimeToEvaluate)
-                      && this.UtcTimePreviousExecution.IsEqualTo(other.UtcTimePreviousExecution);
+                      && this.EvaluationTimestampUtc.IsEqualTo(other.EvaluationTimestampUtc)
+                      && this.PreviousExecutionTimestampUtc.IsEqualTo(other.PreviousExecutionTimestampUtc);
 
             return result;
         }
@@ -84,8 +84,8 @@ namespace Naos.Reactor.Domain
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.Schedule)
-            .Hash(this.UtcTimeToEvaluate)
-            .Hash(this.UtcTimePreviousExecution)
+            .Hash(this.EvaluationTimestampUtc)
+            .Hash(this.PreviousExecutionTimestampUtc)
             .Value;
 
         /// <inheritdoc />
@@ -117,17 +117,17 @@ namespace Naos.Reactor.Domain
         {
             var result = new EvaluateScheduleOp(
                                  schedule,
-                                 this.UtcTimeToEvaluate.DeepClone(),
-                                 this.UtcTimePreviousExecution?.DeepClone());
+                                 this.EvaluationTimestampUtc.DeepClone(),
+                                 this.PreviousExecutionTimestampUtc?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="UtcTimeToEvaluate" />.
+        /// Deep clones this object with a new <see cref="EvaluationTimestampUtc" />.
         /// </summary>
-        /// <param name="utcTimeToEvaluate">The new <see cref="UtcTimeToEvaluate" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EvaluateScheduleOp" /> using the specified <paramref name="utcTimeToEvaluate" /> for <see cref="UtcTimeToEvaluate" /> and a deep clone of every other property.</returns>
+        /// <param name="evaluationTimestampUtc">The new <see cref="EvaluationTimestampUtc" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="EvaluateScheduleOp" /> using the specified <paramref name="evaluationTimestampUtc" /> for <see cref="EvaluationTimestampUtc" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -145,21 +145,21 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EvaluateScheduleOp DeepCloneWithUtcTimeToEvaluate(DateTime utcTimeToEvaluate)
+        public EvaluateScheduleOp DeepCloneWithEvaluationTimestampUtc(DateTime evaluationTimestampUtc)
         {
             var result = new EvaluateScheduleOp(
                                  this.Schedule?.DeepClone(),
-                                 utcTimeToEvaluate,
-                                 this.UtcTimePreviousExecution?.DeepClone());
+                                 evaluationTimestampUtc,
+                                 this.PreviousExecutionTimestampUtc?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="UtcTimePreviousExecution" />.
+        /// Deep clones this object with a new <see cref="PreviousExecutionTimestampUtc" />.
         /// </summary>
-        /// <param name="utcTimePreviousExecution">The new <see cref="UtcTimePreviousExecution" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EvaluateScheduleOp" /> using the specified <paramref name="utcTimePreviousExecution" /> for <see cref="UtcTimePreviousExecution" /> and a deep clone of every other property.</returns>
+        /// <param name="previousExecutionTimestampUtc">The new <see cref="PreviousExecutionTimestampUtc" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="EvaluateScheduleOp" /> using the specified <paramref name="previousExecutionTimestampUtc" /> for <see cref="PreviousExecutionTimestampUtc" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -177,12 +177,12 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EvaluateScheduleOp DeepCloneWithUtcTimePreviousExecution(DateTime? utcTimePreviousExecution)
+        public EvaluateScheduleOp DeepCloneWithPreviousExecutionTimestampUtc(DateTime? previousExecutionTimestampUtc)
         {
             var result = new EvaluateScheduleOp(
                                  this.Schedule?.DeepClone(),
-                                 this.UtcTimeToEvaluate.DeepClone(),
-                                 utcTimePreviousExecution);
+                                 this.EvaluationTimestampUtc.DeepClone(),
+                                 previousExecutionTimestampUtc);
 
             return result;
         }
@@ -193,8 +193,8 @@ namespace Naos.Reactor.Domain
         {
             var result = new EvaluateScheduleOp(
                                  this.Schedule?.DeepClone(),
-                                 this.UtcTimeToEvaluate.DeepClone(),
-                                 this.UtcTimePreviousExecution?.DeepClone());
+                                 this.EvaluationTimestampUtc.DeepClone(),
+                                 this.PreviousExecutionTimestampUtc?.DeepClone());
 
             return result;
         }
@@ -203,7 +203,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.EvaluateScheduleOp: Schedule = {this.Schedule?.ToString() ?? "<null>"}, UtcTimeToEvaluate = {this.UtcTimeToEvaluate.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, UtcTimePreviousExecution = {this.UtcTimePreviousExecution?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.EvaluateScheduleOp: Schedule = {this.Schedule?.ToString() ?? "<null>"}, EvaluationTimestampUtc = {this.EvaluationTimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, PreviousExecutionTimestampUtc = {this.PreviousExecutionTimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }
