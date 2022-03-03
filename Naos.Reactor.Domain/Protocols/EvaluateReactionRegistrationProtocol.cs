@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EvaluateRegisteredReactionProtocol.cs" company="Naos Project">
+// <copyright file="EvaluateReactionRegistrationProtocol.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -20,16 +20,16 @@ namespace Naos.Reactor.Domain
     /// <summary>
     /// Process all new reactions.
     /// </summary>
-    public partial class EvaluateRegisteredReactionProtocol
-        : SyncSpecificReturningProtocolBase<EvaluateRegisteredReactionOp, ReactionEvent>
+    public partial class EvaluateReactionRegistrationProtocol
+        : SyncSpecificReturningProtocolBase<EvaluateReactionRegistrationOp, ReactionEvent>
     {
         private readonly ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EvaluateRegisteredReactionProtocol"/> class.
+        /// Initializes a new instance of the <see cref="EvaluateReactionRegistrationProtocol"/> class.
         /// </summary>
         /// <param name="streamFactory">The protocol to get <see cref="IStream"/> from a <see cref="StreamRepresentation"/>.</param>
-        public EvaluateRegisteredReactionProtocol(
+        public EvaluateReactionRegistrationProtocol(
             ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory)
         {
             streamFactory.MustForArg(nameof(streamFactory)).NotBeNull();
@@ -39,11 +39,11 @@ namespace Naos.Reactor.Domain
 
         /// <inheritdoc />
         public override ReactionEvent Execute(
-            EvaluateRegisteredReactionOp operation)
+            EvaluateReactionRegistrationOp operation)
         {
             var records = new Dictionary<IStreamRepresentation, IReadOnlyList<long>>();
 
-            foreach (var dependency in operation.RegisteredReaction.Dependencies)
+            foreach (var dependency in operation.ReactionRegistration.Dependencies)
             {
                 var stream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(dependency.StreamRepresentation));
                 stream.MustForOp(nameof(stream)).BeOfType<ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>>();
@@ -69,14 +69,14 @@ namespace Naos.Reactor.Domain
                 }
             }
 
-            var reactionId = Invariant($"{operation.RegisteredReaction.Id}___{DateTime.UtcNow.ToStringInvariantPreferred()}");
+            var reactionId = Invariant($"{operation.ReactionRegistration.Id}___{DateTime.UtcNow.ToStringInvariantPreferred()}");
             var result = records.Any()
                 ? new ReactionEvent(
                     reactionId,
-                    operation.RegisteredReaction.Id,
+                    operation.ReactionRegistration.Id,
                     records,
                     DateTime.UtcNow,
-                    operation.RegisteredReaction.Tags)
+                    operation.ReactionRegistration.Tags)
                 : null;
 
             //put reaction event to reaction stream

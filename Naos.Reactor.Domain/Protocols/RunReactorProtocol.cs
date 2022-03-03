@@ -18,28 +18,28 @@ namespace Naos.Reactor.Domain
     /// </summary>
     public partial class RunReactorProtocol : SyncSpecificVoidProtocolBase<RunReactorOp>
     {
-        private readonly IStandardStream registeredReactionStream;
+        private readonly IStandardStream reactionRegistrationStream;
         private readonly IStandardStream reactionStream;
-        private readonly ISyncAndAsyncReturningProtocol<EvaluateRegisteredReactionOp, ReactionEvent> evaluateRegisteredReactionProtocol;
+        private readonly ISyncAndAsyncReturningProtocol<EvaluateReactionRegistrationOp, ReactionEvent> evaluateReactionRegistrationProtocol;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RunReactorProtocol"/> class.
         /// </summary>
-        /// <param name="registeredReactionStream">The registered reaction stream.</param>
+        /// <param name="reactionRegistrationStream">The registered reaction stream.</param>
         /// <param name="reactionStream">The reaction stream.</param>
-        /// <param name="evaluateRegisteredReactionProtocol">The evaluate registered reaction protocol.</param>
+        /// <param name="evaluateReactionRegistrationProtocol">The evaluate registered reaction protocol.</param>
         public RunReactorProtocol(
-            IStandardStream registeredReactionStream,
+            IStandardStream reactionRegistrationStream,
             IStandardStream reactionStream,
-            ISyncAndAsyncReturningProtocol<EvaluateRegisteredReactionOp, ReactionEvent> evaluateRegisteredReactionProtocol)
+            ISyncAndAsyncReturningProtocol<EvaluateReactionRegistrationOp, ReactionEvent> evaluateReactionRegistrationProtocol)
         {
-            registeredReactionStream.MustForArg(nameof(registeredReactionStream)).NotBeNull();
+            reactionRegistrationStream.MustForArg(nameof(reactionRegistrationStream)).NotBeNull();
             reactionStream.MustForArg(nameof(reactionStream)).NotBeNull();
-            evaluateRegisteredReactionProtocol.MustForArg(nameof(evaluateRegisteredReactionProtocol)).NotBeNull();
+            evaluateReactionRegistrationProtocol.MustForArg(nameof(evaluateReactionRegistrationProtocol)).NotBeNull();
 
-            this.registeredReactionStream = registeredReactionStream;
+            this.reactionRegistrationStream = reactionRegistrationStream;
             this.reactionStream = reactionStream;
-            this.evaluateRegisteredReactionProtocol = evaluateRegisteredReactionProtocol;
+            this.evaluateReactionRegistrationProtocol = evaluateReactionRegistrationProtocol;
         }
 
         /// <inheritdoc />
@@ -53,13 +53,13 @@ namespace Naos.Reactor.Domain
                 new RecordFilter(
                     objectTypes: new[]
                                  {
-                                     typeof(RegisteredReaction).ToRepresentation(),
+                                     typeof(ReactionRegistration).ToRepresentation(),
                                  },
                     deprecatedIdTypes: new[]
                                        {
                                            operation.DeprecatedIdentifierType
                                        }));
-            var distinctIds = this.registeredReactionStream.Execute(getDistinctStringSerializedIdsOp);
+            var distinctIds = this.reactionRegistrationStream.Execute(getDistinctStringSerializedIdsOp);
             foreach (var distinctId in distinctIds)
             {
                 var getLatestRecordOp = new StandardGetLatestRecordOp(
@@ -69,23 +69,23 @@ namespace Naos.Reactor.Domain
                                  distinctId,
                              }));
 
-                var registeredReactionRecord = this.registeredReactionStream.Execute(getLatestRecordOp);
-                registeredReactionRecord
+                var reactionRegistrationRecord = this.reactionRegistrationStream.Execute(getLatestRecordOp);
+                reactionRegistrationRecord
                    .Payload
                    .PayloadTypeRepresentation
-                   .MustForOp("recordFromRegisteredReactionStreamExpectedToBeRegisteredReaction")
-                   .BeEqualTo(typeof(RegisteredReaction).ToRepresentation());
+                   .MustForOp("recordFromReactionRegistrationStreamExpectedToBeRegisteredReaction")
+                   .BeEqualTo(typeof(ReactionRegistration).ToRepresentation());
 
-                var registeredReaction =
-                    registeredReactionRecord.Payload.DeserializePayloadUsingSpecificFactory<RegisteredReaction>(
-                        this.registeredReactionStream.SerializerFactory);
+                var reactionRegistration =
+                    reactionRegistrationRecord.Payload.DeserializePayloadUsingSpecificFactory<ReactionRegistration>(
+                        this.reactionRegistrationStream.SerializerFactory);
 
-                var reaction = this.evaluateRegisteredReactionProtocol.Execute(new EvaluateRegisteredReactionOp(registeredReaction));
+                var reaction = this.evaluateReactionRegistrationProtocol.Execute(new EvaluateReactionRegistrationOp(reactionRegistration));
                 if (reaction != null)
                 {
                     this.reactionStream.PutWithId(reaction.Id, reaction, reaction.Tags);
                     // probably should be void and just write reaction from evaluation
-                    //TODO: complete handling here? or do it in the this.evaluateRegisteredReactionProtocol.Execute
+                    //TODO: complete handling here? or do it in the this.evaluateReactionRegistrationsProtocol.Execute
                 }
             }
         }

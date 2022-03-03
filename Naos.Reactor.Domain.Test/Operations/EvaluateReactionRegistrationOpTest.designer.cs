@@ -33,329 +33,103 @@ namespace Naos.Reactor.Domain.Test
 
     using static global::System.FormattableString;
 
-    public static partial class RegisteredReactionTest
+    public static partial class EvaluateReactionRegistrationOpTest
     {
-        private static readonly StringRepresentationTestScenarios<RegisteredReaction> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<RegisteredReaction>()
+        private static readonly StringRepresentationTestScenarios<EvaluateReactionRegistrationOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<EvaluateReactionRegistrationOp>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<RegisteredReaction>
+                new StringRepresentationTestScenario<EvaluateReactionRegistrationOp>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<RegisteredReaction>();
+                        var systemUnderTest = A.Dummy<EvaluateReactionRegistrationOp>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<RegisteredReaction>
+                        var result = new SystemUnderTestExpectedStringRepresentation<EvaluateReactionRegistrationOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.RegisteredReaction: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Dependencies = {systemUnderTest.Dependencies?.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.EvaluateReactionRegistrationOp: ReactionRegistration = {systemUnderTest.ReactionRegistration?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<RegisteredReaction> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<RegisteredReaction>()
+        private static readonly ConstructorArgumentValidationTestScenarios<EvaluateReactionRegistrationOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<EvaluateReactionRegistrationOp>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<RegisteredReaction>
+                new ConstructorArgumentValidationTestScenario<EvaluateReactionRegistrationOp>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'reactionRegistration' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<RegisteredReaction>();
-
-                        var result = new RegisteredReaction(
-                                             null,
-                                             referenceObject.Dependencies,
-                                             referenceObject.Tags);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "id", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<RegisteredReaction>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'id' is white space scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<RegisteredReaction>();
-
-                        var result = new RegisteredReaction(
-                                             Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.Dependencies,
-                                             referenceObject.Tags);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "id", "white space", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<RegisteredReaction>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'dependencies' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<RegisteredReaction>();
-
-                        var result = new RegisteredReaction(
-                                             referenceObject.Id,
-                                             null,
-                                             referenceObject.Tags);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "dependencies", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<RegisteredReaction>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'dependencies' is an empty enumerable scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<RegisteredReaction>();
-
-                        var result = new RegisteredReaction(
-                                             referenceObject.Id,
-                                             new List<IReactorDependency>(),
-                                             referenceObject.Tags);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "dependencies", "is an empty enumerable", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<RegisteredReaction>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'dependencies' contains a null element scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<RegisteredReaction>();
-
-                        var result = new RegisteredReaction(
-                                             referenceObject.Id,
-                                             new IReactorDependency[0].Concat(referenceObject.Dependencies).Concat(new IReactorDependency[] { null }).Concat(referenceObject.Dependencies).ToList(),
-                                             referenceObject.Tags);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "dependencies", "contains at least one null element", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<RegisteredReaction>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'tags' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<RegisteredReaction>();
-
-                        var result = new RegisteredReaction(
-                                             referenceObject.Id,
-                                             referenceObject.Dependencies,
+                        var result = new EvaluateReactionRegistrationOp(
                                              null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "tags", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<RegisteredReaction>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'tags' is an empty enumerable scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<RegisteredReaction>();
-
-                        var result = new RegisteredReaction(
-                                             referenceObject.Id,
-                                             referenceObject.Dependencies,
-                                             new List<NamedValue<string>>());
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "tags", "is an empty enumerable", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<RegisteredReaction>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'tags' contains a null element scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<RegisteredReaction>();
-
-                        var result = new RegisteredReaction(
-                                             referenceObject.Id,
-                                             referenceObject.Dependencies,
-                                             new NamedValue<string>[0].Concat(referenceObject.Tags).Concat(new NamedValue<string>[] { null }).Concat(referenceObject.Tags).ToList());
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "tags", "contains at least one null element", },
+                    ExpectedExceptionMessageContains = new[] { "reactionRegistration", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<RegisteredReaction> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<RegisteredReaction>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<EvaluateReactionRegistrationOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<EvaluateReactionRegistrationOp>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<RegisteredReaction>
+                new ConstructorPropertyAssignmentTestScenario<EvaluateReactionRegistrationOp>
                 {
-                    Name = "Id should return same 'id' parameter passed to constructor when getting",
+                    Name = "ReactionRegistration should return same 'reactionRegistration' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<RegisteredReaction>();
+                        var referenceObject = A.Dummy<EvaluateReactionRegistrationOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<RegisteredReaction>
+                        var result = new SystemUnderTestExpectedPropertyValue<EvaluateReactionRegistrationOp>
                         {
-                            SystemUnderTest = new RegisteredReaction(
-                                                      referenceObject.Id,
-                                                      referenceObject.Dependencies,
-                                                      referenceObject.Tags),
-                            ExpectedPropertyValue = referenceObject.Id,
+                            SystemUnderTest = new EvaluateReactionRegistrationOp(
+                                                      referenceObject.ReactionRegistration),
+                            ExpectedPropertyValue = referenceObject.ReactionRegistration,
                         };
 
                         return result;
                     },
-                    PropertyName = "Id",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<RegisteredReaction>
-                {
-                    Name = "Dependencies should return same 'dependencies' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<RegisteredReaction>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<RegisteredReaction>
-                        {
-                            SystemUnderTest = new RegisteredReaction(
-                                                      referenceObject.Id,
-                                                      referenceObject.Dependencies,
-                                                      referenceObject.Tags),
-                            ExpectedPropertyValue = referenceObject.Dependencies,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Dependencies",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<RegisteredReaction>
-                {
-                    Name = "Tags should return same 'tags' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<RegisteredReaction>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<RegisteredReaction>
-                        {
-                            SystemUnderTest = new RegisteredReaction(
-                                                      referenceObject.Id,
-                                                      referenceObject.Dependencies,
-                                                      referenceObject.Tags),
-                            ExpectedPropertyValue = referenceObject.Tags,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Tags",
+                    PropertyName = "ReactionRegistration",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<RegisteredReaction> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<RegisteredReaction>()
+        private static readonly DeepCloneWithTestScenarios<EvaluateReactionRegistrationOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<EvaluateReactionRegistrationOp>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<RegisteredReaction>
+                new DeepCloneWithTestScenario<EvaluateReactionRegistrationOp>
                 {
-                    Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
-                    WithPropertyName = "Id",
+                    Name = "DeepCloneWithReactionRegistration should deep clone object and replace ReactionRegistration with the provided reactionRegistration",
+                    WithPropertyName = "ReactionRegistration",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<RegisteredReaction>();
+                        var systemUnderTest = A.Dummy<EvaluateReactionRegistrationOp>();
 
-                        var referenceObject = A.Dummy<RegisteredReaction>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+                        var referenceObject = A.Dummy<EvaluateReactionRegistrationOp>().ThatIs(_ => !systemUnderTest.ReactionRegistration.IsEqualTo(_.ReactionRegistration));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<RegisteredReaction>
+                        var result = new SystemUnderTestDeepCloneWithValue<EvaluateReactionRegistrationOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Id,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<RegisteredReaction>
-                {
-                    Name = "DeepCloneWithDependencies should deep clone object and replace Dependencies with the provided dependencies",
-                    WithPropertyName = "Dependencies",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<RegisteredReaction>();
-
-                        var referenceObject = A.Dummy<RegisteredReaction>().ThatIs(_ => !systemUnderTest.Dependencies.IsEqualTo(_.Dependencies));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<RegisteredReaction>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Dependencies,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<RegisteredReaction>
-                {
-                    Name = "DeepCloneWithTags should deep clone object and replace Tags with the provided tags",
-                    WithPropertyName = "Tags",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<RegisteredReaction>();
-
-                        var referenceObject = A.Dummy<RegisteredReaction>().ThatIs(_ => !systemUnderTest.Tags.IsEqualTo(_.Tags));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<RegisteredReaction>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Tags,
+                            DeepCloneWithValue = referenceObject.ReactionRegistration,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly RegisteredReaction ReferenceObjectForEquatableTestScenarios = A.Dummy<RegisteredReaction>();
+        private static readonly EvaluateReactionRegistrationOp ReferenceObjectForEquatableTestScenarios = A.Dummy<EvaluateReactionRegistrationOp>();
 
-        private static readonly EquatableTestScenarios<RegisteredReaction> EquatableTestScenarios = new EquatableTestScenarios<RegisteredReaction>()
+        private static readonly EquatableTestScenarios<EvaluateReactionRegistrationOp> EquatableTestScenarios = new EquatableTestScenarios<EvaluateReactionRegistrationOp>()
             .AddScenario(() =>
-                new EquatableTestScenario<RegisteredReaction>
+                new EquatableTestScenario<EvaluateReactionRegistrationOp>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new RegisteredReaction[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new EvaluateReactionRegistrationOp[]
                     {
-                        new RegisteredReaction(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.Dependencies,
-                                ReferenceObjectForEquatableTestScenarios.Tags),
+                        new EvaluateReactionRegistrationOp(
+                                ReferenceObjectForEquatableTestScenarios.ReactionRegistration),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new RegisteredReaction[]
+                    ObjectsThatAreNotEqualToReferenceObject = new EvaluateReactionRegistrationOp[]
                     {
-                        new RegisteredReaction(
-                                A.Dummy<RegisteredReaction>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
-                                ReferenceObjectForEquatableTestScenarios.Dependencies,
-                                ReferenceObjectForEquatableTestScenarios.Tags),
-                        new RegisteredReaction(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                A.Dummy<RegisteredReaction>().Whose(_ => !_.Dependencies.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Dependencies)).Dependencies,
-                                ReferenceObjectForEquatableTestScenarios.Tags),
-                        new RegisteredReaction(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.Dependencies,
-                                A.Dummy<RegisteredReaction>().Whose(_ => !_.Tags.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Tags)).Tags),
+                        new EvaluateReactionRegistrationOp(
+                                A.Dummy<EvaluateReactionRegistrationOp>().Whose(_ => !_.ReactionRegistration.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ReactionRegistration)).ReactionRegistration),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -364,6 +138,15 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<CheckRecordExistsOp>(),
+                        A.Dummy<CheckRecordHandlingOp>(),
+                        A.Dummy<EvaluateScheduleOp>(),
+                        A.Dummy<ExecuteOpOnScheduleOp>(),
+                        A.Dummy<RunReactorOp>(),
+                        A.Dummy<RunScheduleOp>(),
+                        A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>(),
+                        A.Dummy<WriteEventOnMatchingRecordFilterOp<Version>>(),
+                        A.Dummy<WriteEventsWithUtcTimestampIdOp>(),
                     },
                 });
 
@@ -385,12 +168,12 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void RegisteredReaction___Should_implement_IModel_of_RegisteredReaction___When_reflecting()
+            public static void EvaluateReactionRegistrationOp___Should_implement_IModel_of_EvaluateReactionRegistrationOp___When_reflecting()
             {
                 // Arrange
-                var type = typeof(RegisteredReaction);
+                var type = typeof(EvaluateReactionRegistrationOp);
 
-                var expectedModelMethods = typeof(IModel<RegisteredReaction>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<EvaluateReactionRegistrationOp>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -400,7 +183,7 @@ namespace Naos.Reactor.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<RegisteredReaction>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<EvaluateReactionRegistrationOp>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -418,10 +201,10 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void RegisteredReaction___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void EvaluateReactionRegistrationOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(RegisteredReaction);
+                var type = typeof(EvaluateReactionRegistrationOp);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -601,10 +384,10 @@ namespace Naos.Reactor.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<RegisteredReaction>();
+                var systemUnderTest = A.Dummy<EvaluateReactionRegistrationOp>();
 
                 // Act
-                var actual = (RegisteredReaction)systemUnderTest.Clone();
+                var actual = (EvaluateReactionRegistrationOp)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -628,7 +411,7 @@ namespace Naos.Reactor.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<RegisteredReaction>();
+                var systemUnderTest = A.Dummy<EvaluateReactionRegistrationOp>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -637,28 +420,16 @@ namespace Naos.Reactor.Domain.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.Dependencies == null)
+                if (systemUnderTest.ReactionRegistration == null)
                 {
-                    actual.Dependencies.AsTest().Must().BeNull();
+                    actual.ReactionRegistration.AsTest().Must().BeNull();
                 }
-                else if (!actual.Dependencies.GetType().IsValueType)
+                else if (!actual.ReactionRegistration.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.Dependencies.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Dependencies);
-                }
-
-                if (systemUnderTest.Tags == null)
-                {
-                    actual.Tags.AsTest().Must().BeNull();
-                }
-                else if (!actual.Tags.GetType().IsValueType)
-                {
-                    // When the declared type is a reference type, we still have to check the runtime type.
-                    // The object could be a boxed value type, which will fail this asseration because
-                    // a deep clone of a value type object is the same object.
-                    actual.Tags.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Tags);
+                    actual.ReactionRegistration.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ReactionRegistration);
                 }
             }
 
@@ -678,7 +449,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "Dependencies", "Tags" };
+                var propertyNames = new string[] { "ReactionRegistration" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -691,12 +462,12 @@ namespace Naos.Reactor.Domain.Test
                     }
 
                     // Act
-                    var actual = (RegisteredReaction)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (EvaluateReactionRegistrationOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(RegisteredReaction).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(EvaluateReactionRegistrationOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -758,7 +529,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<RegisteredReaction>();
+                var expected = A.Dummy<EvaluateReactionRegistrationOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -787,7 +558,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<RegisteredReaction>();
+                var expected = A.Dummy<EvaluateReactionRegistrationOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -816,7 +587,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<RegisteredReaction>();
+                var expected = A.Dummy<EvaluateReactionRegistrationOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -845,7 +616,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<RegisteredReaction>();
+                var expected = A.Dummy<EvaluateReactionRegistrationOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -879,8 +650,8 @@ namespace Naos.Reactor.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                RegisteredReaction systemUnderTest1 = null;
-                RegisteredReaction systemUnderTest2 = null;
+                EvaluateReactionRegistrationOp systemUnderTest1 = null;
+                EvaluateReactionRegistrationOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -910,7 +681,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    RegisteredReaction systemUnderTest = null;
+                    EvaluateReactionRegistrationOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -1059,8 +830,8 @@ namespace Naos.Reactor.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                RegisteredReaction systemUnderTest1 = null;
-                RegisteredReaction systemUnderTest2 = null;
+                EvaluateReactionRegistrationOp systemUnderTest1 = null;
+                EvaluateReactionRegistrationOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -1090,7 +861,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    RegisteredReaction systemUnderTest = null;
+                    EvaluateReactionRegistrationOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1236,14 +1007,300 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RegisteredReaction___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_OperationBase___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    RegisteredReaction systemUnderTest = null;
+                    OperationBase systemUnderTest = null;
+
+                    // Act
+                    var actual = scenario.ReferenceObject.Equals((OperationBase)systemUnderTest);
+
+                    // Assert
+                    actual.AsTest().Must().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_OperationBase___Should_return_true___When_parameter_other_is_same_object()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actual = scenario.ReferenceObject.Equals((OperationBase)scenario.ReferenceObject);
+
+                    // Assert
+                    actual.AsTest().Must().BeTrue(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_OperationBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((OperationBase)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_OperationBase___Should_return_false___When_objects_being_compared_have_different_property_values()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((OperationBase)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_OperationBase___Should_return_true___When_objects_being_compared_have_same_property_values()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((OperationBase)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_ReturningOperationBase_of_ReactionEvent___Should_return_false___When_parameter_other_is_null()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange
+                    ReturningOperationBase<ReactionEvent> systemUnderTest = null;
+
+                    // Act
+                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<ReactionEvent>)systemUnderTest);
+
+                    // Assert
+                    actual.AsTest().Must().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_ReturningOperationBase_of_ReactionEvent___Should_return_true___When_parameter_other_is_same_object()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<ReactionEvent>)scenario.ReferenceObject);
+
+                    // Assert
+                    actual.AsTest().Must().BeTrue(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_ReturningOperationBase_of_ReactionEvent___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<ReactionEvent>)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_ReturningOperationBase_of_ReactionEvent___Should_return_false___When_objects_being_compared_have_different_property_values()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<ReactionEvent>)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_ReturningOperationBase_of_ReactionEvent___Should_return_true___When_objects_being_compared_have_same_property_values()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<ReactionEvent>)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_EvaluateReactionRegistrationOp___Should_return_false___When_parameter_other_is_null()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange
+                    EvaluateReactionRegistrationOp systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1267,7 +1324,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RegisteredReaction___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_EvaluateReactionRegistrationOp___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1295,7 +1352,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RegisteredReaction___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_EvaluateReactionRegistrationOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1323,7 +1380,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RegisteredReaction___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_EvaluateReactionRegistrationOp___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1351,7 +1408,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RegisteredReaction___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_EvaluateReactionRegistrationOp___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

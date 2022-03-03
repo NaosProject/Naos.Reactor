@@ -162,8 +162,8 @@
     <Compile Include="Model\Classes\EventToPutWithId{TId}.designer.cs">
       <DependentUpon>EventToPutWithId{TId}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Classes\RegisteredReaction.designer.cs">
-      <DependentUpon>RegisteredReaction.cs</DependentUpon>
+    <Compile Include="Model\Classes\ReactionRegistration.designer.cs">
+      <DependentUpon>ReactionRegistration.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Classes\StringIdentifiedReactorDependency.cs" />
     <Compile Include="Model\Classes\EventToPutWithId{TId}.cs" />
@@ -188,14 +188,14 @@
       <DependentUpon>CheckRecordExistsOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\CheckRecordHandlingOp.cs" />
-    <Compile Include="Model\Classes\RegisteredReaction.cs" />
+    <Compile Include="Model\Classes\ReactionRegistration.cs" />
     <Compile Include="Model\Interfaces\IReactorDependency.cs" />
     <Compile Include="Operations\CheckRecordHandlingOp.designer.cs">
       <DependentUpon>CheckRecordHandlingOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\EvaluateRegisteredReactionOp.cs" />
-    <Compile Include="Operations\EvaluateRegisteredReactionOp.designer.cs">
-      <DependentUpon>EvaluateRegisteredReactionOp.cs</DependentUpon>
+    <Compile Include="Operations\EvaluateReactionRegistrationOp.cs" />
+    <Compile Include="Operations\EvaluateReactionRegistrationOp.designer.cs">
+      <DependentUpon>EvaluateReactionRegistrationOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\RunScheduleOp.cs" />
     <Compile Include="Operations\RunReactorOp.designer.cs">
@@ -219,7 +219,7 @@
     <Compile Include="Protocols\ExecuteOpOnScheduleProtocol.cs" />
     <Compile Include="Protocols\EvaluateScheduleProtocol.cs" />
     <Compile Include="Protocols\CheckRecordExistsProtocol.cs" />
-    <Compile Include="Protocols\EvaluateRegisteredReactionProtocol.cs" />
+    <Compile Include="Protocols\EvaluateReactionRegistrationProtocol.cs" />
     <Compile Include="Protocols\HandleAndReQueueExecuteOpRequestedProtocol{TOperation}.cs" />
     <Compile Include="Protocols\RunScheduleProtocol.cs" />
     <Compile Include="Protocols\RunReactorProtocol.cs" />

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IReactorDependency.cs" company="Naos Project">
+// <copyright file="ReactionRegistration.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -13,15 +13,15 @@ namespace Naos.Reactor.Domain
     /// <summary>
     /// Registered reaction criteria to evaluate for possible <see cref="ReactionEvent"/>'s.
     /// </summary>
-    public partial class RegisteredReaction : IModelViaCodeGen, IHaveStringId, IHaveTags
+    public partial class ReactionRegistration : IModelViaCodeGen, IHaveStringId, IHaveTags
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RegisteredReaction"/> class.
+        /// Initializes a new instance of the <see cref="ReactionRegistration"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="dependencies">The dependencies to check.</param>
         /// <param name="tags">The tags to write on the <see cref="ReactionEvent"/>.</param>
-        public RegisteredReaction(
+        public ReactionRegistration(
             string id,
             IReadOnlyList<IReactorDependency> dependencies,
             IReadOnlyCollection<NamedValue<string>> tags = null)

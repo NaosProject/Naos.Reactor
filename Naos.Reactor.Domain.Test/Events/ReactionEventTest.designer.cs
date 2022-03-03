@@ -49,7 +49,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ReactionEvent>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.ReactionEvent: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, RegisteredReactionId = {systemUnderTest.RegisteredReactionId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, StreamRepresentationToInternalRecordIdsMap = {systemUnderTest.StreamRepresentationToInternalRecordIdsMap?.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.ReactionEvent: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ReactionRegistrationId = {systemUnderTest.ReactionRegistrationId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, StreamRepresentationToInternalRecordIdsMap = {systemUnderTest.StreamRepresentationToInternalRecordIdsMap?.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -67,7 +67,7 @@ namespace Naos.Reactor.Domain.Test
 
                         var result = new ReactionEvent(
                                              null,
-                                             referenceObject.RegisteredReactionId,
+                                             referenceObject.ReactionRegistrationId,
                                              referenceObject.StreamRepresentationToInternalRecordIdsMap,
                                              referenceObject.TimestampUtc,
                                              referenceObject.Tags);
@@ -87,7 +87,7 @@ namespace Naos.Reactor.Domain.Test
 
                         var result = new ReactionEvent(
                                              Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.RegisteredReactionId,
+                                             referenceObject.ReactionRegistrationId,
                                              referenceObject.StreamRepresentationToInternalRecordIdsMap,
                                              referenceObject.TimestampUtc,
                                              referenceObject.Tags);
@@ -100,7 +100,7 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<ReactionEvent>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'registeredReactionId' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'reactionRegistrationId' is null scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<ReactionEvent>();
@@ -115,12 +115,12 @@ namespace Naos.Reactor.Domain.Test
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "registeredReactionId", },
+                    ExpectedExceptionMessageContains = new[] { "reactionRegistrationId", },
                 })
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<ReactionEvent>
                 {
-                    Name = "constructor should throw ArgumentException when parameter 'registeredReactionId' is white space scenario",
+                    Name = "constructor should throw ArgumentException when parameter 'reactionRegistrationId' is white space scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<ReactionEvent>();
@@ -135,7 +135,7 @@ namespace Naos.Reactor.Domain.Test
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "registeredReactionId", "white space", },
+                    ExpectedExceptionMessageContains = new[] { "reactionRegistrationId", "white space", },
                 })
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<ReactionEvent>
@@ -147,7 +147,7 @@ namespace Naos.Reactor.Domain.Test
 
                         var result = new ReactionEvent(
                                              referenceObject.Id,
-                                             referenceObject.RegisteredReactionId,
+                                             referenceObject.ReactionRegistrationId,
                                              null,
                                              referenceObject.TimestampUtc,
                                              referenceObject.Tags);
@@ -167,7 +167,7 @@ namespace Naos.Reactor.Domain.Test
 
                         var result = new ReactionEvent(
                                              referenceObject.Id,
-                                             referenceObject.RegisteredReactionId,
+                                             referenceObject.ReactionRegistrationId,
                                              new Dictionary<IStreamRepresentation, IReadOnlyList<long>>(),
                                              referenceObject.TimestampUtc,
                                              referenceObject.Tags);
@@ -193,7 +193,7 @@ namespace Naos.Reactor.Domain.Test
 
                         var result = new ReactionEvent(
                                              referenceObject.Id,
-                                             referenceObject.RegisteredReactionId,
+                                             referenceObject.ReactionRegistrationId,
                                              dictionaryWithNullValue,
                                              referenceObject.TimestampUtc,
                                              referenceObject.Tags);
@@ -213,7 +213,7 @@ namespace Naos.Reactor.Domain.Test
 
                         var result = new ReactionEvent(
                                              referenceObject.Id,
-                                             referenceObject.RegisteredReactionId,
+                                             referenceObject.ReactionRegistrationId,
                                              referenceObject.StreamRepresentationToInternalRecordIdsMap,
                                              referenceObject.TimestampUtc,
                                              null);
@@ -233,7 +233,7 @@ namespace Naos.Reactor.Domain.Test
 
                         var result = new ReactionEvent(
                                              referenceObject.Id,
-                                             referenceObject.RegisteredReactionId,
+                                             referenceObject.ReactionRegistrationId,
                                              referenceObject.StreamRepresentationToInternalRecordIdsMap,
                                              referenceObject.TimestampUtc,
                                              new List<NamedValue<string>>());
@@ -253,7 +253,7 @@ namespace Naos.Reactor.Domain.Test
 
                         var result = new ReactionEvent(
                                              referenceObject.Id,
-                                             referenceObject.RegisteredReactionId,
+                                             referenceObject.ReactionRegistrationId,
                                              referenceObject.StreamRepresentationToInternalRecordIdsMap,
                                              referenceObject.TimestampUtc,
                                              new NamedValue<string>[0].Concat(referenceObject.Tags).Concat(new NamedValue<string>[] { null }).Concat(referenceObject.Tags).ToList());
@@ -277,7 +277,7 @@ namespace Naos.Reactor.Domain.Test
                         {
                             SystemUnderTest = new ReactionEvent(
                                                       referenceObject.Id,
-                                                      referenceObject.RegisteredReactionId,
+                                                      referenceObject.ReactionRegistrationId,
                                                       referenceObject.StreamRepresentationToInternalRecordIdsMap,
                                                       referenceObject.TimestampUtc,
                                                       referenceObject.Tags),
@@ -291,7 +291,7 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ReactionEvent>
                 {
-                    Name = "RegisteredReactionId should return same 'registeredReactionId' parameter passed to constructor when getting",
+                    Name = "ReactionRegistrationId should return same 'reactionRegistrationId' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<ReactionEvent>();
@@ -300,16 +300,16 @@ namespace Naos.Reactor.Domain.Test
                         {
                             SystemUnderTest = new ReactionEvent(
                                                       referenceObject.Id,
-                                                      referenceObject.RegisteredReactionId,
+                                                      referenceObject.ReactionRegistrationId,
                                                       referenceObject.StreamRepresentationToInternalRecordIdsMap,
                                                       referenceObject.TimestampUtc,
                                                       referenceObject.Tags),
-                            ExpectedPropertyValue = referenceObject.RegisteredReactionId,
+                            ExpectedPropertyValue = referenceObject.ReactionRegistrationId,
                         };
 
                         return result;
                     },
-                    PropertyName = "RegisteredReactionId",
+                    PropertyName = "ReactionRegistrationId",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ReactionEvent>
@@ -323,7 +323,7 @@ namespace Naos.Reactor.Domain.Test
                         {
                             SystemUnderTest = new ReactionEvent(
                                                       referenceObject.Id,
-                                                      referenceObject.RegisteredReactionId,
+                                                      referenceObject.ReactionRegistrationId,
                                                       referenceObject.StreamRepresentationToInternalRecordIdsMap,
                                                       referenceObject.TimestampUtc,
                                                       referenceObject.Tags),
@@ -346,7 +346,7 @@ namespace Naos.Reactor.Domain.Test
                         {
                             SystemUnderTest = new ReactionEvent(
                                                       referenceObject.Id,
-                                                      referenceObject.RegisteredReactionId,
+                                                      referenceObject.ReactionRegistrationId,
                                                       referenceObject.StreamRepresentationToInternalRecordIdsMap,
                                                       referenceObject.TimestampUtc,
                                                       referenceObject.Tags),
@@ -369,7 +369,7 @@ namespace Naos.Reactor.Domain.Test
                         {
                             SystemUnderTest = new ReactionEvent(
                                                       referenceObject.Id,
-                                                      referenceObject.RegisteredReactionId,
+                                                      referenceObject.ReactionRegistrationId,
                                                       referenceObject.StreamRepresentationToInternalRecordIdsMap,
                                                       referenceObject.TimestampUtc,
                                                       referenceObject.Tags),
@@ -425,18 +425,18 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<ReactionEvent>
                 {
-                    Name = "DeepCloneWithRegisteredReactionId should deep clone object and replace RegisteredReactionId with the provided registeredReactionId",
-                    WithPropertyName = "RegisteredReactionId",
+                    Name = "DeepCloneWithReactionRegistrationId should deep clone object and replace ReactionRegistrationId with the provided reactionRegistrationId",
+                    WithPropertyName = "ReactionRegistrationId",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<ReactionEvent>();
 
-                        var referenceObject = A.Dummy<ReactionEvent>().ThatIs(_ => !systemUnderTest.RegisteredReactionId.IsEqualTo(_.RegisteredReactionId));
+                        var referenceObject = A.Dummy<ReactionEvent>().ThatIs(_ => !systemUnderTest.ReactionRegistrationId.IsEqualTo(_.ReactionRegistrationId));
 
                         var result = new SystemUnderTestDeepCloneWithValue<ReactionEvent>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.RegisteredReactionId,
+                            DeepCloneWithValue = referenceObject.ReactionRegistrationId,
                         };
 
                         return result;
@@ -495,7 +495,7 @@ namespace Naos.Reactor.Domain.Test
                     {
                         new ReactionEvent(
                                 ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.RegisteredReactionId,
+                                ReferenceObjectForEquatableTestScenarios.ReactionRegistrationId,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentationToInternalRecordIdsMap,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
@@ -504,31 +504,31 @@ namespace Naos.Reactor.Domain.Test
                     {
                         new ReactionEvent(
                                 ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.RegisteredReactionId,
+                                ReferenceObjectForEquatableTestScenarios.ReactionRegistrationId,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentationToInternalRecordIdsMap,
                                 A.Dummy<ReactionEvent>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ReactionEvent(
                                 A.Dummy<ReactionEvent>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
-                                ReferenceObjectForEquatableTestScenarios.RegisteredReactionId,
+                                ReferenceObjectForEquatableTestScenarios.ReactionRegistrationId,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentationToInternalRecordIdsMap,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ReactionEvent(
                                 ReferenceObjectForEquatableTestScenarios.Id,
-                                A.Dummy<ReactionEvent>().Whose(_ => !_.RegisteredReactionId.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RegisteredReactionId)).RegisteredReactionId,
+                                A.Dummy<ReactionEvent>().Whose(_ => !_.ReactionRegistrationId.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ReactionRegistrationId)).ReactionRegistrationId,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentationToInternalRecordIdsMap,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ReactionEvent(
                                 ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.RegisteredReactionId,
+                                ReferenceObjectForEquatableTestScenarios.ReactionRegistrationId,
                                 A.Dummy<ReactionEvent>().Whose(_ => !_.StreamRepresentationToInternalRecordIdsMap.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StreamRepresentationToInternalRecordIdsMap)).StreamRepresentationToInternalRecordIdsMap,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ReactionEvent(
                                 ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.RegisteredReactionId,
+                                ReferenceObjectForEquatableTestScenarios.ReactionRegistrationId,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentationToInternalRecordIdsMap,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 A.Dummy<ReactionEvent>().Whose(_ => !_.Tags.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Tags)).Tags),
@@ -855,7 +855,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "TimestampUtc", "Id", "RegisteredReactionId", "StreamRepresentationToInternalRecordIdsMap", "Tags" };
+                var propertyNames = new string[] { "TimestampUtc", "Id", "ReactionRegistrationId", "StreamRepresentationToInternalRecordIdsMap", "Tags" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

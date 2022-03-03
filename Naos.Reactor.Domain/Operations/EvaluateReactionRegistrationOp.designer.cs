@@ -23,15 +23,15 @@ namespace Naos.Reactor.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class EvaluateRegisteredReactionOp : IModel<EvaluateRegisteredReactionOp>
+    public partial class EvaluateReactionRegistrationOp : IModel<EvaluateReactionRegistrationOp>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="EvaluateRegisteredReactionOp"/> are equal.
+        /// Determines whether two objects of type <see cref="EvaluateReactionRegistrationOp"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(EvaluateRegisteredReactionOp left, EvaluateRegisteredReactionOp right)
+        public static bool operator ==(EvaluateReactionRegistrationOp left, EvaluateReactionRegistrationOp right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="EvaluateRegisteredReactionOp"/> are not equal.
+        /// Determines whether two objects of type <see cref="EvaluateReactionRegistrationOp"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(EvaluateRegisteredReactionOp left, EvaluateRegisteredReactionOp right) => !(left == right);
+        public static bool operator !=(EvaluateReactionRegistrationOp left, EvaluateReactionRegistrationOp right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(EvaluateRegisteredReactionOp other)
+        public bool Equals(EvaluateReactionRegistrationOp other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,27 +69,27 @@ namespace Naos.Reactor.Domain
                 return false;
             }
 
-            var result = this.RegisteredReaction.IsEqualTo(other.RegisteredReaction);
+            var result = this.ReactionRegistration.IsEqualTo(other.ReactionRegistration);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as EvaluateRegisteredReactionOp);
+        public override bool Equals(object obj) => this == (obj as EvaluateReactionRegistrationOp);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.RegisteredReaction)
+            .Hash(this.ReactionRegistration)
             .Value;
 
         /// <inheritdoc />
-        public new EvaluateRegisteredReactionOp DeepClone() => (EvaluateRegisteredReactionOp)this.DeepCloneInternal();
+        public new EvaluateReactionRegistrationOp DeepClone() => (EvaluateReactionRegistrationOp)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="RegisteredReaction" />.
+        /// Deep clones this object with a new <see cref="ReactionRegistration" />.
         /// </summary>
-        /// <param name="registeredReaction">The new <see cref="RegisteredReaction" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EvaluateRegisteredReactionOp" /> using the specified <paramref name="registeredReaction" /> for <see cref="RegisteredReaction" /> and a deep clone of every other property.</returns>
+        /// <param name="reactionRegistration">The new <see cref="ReactionRegistration" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="EvaluateReactionRegistrationOp" /> using the specified <paramref name="reactionRegistration" /> for <see cref="ReactionRegistration" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -107,10 +107,10 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EvaluateRegisteredReactionOp DeepCloneWithRegisteredReaction(RegisteredReaction registeredReaction)
+        public EvaluateReactionRegistrationOp DeepCloneWithReactionRegistration(ReactionRegistration reactionRegistration)
         {
-            var result = new EvaluateRegisteredReactionOp(
-                                 registeredReaction);
+            var result = new EvaluateReactionRegistrationOp(
+                                 reactionRegistration);
 
             return result;
         }
@@ -119,8 +119,8 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override OperationBase DeepCloneInternal()
         {
-            var result = new EvaluateRegisteredReactionOp(
-                                 this.RegisteredReaction?.DeepClone());
+            var result = new EvaluateReactionRegistrationOp(
+                                 this.ReactionRegistration?.DeepClone());
 
             return result;
         }
@@ -129,7 +129,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.EvaluateRegisteredReactionOp: RegisteredReaction = {this.RegisteredReaction?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.EvaluateReactionRegistrationOp: ReactionRegistration = {this.ReactionRegistration?.ToString() ?? "<null>"}.");
 
             return result;
         }

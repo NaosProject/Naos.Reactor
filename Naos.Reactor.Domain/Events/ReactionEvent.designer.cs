@@ -73,7 +73,7 @@ namespace Naos.Reactor.Domain
 
             var result = this.TimestampUtc.IsEqualTo(other.TimestampUtc)
                       && this.Id.IsEqualTo(other.Id, StringComparer.Ordinal)
-                      && this.RegisteredReactionId.IsEqualTo(other.RegisteredReactionId, StringComparer.Ordinal)
+                      && this.ReactionRegistrationId.IsEqualTo(other.ReactionRegistrationId, StringComparer.Ordinal)
                       && this.StreamRepresentationToInternalRecordIdsMap.IsEqualTo(other.StreamRepresentationToInternalRecordIdsMap)
                       && this.Tags.IsEqualTo(other.Tags);
 
@@ -87,7 +87,7 @@ namespace Naos.Reactor.Domain
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.TimestampUtc)
             .Hash(this.Id)
-            .Hash(this.RegisteredReactionId)
+            .Hash(this.ReactionRegistrationId)
             .Hash(this.StreamRepresentationToInternalRecordIdsMap)
             .Hash(this.Tags)
             .Value;
@@ -117,7 +117,7 @@ namespace Naos.Reactor.Domain
         {
             var result = new ReactionEvent(
                                  this.Id?.DeepClone(),
-                                 this.RegisteredReactionId?.DeepClone(),
+                                 this.ReactionRegistrationId?.DeepClone(),
                                  this.StreamRepresentationToInternalRecordIdsMap?.DeepClone(),
                                  timestampUtc,
                                  this.Tags?.DeepClone());
@@ -147,7 +147,7 @@ namespace Naos.Reactor.Domain
         {
             var result = new ReactionEvent(
                                  id,
-                                 this.RegisteredReactionId?.DeepClone(),
+                                 this.ReactionRegistrationId?.DeepClone(),
                                  this.StreamRepresentationToInternalRecordIdsMap?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
                                  this.Tags?.DeepClone());
@@ -156,10 +156,10 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="RegisteredReactionId" />.
+        /// Deep clones this object with a new <see cref="ReactionRegistrationId" />.
         /// </summary>
-        /// <param name="registeredReactionId">The new <see cref="RegisteredReactionId" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ReactionEvent" /> using the specified <paramref name="registeredReactionId" /> for <see cref="RegisteredReactionId" /> and a deep clone of every other property.</returns>
+        /// <param name="reactionRegistrationId">The new <see cref="ReactionRegistrationId" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ReactionEvent" /> using the specified <paramref name="reactionRegistrationId" /> for <see cref="ReactionRegistrationId" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -177,11 +177,11 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ReactionEvent DeepCloneWithRegisteredReactionId(string registeredReactionId)
+        public ReactionEvent DeepCloneWithReactionRegistrationId(string reactionRegistrationId)
         {
             var result = new ReactionEvent(
                                  this.Id?.DeepClone(),
-                                 registeredReactionId,
+                                 reactionRegistrationId,
                                  this.StreamRepresentationToInternalRecordIdsMap?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
                                  this.Tags?.DeepClone());
@@ -215,7 +215,7 @@ namespace Naos.Reactor.Domain
         {
             var result = new ReactionEvent(
                                  this.Id?.DeepClone(),
-                                 this.RegisteredReactionId?.DeepClone(),
+                                 this.ReactionRegistrationId?.DeepClone(),
                                  streamRepresentationToInternalRecordIdsMap,
                                  this.TimestampUtc.DeepClone(),
                                  this.Tags?.DeepClone());
@@ -249,7 +249,7 @@ namespace Naos.Reactor.Domain
         {
             var result = new ReactionEvent(
                                  this.Id?.DeepClone(),
-                                 this.RegisteredReactionId?.DeepClone(),
+                                 this.ReactionRegistrationId?.DeepClone(),
                                  this.StreamRepresentationToInternalRecordIdsMap?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
                                  tags);
@@ -263,7 +263,7 @@ namespace Naos.Reactor.Domain
         {
             var result = new ReactionEvent(
                                  this.Id?.DeepClone(),
-                                 this.RegisteredReactionId?.DeepClone(),
+                                 this.ReactionRegistrationId?.DeepClone(),
                                  this.StreamRepresentationToInternalRecordIdsMap?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
                                  this.Tags?.DeepClone());
@@ -275,7 +275,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.ReactionEvent: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, RegisteredReactionId = {this.RegisteredReactionId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, StreamRepresentationToInternalRecordIdsMap = {this.StreamRepresentationToInternalRecordIdsMap?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.ReactionEvent: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ReactionRegistrationId = {this.ReactionRegistrationId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, StreamRepresentationToInternalRecordIdsMap = {this.StreamRepresentationToInternalRecordIdsMap?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}.");
 
             return result;
         }

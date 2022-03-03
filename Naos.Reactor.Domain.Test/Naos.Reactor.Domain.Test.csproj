@@ -295,9 +295,9 @@
       <DependentUpon>CheckRecordHandlingResultTest.cs</DependentUpon>
     </Compile>
     <Compile Include="ConsoleAbstraction.cs" />
-    <Compile Include="Operations\EvaluateRegisteredReactionOpTest.cs" />
-    <Compile Include="Operations\EvaluateRegisteredReactionOpTest.designer.cs">
-      <DependentUpon>EvaluateRegisteredReactionOpTest.cs</DependentUpon>
+    <Compile Include="Operations\EvaluateReactionRegistrationOpTest.cs" />
+    <Compile Include="Operations\EvaluateReactionRegistrationOpTest.designer.cs">
+      <DependentUpon>EvaluateReactionRegistrationOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Classes\EventToPutWithIdOnHandlingStatusMatch{TId}Test.cs" />
     <Compile Include="Model\Classes\EventToPutWithIdOnHandlingStatusMatch{TId}Test.designer.cs">
@@ -321,9 +321,9 @@
     <Compile Include="ReactorDummyFactoryTest.designer.cs">
       <DependentUpon>ReactorDummyFactoryTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Classes\RegisteredReactionTest.cs" />
-    <Compile Include="Model\Classes\RegisteredReactionTest.designer.cs">
-      <DependentUpon>RegisteredReactionTest.cs</DependentUpon>
+    <Compile Include="Model\Classes\ReactionRegistrationTest.cs" />
+    <Compile Include="Model\Classes\ReactionRegistrationTest.designer.cs">
+      <DependentUpon>ReactionRegistrationTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\RunReactorOpTest.cs" />
     <Compile Include="Operations\RunReactorOpTest.designer.cs">

@@ -10,7 +10,7 @@ namespace Naos.Reactor.Domain
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Evaluates all <see cref="RegisteredReaction"/>'s.
+    /// Evaluates all <see cref="ReactionRegistration"/>'s.
     /// </summary>
     public partial class RunReactorOp : VoidOperationBase
     {

@@ -23,15 +23,15 @@ namespace Naos.Reactor.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class RegisteredReaction : IModel<RegisteredReaction>
+    public partial class ReactionRegistration : IModel<ReactionRegistration>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="RegisteredReaction"/> are equal.
+        /// Determines whether two objects of type <see cref="ReactionRegistration"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(RegisteredReaction left, RegisteredReaction right)
+        public static bool operator ==(ReactionRegistration left, ReactionRegistration right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="RegisteredReaction"/> are not equal.
+        /// Determines whether two objects of type <see cref="ReactionRegistration"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(RegisteredReaction left, RegisteredReaction right) => !(left == right);
+        public static bool operator !=(ReactionRegistration left, ReactionRegistration right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(RegisteredReaction other)
+        public bool Equals(ReactionRegistration other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -77,7 +77,7 @@ namespace Naos.Reactor.Domain
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as RegisteredReaction);
+        public override bool Equals(object obj) => this == (obj as ReactionRegistration);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
@@ -90,9 +90,9 @@ namespace Naos.Reactor.Domain
         public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        public RegisteredReaction DeepClone()
+        public ReactionRegistration DeepClone()
         {
-            var result = new RegisteredReaction(
+            var result = new ReactionRegistration(
                                  this.Id?.DeepClone(),
                                  this.Dependencies?.DeepClone(),
                                  this.Tags?.DeepClone());
@@ -104,7 +104,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="Id" />.
         /// </summary>
         /// <param name="id">The new <see cref="Id" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="RegisteredReaction" /> using the specified <paramref name="id" /> for <see cref="Id" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="ReactionRegistration" /> using the specified <paramref name="id" /> for <see cref="Id" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -122,9 +122,9 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public RegisteredReaction DeepCloneWithId(string id)
+        public ReactionRegistration DeepCloneWithId(string id)
         {
-            var result = new RegisteredReaction(
+            var result = new ReactionRegistration(
                                  id,
                                  this.Dependencies?.DeepClone(),
                                  this.Tags?.DeepClone());
@@ -136,7 +136,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="Dependencies" />.
         /// </summary>
         /// <param name="dependencies">The new <see cref="Dependencies" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="RegisteredReaction" /> using the specified <paramref name="dependencies" /> for <see cref="Dependencies" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="ReactionRegistration" /> using the specified <paramref name="dependencies" /> for <see cref="Dependencies" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -154,9 +154,9 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public RegisteredReaction DeepCloneWithDependencies(IReadOnlyList<IReactorDependency> dependencies)
+        public ReactionRegistration DeepCloneWithDependencies(IReadOnlyList<IReactorDependency> dependencies)
         {
-            var result = new RegisteredReaction(
+            var result = new ReactionRegistration(
                                  this.Id?.DeepClone(),
                                  dependencies,
                                  this.Tags?.DeepClone());
@@ -168,7 +168,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="Tags" />.
         /// </summary>
         /// <param name="tags">The new <see cref="Tags" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="RegisteredReaction" /> using the specified <paramref name="tags" /> for <see cref="Tags" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="ReactionRegistration" /> using the specified <paramref name="tags" /> for <see cref="Tags" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -186,9 +186,9 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public RegisteredReaction DeepCloneWithTags(IReadOnlyCollection<NamedValue<string>> tags)
+        public ReactionRegistration DeepCloneWithTags(IReadOnlyCollection<NamedValue<string>> tags)
         {
-            var result = new RegisteredReaction(
+            var result = new ReactionRegistration(
                                  this.Id?.DeepClone(),
                                  this.Dependencies?.DeepClone(),
                                  tags);
@@ -200,7 +200,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.RegisteredReaction: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Dependencies = {this.Dependencies?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.ReactionRegistration: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Dependencies = {this.Dependencies?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}.");
 
             return result;
         }

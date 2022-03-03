@@ -61,8 +61,8 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IReadOnlyDictionary<long, HandlingStatus>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new EvaluateRegisteredReactionOp(
-                                 A.Dummy<RegisteredReaction>()));
+                () => new EvaluateReactionRegistrationOp(
+                                 A.Dummy<ReactionRegistration>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new EvaluateScheduleOp(
@@ -108,7 +108,7 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new RegisteredReaction(
+                () => new ReactionRegistration(
                                  A.Dummy<string>(),
                                  A.Dummy<IReadOnlyList<IReactorDependency>>(),
                                  A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
