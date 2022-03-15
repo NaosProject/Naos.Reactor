@@ -19,7 +19,7 @@ namespace Naos.Reactor.Domain
         /// Initializes a new instance of the <see cref="ReactionRegistration"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="dependencies">The dependencies to check.</param>
+        /// <param name="dependencies">The dependencies to check; any dependencies will produce a <see cref="ReactionEvent"/>.</param>
         /// <param name="tags">The tags to write on the <see cref="ReactionEvent"/>.</param>
         public ReactionRegistration(
             string id,
@@ -38,9 +38,8 @@ namespace Naos.Reactor.Domain
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the dependencies.
+        /// Gets the dependencies to check; any dependencies will produce a <see cref="ReactionEvent"/>..
         /// </summary>
-        /// <value>The dependencies.</value>
         public IReadOnlyList<IReactorDependency> Dependencies { get; private set; }
 
         /// <inheritdoc />
