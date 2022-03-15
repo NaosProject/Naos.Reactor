@@ -6,6 +6,7 @@
 
 namespace Naos.Reactor.Domain
 {
+    using System.Linq;
     using System.Threading;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
@@ -83,7 +84,16 @@ namespace Naos.Reactor.Domain
                 var reaction = this.evaluateReactionRegistrationProtocol.Execute(new EvaluateReactionRegistrationOp(reactionRegistration));
                 if (reaction != null)
                 {
-                    this.reactionStream.PutWithId(reaction.Id, reaction, reaction.Tags);
+                    var reactionTags = reaction.Tags.Union(
+                                                    new[]
+                                                    {
+                                                        new NamedValue<string>(
+                                                            nameof(reaction.ReactionRegistrationId),
+                                                            reaction.ReactionRegistrationId),
+                                                    })
+                                               .ToList();
+
+                    this.reactionStream.PutWithId(reaction.Id, reaction, reactionTags);
                     // probably should be void and just write reaction from evaluation
                     //TODO: complete handling here? or do it in the this.evaluateReactionRegistrationsProtocol.Execute
                 }
