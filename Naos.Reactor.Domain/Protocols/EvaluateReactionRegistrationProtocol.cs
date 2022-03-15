@@ -45,7 +45,8 @@ namespace Naos.Reactor.Domain
 
             foreach (var dependency in operation.ReactionRegistration.Dependencies)
             {
-                var stream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(dependency.StreamRepresentation));
+                var recordFilterDependency = dependency as RecordFilterReactorDependency;
+                var stream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(recordFilterDependency.StreamRepresentation));
                 stream.MustForOp(nameof(stream)).BeOfType<ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>>();
                 var streamProtocol = ((ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>)stream);
 
@@ -54,7 +55,13 @@ namespace Naos.Reactor.Domain
                 do
                 {
                     //TODO: When does then get mark 'handled'? here or in RunReactorProtocol
-                    var tryHandleRecordResult = streamProtocol.Execute(dependency.TryHandleRecordOp);
+                    var tryHandleRecordOp = new StandardTryHandleRecordOp(
+                        operation.ReactionRegistration.Id,
+                        recordFilterDependency.RecordFilter,
+                        streamRecordItemsToInclude: StreamRecordItemsToInclude.MetadataOnly);
+
+                    var tryHandleRecordResult = streamProtocol.Execute(tryHandleRecordOp);
+
                     currentRecord = tryHandleRecordResult?.RecordToHandle;
                     if (currentRecord != null)
                     {
@@ -65,7 +72,7 @@ namespace Naos.Reactor.Domain
 
                 if (handledIds.Any())
                 {
-                    records.Add(dependency.StreamRepresentation, handledIds);
+                    records.Add(recordFilterDependency.StreamRepresentation, handledIds);
                 }
             }
 
@@ -79,7 +86,7 @@ namespace Naos.Reactor.Domain
                     operation.ReactionRegistration.Tags)
                 : null;
 
-            //put reaction event to reaction stream
+            //put reaction event to reaction stream later, where do we complete
             //foreach marked completed
             //global catch and mark all failed on failure to write, on failure elsewhere cancelrunning
             return result;

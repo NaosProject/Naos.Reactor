@@ -345,9 +345,9 @@
     </Compile>
     <Compile Include="ReactorDummyFactoryTest.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
-    <Compile Include="Model\Classes\StringIdentifiedReactorDependencyTest.cs" />
-    <Compile Include="Model\Classes\StringIdentifiedReactorDependencyTest.designer.cs">
-      <DependentUpon>StringIdentifiedReactorDependencyTest.cs</DependentUpon>
+    <Compile Include="Model\Classes\RecordFilterReactorDependencyTest.cs" />
+    <Compile Include="Model\Classes\RecordFilterReactorDependencyTest.designer.cs">
+      <DependentUpon>RecordFilterReactorDependencyTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\WriteEventOnMatchingHandlingStatusOp{TId}Test.cs" />
     <Compile Include="Operations\WriteEventOnMatchingHandlingStatusOp{TId}Test.designer.cs">

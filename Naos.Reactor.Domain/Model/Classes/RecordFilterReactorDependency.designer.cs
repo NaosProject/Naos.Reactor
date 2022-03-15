@@ -25,15 +25,15 @@ namespace Naos.Reactor.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class StringIdentifiedReactorDependency : IModel<StringIdentifiedReactorDependency>
+    public partial class RecordFilterReactorDependency : IModel<RecordFilterReactorDependency>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="StringIdentifiedReactorDependency"/> are equal.
+        /// Determines whether two objects of type <see cref="RecordFilterReactorDependency"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(StringIdentifiedReactorDependency left, StringIdentifiedReactorDependency right)
+        public static bool operator ==(RecordFilterReactorDependency left, RecordFilterReactorDependency right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -51,15 +51,15 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="StringIdentifiedReactorDependency"/> are not equal.
+        /// Determines whether two objects of type <see cref="RecordFilterReactorDependency"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(StringIdentifiedReactorDependency left, StringIdentifiedReactorDependency right) => !(left == right);
+        public static bool operator !=(RecordFilterReactorDependency left, RecordFilterReactorDependency right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(StringIdentifiedReactorDependency other)
+        public bool Equals(RecordFilterReactorDependency other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -71,65 +71,30 @@ namespace Naos.Reactor.Domain
                 return false;
             }
 
-            var result = this.Id.IsEqualTo(other.Id, StringComparer.Ordinal)
-                      && this.StreamRepresentation.IsEqualTo(other.StreamRepresentation)
-                      && this.TryHandleRecordOp.IsEqualTo(other.TryHandleRecordOp);
+            var result = this.StreamRepresentation.IsEqualTo(other.StreamRepresentation)
+                      && this.RecordFilter.IsEqualTo(other.RecordFilter);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as StringIdentifiedReactorDependency);
+        public override bool Equals(object obj) => this == (obj as RecordFilterReactorDependency);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Id)
             .Hash(this.StreamRepresentation)
-            .Hash(this.TryHandleRecordOp)
+            .Hash(this.RecordFilter)
             .Value;
 
         /// <inheritdoc />
         public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        public StringIdentifiedReactorDependency DeepClone()
+        public RecordFilterReactorDependency DeepClone()
         {
-            var result = new StringIdentifiedReactorDependency(
-                                 this.Id?.DeepClone(),
+            var result = new RecordFilterReactorDependency(
                                  this.StreamRepresentation?.DeepClone(),
-                                 this.TryHandleRecordOp?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="Id" />.
-        /// </summary>
-        /// <param name="id">The new <see cref="Id" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="StringIdentifiedReactorDependency" /> using the specified <paramref name="id" /> for <see cref="Id" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public StringIdentifiedReactorDependency DeepCloneWithId(string id)
-        {
-            var result = new StringIdentifiedReactorDependency(
-                                 id,
-                                 this.StreamRepresentation?.DeepClone(),
-                                 this.TryHandleRecordOp?.DeepClone());
+                                 this.RecordFilter?.DeepClone());
 
             return result;
         }
@@ -138,7 +103,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="StreamRepresentation" />.
         /// </summary>
         /// <param name="streamRepresentation">The new <see cref="StreamRepresentation" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="StringIdentifiedReactorDependency" /> using the specified <paramref name="streamRepresentation" /> for <see cref="StreamRepresentation" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="RecordFilterReactorDependency" /> using the specified <paramref name="streamRepresentation" /> for <see cref="StreamRepresentation" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -156,21 +121,20 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public StringIdentifiedReactorDependency DeepCloneWithStreamRepresentation(IStreamRepresentation streamRepresentation)
+        public RecordFilterReactorDependency DeepCloneWithStreamRepresentation(IStreamRepresentation streamRepresentation)
         {
-            var result = new StringIdentifiedReactorDependency(
-                                 this.Id?.DeepClone(),
+            var result = new RecordFilterReactorDependency(
                                  streamRepresentation,
-                                 this.TryHandleRecordOp?.DeepClone());
+                                 this.RecordFilter?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="TryHandleRecordOp" />.
+        /// Deep clones this object with a new <see cref="RecordFilter" />.
         /// </summary>
-        /// <param name="tryHandleRecordOp">The new <see cref="TryHandleRecordOp" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="StringIdentifiedReactorDependency" /> using the specified <paramref name="tryHandleRecordOp" /> for <see cref="TryHandleRecordOp" /> and a deep clone of every other property.</returns>
+        /// <param name="recordFilter">The new <see cref="RecordFilter" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="RecordFilterReactorDependency" /> using the specified <paramref name="recordFilter" /> for <see cref="RecordFilter" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -188,12 +152,11 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public StringIdentifiedReactorDependency DeepCloneWithTryHandleRecordOp(StandardTryHandleRecordOp tryHandleRecordOp)
+        public RecordFilterReactorDependency DeepCloneWithRecordFilter(RecordFilter recordFilter)
         {
-            var result = new StringIdentifiedReactorDependency(
-                                 this.Id?.DeepClone(),
+            var result = new RecordFilterReactorDependency(
                                  this.StreamRepresentation?.DeepClone(),
-                                 tryHandleRecordOp);
+                                 recordFilter);
 
             return result;
         }
@@ -202,7 +165,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.StringIdentifiedReactorDependency: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, StreamRepresentation = {this.StreamRepresentation?.ToString() ?? "<null>"}, TryHandleRecordOp = {this.TryHandleRecordOp?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.RecordFilterReactorDependency: StreamRepresentation = {this.StreamRepresentation?.ToString() ?? "<null>"}, RecordFilter = {this.RecordFilter?.ToString() ?? "<null>"}.");
 
             return result;
         }

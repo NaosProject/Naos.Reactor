@@ -114,6 +114,11 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new RecordFilterReactorDependency(
+                                 A.Dummy<IStreamRepresentation>(),
+                                 A.Dummy<RecordFilter>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RunReactorOp(
                                  A.Dummy<TypeRepresentation>()));
 
@@ -129,12 +134,6 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<DateTime?>(),
                                  A.Dummy<DateTime>(),
                                  A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new StringIdentifiedReactorDependency(
-                                 A.Dummy<string>(),
-                                 A.Dummy<IStreamRepresentation>(),
-                                 A.Dummy<StandardTryHandleRecordOp>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new WriteEventOnMatchingHandlingStatusOp<Version>(

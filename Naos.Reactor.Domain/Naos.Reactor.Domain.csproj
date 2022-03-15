@@ -165,10 +165,10 @@
     <Compile Include="Model\Classes\ReactionRegistration.designer.cs">
       <DependentUpon>ReactionRegistration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Classes\StringIdentifiedReactorDependency.cs" />
+    <Compile Include="Model\Classes\RecordFilterReactorDependency.cs" />
     <Compile Include="Model\Classes\EventToPutWithId{TId}.cs" />
-    <Compile Include="Model\Classes\StringIdentifiedReactorDependency.designer.cs">
-      <DependentUpon>StringIdentifiedReactorDependency.cs</DependentUpon>
+    <Compile Include="Model\Classes\RecordFilterReactorDependency.designer.cs">
+      <DependentUpon>RecordFilterReactorDependency.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Interfaces\IChainOfResponsibilityLink.cs" />
     <Compile Include="Operations\EvaluateScheduleOp.designer.cs">
