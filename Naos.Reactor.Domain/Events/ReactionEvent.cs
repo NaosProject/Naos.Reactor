@@ -23,19 +23,25 @@ namespace Naos.Reactor.Domain
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="reactionRegistrationId">The identifier of the <see cref="ReactionRegistration"/> which generated the reaction.</param>
+        /// <param name="reactionContext">The context provided by the <see cref="ReactionRegistration"/> evaluated.</param>
         /// <param name="streamRepresentationToInternalRecordIdsMap">The <see cref="IStreamRepresentation"/> to list of internal record identifiers that were evaluated by the reaction.</param>
         /// <param name="timestampUtc">The timestamp of the event in UTC format.</param>
         /// <param name="tags">The tags associated with the reaction.</param>
         public ReactionEvent(
             string id,
             string reactionRegistrationId,
+            IReactionContext reactionContext,
             IReadOnlyDictionary<IStreamRepresentation, IReadOnlyList<long>> streamRepresentationToInternalRecordIdsMap,
             DateTime timestampUtc,
             IReadOnlyCollection<NamedValue<string>> tags = null) : base(id, timestampUtc)
         {
+            id.MustForArg(nameof(id)).NotBeNullNorWhiteSpace();
+            reactionRegistrationId.MustForArg(nameof(reactionRegistrationId)).NotBeNullNorWhiteSpace();
+            reactionContext.MustForArg(nameof(reactionContext)).NotBeNull();
             streamRepresentationToInternalRecordIdsMap.MustForArg(nameof(streamRepresentationToInternalRecordIdsMap)).NotBeNullNorEmptyDictionaryNorContainAnyNullValues();
 
             this.ReactionRegistrationId = reactionRegistrationId;
+            this.ReactionContext = reactionContext;
             this.StreamRepresentationToInternalRecordIdsMap = streamRepresentationToInternalRecordIdsMap;
             this.Tags = tags;
         }
@@ -45,6 +51,11 @@ namespace Naos.Reactor.Domain
         /// </summary>
         /// <value>The identifier of the <see cref="ReactionRegistration"/> which generated the reaction.</value>
         public string ReactionRegistrationId { get; private set; }
+
+        /// <summary>
+        /// Gets the reaction context provided from the <see cref="ReactionRegistration"/>.
+        /// </summary>
+        public IReactionContext ReactionContext { get; private set; }
 
         /// <summary>
         /// The <see cref="IStreamRepresentation"/> to list of internal record identifiers that were evaluated by the reaction.

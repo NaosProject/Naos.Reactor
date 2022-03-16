@@ -81,6 +81,7 @@ namespace Naos.Reactor.Domain
                 ? new ReactionEvent(
                     reactionId,
                     operation.ReactionRegistration.Id,
+                    operation.ReactionRegistration.ReactionContext,
                     records,
                     DateTime.UtcNow,
                     operation.ReactionRegistration.Tags)

@@ -33,6 +33,9 @@ namespace Naos.Reactor.Domain.Test
 
             // ------------------------------- ENUMS --------------------------------------
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(CompositeHandlingStatusMatchStrategy.Unknown);
+
+            // ------------------------------- BASE CLASSES -------------------------------
+            AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IReactionContext>();
         }
     }
 }

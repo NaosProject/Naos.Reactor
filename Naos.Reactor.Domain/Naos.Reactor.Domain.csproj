@@ -141,6 +141,7 @@
     </Compile>
     <Compile Include="Logic\RecordExistsMatchStrategyExtensions.cs" />
     <Compile Include="Logic\CompositeHandlingStatusMatchStrategyExtensions.cs" />
+    <Compile Include="Model\Classes\DetailsReactionContext.cs" />
     <Compile Include="Model\Classes\CheckRecordExistsResult.cs" />
     <Compile Include="Model\Classes\CheckRecordExistsResult.designer.cs">
       <DependentUpon>CheckRecordExistsResult.cs</DependentUpon>
@@ -148,6 +149,9 @@
     <Compile Include="Model\Classes\CheckRecordHandlingResult.cs" />
     <Compile Include="Model\Classes\CheckRecordHandlingResult.designer.cs">
       <DependentUpon>CheckRecordHandlingResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Classes\DetailsReactionContext.designer.cs">
+      <DependentUpon>DetailsReactionContext.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Classes\EventToPutWithIdOnHandlingStatusMatch{TId}.designer.cs">
       <DependentUpon>EventToPutWithIdOnHandlingStatusMatch{TId}.cs</DependentUpon>
@@ -171,6 +175,7 @@
       <DependentUpon>RecordFilterReactorDependency.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Interfaces\IChainOfResponsibilityLink.cs" />
+    <Compile Include="Model\Interfaces\IReactionContext.cs" />
     <Compile Include="Operations\EvaluateScheduleOp.designer.cs">
       <DependentUpon>EvaluateScheduleOp.cs</DependentUpon>
     </Compile>
