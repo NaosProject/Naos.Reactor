@@ -40,6 +40,10 @@ namespace Naos.Reactor.Domain.Test
         public DefaultReactorDummyFactory()
         {
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new AllDependenciesReactorDependency(
+                                 A.Dummy<IReadOnlyCollection<IReactorDependency>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CheckRecordExistsOp(
                                  A.Dummy<IStreamRepresentation>(),
                                  A.Dummy<RecordFilter>()));

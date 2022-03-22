@@ -270,6 +270,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Model\Classes\AllDependenciesReactorDependencyTest.cs" />
+    <Compile Include="Model\Classes\AllDependenciesReactorDependencyTest.designer.cs">
+      <DependentUpon>AllDependenciesReactorDependencyTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="DetailsReactionContextTest.cs" />
     <Compile Include="DetailsReactionContextTest.designer.cs">
       <DependentUpon>DetailsReactionContextTest.cs</DependentUpon>

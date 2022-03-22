@@ -141,6 +141,9 @@
     </Compile>
     <Compile Include="Logic\RecordExistsMatchStrategyExtensions.cs" />
     <Compile Include="Logic\CompositeHandlingStatusMatchStrategyExtensions.cs" />
+    <Compile Include="Model\Classes\AllDependenciesReactorDependency.designer.cs">
+      <DependentUpon>AllDependenciesReactorDependency.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Classes\DetailsReactionContext.cs" />
     <Compile Include="Model\Classes\CheckRecordExistsResult.cs" />
     <Compile Include="Model\Classes\CheckRecordExistsResult.designer.cs">
@@ -159,6 +162,7 @@
     <Compile Include="Model\Classes\EventToPutWithIdOnRecordFilterMatch{TId}.designer.cs">
       <DependentUpon>EventToPutWithIdOnRecordFilterMatch{TId}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Classes\AllDependenciesReactorDependency.cs" />
     <Compile Include="Model\Enums\RecordExistsMatchStrategy.cs" />
     <Compile Include="Model\Enums\CompositeHandlingStatusMatchStrategy.cs" />
     <Compile Include="Model\Classes\EventToPutWithIdOnRecordFilterMatch{TId}.cs" />
