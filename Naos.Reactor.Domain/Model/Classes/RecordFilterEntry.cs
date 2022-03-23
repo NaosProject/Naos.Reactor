@@ -6,7 +6,6 @@
 
 namespace Naos.Reactor.Domain
 {
-    using System.Collections.Generic;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
@@ -24,7 +23,7 @@ namespace Naos.Reactor.Domain
         /// <param name="requiredForReaction">if set to <c>true</c> [required for reaction].</param>
         /// <param name="includeInReaction">if set to <c>true</c> [include in reaction].</param>
         public RecordFilterEntry(
-            StreamRepresentation streamRepresentation,
+            IStreamRepresentation streamRepresentation,
             RecordFilter recordFilter,
             bool requiredForReaction,
             bool includeInReaction)
@@ -41,7 +40,7 @@ namespace Naos.Reactor.Domain
         /// <summary>
         /// Gets the stream representation.
         /// </summary>
-        public StreamRepresentation StreamRepresentation { get; private set; }
+        public IStreamRepresentation StreamRepresentation { get; private set; }
 
         /// <summary>
         /// Gets the record filter.

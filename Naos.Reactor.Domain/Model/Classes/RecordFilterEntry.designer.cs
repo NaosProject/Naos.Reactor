@@ -127,7 +127,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public RecordFilterEntry DeepCloneWithStreamRepresentation(StreamRepresentation streamRepresentation)
+        public RecordFilterEntry DeepCloneWithStreamRepresentation(IStreamRepresentation streamRepresentation)
         {
             var result = new RecordFilterEntry(
                                  streamRepresentation,
