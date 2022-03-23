@@ -44,6 +44,10 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IReadOnlyCollection<IReactorDependency>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new AnyDependenciesReactorDependency(
+                                 A.Dummy<IReadOnlyCollection<IReactorDependency>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CheckRecordExistsOp(
                                  A.Dummy<IStreamRepresentation>(),
                                  A.Dummy<RecordFilter>()));
@@ -124,9 +128,15 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new RecordFilterEntry(
+                                 A.Dummy<StreamRepresentation>(),
+                                 A.Dummy<RecordFilter>(),
+                                 A.Dummy<bool>(),
+                                 A.Dummy<bool>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RecordFilterReactorDependency(
-                                 A.Dummy<IStreamRepresentation>(),
-                                 A.Dummy<RecordFilter>()));
+                                 A.Dummy<IReadOnlyList<RecordFilterEntry>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RunReactorOp(

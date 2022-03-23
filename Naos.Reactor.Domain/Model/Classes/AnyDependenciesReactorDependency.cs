@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AllDependenciesReactorDependency.cs" company="Naos Project">
+// <copyright file="AnyDependenciesReactorDependency.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,15 +11,15 @@ namespace Naos.Reactor.Domain
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// A set of dependencies to be evaluated together, will self cancel if any of the dependencies have no records to handle.
+    /// A set of dependencies to be evaluated together, will return if any of the dependencies have records to handle.
     /// </summary>
-    public partial class AllDependenciesReactorDependency : IReactorDependency, IModelViaCodeGen
+    public partial class AnyDependenciesReactorDependency : IReactorDependency, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AllDependenciesReactorDependency"/> class.
         /// </summary>
         /// <param name="dependencies"></param>
-        public AllDependenciesReactorDependency(
+        public AnyDependenciesReactorDependency(
             IReadOnlyCollection<IReactorDependency> dependencies)
         {
             dependencies.MustForArg(nameof(dependencies)).NotBeNull();

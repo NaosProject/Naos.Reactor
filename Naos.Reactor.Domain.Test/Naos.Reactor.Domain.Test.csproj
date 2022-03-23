@@ -270,6 +270,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="AnyDependenciesReactorDependencyTest.cs" />
+    <Compile Include="AnyDependenciesReactorDependencyTest.designer.cs">
+      <DependentUpon>AnyDependenciesReactorDependencyTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Classes\AllDependenciesReactorDependencyTest.cs" />
     <Compile Include="Model\Classes\AllDependenciesReactorDependencyTest.designer.cs">
       <DependentUpon>AllDependenciesReactorDependencyTest.cs</DependentUpon>
@@ -344,6 +348,10 @@
     <Compile Include="Events\ScheduledExecutionEventTest.cs" />
     <Compile Include="Events\ScheduledExecutionEventTest.designer.cs">
       <DependentUpon>ScheduledExecutionEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RecordFilterEntryTest.cs" />
+    <Compile Include="RecordFilterEntryTest.designer.cs">
+      <DependentUpon>RecordFilterEntryTest.cs</DependentUpon>
     </Compile>
     <Compile Include="SerializationConfigurationTypes.cs" />
     <Compile Include="GlobalSuppressions.cs" />

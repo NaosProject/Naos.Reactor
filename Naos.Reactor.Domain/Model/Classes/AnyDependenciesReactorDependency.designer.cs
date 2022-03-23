@@ -23,15 +23,15 @@ namespace Naos.Reactor.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class RecordFilterReactorDependency : IModel<RecordFilterReactorDependency>
+    public partial class AnyDependenciesReactorDependency : IModel<AnyDependenciesReactorDependency>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="RecordFilterReactorDependency"/> are equal.
+        /// Determines whether two objects of type <see cref="AnyDependenciesReactorDependency"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(RecordFilterReactorDependency left, RecordFilterReactorDependency right)
+        public static bool operator ==(AnyDependenciesReactorDependency left, AnyDependenciesReactorDependency right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="RecordFilterReactorDependency"/> are not equal.
+        /// Determines whether two objects of type <see cref="AnyDependenciesReactorDependency"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(RecordFilterReactorDependency left, RecordFilterReactorDependency right) => !(left == right);
+        public static bool operator !=(AnyDependenciesReactorDependency left, AnyDependenciesReactorDependency right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(RecordFilterReactorDependency other)
+        public bool Equals(AnyDependenciesReactorDependency other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,36 +69,36 @@ namespace Naos.Reactor.Domain
                 return false;
             }
 
-            var result = this.Entries.IsEqualTo(other.Entries);
+            var result = this.Dependencies.IsEqualTo(other.Dependencies);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as RecordFilterReactorDependency);
+        public override bool Equals(object obj) => this == (obj as AnyDependenciesReactorDependency);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Entries)
+            .Hash(this.Dependencies)
             .Value;
 
         /// <inheritdoc />
         public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        public RecordFilterReactorDependency DeepClone()
+        public AnyDependenciesReactorDependency DeepClone()
         {
-            var result = new RecordFilterReactorDependency(
-                                 this.Entries?.DeepClone());
+            var result = new AnyDependenciesReactorDependency(
+                                 this.Dependencies?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Entries" />.
+        /// Deep clones this object with a new <see cref="Dependencies" />.
         /// </summary>
-        /// <param name="entries">The new <see cref="Entries" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="RecordFilterReactorDependency" /> using the specified <paramref name="entries" /> for <see cref="Entries" /> and a deep clone of every other property.</returns>
+        /// <param name="dependencies">The new <see cref="Dependencies" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="AnyDependenciesReactorDependency" /> using the specified <paramref name="dependencies" /> for <see cref="Dependencies" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -116,10 +116,10 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public RecordFilterReactorDependency DeepCloneWithEntries(IReadOnlyList<RecordFilterEntry> entries)
+        public AnyDependenciesReactorDependency DeepCloneWithDependencies(IReadOnlyCollection<IReactorDependency> dependencies)
         {
-            var result = new RecordFilterReactorDependency(
-                                 entries);
+            var result = new AnyDependenciesReactorDependency(
+                                 dependencies);
 
             return result;
         }
@@ -128,7 +128,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.RecordFilterReactorDependency: Entries = {this.Entries?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.AnyDependenciesReactorDependency: Dependencies = {this.Dependencies?.ToString() ?? "<null>"}.");
 
             return result;
         }

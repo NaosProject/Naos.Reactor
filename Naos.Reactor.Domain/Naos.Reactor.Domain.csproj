@@ -141,8 +141,12 @@
     </Compile>
     <Compile Include="Logic\RecordExistsMatchStrategyExtensions.cs" />
     <Compile Include="Logic\CompositeHandlingStatusMatchStrategyExtensions.cs" />
+    <Compile Include="Model\Classes\AnyDependenciesReactorDependency.cs" />
     <Compile Include="Model\Classes\AllDependenciesReactorDependency.designer.cs">
       <DependentUpon>AllDependenciesReactorDependency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Classes\AnyDependenciesReactorDependency.designer.cs">
+      <DependentUpon>AnyDependenciesReactorDependency.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Classes\DetailsReactionContext.cs" />
     <Compile Include="Model\Classes\CheckRecordExistsResult.cs" />
@@ -163,6 +167,13 @@
       <DependentUpon>EventToPutWithIdOnRecordFilterMatch{TId}.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Classes\AllDependenciesReactorDependency.cs" />
+    <Compile Include="Model\Classes\RecordFilterEntry.cs" />
+    <Compile Include="Model\Classes\RecordFilterEntry.designer.cs">
+      <DependentUpon>RecordFilterEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Classes\RecordFilterReactorDependency.designer.cs">
+      <DependentUpon>RecordFilterReactorDependency.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Enums\RecordExistsMatchStrategy.cs" />
     <Compile Include="Model\Enums\CompositeHandlingStatusMatchStrategy.cs" />
     <Compile Include="Model\Classes\EventToPutWithIdOnRecordFilterMatch{TId}.cs" />
@@ -175,9 +186,6 @@
     </Compile>
     <Compile Include="Model\Classes\RecordFilterReactorDependency.cs" />
     <Compile Include="Model\Classes\EventToPutWithId{TId}.cs" />
-    <Compile Include="Model\Classes\RecordFilterReactorDependency.designer.cs">
-      <DependentUpon>RecordFilterReactorDependency.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model\Interfaces\IChainOfResponsibilityLink.cs" />
     <Compile Include="Model\Interfaces\IReactionContext.cs" />
     <Compile Include="Operations\EvaluateScheduleOp.designer.cs">
