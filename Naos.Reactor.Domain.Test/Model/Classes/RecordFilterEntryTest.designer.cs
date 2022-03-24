@@ -49,7 +49,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<RecordFilterEntry>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.RecordFilterEntry: StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, RecordFilter = {systemUnderTest.RecordFilter?.ToString() ?? "<null>"}, RequiredForReaction = {systemUnderTest.RequiredForReaction.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, IncludeInReaction = {systemUnderTest.IncludeInReaction.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.RecordFilterEntry: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, RecordFilter = {systemUnderTest.RecordFilter?.ToString() ?? "<null>"}, RequiredForReaction = {systemUnderTest.RequiredForReaction.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, IncludeInReaction = {systemUnderTest.IncludeInReaction.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
@@ -60,12 +60,53 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<RecordFilterEntry>
                 {
+                    Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<RecordFilterEntry>();
+
+                        var result = new RecordFilterEntry(
+                                             null,
+                                             referenceObject.StreamRepresentation,
+                                             referenceObject.RecordFilter,
+                                             referenceObject.RequiredForReaction,
+                                             referenceObject.IncludeInReaction);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "id", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<RecordFilterEntry>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'id' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<RecordFilterEntry>();
+
+                        var result = new RecordFilterEntry(
+                                             Invariant($"  {Environment.NewLine}  "),
+                                             referenceObject.StreamRepresentation,
+                                             referenceObject.RecordFilter,
+                                             referenceObject.RequiredForReaction,
+                                             referenceObject.IncludeInReaction);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "id", "white space", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<RecordFilterEntry>
+                {
                     Name = "constructor should throw ArgumentNullException when parameter 'streamRepresentation' is null scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<RecordFilterEntry>();
 
                         var result = new RecordFilterEntry(
+                                             referenceObject.Id,
                                              null,
                                              referenceObject.RecordFilter,
                                              referenceObject.RequiredForReaction,
@@ -85,6 +126,7 @@ namespace Naos.Reactor.Domain.Test
                         var referenceObject = A.Dummy<RecordFilterEntry>();
 
                         var result = new RecordFilterEntry(
+                                             referenceObject.Id,
                                              referenceObject.StreamRepresentation,
                                              null,
                                              referenceObject.RequiredForReaction,
@@ -100,6 +142,29 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<RecordFilterEntry>
                 {
+                    Name = "Id should return same 'id' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<RecordFilterEntry>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<RecordFilterEntry>
+                        {
+                            SystemUnderTest = new RecordFilterEntry(
+                                                      referenceObject.Id,
+                                                      referenceObject.StreamRepresentation,
+                                                      referenceObject.RecordFilter,
+                                                      referenceObject.RequiredForReaction,
+                                                      referenceObject.IncludeInReaction),
+                            ExpectedPropertyValue = referenceObject.Id,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Id",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<RecordFilterEntry>
+                {
                     Name = "StreamRepresentation should return same 'streamRepresentation' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
@@ -108,6 +173,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedPropertyValue<RecordFilterEntry>
                         {
                             SystemUnderTest = new RecordFilterEntry(
+                                                      referenceObject.Id,
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.RecordFilter,
                                                       referenceObject.RequiredForReaction,
@@ -130,6 +196,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedPropertyValue<RecordFilterEntry>
                         {
                             SystemUnderTest = new RecordFilterEntry(
+                                                      referenceObject.Id,
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.RecordFilter,
                                                       referenceObject.RequiredForReaction,
@@ -152,6 +219,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedPropertyValue<RecordFilterEntry>
                         {
                             SystemUnderTest = new RecordFilterEntry(
+                                                      referenceObject.Id,
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.RecordFilter,
                                                       referenceObject.RequiredForReaction,
@@ -174,6 +242,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedPropertyValue<RecordFilterEntry>
                         {
                             SystemUnderTest = new RecordFilterEntry(
+                                                      referenceObject.Id,
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.RecordFilter,
                                                       referenceObject.RequiredForReaction,
@@ -187,6 +256,26 @@ namespace Naos.Reactor.Domain.Test
                 });
 
         private static readonly DeepCloneWithTestScenarios<RecordFilterEntry> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<RecordFilterEntry>()
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<RecordFilterEntry>
+                {
+                    Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
+                    WithPropertyName = "Id",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<RecordFilterEntry>();
+
+                        var referenceObject = A.Dummy<RecordFilterEntry>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<RecordFilterEntry>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Id,
+                        };
+
+                        return result;
+                    },
+                })
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<RecordFilterEntry>
                 {
@@ -279,6 +368,7 @@ namespace Naos.Reactor.Domain.Test
                     ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new RecordFilterEntry[]
                     {
                         new RecordFilterEntry(
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.RecordFilter,
                                 ReferenceObjectForEquatableTestScenarios.RequiredForReaction,
@@ -287,21 +377,31 @@ namespace Naos.Reactor.Domain.Test
                     ObjectsThatAreNotEqualToReferenceObject = new RecordFilterEntry[]
                     {
                         new RecordFilterEntry(
+                                A.Dummy<RecordFilterEntry>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
+                                ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
+                                ReferenceObjectForEquatableTestScenarios.RecordFilter,
+                                ReferenceObjectForEquatableTestScenarios.RequiredForReaction,
+                                ReferenceObjectForEquatableTestScenarios.IncludeInReaction),
+                        new RecordFilterEntry(
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<RecordFilterEntry>().Whose(_ => !_.StreamRepresentation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StreamRepresentation)).StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.RecordFilter,
                                 ReferenceObjectForEquatableTestScenarios.RequiredForReaction,
                                 ReferenceObjectForEquatableTestScenarios.IncludeInReaction),
                         new RecordFilterEntry(
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 A.Dummy<RecordFilterEntry>().Whose(_ => !_.RecordFilter.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RecordFilter)).RecordFilter,
                                 ReferenceObjectForEquatableTestScenarios.RequiredForReaction,
                                 ReferenceObjectForEquatableTestScenarios.IncludeInReaction),
                         new RecordFilterEntry(
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.RecordFilter,
                                 A.Dummy<RecordFilterEntry>().Whose(_ => !_.RequiredForReaction.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RequiredForReaction)).RequiredForReaction,
                                 ReferenceObjectForEquatableTestScenarios.IncludeInReaction),
                         new RecordFilterEntry(
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.RecordFilter,
                                 ReferenceObjectForEquatableTestScenarios.RequiredForReaction,
@@ -628,7 +728,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "StreamRepresentation", "RecordFilter", "RequiredForReaction", "IncludeInReaction" };
+                var propertyNames = new string[] { "Id", "StreamRepresentation", "RecordFilter", "RequiredForReaction", "IncludeInReaction" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

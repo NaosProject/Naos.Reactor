@@ -71,7 +71,8 @@ namespace Naos.Reactor.Domain
                 return false;
             }
 
-            var result = this.StreamRepresentation.IsEqualTo(other.StreamRepresentation)
+            var result = this.Id.IsEqualTo(other.Id, StringComparer.Ordinal)
+                      && this.StreamRepresentation.IsEqualTo(other.StreamRepresentation)
                       && this.RecordFilter.IsEqualTo(other.RecordFilter)
                       && this.RequiredForReaction.IsEqualTo(other.RequiredForReaction)
                       && this.IncludeInReaction.IsEqualTo(other.IncludeInReaction);
@@ -84,6 +85,7 @@ namespace Naos.Reactor.Domain
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
+            .Hash(this.Id)
             .Hash(this.StreamRepresentation)
             .Hash(this.RecordFilter)
             .Hash(this.RequiredForReaction)
@@ -97,6 +99,41 @@ namespace Naos.Reactor.Domain
         public RecordFilterEntry DeepClone()
         {
             var result = new RecordFilterEntry(
+                                 this.Id?.DeepClone(),
+                                 this.StreamRepresentation?.DeepClone(),
+                                 this.RecordFilter?.DeepClone(),
+                                 this.RequiredForReaction.DeepClone(),
+                                 this.IncludeInReaction.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Id" />.
+        /// </summary>
+        /// <param name="id">The new <see cref="Id" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="RecordFilterEntry" /> using the specified <paramref name="id" /> for <see cref="Id" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public RecordFilterEntry DeepCloneWithId(string id)
+        {
+            var result = new RecordFilterEntry(
+                                 id,
                                  this.StreamRepresentation?.DeepClone(),
                                  this.RecordFilter?.DeepClone(),
                                  this.RequiredForReaction.DeepClone(),
@@ -130,6 +167,7 @@ namespace Naos.Reactor.Domain
         public RecordFilterEntry DeepCloneWithStreamRepresentation(IStreamRepresentation streamRepresentation)
         {
             var result = new RecordFilterEntry(
+                                 this.Id?.DeepClone(),
                                  streamRepresentation,
                                  this.RecordFilter?.DeepClone(),
                                  this.RequiredForReaction.DeepClone(),
@@ -163,6 +201,7 @@ namespace Naos.Reactor.Domain
         public RecordFilterEntry DeepCloneWithRecordFilter(RecordFilter recordFilter)
         {
             var result = new RecordFilterEntry(
+                                 this.Id?.DeepClone(),
                                  this.StreamRepresentation?.DeepClone(),
                                  recordFilter,
                                  this.RequiredForReaction.DeepClone(),
@@ -196,6 +235,7 @@ namespace Naos.Reactor.Domain
         public RecordFilterEntry DeepCloneWithRequiredForReaction(bool requiredForReaction)
         {
             var result = new RecordFilterEntry(
+                                 this.Id?.DeepClone(),
                                  this.StreamRepresentation?.DeepClone(),
                                  this.RecordFilter?.DeepClone(),
                                  requiredForReaction,
@@ -229,6 +269,7 @@ namespace Naos.Reactor.Domain
         public RecordFilterEntry DeepCloneWithIncludeInReaction(bool includeInReaction)
         {
             var result = new RecordFilterEntry(
+                                 this.Id?.DeepClone(),
                                  this.StreamRepresentation?.DeepClone(),
                                  this.RecordFilter?.DeepClone(),
                                  this.RequiredForReaction.DeepClone(),
@@ -241,7 +282,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.RecordFilterEntry: StreamRepresentation = {this.StreamRepresentation?.ToString() ?? "<null>"}, RecordFilter = {this.RecordFilter?.ToString() ?? "<null>"}, RequiredForReaction = {this.RequiredForReaction.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, IncludeInReaction = {this.IncludeInReaction.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.RecordFilterEntry: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, StreamRepresentation = {this.StreamRepresentation?.ToString() ?? "<null>"}, RecordFilter = {this.RecordFilter?.ToString() ?? "<null>"}, RequiredForReaction = {this.RequiredForReaction.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, IncludeInReaction = {this.IncludeInReaction.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

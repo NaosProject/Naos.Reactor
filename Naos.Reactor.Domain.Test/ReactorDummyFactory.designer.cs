@@ -129,6 +129,7 @@ namespace Naos.Reactor.Domain.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RecordFilterEntry(
+                                 A.Dummy<string>(),
                                  A.Dummy<IStreamRepresentation>(),
                                  A.Dummy<RecordFilter>(),
                                  A.Dummy<bool>(),

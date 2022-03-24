@@ -270,16 +270,16 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="AnyDependenciesReactorDependencyTest.cs" />
-    <Compile Include="AnyDependenciesReactorDependencyTest.designer.cs">
+    <Compile Include="Model\Classes\AnyDependenciesReactorDependencyTest.cs" />
+    <Compile Include="Model\Classes\AnyDependenciesReactorDependencyTest.designer.cs">
       <DependentUpon>AnyDependenciesReactorDependencyTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Classes\AllDependenciesReactorDependencyTest.cs" />
     <Compile Include="Model\Classes\AllDependenciesReactorDependencyTest.designer.cs">
       <DependentUpon>AllDependenciesReactorDependencyTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="DetailsReactionContextTest.cs" />
-    <Compile Include="DetailsReactionContextTest.designer.cs">
+    <Compile Include="Model\Classes\DetailsReactionContextTest.cs" />
+    <Compile Include="Model\Classes\DetailsReactionContextTest.designer.cs">
       <DependentUpon>DetailsReactionContextTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\EvaluateScheduleOpTest.cs" />
@@ -349,8 +349,8 @@
     <Compile Include="Events\ScheduledExecutionEventTest.designer.cs">
       <DependentUpon>ScheduledExecutionEventTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="RecordFilterEntryTest.cs" />
-    <Compile Include="RecordFilterEntryTest.designer.cs">
+    <Compile Include="Model\Classes\RecordFilterEntryTest.cs" />
+    <Compile Include="Model\Classes\RecordFilterEntryTest.designer.cs">
       <DependentUpon>RecordFilterEntryTest.cs</DependentUpon>
     </Compile>
     <Compile Include="SerializationConfigurationTypes.cs" />
