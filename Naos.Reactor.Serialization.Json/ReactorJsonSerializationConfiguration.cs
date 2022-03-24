@@ -18,6 +18,13 @@ namespace Naos.Reactor.Serialization.Json
     public class ReactorJsonSerializationConfiguration : JsonSerializationConfigurationBase
     {
         /// <inheritdoc />
+        protected override IReadOnlyCollection<string> TypeToRegisterNamespacePrefixFilters =>
+            new[]
+            {
+                Naos.Reactor.Domain.ProjectInfo.Namespace,
+            };
+
+        /// <inheritdoc />
         protected override IReadOnlyCollection<JsonSerializationConfigurationType> DependentJsonSerializationConfigurationTypes =>
             new[]
             {

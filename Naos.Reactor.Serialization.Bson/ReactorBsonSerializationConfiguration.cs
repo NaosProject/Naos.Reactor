@@ -18,6 +18,13 @@ namespace Naos.Reactor.Serialization.Bson
     public class ReactorBsonSerializationConfiguration : BsonSerializationConfigurationBase
     {
         /// <inheritdoc />
+        protected override IReadOnlyCollection<string> TypeToRegisterNamespacePrefixFilters =>
+            new[]
+            {
+                Naos.Reactor.Domain.ProjectInfo.Namespace,
+            };
+
+        /// <inheritdoc />
         protected override IReadOnlyCollection<BsonSerializationConfigurationType> DependentBsonSerializationConfigurationTypes =>
             new[]
             {
