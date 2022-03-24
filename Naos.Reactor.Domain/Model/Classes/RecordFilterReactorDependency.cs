@@ -7,6 +7,7 @@
 namespace Naos.Reactor.Domain
 {
     using System.Collections.Generic;
+    using System.Linq;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
 
@@ -23,6 +24,7 @@ namespace Naos.Reactor.Domain
             IReadOnlyList<RecordFilterEntry> entries)
         {
             entries.MustForArg(nameof(entries)).NotBeNullNorEmptyEnumerableNorContainAnyNulls();
+            entries.Select(_ => _.Id).Distinct().Count().MustForArg(nameof(entries)).BeEqualTo(entries.Count, "All Id's in the entries must be unique.");
 
             this.Entries = entries;
         }
