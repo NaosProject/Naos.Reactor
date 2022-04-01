@@ -62,7 +62,7 @@ namespace Naos.Reactor.Domain
             foreach (var recordFilterEntry in recordFilterDependency.Entries)
             {
                 var stream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(recordFilterEntry.StreamRepresentation));
-                stream.MustForOp(nameof(stream)).BeOfType<ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>>();
+                stream.MustForOp(nameof(stream)).BeAssignableToType<ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>>();
                 var streamProtocol = (ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>)stream;
 
                 var tryHandleConcern = Invariant($"{operation.ReactionRegistration.Id}_{recordFilterEntry.Id}");
