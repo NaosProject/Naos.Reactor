@@ -56,64 +56,77 @@ namespace Naos.Reactor.Domain
                 throw new NotSupportedException(Invariant($"Only {typeof(RecordFilterReactorDependency)} is supported, {dependency?.GetType().ToStringReadable()}."));
             }
 
+            var evaluateReactionRegistrationsBatchId = Guid.NewGuid().ToStringInvariantPreferred();
+
             var records = new Dictionary<IStreamRepresentation, HashSet<long>>();
             var trackingForRollback = new List<Tuple<IStream, string, HashSet<long>>>();
             var allRequiredSeen = true;
             foreach (var recordFilterEntry in recordFilterDependency.Entries)
             {
-                var stream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(recordFilterEntry.StreamRepresentation));
-                stream.MustForOp(nameof(stream)).BeAssignableToType<ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>>();
-                var streamProtocol = (ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>)stream;
-
-                var tryHandleConcern = Invariant($"{operation.ReactionRegistration.Id}_{recordFilterEntry.Id}");
-
-                var handledIds = new HashSet<long>(); // could get duplicates
-                StreamRecord currentRecord = null;
-                do
+                try
                 {
-                    //TODO: When does then get mark 'handled'? here or in RunReactorProtocol
-                    var tryHandleRecordOp = new StandardTryHandleRecordOp(
-                        tryHandleConcern,
-                        recordFilterEntry.RecordFilter,
-                        streamRecordItemsToInclude: StreamRecordItemsToInclude.MetadataOnly);
+                    var stream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(recordFilterEntry.StreamRepresentation));
+                    stream.MustForOp(nameof(stream)).BeAssignableToType<ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>>();
+                    var streamProtocol = (ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>)stream;
 
-                    var tryHandleRecordResult = streamProtocol.Execute(tryHandleRecordOp);
+                    var tryHandleConcern = Invariant($"{operation.ReactionRegistration.Id}_{recordFilterEntry.Id}");
 
-                    currentRecord = tryHandleRecordResult?.RecordToHandle;
-                    if (currentRecord != null)
+                    var handledIds = new HashSet<long>(); // could get duplicates
+                    StreamRecord currentRecord = null;
+                    do
                     {
-                        handledIds.Add(currentRecord.InternalRecordId);
-                    }
-                }
-                while (currentRecord != null);
-
-                if (handledIds.Any())
-                {
-                    trackingForRollback.Add(
-                        new Tuple<IStream, string, HashSet<long>>(
-                            stream,
+                        //TODO: When does then get mark 'handled'? here or in RunReactorProtocol
+                        var tryHandleRecordOp = new StandardTryHandleRecordOp(
                             tryHandleConcern,
-                            handledIds));
+                            recordFilterEntry.RecordFilter,
+                            streamRecordItemsToInclude: StreamRecordItemsToInclude.MetadataOnly,
+                            tags: new[]
+                                  {
+                                      new NamedValue<string>("BatchId", evaluateReactionRegistrationsBatchId),
+                                  });
 
-                    if (recordFilterEntry.IncludeInReaction)
-                    {
-                        if (records.ContainsKey(recordFilterEntry.StreamRepresentation))
+                        var tryHandleRecordResult = streamProtocol.Execute(tryHandleRecordOp);
+
+                        currentRecord = tryHandleRecordResult?.RecordToHandle;
+                        if (currentRecord != null)
                         {
-                            records[recordFilterEntry.StreamRepresentation].AddRange(handledIds);
+                            handledIds.Add(currentRecord.InternalRecordId);
                         }
-                        else
+                    }
+                    while (currentRecord != null);
+
+                    if (handledIds.Any())
+                    {
+                        trackingForRollback.Add(
+                            new Tuple<IStream, string, HashSet<long>>(
+                                stream,
+                                tryHandleConcern,
+                                handledIds));
+
+                        if (recordFilterEntry.IncludeInReaction)
                         {
-                            records.Add(recordFilterEntry.StreamRepresentation, handledIds);
+                            if (records.ContainsKey(recordFilterEntry.StreamRepresentation))
+                            {
+                                records[recordFilterEntry.StreamRepresentation].AddRange(handledIds);
+                            }
+                            else
+                            {
+                                records.Add(recordFilterEntry.StreamRepresentation, handledIds);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (recordFilterEntry.RequiredForReaction)
+                        {
+                            allRequiredSeen = false;
+                            break;
                         }
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    if (recordFilterEntry.RequiredForReaction)
-                    {
-                        allRequiredSeen = false;
-                        break;
-                    }
+                    throw new ReactorException(Invariant($"Failed to process entry: {recordFilterEntry}."), ex, operation);
                 }
             }
 

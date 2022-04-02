@@ -6,6 +6,7 @@
 
 namespace Naos.Reactor.Domain
 {
+    using System;
     using System.Linq;
     using System.Threading;
     using Naos.Database.Domain;
@@ -13,6 +14,7 @@ namespace Naos.Reactor.Domain
     using OBeautifulCode.Representation.System;
     using OBeautifulCode.Serialization;
     using OBeautifulCode.Type;
+    using static System.FormattableString;
 
     /// <summary>
     /// Protocol for <see cref="RunReactorOp"/>.
@@ -63,39 +65,46 @@ namespace Naos.Reactor.Domain
             var distinctIds = this.reactionRegistrationStream.Execute(getDistinctStringSerializedIdsOp);
             foreach (var distinctId in distinctIds)
             {
-                var getLatestRecordOp = new StandardGetLatestRecordOp(
-                    new RecordFilter(
-                        ids: new[]
-                             {
-                                 distinctId,
-                             }));
-
-                var reactionRegistrationRecord = this.reactionRegistrationStream.Execute(getLatestRecordOp);
-                reactionRegistrationRecord
-                   .Payload
-                   .PayloadTypeRepresentation
-                   .MustForOp("recordFromReactionRegistrationStreamExpectedToBeRegisteredReaction")
-                   .BeEqualTo(typeof(ReactionRegistration).ToRepresentation());
-
-                var reactionRegistration =
-                    reactionRegistrationRecord.Payload.DeserializePayloadUsingSpecificFactory<ReactionRegistration>(
-                        this.reactionRegistrationStream.SerializerFactory);
-
-                var reaction = this.evaluateReactionRegistrationProtocol.Execute(new EvaluateReactionRegistrationOp(reactionRegistration));
-                if (reaction != null)
+                try
                 {
-                    var reactionTags = reaction.Tags.Union(
-                                                    new[]
-                                                    {
-                                                        new NamedValue<string>(
-                                                            nameof(reaction.ReactionRegistrationId),
-                                                            reaction.ReactionRegistrationId),
-                                                    })
-                                               .ToList();
+                    var getLatestRecordOp = new StandardGetLatestRecordOp(
+                        new RecordFilter(
+                            ids: new[]
+                                 {
+                                     distinctId,
+                                 }));
 
-                    this.reactionStream.PutWithId(reaction.Id, reaction, reactionTags);
-                    // probably should be void and just write reaction from evaluation
-                    //TODO: complete handling here? or do it in the this.evaluateReactionRegistrationsProtocol.Execute
+                    var reactionRegistrationRecord = this.reactionRegistrationStream.Execute(getLatestRecordOp);
+                    reactionRegistrationRecord
+                       .Payload
+                       .PayloadTypeRepresentation
+                       .MustForOp("recordFromReactionRegistrationStreamExpectedToBeRegisteredReaction")
+                       .BeEqualTo(typeof(ReactionRegistration).ToRepresentation());
+
+                    var reactionRegistration =
+                        reactionRegistrationRecord.Payload.DeserializePayloadUsingSpecificFactory<ReactionRegistration>(
+                            this.reactionRegistrationStream.SerializerFactory);
+
+                    var reaction = this.evaluateReactionRegistrationProtocol.Execute(new EvaluateReactionRegistrationOp(reactionRegistration));
+                    if (reaction != null)
+                    {
+                        var reactionTags = reaction.Tags.Union(
+                                                        new[]
+                                                        {
+                                                            new NamedValue<string>(
+                                                                nameof(reaction.ReactionRegistrationId),
+                                                                reaction.ReactionRegistrationId),
+                                                        })
+                                                   .ToList();
+
+                        this.reactionStream.PutWithId(reaction.Id, reaction, reactionTags);
+                        // probably should be void and just write reaction from evaluation
+                        //TODO: complete handling here? or do it in the this.evaluateReactionRegistrationsProtocol.Execute
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ReactorException(Invariant($"Failed to process {nameof(ReactionRegistration)} Id: {distinctId}."), ex, operation);
                 }
             }
         }
