@@ -24,6 +24,7 @@ namespace Naos.Reactor.Domain
         private readonly IStandardStream reactionRegistrationStream;
         private readonly IStandardStream reactionStream;
         private readonly ISyncAndAsyncReturningProtocol<EvaluateReactionRegistrationOp, ReactionEvent> evaluateReactionRegistrationProtocol;
+        private static readonly TypeRepresentation ReactionRegistrationTypeRepWithoutVersion = typeof(ReactionRegistration).ToRepresentation().RemoveAssemblyVersions();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RunReactorProtocol"/> class.
@@ -78,8 +79,9 @@ namespace Naos.Reactor.Domain
                     reactionRegistrationRecord
                        .Payload
                        .PayloadTypeRepresentation
+                       .RemoveAssemblyVersions()
                        .MustForOp("recordFromReactionRegistrationStreamExpectedToBeRegisteredReaction")
-                       .BeEqualTo(typeof(ReactionRegistration).ToRepresentation());
+                       .BeEqualTo(ReactionRegistrationTypeRepWithoutVersion);
 
                     var reactionRegistration =
                         reactionRegistrationRecord.Payload.DeserializePayloadUsingSpecificFactory<ReactionRegistration>(
