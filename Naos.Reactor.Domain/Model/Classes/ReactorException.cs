@@ -7,11 +7,13 @@
 namespace Naos.Reactor.Domain
 {
     using System;
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
 
     /// <summary>
     /// Entry to use in <see cref="RecordFilterReactorDependency"/>.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors", Justification = ObcSuppressBecause.CA1032_ImplementStandardExceptionConstructors_ExceptionUsedInternallyAndConstructorsEnsureRequiredInfoAvailableWhenCaught)]
     public partial class ReactorException : OpExecutionFailedExceptionBase
     {
         /// <inheritdoc />

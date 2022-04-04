@@ -23,7 +23,7 @@ namespace Naos.Reactor.Domain
     {
         private readonly IStandardStream reactionRegistrationStream;
         private readonly IStandardStream reactionStream;
-        private readonly ISyncAndAsyncReturningProtocol<EvaluateReactionRegistrationOp, ReactionEvent> evaluateReactionRegistrationProtocol;
+        private readonly ISyncAndAsyncReturningProtocol<EvaluateReactionRegistrationOp, EvaluateReactionRegistrationResult> evaluateReactionRegistrationProtocol;
         private static readonly TypeRepresentation ReactionRegistrationTypeRepWithoutVersion = typeof(ReactionRegistration).ToRepresentation().RemoveAssemblyVersions();
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Naos.Reactor.Domain
         public RunReactorProtocol(
             IStandardStream reactionRegistrationStream,
             IStandardStream reactionStream,
-            ISyncAndAsyncReturningProtocol<EvaluateReactionRegistrationOp, ReactionEvent> evaluateReactionRegistrationProtocol)
+            ISyncAndAsyncReturningProtocol<EvaluateReactionRegistrationOp, EvaluateReactionRegistrationResult> evaluateReactionRegistrationProtocol)
         {
             reactionRegistrationStream.MustForArg(nameof(reactionRegistrationStream)).NotBeNull();
             reactionStream.MustForArg(nameof(reactionStream)).NotBeNull();
@@ -87,9 +87,11 @@ namespace Naos.Reactor.Domain
                         reactionRegistrationRecord.Payload.DeserializePayloadUsingSpecificFactory<ReactionRegistration>(
                             this.reactionRegistrationStream.SerializerFactory);
 
-                    var reaction = this.evaluateReactionRegistrationProtocol.Execute(new EvaluateReactionRegistrationOp(reactionRegistration));
-                    if (reaction != null)
+                    var evaluateReactionRegistrationOp = new EvaluateReactionRegistrationOp(reactionRegistration);
+                    var evaluateReactionRegistrationResult = this.evaluateReactionRegistrationProtocol.Execute(evaluateReactionRegistrationOp);
+                    if (evaluateReactionRegistrationResult.ReactionEvent != null)
                     {
+                        var reaction = evaluateReactionRegistrationResult.ReactionEvent;
                         var reactionTags = reaction.Tags.Union(
                                                         new[]
                                                         {
@@ -100,8 +102,12 @@ namespace Naos.Reactor.Domain
                                                    .ToList();
 
                         this.reactionStream.PutWithId(reaction.Id, reaction, reactionTags);
-                        // probably should be void and just write reaction from evaluation
-                        //TODO: complete handling here? or do it in the this.evaluateReactionRegistrationsProtocol.Execute
+
+                        // once we have recorded the reaction then we can finalize the handling cycle.
+                        foreach (var recordSetHandlingMemento in evaluateReactionRegistrationResult.RecordSetHandlingMementos)
+                        {
+                            recordSetHandlingMemento.CompleteSet();
+                        }
                     }
                 }
                 catch (Exception ex)

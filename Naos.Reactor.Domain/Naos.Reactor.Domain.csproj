@@ -142,6 +142,8 @@
     </Compile>
     <Compile Include="Logic\RecordExistsMatchStrategyExtensions.cs" />
     <Compile Include="Logic\CompositeHandlingStatusMatchStrategyExtensions.cs" />
+    <Compile Include="Model\Classes\RecordSetHandlingMemento.cs" />
+    <Compile Include="Model\Classes\EvaluateReactionRegistrationResult.cs" />
     <Compile Include="Model\Classes\AnyDependenciesReactorDependency.cs" />
     <Compile Include="Model\Classes\AllDependenciesReactorDependency.designer.cs">
       <DependentUpon>AllDependenciesReactorDependency.cs</DependentUpon>

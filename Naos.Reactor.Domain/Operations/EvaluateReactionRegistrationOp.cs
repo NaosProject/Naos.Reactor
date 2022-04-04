@@ -13,7 +13,7 @@ namespace Naos.Reactor.Domain
     /// Operation to evaluate a <see cref="ReactionRegistration"/> and get any applicable.
     /// <remarks>Null is the expected result if there are no records handled.</remarks>
     /// </summary>
-    public partial class EvaluateReactionRegistrationOp : ReturningOperationBase<ReactionEvent>
+    public partial class EvaluateReactionRegistrationOp : ReturningOperationBase<EvaluateReactionRegistrationResult>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EvaluateReactionRegistrationOp"/> class.
