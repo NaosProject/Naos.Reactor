@@ -11,6 +11,7 @@ namespace Naos.Reactor.Domain
     using Naos.CodeAnalysis.Recipes;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Cloning.Recipes;
     using OBeautifulCode.Representation.System;
     using OBeautifulCode.Type;
 
@@ -56,7 +57,7 @@ namespace Naos.Reactor.Domain
             this.executeOperationProtocol.Execute(operationToExecute);
             Thread.Sleep(this.waitTimeBeforeQueuing);
 
-            var operationClone = operation.DeepClone();
+            var operationClone = operationToExecute.DeepClone();
             this.requeueStream.Put(operationClone);
         }
     }
