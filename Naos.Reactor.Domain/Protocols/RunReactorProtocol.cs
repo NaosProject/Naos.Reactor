@@ -7,6 +7,7 @@
 namespace Naos.Reactor.Domain
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using Naos.Database.Domain;
@@ -92,14 +93,16 @@ namespace Naos.Reactor.Domain
                     if (evaluateReactionRegistrationResult.ReactionEvent != null)
                     {
                         var reaction = evaluateReactionRegistrationResult.ReactionEvent;
-                        var reactionTags = reaction.Tags.Union(
-                                                        new[]
-                                                        {
-                                                            new NamedValue<string>(
-                                                                nameof(reaction.ReactionRegistrationId),
-                                                                reaction.ReactionRegistrationId),
-                                                        })
-                                                   .ToList();
+                        var reactionTags =
+                            (reaction.Tags ?? new List<NamedValue<string>>())
+                           .Union(
+                                new[]
+                                {
+                                    new NamedValue<string>(
+                                        nameof(reaction.ReactionRegistrationId),
+                                        reaction.ReactionRegistrationId),
+                                })
+                           .ToList();
 
                         this.reactionStream.PutWithId(reaction.Id, reaction, reactionTags);
 
