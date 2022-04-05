@@ -38,7 +38,7 @@ namespace Naos.Reactor.Domain
             id.MustForArg(nameof(id)).NotBeNullNorWhiteSpace();
             reactionRegistrationId.MustForArg(nameof(reactionRegistrationId)).NotBeNullNorWhiteSpace();
             reactionContext.MustForArg(nameof(reactionContext)).NotBeNull();
-            streamRepresentationToInternalRecordIdsMap.MustForArg(nameof(streamRepresentationToInternalRecordIdsMap)).NotBeNullNorEmptyDictionaryNorContainAnyNullValues();
+            streamRepresentationToInternalRecordIdsMap.MustForArg(nameof(streamRepresentationToInternalRecordIdsMap)).NotBeNull();
 
             this.ReactionRegistrationId = reactionRegistrationId;
             this.ReactionContext = reactionContext;
