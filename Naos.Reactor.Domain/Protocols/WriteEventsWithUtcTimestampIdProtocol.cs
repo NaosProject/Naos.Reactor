@@ -45,7 +45,7 @@ namespace Naos.Reactor.Domain
             foreach (var eventToPutWithId in operation.EventsToPut)
             {
                 var targetStream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(eventToPutWithId.StreamRepresentation));
-                targetStream.MustForOp("targetStreamMustBeIWriteOnlyStream").BeOfType<IWriteOnlyStream>();
+                targetStream.MustForOp("targetStreamMustBeIWriteOnlyStream").BeAssignableToType<IWriteOnlyStream>();
                 var eventBase = eventToPutWithId.EventToPut as EventBase<string>;
                 eventBase
                    .MustForOp(Invariant($"{nameof(eventToPutWithId)}.{nameof(eventToPutWithId.EventToPut)}"))

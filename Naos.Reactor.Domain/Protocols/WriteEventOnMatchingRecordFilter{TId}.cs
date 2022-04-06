@@ -71,7 +71,7 @@ namespace Naos.Reactor.Domain
                     {
                         var eventToPutWithId = eventToPutWithIdOnMatch.EventToPut;
                         var targetStream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(eventToPutWithId.StreamRepresentation));
-                        targetStream.MustForOp("targetStreamMustBeIWriteOnlyStream").BeOfType<IWriteOnlyStream>();
+                        targetStream.MustForOp("targetStreamMustBeIWriteOnlyStream").BeAssignableToType<IWriteOnlyStream>();
 
                         IEvent eventToPut;
                         if (eventToPutWithId.UpdateTimestampOnPut)
