@@ -12,14 +12,8 @@ namespace Naos.Reactor.Domain
     public interface IChainOfResponsibilityLink
     {
         /// <summary>
-        /// Gets a value indicating whether or not to terminate the chain of responsibility on match.
+        /// Gets the chain of responsibility link match strategy.
         /// </summary>
-        bool MatchTerminatesChain { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether or not to terminate the larger execution context on match.
-        /// </summary>
-        bool MatchTerminatesExecution { get; }
-
+        ChainOfResponsibilityLinkMatchStrategy ChainOfResponsibilityLinkMatchStrategy { get; }
     }
 }

@@ -22,24 +22,22 @@ namespace Naos.Reactor.Domain
         /// <param name="statusToMatch">The <see cref="CompositeHandlingStatus"/> to match.</param>
         /// <param name="compositeHandlingStatusMatchStrategy">The <see cref="CompositeHandlingStatusMatchStrategy"/> to use with <paramref name="statusToMatch"/>.</param>
         /// <param name="eventToPut">The event to put on a match.</param>
-        /// <param name="matchTerminatesChain">OPTIONAL value indicating whether or not to terminate the larger execution context on match; DEFAULT is true.</param>
-        /// <param name="matchTerminatesExecution">OPTIONAL value indicating whether or not to terminate the larger execution context on match; DEFAULT is true.</param>
+        /// <param name="chainOfResponsibilityLinkMatchStrategy">OPTIONAL strategy override to determine what to do in the execution on a match; DEFAULT is Halt and Complete.</param>
         public EventToPutWithIdOnHandlingStatusMatch(
             CompositeHandlingStatus statusToMatch,
             CompositeHandlingStatusMatchStrategy compositeHandlingStatusMatchStrategy,
             EventToPutWithId<TId> eventToPut,
-            bool matchTerminatesChain = true,
-            bool matchTerminatesExecution = true)
+            ChainOfResponsibilityLinkMatchStrategy chainOfResponsibilityLinkMatchStrategy = ChainOfResponsibilityLinkMatchStrategy.MatchHaltsEvaluationOfChainAndCompletes)
         {
             statusToMatch.MustForArg(nameof(statusToMatch)).NotBeEqualTo(CompositeHandlingStatus.Unknown);
             compositeHandlingStatusMatchStrategy.MustForArg(nameof(compositeHandlingStatusMatchStrategy)).NotBeEqualTo(CompositeHandlingStatusMatchStrategy.Unknown);
             eventToPut.MustForArg(nameof(eventToPut)).NotBeNull();
+            chainOfResponsibilityLinkMatchStrategy.MustForArg(nameof(chainOfResponsibilityLinkMatchStrategy)).NotBeEqualTo(ChainOfResponsibilityLinkMatchStrategy.Unknown);
 
             this.StatusToMatch = statusToMatch;
             this.CompositeHandlingStatusMatchStrategy = compositeHandlingStatusMatchStrategy;
             this.EventToPut = eventToPut;
-            this.MatchTerminatesChain = matchTerminatesChain;
-            this.MatchTerminatesExecution = matchTerminatesExecution;
+            this.ChainOfResponsibilityLinkMatchStrategy = chainOfResponsibilityLinkMatchStrategy;
         }
 
         /// <summary>
@@ -58,9 +56,6 @@ namespace Naos.Reactor.Domain
         public EventToPutWithId<TId> EventToPut { get; private set; }
 
         /// <inheritdoc />
-        public bool MatchTerminatesChain { get; private set; }
-
-        /// <inheritdoc />
-        public bool MatchTerminatesExecution { get; private set; }
+        public ChainOfResponsibilityLinkMatchStrategy ChainOfResponsibilityLinkMatchStrategy { get; private set; }
     }
 }

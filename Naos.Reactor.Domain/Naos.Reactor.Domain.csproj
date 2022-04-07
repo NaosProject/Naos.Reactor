@@ -178,6 +178,7 @@
     <Compile Include="Model\Classes\RecordFilterReactorDependency.designer.cs">
       <DependentUpon>RecordFilterReactorDependency.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Enums\ChainOfResponsibilityLinkMatchStrategy.cs" />
     <Compile Include="Model\Enums\RecordExistsMatchStrategy.cs" />
     <Compile Include="Model\Enums\CompositeHandlingStatusMatchStrategy.cs" />
     <Compile Include="Model\Classes\EventToPutWithIdOnRecordFilterMatch{TId}.cs" />

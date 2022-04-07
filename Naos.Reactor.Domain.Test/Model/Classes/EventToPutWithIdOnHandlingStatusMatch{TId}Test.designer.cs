@@ -49,7 +49,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<EventToPutWithIdOnHandlingStatusMatch<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.EventToPutWithIdOnHandlingStatusMatch<Version>: StatusToMatch = {systemUnderTest.StatusToMatch.ToString() ?? "<null>"}, CompositeHandlingStatusMatchStrategy = {systemUnderTest.CompositeHandlingStatusMatchStrategy.ToString() ?? "<null>"}, EventToPut = {systemUnderTest.EventToPut?.ToString() ?? "<null>"}, MatchTerminatesChain = {systemUnderTest.MatchTerminatesChain.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, MatchTerminatesExecution = {systemUnderTest.MatchTerminatesExecution.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.EventToPutWithIdOnHandlingStatusMatch<Version>: StatusToMatch = {systemUnderTest.StatusToMatch.ToString() ?? "<null>"}, CompositeHandlingStatusMatchStrategy = {systemUnderTest.CompositeHandlingStatusMatchStrategy.ToString() ?? "<null>"}, EventToPut = {systemUnderTest.EventToPut?.ToString() ?? "<null>"}, ChainOfResponsibilityLinkMatchStrategy = {systemUnderTest.ChainOfResponsibilityLinkMatchStrategy.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -69,8 +69,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.StatusToMatch,
                                              referenceObject.CompositeHandlingStatusMatchStrategy,
                                              null,
-                                             referenceObject.MatchTerminatesChain,
-                                             referenceObject.MatchTerminatesExecution);
+                                             referenceObject.ChainOfResponsibilityLinkMatchStrategy);
 
                         return result;
                     },
@@ -93,8 +92,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.StatusToMatch,
                                                       referenceObject.CompositeHandlingStatusMatchStrategy,
                                                       referenceObject.EventToPut,
-                                                      referenceObject.MatchTerminatesChain,
-                                                      referenceObject.MatchTerminatesExecution),
+                                                      referenceObject.ChainOfResponsibilityLinkMatchStrategy),
                             ExpectedPropertyValue = referenceObject.StatusToMatch,
                         };
 
@@ -116,8 +114,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.StatusToMatch,
                                                       referenceObject.CompositeHandlingStatusMatchStrategy,
                                                       referenceObject.EventToPut,
-                                                      referenceObject.MatchTerminatesChain,
-                                                      referenceObject.MatchTerminatesExecution),
+                                                      referenceObject.ChainOfResponsibilityLinkMatchStrategy),
                             ExpectedPropertyValue = referenceObject.CompositeHandlingStatusMatchStrategy,
                         };
 
@@ -139,8 +136,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.StatusToMatch,
                                                       referenceObject.CompositeHandlingStatusMatchStrategy,
                                                       referenceObject.EventToPut,
-                                                      referenceObject.MatchTerminatesChain,
-                                                      referenceObject.MatchTerminatesExecution),
+                                                      referenceObject.ChainOfResponsibilityLinkMatchStrategy),
                             ExpectedPropertyValue = referenceObject.EventToPut,
                         };
 
@@ -151,7 +147,7 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<EventToPutWithIdOnHandlingStatusMatch<Version>>
                 {
-                    Name = "MatchTerminatesChain should return same 'matchTerminatesChain' parameter passed to constructor when getting",
+                    Name = "ChainOfResponsibilityLinkMatchStrategy should return same 'chainOfResponsibilityLinkMatchStrategy' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>();
@@ -162,37 +158,13 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.StatusToMatch,
                                                       referenceObject.CompositeHandlingStatusMatchStrategy,
                                                       referenceObject.EventToPut,
-                                                      referenceObject.MatchTerminatesChain,
-                                                      referenceObject.MatchTerminatesExecution),
-                            ExpectedPropertyValue = referenceObject.MatchTerminatesChain,
+                                                      referenceObject.ChainOfResponsibilityLinkMatchStrategy),
+                            ExpectedPropertyValue = referenceObject.ChainOfResponsibilityLinkMatchStrategy,
                         };
 
                         return result;
                     },
-                    PropertyName = "MatchTerminatesChain",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<EventToPutWithIdOnHandlingStatusMatch<Version>>
-                {
-                    Name = "MatchTerminatesExecution should return same 'matchTerminatesExecution' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<EventToPutWithIdOnHandlingStatusMatch<Version>>
-                        {
-                            SystemUnderTest = new EventToPutWithIdOnHandlingStatusMatch<Version>(
-                                                      referenceObject.StatusToMatch,
-                                                      referenceObject.CompositeHandlingStatusMatchStrategy,
-                                                      referenceObject.EventToPut,
-                                                      referenceObject.MatchTerminatesChain,
-                                                      referenceObject.MatchTerminatesExecution),
-                            ExpectedPropertyValue = referenceObject.MatchTerminatesExecution,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "MatchTerminatesExecution",
+                    PropertyName = "ChainOfResponsibilityLinkMatchStrategy",
                 });
 
         private static readonly DeepCloneWithTestScenarios<EventToPutWithIdOnHandlingStatusMatch<Version>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<EventToPutWithIdOnHandlingStatusMatch<Version>>()
@@ -259,38 +231,18 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<EventToPutWithIdOnHandlingStatusMatch<Version>>
                 {
-                    Name = "DeepCloneWithMatchTerminatesChain should deep clone object and replace MatchTerminatesChain with the provided matchTerminatesChain",
-                    WithPropertyName = "MatchTerminatesChain",
+                    Name = "DeepCloneWithChainOfResponsibilityLinkMatchStrategy should deep clone object and replace ChainOfResponsibilityLinkMatchStrategy with the provided chainOfResponsibilityLinkMatchStrategy",
+                    WithPropertyName = "ChainOfResponsibilityLinkMatchStrategy",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>();
 
-                        var referenceObject = A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>().ThatIs(_ => !systemUnderTest.MatchTerminatesChain.IsEqualTo(_.MatchTerminatesChain));
+                        var referenceObject = A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>().ThatIs(_ => !systemUnderTest.ChainOfResponsibilityLinkMatchStrategy.IsEqualTo(_.ChainOfResponsibilityLinkMatchStrategy));
 
                         var result = new SystemUnderTestDeepCloneWithValue<EventToPutWithIdOnHandlingStatusMatch<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.MatchTerminatesChain,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<EventToPutWithIdOnHandlingStatusMatch<Version>>
-                {
-                    Name = "DeepCloneWithMatchTerminatesExecution should deep clone object and replace MatchTerminatesExecution with the provided matchTerminatesExecution",
-                    WithPropertyName = "MatchTerminatesExecution",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>();
-
-                        var referenceObject = A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>().ThatIs(_ => !systemUnderTest.MatchTerminatesExecution.IsEqualTo(_.MatchTerminatesExecution));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<EventToPutWithIdOnHandlingStatusMatch<Version>>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.MatchTerminatesExecution,
+                            DeepCloneWithValue = referenceObject.ChainOfResponsibilityLinkMatchStrategy,
                         };
 
                         return result;
@@ -311,8 +263,7 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.StatusToMatch,
                                 ReferenceObjectForEquatableTestScenarios.CompositeHandlingStatusMatchStrategy,
                                 ReferenceObjectForEquatableTestScenarios.EventToPut,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
+                                ReferenceObjectForEquatableTestScenarios.ChainOfResponsibilityLinkMatchStrategy),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new EventToPutWithIdOnHandlingStatusMatch<Version>[]
                     {
@@ -320,32 +271,22 @@ namespace Naos.Reactor.Domain.Test
                                 A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>().Whose(_ => !_.StatusToMatch.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StatusToMatch)).StatusToMatch,
                                 ReferenceObjectForEquatableTestScenarios.CompositeHandlingStatusMatchStrategy,
                                 ReferenceObjectForEquatableTestScenarios.EventToPut,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
+                                ReferenceObjectForEquatableTestScenarios.ChainOfResponsibilityLinkMatchStrategy),
                         new EventToPutWithIdOnHandlingStatusMatch<Version>(
                                 ReferenceObjectForEquatableTestScenarios.StatusToMatch,
                                 A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>().Whose(_ => !_.CompositeHandlingStatusMatchStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CompositeHandlingStatusMatchStrategy)).CompositeHandlingStatusMatchStrategy,
                                 ReferenceObjectForEquatableTestScenarios.EventToPut,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
+                                ReferenceObjectForEquatableTestScenarios.ChainOfResponsibilityLinkMatchStrategy),
                         new EventToPutWithIdOnHandlingStatusMatch<Version>(
                                 ReferenceObjectForEquatableTestScenarios.StatusToMatch,
                                 ReferenceObjectForEquatableTestScenarios.CompositeHandlingStatusMatchStrategy,
                                 A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>().Whose(_ => !_.EventToPut.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EventToPut)).EventToPut,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
+                                ReferenceObjectForEquatableTestScenarios.ChainOfResponsibilityLinkMatchStrategy),
                         new EventToPutWithIdOnHandlingStatusMatch<Version>(
                                 ReferenceObjectForEquatableTestScenarios.StatusToMatch,
                                 ReferenceObjectForEquatableTestScenarios.CompositeHandlingStatusMatchStrategy,
                                 ReferenceObjectForEquatableTestScenarios.EventToPut,
-                                A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>().Whose(_ => !_.MatchTerminatesChain.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain)).MatchTerminatesChain,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
-                        new EventToPutWithIdOnHandlingStatusMatch<Version>(
-                                ReferenceObjectForEquatableTestScenarios.StatusToMatch,
-                                ReferenceObjectForEquatableTestScenarios.CompositeHandlingStatusMatchStrategy,
-                                ReferenceObjectForEquatableTestScenarios.EventToPut,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
-                                A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>().Whose(_ => !_.MatchTerminatesExecution.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution)).MatchTerminatesExecution),
+                                A.Dummy<EventToPutWithIdOnHandlingStatusMatch<Version>>().Whose(_ => !_.ChainOfResponsibilityLinkMatchStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ChainOfResponsibilityLinkMatchStrategy)).ChainOfResponsibilityLinkMatchStrategy),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -656,7 +597,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "StatusToMatch", "CompositeHandlingStatusMatchStrategy", "EventToPut", "MatchTerminatesChain", "MatchTerminatesExecution" };
+                var propertyNames = new string[] { "StatusToMatch", "CompositeHandlingStatusMatchStrategy", "EventToPut", "ChainOfResponsibilityLinkMatchStrategy" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

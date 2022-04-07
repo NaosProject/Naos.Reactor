@@ -95,15 +95,13 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<CompositeHandlingStatus>(),
                                  A.Dummy<CompositeHandlingStatusMatchStrategy>(),
                                  A.Dummy<EventToPutWithId<Version>>(),
-                                 A.Dummy<bool>(),
-                                 A.Dummy<bool>()));
+                                 A.Dummy<ChainOfResponsibilityLinkMatchStrategy>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new EventToPutWithIdOnRecordFilterMatch<Version>(
                                  A.Dummy<RecordExistsMatchStrategy>(),
                                  A.Dummy<EventToPutWithId<Version>>(),
-                                 A.Dummy<bool>(),
-                                 A.Dummy<bool>()));
+                                 A.Dummy<ChainOfResponsibilityLinkMatchStrategy>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ExecuteOpOnScheduleOp(

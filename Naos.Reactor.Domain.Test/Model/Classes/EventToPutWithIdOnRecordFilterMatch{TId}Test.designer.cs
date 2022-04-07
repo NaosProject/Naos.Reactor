@@ -47,7 +47,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<EventToPutWithIdOnRecordFilterMatch<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.EventToPutWithIdOnRecordFilterMatch<Version>: RecordExistsMatchStrategy = {systemUnderTest.RecordExistsMatchStrategy.ToString() ?? "<null>"}, EventToPut = {systemUnderTest.EventToPut?.ToString() ?? "<null>"}, MatchTerminatesChain = {systemUnderTest.MatchTerminatesChain.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, MatchTerminatesExecution = {systemUnderTest.MatchTerminatesExecution.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.EventToPutWithIdOnRecordFilterMatch<Version>: RecordExistsMatchStrategy = {systemUnderTest.RecordExistsMatchStrategy.ToString() ?? "<null>"}, EventToPut = {systemUnderTest.EventToPut?.ToString() ?? "<null>"}, ChainOfResponsibilityLinkMatchStrategy = {systemUnderTest.ChainOfResponsibilityLinkMatchStrategy.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -66,8 +66,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new EventToPutWithIdOnRecordFilterMatch<Version>(
                                              referenceObject.RecordExistsMatchStrategy,
                                              null,
-                                             referenceObject.MatchTerminatesChain,
-                                             referenceObject.MatchTerminatesExecution);
+                                             referenceObject.ChainOfResponsibilityLinkMatchStrategy);
 
                         return result;
                     },
@@ -89,8 +88,7 @@ namespace Naos.Reactor.Domain.Test
                             SystemUnderTest = new EventToPutWithIdOnRecordFilterMatch<Version>(
                                                       referenceObject.RecordExistsMatchStrategy,
                                                       referenceObject.EventToPut,
-                                                      referenceObject.MatchTerminatesChain,
-                                                      referenceObject.MatchTerminatesExecution),
+                                                      referenceObject.ChainOfResponsibilityLinkMatchStrategy),
                             ExpectedPropertyValue = referenceObject.RecordExistsMatchStrategy,
                         };
 
@@ -111,8 +109,7 @@ namespace Naos.Reactor.Domain.Test
                             SystemUnderTest = new EventToPutWithIdOnRecordFilterMatch<Version>(
                                                       referenceObject.RecordExistsMatchStrategy,
                                                       referenceObject.EventToPut,
-                                                      referenceObject.MatchTerminatesChain,
-                                                      referenceObject.MatchTerminatesExecution),
+                                                      referenceObject.ChainOfResponsibilityLinkMatchStrategy),
                             ExpectedPropertyValue = referenceObject.EventToPut,
                         };
 
@@ -123,7 +120,7 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<EventToPutWithIdOnRecordFilterMatch<Version>>
                 {
-                    Name = "MatchTerminatesChain should return same 'matchTerminatesChain' parameter passed to constructor when getting",
+                    Name = "ChainOfResponsibilityLinkMatchStrategy should return same 'chainOfResponsibilityLinkMatchStrategy' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<EventToPutWithIdOnRecordFilterMatch<Version>>();
@@ -133,36 +130,13 @@ namespace Naos.Reactor.Domain.Test
                             SystemUnderTest = new EventToPutWithIdOnRecordFilterMatch<Version>(
                                                       referenceObject.RecordExistsMatchStrategy,
                                                       referenceObject.EventToPut,
-                                                      referenceObject.MatchTerminatesChain,
-                                                      referenceObject.MatchTerminatesExecution),
-                            ExpectedPropertyValue = referenceObject.MatchTerminatesChain,
+                                                      referenceObject.ChainOfResponsibilityLinkMatchStrategy),
+                            ExpectedPropertyValue = referenceObject.ChainOfResponsibilityLinkMatchStrategy,
                         };
 
                         return result;
                     },
-                    PropertyName = "MatchTerminatesChain",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<EventToPutWithIdOnRecordFilterMatch<Version>>
-                {
-                    Name = "MatchTerminatesExecution should return same 'matchTerminatesExecution' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<EventToPutWithIdOnRecordFilterMatch<Version>>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<EventToPutWithIdOnRecordFilterMatch<Version>>
-                        {
-                            SystemUnderTest = new EventToPutWithIdOnRecordFilterMatch<Version>(
-                                                      referenceObject.RecordExistsMatchStrategy,
-                                                      referenceObject.EventToPut,
-                                                      referenceObject.MatchTerminatesChain,
-                                                      referenceObject.MatchTerminatesExecution),
-                            ExpectedPropertyValue = referenceObject.MatchTerminatesExecution,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "MatchTerminatesExecution",
+                    PropertyName = "ChainOfResponsibilityLinkMatchStrategy",
                 });
 
         private static readonly DeepCloneWithTestScenarios<EventToPutWithIdOnRecordFilterMatch<Version>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<EventToPutWithIdOnRecordFilterMatch<Version>>()
@@ -209,38 +183,18 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<EventToPutWithIdOnRecordFilterMatch<Version>>
                 {
-                    Name = "DeepCloneWithMatchTerminatesChain should deep clone object and replace MatchTerminatesChain with the provided matchTerminatesChain",
-                    WithPropertyName = "MatchTerminatesChain",
+                    Name = "DeepCloneWithChainOfResponsibilityLinkMatchStrategy should deep clone object and replace ChainOfResponsibilityLinkMatchStrategy with the provided chainOfResponsibilityLinkMatchStrategy",
+                    WithPropertyName = "ChainOfResponsibilityLinkMatchStrategy",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<EventToPutWithIdOnRecordFilterMatch<Version>>();
 
-                        var referenceObject = A.Dummy<EventToPutWithIdOnRecordFilterMatch<Version>>().ThatIs(_ => !systemUnderTest.MatchTerminatesChain.IsEqualTo(_.MatchTerminatesChain));
+                        var referenceObject = A.Dummy<EventToPutWithIdOnRecordFilterMatch<Version>>().ThatIs(_ => !systemUnderTest.ChainOfResponsibilityLinkMatchStrategy.IsEqualTo(_.ChainOfResponsibilityLinkMatchStrategy));
 
                         var result = new SystemUnderTestDeepCloneWithValue<EventToPutWithIdOnRecordFilterMatch<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.MatchTerminatesChain,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<EventToPutWithIdOnRecordFilterMatch<Version>>
-                {
-                    Name = "DeepCloneWithMatchTerminatesExecution should deep clone object and replace MatchTerminatesExecution with the provided matchTerminatesExecution",
-                    WithPropertyName = "MatchTerminatesExecution",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<EventToPutWithIdOnRecordFilterMatch<Version>>();
-
-                        var referenceObject = A.Dummy<EventToPutWithIdOnRecordFilterMatch<Version>>().ThatIs(_ => !systemUnderTest.MatchTerminatesExecution.IsEqualTo(_.MatchTerminatesExecution));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<EventToPutWithIdOnRecordFilterMatch<Version>>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.MatchTerminatesExecution,
+                            DeepCloneWithValue = referenceObject.ChainOfResponsibilityLinkMatchStrategy,
                         };
 
                         return result;
@@ -260,31 +214,22 @@ namespace Naos.Reactor.Domain.Test
                         new EventToPutWithIdOnRecordFilterMatch<Version>(
                                 ReferenceObjectForEquatableTestScenarios.RecordExistsMatchStrategy,
                                 ReferenceObjectForEquatableTestScenarios.EventToPut,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
+                                ReferenceObjectForEquatableTestScenarios.ChainOfResponsibilityLinkMatchStrategy),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new EventToPutWithIdOnRecordFilterMatch<Version>[]
                     {
                         new EventToPutWithIdOnRecordFilterMatch<Version>(
                                 A.Dummy<EventToPutWithIdOnRecordFilterMatch<Version>>().Whose(_ => !_.RecordExistsMatchStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RecordExistsMatchStrategy)).RecordExistsMatchStrategy,
                                 ReferenceObjectForEquatableTestScenarios.EventToPut,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
+                                ReferenceObjectForEquatableTestScenarios.ChainOfResponsibilityLinkMatchStrategy),
                         new EventToPutWithIdOnRecordFilterMatch<Version>(
                                 ReferenceObjectForEquatableTestScenarios.RecordExistsMatchStrategy,
                                 A.Dummy<EventToPutWithIdOnRecordFilterMatch<Version>>().Whose(_ => !_.EventToPut.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EventToPut)).EventToPut,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
+                                ReferenceObjectForEquatableTestScenarios.ChainOfResponsibilityLinkMatchStrategy),
                         new EventToPutWithIdOnRecordFilterMatch<Version>(
                                 ReferenceObjectForEquatableTestScenarios.RecordExistsMatchStrategy,
                                 ReferenceObjectForEquatableTestScenarios.EventToPut,
-                                A.Dummy<EventToPutWithIdOnRecordFilterMatch<Version>>().Whose(_ => !_.MatchTerminatesChain.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain)).MatchTerminatesChain,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution),
-                        new EventToPutWithIdOnRecordFilterMatch<Version>(
-                                ReferenceObjectForEquatableTestScenarios.RecordExistsMatchStrategy,
-                                ReferenceObjectForEquatableTestScenarios.EventToPut,
-                                ReferenceObjectForEquatableTestScenarios.MatchTerminatesChain,
-                                A.Dummy<EventToPutWithIdOnRecordFilterMatch<Version>>().Whose(_ => !_.MatchTerminatesExecution.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MatchTerminatesExecution)).MatchTerminatesExecution),
+                                A.Dummy<EventToPutWithIdOnRecordFilterMatch<Version>>().Whose(_ => !_.ChainOfResponsibilityLinkMatchStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ChainOfResponsibilityLinkMatchStrategy)).ChainOfResponsibilityLinkMatchStrategy),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -595,7 +540,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "RecordExistsMatchStrategy", "EventToPut", "MatchTerminatesChain", "MatchTerminatesExecution" };
+                var propertyNames = new string[] { "RecordExistsMatchStrategy", "EventToPut", "ChainOfResponsibilityLinkMatchStrategy" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

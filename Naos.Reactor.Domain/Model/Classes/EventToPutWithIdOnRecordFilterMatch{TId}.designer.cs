@@ -71,8 +71,7 @@ namespace Naos.Reactor.Domain
 
             var result = this.RecordExistsMatchStrategy.IsEqualTo(other.RecordExistsMatchStrategy)
                       && this.EventToPut.IsEqualTo(other.EventToPut)
-                      && this.MatchTerminatesChain.IsEqualTo(other.MatchTerminatesChain)
-                      && this.MatchTerminatesExecution.IsEqualTo(other.MatchTerminatesExecution);
+                      && this.ChainOfResponsibilityLinkMatchStrategy.IsEqualTo(other.ChainOfResponsibilityLinkMatchStrategy);
 
             return result;
         }
@@ -84,8 +83,7 @@ namespace Naos.Reactor.Domain
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.RecordExistsMatchStrategy)
             .Hash(this.EventToPut)
-            .Hash(this.MatchTerminatesChain)
-            .Hash(this.MatchTerminatesExecution)
+            .Hash(this.ChainOfResponsibilityLinkMatchStrategy)
             .Value;
 
         /// <inheritdoc />
@@ -97,8 +95,7 @@ namespace Naos.Reactor.Domain
             var result = new EventToPutWithIdOnRecordFilterMatch<TId>(
                                  this.RecordExistsMatchStrategy.DeepClone(),
                                  this.EventToPut?.DeepClone(),
-                                 this.MatchTerminatesChain.DeepClone(),
-                                 this.MatchTerminatesExecution.DeepClone());
+                                 this.ChainOfResponsibilityLinkMatchStrategy.DeepClone());
 
             return result;
         }
@@ -130,8 +127,7 @@ namespace Naos.Reactor.Domain
             var result = new EventToPutWithIdOnRecordFilterMatch<TId>(
                                  recordExistsMatchStrategy,
                                  this.EventToPut?.DeepClone(),
-                                 this.MatchTerminatesChain.DeepClone(),
-                                 this.MatchTerminatesExecution.DeepClone());
+                                 this.ChainOfResponsibilityLinkMatchStrategy.DeepClone());
 
             return result;
         }
@@ -163,17 +159,16 @@ namespace Naos.Reactor.Domain
             var result = new EventToPutWithIdOnRecordFilterMatch<TId>(
                                  this.RecordExistsMatchStrategy.DeepClone(),
                                  eventToPut,
-                                 this.MatchTerminatesChain.DeepClone(),
-                                 this.MatchTerminatesExecution.DeepClone());
+                                 this.ChainOfResponsibilityLinkMatchStrategy.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="MatchTerminatesChain" />.
+        /// Deep clones this object with a new <see cref="ChainOfResponsibilityLinkMatchStrategy" />.
         /// </summary>
-        /// <param name="matchTerminatesChain">The new <see cref="MatchTerminatesChain" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EventToPutWithIdOnRecordFilterMatch{TId}" /> using the specified <paramref name="matchTerminatesChain" /> for <see cref="MatchTerminatesChain" /> and a deep clone of every other property.</returns>
+        /// <param name="chainOfResponsibilityLinkMatchStrategy">The new <see cref="ChainOfResponsibilityLinkMatchStrategy" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="EventToPutWithIdOnRecordFilterMatch{TId}" /> using the specified <paramref name="chainOfResponsibilityLinkMatchStrategy" /> for <see cref="ChainOfResponsibilityLinkMatchStrategy" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -191,46 +186,12 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EventToPutWithIdOnRecordFilterMatch<TId> DeepCloneWithMatchTerminatesChain(bool matchTerminatesChain)
+        public EventToPutWithIdOnRecordFilterMatch<TId> DeepCloneWithChainOfResponsibilityLinkMatchStrategy(ChainOfResponsibilityLinkMatchStrategy chainOfResponsibilityLinkMatchStrategy)
         {
             var result = new EventToPutWithIdOnRecordFilterMatch<TId>(
                                  this.RecordExistsMatchStrategy.DeepClone(),
                                  this.EventToPut?.DeepClone(),
-                                 matchTerminatesChain,
-                                 this.MatchTerminatesExecution.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="MatchTerminatesExecution" />.
-        /// </summary>
-        /// <param name="matchTerminatesExecution">The new <see cref="MatchTerminatesExecution" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EventToPutWithIdOnRecordFilterMatch{TId}" /> using the specified <paramref name="matchTerminatesExecution" /> for <see cref="MatchTerminatesExecution" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EventToPutWithIdOnRecordFilterMatch<TId> DeepCloneWithMatchTerminatesExecution(bool matchTerminatesExecution)
-        {
-            var result = new EventToPutWithIdOnRecordFilterMatch<TId>(
-                                 this.RecordExistsMatchStrategy.DeepClone(),
-                                 this.EventToPut?.DeepClone(),
-                                 this.MatchTerminatesChain.DeepClone(),
-                                 matchTerminatesExecution);
+                                 chainOfResponsibilityLinkMatchStrategy);
 
             return result;
         }
@@ -239,7 +200,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.{this.GetType().ToStringReadable()}: RecordExistsMatchStrategy = {this.RecordExistsMatchStrategy.ToString() ?? "<null>"}, EventToPut = {this.EventToPut?.ToString() ?? "<null>"}, MatchTerminatesChain = {this.MatchTerminatesChain.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, MatchTerminatesExecution = {this.MatchTerminatesExecution.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.{this.GetType().ToStringReadable()}: RecordExistsMatchStrategy = {this.RecordExistsMatchStrategy.ToString() ?? "<null>"}, EventToPut = {this.EventToPut?.ToString() ?? "<null>"}, ChainOfResponsibilityLinkMatchStrategy = {this.ChainOfResponsibilityLinkMatchStrategy.ToString() ?? "<null>"}.");
 
             return result;
         }
