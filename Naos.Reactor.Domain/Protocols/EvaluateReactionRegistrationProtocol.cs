@@ -173,13 +173,25 @@ namespace Naos.Reactor.Domain
             else
             {
                 var readonlyRecords = records.ToDictionary(k => k.Key, v => (IReadOnlyList<long>)v.Value);
+
+                var reactionTags =
+                    (operation.ReactionRegistration.Tags ?? new List<NamedValue<string>>())
+                   .Union(
+                        new[]
+                        {
+                            new NamedValue<string>(
+                                TagNames.ReactionRegistrationId,
+                                operation.ReactionRegistration.Id),
+                        })
+                   .ToList();
+                
                 var reactionEvent = new ReactionEvent(
                     reactionId,
                     operation.ReactionRegistration.Id,
                     operation.ReactionRegistration.ReactionContext,
                     readonlyRecords,
                     DateTime.UtcNow,
-                    operation.ReactionRegistration.Tags);
+                    reactionTags);
 
                 result = new EvaluateReactionRegistrationResult(reactionEvent, handledRecordMementos);
             }

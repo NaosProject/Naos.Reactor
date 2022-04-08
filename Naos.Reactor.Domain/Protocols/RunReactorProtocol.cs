@@ -93,18 +93,8 @@ namespace Naos.Reactor.Domain
                     if (evaluateReactionRegistrationResult.ReactionEvent != null)
                     {
                         var reaction = evaluateReactionRegistrationResult.ReactionEvent;
-                        var reactionTags =
-                            (reaction.Tags ?? new List<NamedValue<string>>())
-                           .Union(
-                                new[]
-                                {
-                                    new NamedValue<string>(
-                                        TagNames.ReactionRegistrationId,
-                                        reaction.ReactionRegistrationId),
-                                })
-                           .ToList();
 
-                        this.reactionStream.PutWithId(reaction.Id, reaction, reactionTags);
+                        this.reactionStream.PutWithId(reaction.Id, reaction, reaction.Tags);
 
                         // once we have recorded the reaction then we can finalize the handling cycle.
                         foreach (var recordSetHandlingMemento in evaluateReactionRegistrationResult.RecordSetHandlingMementos)
