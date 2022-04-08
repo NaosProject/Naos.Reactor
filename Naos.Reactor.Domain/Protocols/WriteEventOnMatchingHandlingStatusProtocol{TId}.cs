@@ -95,7 +95,10 @@ namespace Naos.Reactor.Domain
                             eventToPut = eventToPutWithId.EventToPut;
                         }
 
-                        ((IWriteOnlyStream)targetStream).PutWithId(eventToPutWithId.Id, eventToPut, eventToPutWithId.Tags);
+                        var eventToPutTags = eventToPut is IHaveTags eventToPutWithTags
+                            ? eventToPutWithTags.Tags
+                            : null;
+                        ((IWriteOnlyStream)targetStream).PutWithId(eventToPutWithId.Id, eventToPut, eventToPutTags);
 
                         switch (eventToPutWithIdOnMatch.ChainOfResponsibilityLinkMatchStrategy)
                         {
