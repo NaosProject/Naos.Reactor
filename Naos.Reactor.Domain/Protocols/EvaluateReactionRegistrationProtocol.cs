@@ -56,7 +56,7 @@ namespace Naos.Reactor.Domain
                 throw new NotSupportedException(Invariant($"Only {typeof(RecordFilterReactorDependency)} is supported, {dependency?.GetType().ToStringReadable()}."));
             }
 
-            var evaluateReactionRegistrationsBatchId = Guid.NewGuid().ToStringInvariantPreferred();
+            var reactionId = Invariant($"{operation.ReactionRegistration.Id}___{DateTime.UtcNow.ToStringInvariantPreferred()}");
 
             var records = new Dictionary<IStreamRepresentation, HashSet<long>>();
             var handledRecordMementos = new List<RecordSetHandlingMemento>();
@@ -81,7 +81,7 @@ namespace Naos.Reactor.Domain
                             streamRecordItemsToInclude: StreamRecordItemsToInclude.MetadataOnly,
                             tags: new[]
                                   {
-                                      new NamedValue<string>("BatchId", evaluateReactionRegistrationsBatchId),
+                                      new NamedValue<string>("PotentialReactionId", reactionId),
                                   });
 
                         var tryHandleRecordResult = streamProtocol.Execute(tryHandleRecordOp);
@@ -172,7 +172,6 @@ namespace Naos.Reactor.Domain
             }
             else
             {
-                var reactionId = Invariant($"{operation.ReactionRegistration.Id}___{DateTime.UtcNow.ToStringInvariantPreferred()}");
                 var readonlyRecords = records.ToDictionary(k => k.Key, v => (IReadOnlyList<long>)v.Value);
                 var reactionEvent = new ReactionEvent(
                     reactionId,
