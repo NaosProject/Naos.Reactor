@@ -81,7 +81,7 @@ namespace Naos.Reactor.Domain
                             streamRecordItemsToInclude: StreamRecordItemsToInclude.MetadataOnly,
                             tags: new[]
                                   {
-                                      new NamedValue<string>("PotentialReactionId", reactionId),
+                                      new NamedValue<string>(TagNames.PotentialReactionId, reactionId),
                                   });
 
                         var tryHandleRecordResult = streamProtocol.Execute(tryHandleRecordOp);

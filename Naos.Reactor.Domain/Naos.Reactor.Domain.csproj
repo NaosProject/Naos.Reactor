@@ -140,8 +140,9 @@
     <Compile Include="Events\ReactionEvent.designer.cs">
       <DependentUpon>ReactionEvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logic\RecordExistsMatchStrategyExtensions.cs" />
-    <Compile Include="Logic\CompositeHandlingStatusMatchStrategyExtensions.cs" />
+    <Compile Include="Logic\Constants\TagNames.cs" />
+    <Compile Include="Logic\Extensions\RecordExistsMatchStrategyExtensions.cs" />
+    <Compile Include="Logic\Extensions\CompositeHandlingStatusMatchStrategyExtensions.cs" />
     <Compile Include="Model\Classes\RecordSetHandlingMemento.cs" />
     <Compile Include="Model\Classes\EvaluateReactionRegistrationResult.cs" />
     <Compile Include="Model\Classes\AnyDependenciesReactorDependency.cs" />

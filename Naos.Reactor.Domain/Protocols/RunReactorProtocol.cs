@@ -99,7 +99,7 @@ namespace Naos.Reactor.Domain
                                 new[]
                                 {
                                     new NamedValue<string>(
-                                        nameof(reaction.ReactionRegistrationId),
+                                        TagNames.ReactionRegistrationId,
                                         reaction.ReactionRegistrationId),
                                 })
                            .ToList();
