@@ -58,7 +58,7 @@ namespace Naos.Reactor.Domain
 
             var reactionId = Invariant($"{operation.ReactionRegistration.Id}___{DateTime.UtcNow.ToStringInvariantPreferred()}");
 
-            var records = new Dictionary<IStreamRepresentation, HashSet<long>>();
+            var streamRepToHandledDependencyRecordIdToBeIncludedMap = new Dictionary<IStreamRepresentation, HashSet<long>>();
             var handledRecordMementos = new List<RecordSetHandlingMemento>();
             var allRequiredSeen = true;
             foreach (var recordFilterEntry in recordFilterDependency.Entries)
@@ -129,13 +129,13 @@ namespace Naos.Reactor.Domain
 
                         if (recordFilterEntry.IncludeInReaction)
                         {
-                            if (records.ContainsKey(recordFilterEntry.StreamRepresentation))
+                            if (streamRepToHandledDependencyRecordIdToBeIncludedMap.ContainsKey(recordFilterEntry.StreamRepresentation))
                             {
-                                records[recordFilterEntry.StreamRepresentation].AddRange(handledIds);
+                                streamRepToHandledDependencyRecordIdToBeIncludedMap[recordFilterEntry.StreamRepresentation].AddRange(handledIds);
                             }
                             else
                             {
-                                records.Add(recordFilterEntry.StreamRepresentation, handledIds);
+                                streamRepToHandledDependencyRecordIdToBeIncludedMap.Add(recordFilterEntry.StreamRepresentation, handledIds);
                             }
                         }
                     }
@@ -172,7 +172,10 @@ namespace Naos.Reactor.Domain
             }
             else
             {
-                var readonlyRecords = records.ToDictionary(k => k.Key, v => (IReadOnlyList<long>)v.Value);
+                var streamRepresentationToInternalRecordIdsMap =
+                    streamRepToHandledDependencyRecordIdToBeIncludedMap.ToDictionary(
+                        k => k.Key,
+                        v => (IReadOnlyList<long>)v.Value.ToList());
 
                 var reactionTags =
                     (operation.ReactionRegistration.Tags ?? new List<NamedValue<string>>())
@@ -189,7 +192,7 @@ namespace Naos.Reactor.Domain
                     reactionId,
                     operation.ReactionRegistration.Id,
                     operation.ReactionRegistration.ReactionContext,
-                    readonlyRecords,
+                    streamRepresentationToInternalRecordIdsMap,
                     DateTime.UtcNow,
                     reactionTags);
 
