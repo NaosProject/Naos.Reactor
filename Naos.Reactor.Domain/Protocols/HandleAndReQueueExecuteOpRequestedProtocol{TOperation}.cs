@@ -48,7 +48,7 @@ namespace Naos.Reactor.Domain
         {
             requeueStream.MustForArg(nameof(requeueStream)).NotBeNull();
             executeOperationProtocol.MustForArg(nameof(executeOperationProtocol)).NotBeNull();
-            existingRecordStrategyOnRequeue.MustForArg(nameof(existingRecordStrategyOnRequeue)).NotBeEqualTo(ExistingDatabaseStrategy.Unknown);
+            existingRecordStrategyOnRequeue.MustForArg(nameof(existingRecordStrategyOnRequeue)).NotBeEqualTo(ExistingRecordStrategy.Unknown);
 
             this.requeueStream = requeueStream;
             this.executeOperationProtocol = executeOperationProtocol;
