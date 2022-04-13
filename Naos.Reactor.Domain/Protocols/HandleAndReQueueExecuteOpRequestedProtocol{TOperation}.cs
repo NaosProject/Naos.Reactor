@@ -11,8 +11,6 @@ namespace Naos.Reactor.Domain
     using Naos.CodeAnalysis.Recipes;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
-    using OBeautifulCode.Cloning.Recipes;
-    using OBeautifulCode.Representation.System;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -28,25 +26,35 @@ namespace Naos.Reactor.Domain
         private readonly ISyncVoidProtocol<TOperation> executeOperationProtocol;
         private readonly TimeSpan waitTimeBeforeQueuing;
         private readonly IStandardStream requeueStream;
+        private readonly ExistingRecordStrategy existingRecordStrategyOnRequeue;
+        private readonly int? recordRetentionCountOnRequeue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RunReactorProtocol"/> class.
         /// </summary>
         /// <param name="requeueStream">The stream to write the <see cref="ExecuteOpRequestedEvent{TId,TOperation}"/> back to.</param>
         /// <param name="executeOperationProtocol">The backing protocol to execute the operation.</param>
-        /// <param name="waitTimeBeforeQueuing">The time to wait before requeue the .</param>
+        /// <param name="waitTimeBeforeQueuing">The time to wait before operation is re-queued.</param>
+        /// <param name="existingRecordStrategyOnRequeue">The strategy to use during the Put of the operation when re-queued.</param>
+        /// <param name="recordRetentionCountOnRequeue">The record retention count (if applicable) to use during the Put of the operation when re-queued.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Requeue", Justification = NaosSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "requeue", Justification = NaosSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
         public HandleAndReQueueExecuteOpRequestedProtocol(
             IStandardStream requeueStream,
             ISyncVoidProtocol<TOperation> executeOperationProtocol,
-            TimeSpan waitTimeBeforeQueuing)
+            TimeSpan waitTimeBeforeQueuing,
+            ExistingRecordStrategy existingRecordStrategyOnRequeue,
+            int? recordRetentionCountOnRequeue)
         {
             requeueStream.MustForArg(nameof(requeueStream)).NotBeNull();
             executeOperationProtocol.MustForArg(nameof(executeOperationProtocol)).NotBeNull();
+            existingRecordStrategyOnRequeue.MustForArg(nameof(existingRecordStrategyOnRequeue)).NotBeEqualTo(ExistingDatabaseStrategy.Unknown);
 
             this.requeueStream = requeueStream;
             this.executeOperationProtocol = executeOperationProtocol;
             this.waitTimeBeforeQueuing = waitTimeBeforeQueuing;
+            this.existingRecordStrategyOnRequeue = existingRecordStrategyOnRequeue;
+            this.recordRetentionCountOnRequeue = recordRetentionCountOnRequeue;
         }
 
         /// <inheritdoc />
@@ -58,7 +66,10 @@ namespace Naos.Reactor.Domain
             Thread.Sleep(this.waitTimeBeforeQueuing);
 
             var operationClone = operation.RecordToHandle.Payload.DeepClone();
-            this.requeueStream.Put(operationClone);
+            this.requeueStream.Put(
+                operationClone,
+                existingRecordStrategy: this.existingRecordStrategyOnRequeue,
+                recordRetentionCount: this.recordRetentionCountOnRequeue);
         }
     }
 }

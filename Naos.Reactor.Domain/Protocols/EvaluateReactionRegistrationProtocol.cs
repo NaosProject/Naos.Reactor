@@ -40,6 +40,7 @@ namespace Naos.Reactor.Domain
         }
 
         /// <inheritdoc />
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Expected by nature of problem space.")]
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = NaosSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
         public override EvaluateReactionRegistrationResult Execute(
             EvaluateReactionRegistrationOp operation)
