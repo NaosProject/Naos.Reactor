@@ -142,7 +142,7 @@ namespace Naos.Reactor.Domain
                     }
                     else
                     {
-                        if (recordFilterEntry.RequiredForReaction)
+                        if (recordFilterEntry.RequiredForReaction && !operation.OverrideRequired)
                         {
                             allRequiredSeen = false;
                             break;
