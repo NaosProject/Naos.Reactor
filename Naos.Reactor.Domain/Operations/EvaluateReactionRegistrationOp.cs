@@ -19,12 +19,15 @@ namespace Naos.Reactor.Domain
         /// Initializes a new instance of the <see cref="EvaluateReactionRegistrationOp"/> class.
         /// </summary>
         /// <param name="reactionRegistration">The <see cref="ReactionRegistration"/> to evaluate.</param>
+        /// <param name="overrideRequired">Treat the reaction dependencies as if everything is optional (e.g. if you are triggering a reaction).</param>
         public EvaluateReactionRegistrationOp(
-            ReactionRegistration reactionRegistration)
+            ReactionRegistration reactionRegistration,
+            bool overrideRequired = false)
         {
             reactionRegistration.MustForArg(nameof(reactionRegistration)).NotBeNull();
 
             this.ReactionRegistration = reactionRegistration;
+            this.OverrideRequired = overrideRequired;
         }
 
         /// <summary>
@@ -32,5 +35,10 @@ namespace Naos.Reactor.Domain
         /// </summary>
         /// <value>The <see cref="ReactionRegistration"/> to evaluate.</value>
         public ReactionRegistration ReactionRegistration { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether [override required].  Treat the reaction dependencies as if everything is optional (e.g. if you are triggering a reaction).
+        /// </summary>
+        public bool OverrideRequired { get; private set; }
     }
 }

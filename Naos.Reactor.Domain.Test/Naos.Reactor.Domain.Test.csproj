@@ -377,6 +377,10 @@
     <Compile Include="Operations\WriteEventsWithUtcTimestampIdOpTest.designer.cs">
       <DependentUpon>WriteEventsWithUtcTimestampIdOpTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="TriggerReactionRegistrationOpTest.cs" />
+    <Compile Include="TriggerReactionRegistrationOpTest.designer.cs">
+      <DependentUpon>TriggerReactionRegistrationOpTest.cs</DependentUpon>
+    </Compile>
     <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />
     <None Include="packages.config" />

@@ -200,8 +200,12 @@
     <Compile Include="Operations\ExecuteOpOnScheduleOp.designer.cs">
       <DependentUpon>ExecuteOpOnScheduleOp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\TriggerReactionRegistrationOp.cs" />
     <Compile Include="Operations\RunScheduleOp.designer.cs">
       <DependentUpon>RunScheduleOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\TriggerReactionRegistrationOp.designer.cs">
+      <DependentUpon>TriggerReactionRegistrationOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\WriteEventsWithUtcTimestampIdOp.cs" />
     <Compile Include="Operations\EvaluateScheduleOp.cs" />
@@ -238,6 +242,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
+    <Compile Include="Protocols\TriggerReactionRegistrationProtocol.cs" />
     <Compile Include="Protocols\WriteEventsWithUtcTimestampIdProtocol.cs" />
     <Compile Include="Protocols\ExecuteOpOnScheduleProtocol.cs" />
     <Compile Include="Protocols\EvaluateScheduleProtocol.cs" />
