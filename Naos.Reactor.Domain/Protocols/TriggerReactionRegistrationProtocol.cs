@@ -7,13 +7,8 @@
 namespace Naos.Reactor.Domain
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
-    using OBeautifulCode.Representation.System;
-    using OBeautifulCode.Serialization;
     using OBeautifulCode.Type;
     using static System.FormattableString;
 
@@ -25,7 +20,6 @@ namespace Naos.Reactor.Domain
         private readonly IStandardStream reactionRegistrationStream;
         private readonly IStandardStream reactionStream;
         private readonly ISyncAndAsyncReturningProtocol<EvaluateReactionRegistrationOp, EvaluateReactionRegistrationResult> evaluateReactionRegistrationProtocol;
-        private static readonly TypeRepresentation ReactionRegistrationTypeRepWithoutVersion = typeof(ReactionRegistration).ToRepresentation().RemoveAssemblyVersions();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RunReactorProtocol"/> class.
