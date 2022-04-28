@@ -25,6 +25,7 @@ namespace Naos.Reactor.Domain
     /// <typeparam name="TId">Type of the identifier.</typeparam>
     public partial class WriteEventOnMatchingHandlingStatusProtocol<TId> : SyncSpecificVoidProtocolBase<WriteEventOnMatchingHandlingStatusOp<TId>>
     {
+        private static readonly IStreamRepresentation NullStreamRepresentation = new NullStandardStream().StreamRepresentation;
         private readonly ISyncAndAsyncReturningProtocol<CheckRecordHandlingOp, CheckRecordHandlingResult> checkRecordHandlingProtocol;
         private readonly ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory;
 
@@ -74,8 +75,6 @@ namespace Naos.Reactor.Domain
                     if (matches)
                     {
                         var eventToPutWithId = eventToPutWithIdOnMatch.EventToPut;
-                        var targetStream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(eventToPutWithId.StreamRepresentation));
-                        targetStream.MustForOp("targetStreamMustBeIWriteOnlyStream").BeAssignableToType<IWriteOnlyStream>();
 
                         IEvent eventToPut;
                         if (eventToPutWithId.UpdateTimestampOnPut)
@@ -98,7 +97,13 @@ namespace Naos.Reactor.Domain
                         var eventToPutTags = eventToPut is IHaveTags eventToPutWithTags
                             ? eventToPutWithTags.Tags
                             : null;
-                        ((IWriteOnlyStream)targetStream).PutWithId(eventToPutWithId.Id, eventToPut, eventToPutTags);
+
+                        if (!NullStreamRepresentation.Equals(eventToPutWithId.StreamRepresentation))
+                        {
+                            var targetStream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(eventToPutWithId.StreamRepresentation));
+                            targetStream.MustForOp("targetStreamMustBeIWriteOnlyStream").BeAssignableToType<IWriteOnlyStream>();
+                            ((IWriteOnlyStream)targetStream).PutWithId(eventToPutWithId.Id, eventToPut, eventToPutTags);
+                        }
 
                         switch (eventToPutWithIdOnMatch.ChainOfResponsibilityLinkMatchStrategy)
                         {
