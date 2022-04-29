@@ -47,7 +47,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ReactionRegistration>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.ReactionRegistration: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ReactionContext = {systemUnderTest.ReactionContext?.ToString() ?? "<null>"}, Dependencies = {systemUnderTest.Dependencies?.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.ReactionRegistration: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ReactionContext = {systemUnderTest.ReactionContext?.ToString() ?? "<null>"}, Dependencies = {systemUnderTest.Dependencies?.ToString() ?? "<null>"}, IdealWaitTimeBetweenEvaluations = {systemUnderTest.IdealWaitTimeBetweenEvaluations.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -67,6 +67,7 @@ namespace Naos.Reactor.Domain.Test
                                              null,
                                              referenceObject.ReactionContext,
                                              referenceObject.Dependencies,
+                                             referenceObject.IdealWaitTimeBetweenEvaluations,
                                              referenceObject.Tags);
 
                         return result;
@@ -86,6 +87,7 @@ namespace Naos.Reactor.Domain.Test
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.ReactionContext,
                                              referenceObject.Dependencies,
+                                             referenceObject.IdealWaitTimeBetweenEvaluations,
                                              referenceObject.Tags);
 
                         return result;
@@ -105,6 +107,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Id,
                                              null,
                                              referenceObject.Dependencies,
+                                             referenceObject.IdealWaitTimeBetweenEvaluations,
                                              referenceObject.Tags);
 
                         return result;
@@ -124,6 +127,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Id,
                                              referenceObject.ReactionContext,
                                              null,
+                                             referenceObject.IdealWaitTimeBetweenEvaluations,
                                              referenceObject.Tags);
 
                         return result;
@@ -143,6 +147,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Id,
                                              referenceObject.ReactionContext,
                                              new List<IReactorDependency>(),
+                                             referenceObject.IdealWaitTimeBetweenEvaluations,
                                              referenceObject.Tags);
 
                         return result;
@@ -162,6 +167,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Id,
                                              referenceObject.ReactionContext,
                                              new IReactorDependency[0].Concat(referenceObject.Dependencies).Concat(new IReactorDependency[] { null }).Concat(referenceObject.Dependencies).ToList(),
+                                             referenceObject.IdealWaitTimeBetweenEvaluations,
                                              referenceObject.Tags);
 
                         return result;
@@ -181,6 +187,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Id,
                                              referenceObject.ReactionContext,
                                              referenceObject.Dependencies,
+                                             referenceObject.IdealWaitTimeBetweenEvaluations,
                                              null);
 
                         return result;
@@ -200,6 +207,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Id,
                                              referenceObject.ReactionContext,
                                              referenceObject.Dependencies,
+                                             referenceObject.IdealWaitTimeBetweenEvaluations,
                                              new List<NamedValue<string>>());
 
                         return result;
@@ -219,6 +227,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Id,
                                              referenceObject.ReactionContext,
                                              referenceObject.Dependencies,
+                                             referenceObject.IdealWaitTimeBetweenEvaluations,
                                              new NamedValue<string>[0].Concat(referenceObject.Tags).Concat(new NamedValue<string>[] { null }).Concat(referenceObject.Tags).ToList());
 
                         return result;
@@ -242,6 +251,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.Id,
                                                       referenceObject.ReactionContext,
                                                       referenceObject.Dependencies,
+                                                      referenceObject.IdealWaitTimeBetweenEvaluations,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.Id,
                         };
@@ -264,6 +274,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.Id,
                                                       referenceObject.ReactionContext,
                                                       referenceObject.Dependencies,
+                                                      referenceObject.IdealWaitTimeBetweenEvaluations,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.ReactionContext,
                         };
@@ -286,6 +297,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.Id,
                                                       referenceObject.ReactionContext,
                                                       referenceObject.Dependencies,
+                                                      referenceObject.IdealWaitTimeBetweenEvaluations,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.Dependencies,
                         };
@@ -293,6 +305,29 @@ namespace Naos.Reactor.Domain.Test
                         return result;
                     },
                     PropertyName = "Dependencies",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<ReactionRegistration>
+                {
+                    Name = "IdealWaitTimeBetweenEvaluations should return same 'idealWaitTimeBetweenEvaluations' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ReactionRegistration>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<ReactionRegistration>
+                        {
+                            SystemUnderTest = new ReactionRegistration(
+                                                      referenceObject.Id,
+                                                      referenceObject.ReactionContext,
+                                                      referenceObject.Dependencies,
+                                                      referenceObject.IdealWaitTimeBetweenEvaluations,
+                                                      referenceObject.Tags),
+                            ExpectedPropertyValue = referenceObject.IdealWaitTimeBetweenEvaluations,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "IdealWaitTimeBetweenEvaluations",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ReactionRegistration>
@@ -308,6 +343,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.Id,
                                                       referenceObject.ReactionContext,
                                                       referenceObject.Dependencies,
+                                                      referenceObject.IdealWaitTimeBetweenEvaluations,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.Tags,
                         };
@@ -381,6 +417,26 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<ReactionRegistration>
                 {
+                    Name = "DeepCloneWithIdealWaitTimeBetweenEvaluations should deep clone object and replace IdealWaitTimeBetweenEvaluations with the provided idealWaitTimeBetweenEvaluations",
+                    WithPropertyName = "IdealWaitTimeBetweenEvaluations",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<ReactionRegistration>();
+
+                        var referenceObject = A.Dummy<ReactionRegistration>().ThatIs(_ => !systemUnderTest.IdealWaitTimeBetweenEvaluations.IsEqualTo(_.IdealWaitTimeBetweenEvaluations));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<ReactionRegistration>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.IdealWaitTimeBetweenEvaluations,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<ReactionRegistration>
+                {
                     Name = "DeepCloneWithTags should deep clone object and replace Tags with the provided tags",
                     WithPropertyName = "Tags",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
@@ -413,6 +469,7 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ReactionContext,
                                 ReferenceObjectForEquatableTestScenarios.Dependencies,
+                                ReferenceObjectForEquatableTestScenarios.IdealWaitTimeBetweenEvaluations,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new ReactionRegistration[]
@@ -421,21 +478,31 @@ namespace Naos.Reactor.Domain.Test
                                 A.Dummy<ReactionRegistration>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
                                 ReferenceObjectForEquatableTestScenarios.ReactionContext,
                                 ReferenceObjectForEquatableTestScenarios.Dependencies,
+                                ReferenceObjectForEquatableTestScenarios.IdealWaitTimeBetweenEvaluations,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ReactionRegistration(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<ReactionRegistration>().Whose(_ => !_.ReactionContext.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ReactionContext)).ReactionContext,
                                 ReferenceObjectForEquatableTestScenarios.Dependencies,
+                                ReferenceObjectForEquatableTestScenarios.IdealWaitTimeBetweenEvaluations,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ReactionRegistration(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ReactionContext,
                                 A.Dummy<ReactionRegistration>().Whose(_ => !_.Dependencies.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Dependencies)).Dependencies,
+                                ReferenceObjectForEquatableTestScenarios.IdealWaitTimeBetweenEvaluations,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ReactionRegistration(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ReactionContext,
                                 ReferenceObjectForEquatableTestScenarios.Dependencies,
+                                A.Dummy<ReactionRegistration>().Whose(_ => !_.IdealWaitTimeBetweenEvaluations.IsEqualTo(ReferenceObjectForEquatableTestScenarios.IdealWaitTimeBetweenEvaluations)).IdealWaitTimeBetweenEvaluations,
+                                ReferenceObjectForEquatableTestScenarios.Tags),
+                        new ReactionRegistration(
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.ReactionContext,
+                                ReferenceObjectForEquatableTestScenarios.Dependencies,
+                                ReferenceObjectForEquatableTestScenarios.IdealWaitTimeBetweenEvaluations,
                                 A.Dummy<ReactionRegistration>().Whose(_ => !_.Tags.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Tags)).Tags),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -771,7 +838,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "ReactionContext", "Dependencies", "Tags" };
+                var propertyNames = new string[] { "Id", "ReactionContext", "Dependencies", "IdealWaitTimeBetweenEvaluations", "Tags" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

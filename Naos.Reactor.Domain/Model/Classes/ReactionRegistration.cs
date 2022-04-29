@@ -6,6 +6,7 @@
 
 namespace Naos.Reactor.Domain
 {
+    using System;
     using System.Collections.Generic;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
@@ -21,11 +22,13 @@ namespace Naos.Reactor.Domain
         /// <param name="id">The identifier.</param>
         /// <param name="reactionContext">The context to provide to the <see cref="ReactionEvent"/> when written.</param>
         /// <param name="dependencies">The dependencies to check; any dependencies will produce a <see cref="ReactionEvent"/>.</param>
+        /// <param name="idealWaitTimeBetweenEvaluations">The ideal time to wait between evaluations.</param>
         /// <param name="tags">The tags to write on the <see cref="ReactionEvent"/>.</param>
         public ReactionRegistration(
             string id,
             IReactionContext reactionContext,
             IReadOnlyList<IReactorDependency> dependencies,
+            TimeSpan idealWaitTimeBetweenEvaluations,
             IReadOnlyCollection<NamedValue<string>> tags = null)
         {
             id.MustForArg(nameof(id)).NotBeNullNorWhiteSpace();
@@ -35,6 +38,7 @@ namespace Naos.Reactor.Domain
             this.Id = id;
             this.ReactionContext = reactionContext;
             this.Dependencies = dependencies;
+            this.IdealWaitTimeBetweenEvaluations = idealWaitTimeBetweenEvaluations;
             this.Tags = tags;
         }
 
@@ -50,6 +54,11 @@ namespace Naos.Reactor.Domain
         /// Gets the dependencies to check; any dependencies will produce a <see cref="ReactionEvent"/>..
         /// </summary>
         public IReadOnlyList<IReactorDependency> Dependencies { get; private set; }
+
+        /// <summary>
+        /// Gets the ideal time to wait between evaluations.
+        /// </summary>
+        public TimeSpan IdealWaitTimeBetweenEvaluations { get; private set; }
 
         /// <inheritdoc />
         public IReadOnlyCollection<NamedValue<string>> Tags { get; private set; }

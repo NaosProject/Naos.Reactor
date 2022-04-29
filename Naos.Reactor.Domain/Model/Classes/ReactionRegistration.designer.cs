@@ -72,6 +72,7 @@ namespace Naos.Reactor.Domain
             var result = this.Id.IsEqualTo(other.Id, StringComparer.Ordinal)
                       && this.ReactionContext.IsEqualTo(other.ReactionContext)
                       && this.Dependencies.IsEqualTo(other.Dependencies)
+                      && this.IdealWaitTimeBetweenEvaluations.IsEqualTo(other.IdealWaitTimeBetweenEvaluations)
                       && this.Tags.IsEqualTo(other.Tags);
 
             return result;
@@ -85,6 +86,7 @@ namespace Naos.Reactor.Domain
             .Hash(this.Id)
             .Hash(this.ReactionContext)
             .Hash(this.Dependencies)
+            .Hash(this.IdealWaitTimeBetweenEvaluations)
             .Hash(this.Tags)
             .Value;
 
@@ -98,6 +100,7 @@ namespace Naos.Reactor.Domain
                                  this.Id?.DeepClone(),
                                  this.ReactionContext?.DeepClone(),
                                  this.Dependencies?.DeepClone(),
+                                 this.IdealWaitTimeBetweenEvaluations.DeepClone(),
                                  this.Tags?.DeepClone());
 
             return result;
@@ -131,6 +134,7 @@ namespace Naos.Reactor.Domain
                                  id,
                                  this.ReactionContext?.DeepClone(),
                                  this.Dependencies?.DeepClone(),
+                                 this.IdealWaitTimeBetweenEvaluations.DeepClone(),
                                  this.Tags?.DeepClone());
 
             return result;
@@ -164,6 +168,7 @@ namespace Naos.Reactor.Domain
                                  this.Id?.DeepClone(),
                                  reactionContext,
                                  this.Dependencies?.DeepClone(),
+                                 this.IdealWaitTimeBetweenEvaluations.DeepClone(),
                                  this.Tags?.DeepClone());
 
             return result;
@@ -197,6 +202,41 @@ namespace Naos.Reactor.Domain
                                  this.Id?.DeepClone(),
                                  this.ReactionContext?.DeepClone(),
                                  dependencies,
+                                 this.IdealWaitTimeBetweenEvaluations.DeepClone(),
+                                 this.Tags?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="IdealWaitTimeBetweenEvaluations" />.
+        /// </summary>
+        /// <param name="idealWaitTimeBetweenEvaluations">The new <see cref="IdealWaitTimeBetweenEvaluations" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ReactionRegistration" /> using the specified <paramref name="idealWaitTimeBetweenEvaluations" /> for <see cref="IdealWaitTimeBetweenEvaluations" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public ReactionRegistration DeepCloneWithIdealWaitTimeBetweenEvaluations(TimeSpan idealWaitTimeBetweenEvaluations)
+        {
+            var result = new ReactionRegistration(
+                                 this.Id?.DeepClone(),
+                                 this.ReactionContext?.DeepClone(),
+                                 this.Dependencies?.DeepClone(),
+                                 idealWaitTimeBetweenEvaluations,
                                  this.Tags?.DeepClone());
 
             return result;
@@ -230,6 +270,7 @@ namespace Naos.Reactor.Domain
                                  this.Id?.DeepClone(),
                                  this.ReactionContext?.DeepClone(),
                                  this.Dependencies?.DeepClone(),
+                                 this.IdealWaitTimeBetweenEvaluations.DeepClone(),
                                  tags);
 
             return result;
@@ -239,7 +280,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.ReactionRegistration: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ReactionContext = {this.ReactionContext?.ToString() ?? "<null>"}, Dependencies = {this.Dependencies?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.ReactionRegistration: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ReactionContext = {this.ReactionContext?.ToString() ?? "<null>"}, Dependencies = {this.Dependencies?.ToString() ?? "<null>"}, IdealWaitTimeBetweenEvaluations = {this.IdealWaitTimeBetweenEvaluations.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}.");
 
             return result;
         }

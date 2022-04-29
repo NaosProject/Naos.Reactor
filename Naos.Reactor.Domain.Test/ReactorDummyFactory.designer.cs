@@ -124,6 +124,7 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<string>(),
                                  A.Dummy<IReactionContext>(),
                                  A.Dummy<IReadOnlyList<IReactorDependency>>(),
+                                 A.Dummy<TimeSpan>(),
                                  A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
