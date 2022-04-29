@@ -70,7 +70,8 @@ namespace Naos.Reactor.Domain
                 return false;
             }
 
-            var result = this.DeprecatedIdentifierType.IsEqualTo(other.DeprecatedIdentifierType);
+            var result = this.DegreesOfParallelismForDependencyChecks.IsEqualTo(other.DegreesOfParallelismForDependencyChecks)
+                      && this.DeprecatedIdentifierType.IsEqualTo(other.DeprecatedIdentifierType);
 
             return result;
         }
@@ -80,11 +81,43 @@ namespace Naos.Reactor.Domain
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
+            .Hash(this.DegreesOfParallelismForDependencyChecks)
             .Hash(this.DeprecatedIdentifierType)
             .Value;
 
         /// <inheritdoc />
         public new RunReactorOp DeepClone() => (RunReactorOp)this.DeepCloneInternal();
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="DegreesOfParallelismForDependencyChecks" />.
+        /// </summary>
+        /// <param name="degreesOfParallelismForDependencyChecks">The new <see cref="DegreesOfParallelismForDependencyChecks" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="RunReactorOp" /> using the specified <paramref name="degreesOfParallelismForDependencyChecks" /> for <see cref="DegreesOfParallelismForDependencyChecks" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public RunReactorOp DeepCloneWithDegreesOfParallelismForDependencyChecks(int degreesOfParallelismForDependencyChecks)
+        {
+            var result = new RunReactorOp(
+                                 degreesOfParallelismForDependencyChecks,
+                                 this.DeprecatedIdentifierType?.DeepClone());
+
+            return result;
+        }
 
         /// <summary>
         /// Deep clones this object with a new <see cref="DeprecatedIdentifierType" />.
@@ -111,6 +144,7 @@ namespace Naos.Reactor.Domain
         public RunReactorOp DeepCloneWithDeprecatedIdentifierType(TypeRepresentation deprecatedIdentifierType)
         {
             var result = new RunReactorOp(
+                                 this.DegreesOfParallelismForDependencyChecks.DeepClone(),
                                  deprecatedIdentifierType);
 
             return result;
@@ -121,6 +155,7 @@ namespace Naos.Reactor.Domain
         protected override OperationBase DeepCloneInternal()
         {
             var result = new RunReactorOp(
+                                 this.DegreesOfParallelismForDependencyChecks.DeepClone(),
                                  this.DeprecatedIdentifierType?.DeepClone());
 
             return result;
@@ -130,7 +165,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.RunReactorOp: DeprecatedIdentifierType = {this.DeprecatedIdentifierType?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.RunReactorOp: DegreesOfParallelismForDependencyChecks = {this.DegreesOfParallelismForDependencyChecks.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DeprecatedIdentifierType = {this.DeprecatedIdentifierType?.ToString() ?? "<null>"}.");
 
             return result;
         }

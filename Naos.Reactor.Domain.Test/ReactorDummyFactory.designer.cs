@@ -140,6 +140,7 @@ namespace Naos.Reactor.Domain.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RunReactorOp(
+                                 A.Dummy<int>(),
                                  A.Dummy<TypeRepresentation>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(

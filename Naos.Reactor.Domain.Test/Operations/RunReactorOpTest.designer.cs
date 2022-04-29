@@ -47,7 +47,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<RunReactorOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.RunReactorOp: DeprecatedIdentifierType = {systemUnderTest.DeprecatedIdentifierType?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.RunReactorOp: DegreesOfParallelismForDependencyChecks = {systemUnderTest.DegreesOfParallelismForDependencyChecks.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DeprecatedIdentifierType = {systemUnderTest.DeprecatedIdentifierType?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -61,7 +61,10 @@ namespace Naos.Reactor.Domain.Test
                     Name = "constructor should throw ArgumentNullException when parameter 'deprecatedIdentifierType' is null scenario",
                     ConstructionFunc = () =>
                     {
+                        var referenceObject = A.Dummy<RunReactorOp>();
+
                         var result = new RunReactorOp(
+                                             referenceObject.DegreesOfParallelismForDependencyChecks,
                                              null);
 
                         return result;
@@ -74,6 +77,26 @@ namespace Naos.Reactor.Domain.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<RunReactorOp>
                 {
+                    Name = "DegreesOfParallelismForDependencyChecks should return same 'degreesOfParallelismForDependencyChecks' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<RunReactorOp>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<RunReactorOp>
+                        {
+                            SystemUnderTest = new RunReactorOp(
+                                                      referenceObject.DegreesOfParallelismForDependencyChecks,
+                                                      referenceObject.DeprecatedIdentifierType),
+                            ExpectedPropertyValue = referenceObject.DegreesOfParallelismForDependencyChecks,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "DegreesOfParallelismForDependencyChecks",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<RunReactorOp>
+                {
                     Name = "DeprecatedIdentifierType should return same 'deprecatedIdentifierType' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
@@ -82,6 +105,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedPropertyValue<RunReactorOp>
                         {
                             SystemUnderTest = new RunReactorOp(
+                                                      referenceObject.DegreesOfParallelismForDependencyChecks,
                                                       referenceObject.DeprecatedIdentifierType),
                             ExpectedPropertyValue = referenceObject.DeprecatedIdentifierType,
                         };
@@ -92,6 +116,26 @@ namespace Naos.Reactor.Domain.Test
                 });
 
         private static readonly DeepCloneWithTestScenarios<RunReactorOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<RunReactorOp>()
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<RunReactorOp>
+                {
+                    Name = "DeepCloneWithDegreesOfParallelismForDependencyChecks should deep clone object and replace DegreesOfParallelismForDependencyChecks with the provided degreesOfParallelismForDependencyChecks",
+                    WithPropertyName = "DegreesOfParallelismForDependencyChecks",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<RunReactorOp>();
+
+                        var referenceObject = A.Dummy<RunReactorOp>().ThatIs(_ => !systemUnderTest.DegreesOfParallelismForDependencyChecks.IsEqualTo(_.DegreesOfParallelismForDependencyChecks));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<RunReactorOp>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.DegreesOfParallelismForDependencyChecks,
+                        };
+
+                        return result;
+                    },
+                })
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<RunReactorOp>
                 {
@@ -124,11 +168,16 @@ namespace Naos.Reactor.Domain.Test
                     ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new RunReactorOp[]
                     {
                         new RunReactorOp(
+                                ReferenceObjectForEquatableTestScenarios.DegreesOfParallelismForDependencyChecks,
                                 ReferenceObjectForEquatableTestScenarios.DeprecatedIdentifierType),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new RunReactorOp[]
                     {
                         new RunReactorOp(
+                                A.Dummy<RunReactorOp>().Whose(_ => !_.DegreesOfParallelismForDependencyChecks.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DegreesOfParallelismForDependencyChecks)).DegreesOfParallelismForDependencyChecks,
+                                ReferenceObjectForEquatableTestScenarios.DeprecatedIdentifierType),
+                        new RunReactorOp(
+                                ReferenceObjectForEquatableTestScenarios.DegreesOfParallelismForDependencyChecks,
                                 A.Dummy<RunReactorOp>().Whose(_ => !_.DeprecatedIdentifierType.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DeprecatedIdentifierType)).DeprecatedIdentifierType),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -450,7 +499,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "DeprecatedIdentifierType" };
+                var propertyNames = new string[] { "DegreesOfParallelismForDependencyChecks", "DeprecatedIdentifierType" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

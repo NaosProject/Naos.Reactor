@@ -10,10 +10,12 @@ namespace Naos.Reactor.Domain
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Representation.System;
     using OBeautifulCode.Serialization;
+    using OBeautifulCode.String.Recipes;
     using OBeautifulCode.Type;
     using static System.FormattableString;
 
@@ -22,10 +24,12 @@ namespace Naos.Reactor.Domain
     /// </summary>
     public partial class RunReactorProtocol : SyncSpecificVoidProtocolBase<RunReactorOp>
     {
+        private static readonly TypeRepresentation ReactionRegistrationTypeRepWithoutVersion = typeof(ReactionRegistration).ToRepresentation().RemoveAssemblyVersions();
+        private static readonly Dictionary<StringSerializedIdentifier, Tuple<DateTime, TimeSpan>> ReactionRegistrationIdToCheckbackMap = new Dictionary<StringSerializedIdentifier, Tuple<DateTime, TimeSpan>>();
+
         private readonly IStandardStream reactionRegistrationStream;
         private readonly IStandardStream reactionStream;
         private readonly ISyncAndAsyncReturningProtocol<EvaluateReactionRegistrationOp, EvaluateReactionRegistrationResult> evaluateReactionRegistrationProtocol;
-        private static readonly TypeRepresentation ReactionRegistrationTypeRepWithoutVersion = typeof(ReactionRegistration).ToRepresentation().RemoveAssemblyVersions();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RunReactorProtocol"/> class.
@@ -65,49 +69,51 @@ namespace Naos.Reactor.Domain
                                            operation.DeprecatedIdentifierType
                                        }));
             var distinctIds = this.reactionRegistrationStream.Execute(getDistinctStringSerializedIdsOp);
-            foreach (var distinctId in distinctIds)
-            {
-                try
+            Parallel.ForEach(distinctIds,
+                new ParallelOptions { MaxDegreeOfParallelism = operation.DegreesOfParallelismForDependencyChecks },
+                distinctId =>
                 {
-                    var getLatestRecordOp = new StandardGetLatestRecordOp(
-                        new RecordFilter(
-                            ids: new[]
-                                 {
-                                     distinctId,
-                                 }));
-
-                    var reactionRegistrationRecord = this.reactionRegistrationStream.Execute(getLatestRecordOp);
-                    reactionRegistrationRecord
-                       .Payload
-                       .PayloadTypeRepresentation
-                       .RemoveAssemblyVersions()
-                       .MustForOp("recordFromReactionRegistrationStreamExpectedToBeRegisteredReaction")
-                       .BeEqualTo(ReactionRegistrationTypeRepWithoutVersion);
-
-                    var reactionRegistration =
-                        reactionRegistrationRecord.Payload.DeserializePayloadUsingSpecificFactory<ReactionRegistration>(
-                            this.reactionRegistrationStream.SerializerFactory);
-
-                    var evaluateReactionRegistrationOp = new EvaluateReactionRegistrationOp(reactionRegistration);
-                    var evaluateReactionRegistrationResult = this.evaluateReactionRegistrationProtocol.Execute(evaluateReactionRegistrationOp);
-                    if (evaluateReactionRegistrationResult.ReactionEvent != null)
+                    try
                     {
-                        var reaction = evaluateReactionRegistrationResult.ReactionEvent;
+                        var getLatestRecordOp = new StandardGetLatestRecordOp(
+                            new RecordFilter(
+                                ids: new[]
+                                     {
+                                         distinctId,
+                                     }));
 
-                        this.reactionStream.PutWithId(reaction.Id, reaction, reaction.Tags);
+                        var reactionRegistrationRecord = this.reactionRegistrationStream.Execute(getLatestRecordOp);
+                        reactionRegistrationRecord
+                           .Payload
+                           .PayloadTypeRepresentation
+                           .RemoveAssemblyVersions()
+                           .MustForOp("recordFromReactionRegistrationStreamExpectedToBeRegisteredReaction")
+                           .BeEqualTo(ReactionRegistrationTypeRepWithoutVersion);
 
-                        // once we have recorded the reaction then we can finalize the handling cycle.
-                        foreach (var recordSetHandlingMemento in evaluateReactionRegistrationResult.RecordSetHandlingMementos)
+                        var reactionRegistration =
+                            reactionRegistrationRecord.Payload.DeserializePayloadUsingSpecificFactory<ReactionRegistration>(
+                                this.reactionRegistrationStream.SerializerFactory);
+
+                        var evaluateReactionRegistrationOp = new EvaluateReactionRegistrationOp(reactionRegistration);
+                        var evaluateReactionRegistrationResult = this.evaluateReactionRegistrationProtocol.Execute(evaluateReactionRegistrationOp);
+                        if (evaluateReactionRegistrationResult.ReactionEvent != null)
                         {
-                            recordSetHandlingMemento.CompleteSet();
+                            var reaction = evaluateReactionRegistrationResult.ReactionEvent;
+
+                            this.reactionStream.PutWithId(reaction.Id, reaction, reaction.Tags);
+
+                            // once we have recorded the reaction then we can finalize the handling cycle.
+                            foreach (var recordSetHandlingMemento in evaluateReactionRegistrationResult.RecordSetHandlingMementos)
+                            {
+                                recordSetHandlingMemento.CompleteSet();
+                            }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw new ReactorException(Invariant($"Failed to process {nameof(ReactionRegistration)} Id: {distinctId}."), ex, operation);
-                }
-            }
+                    catch (Exception ex)
+                    {
+                        throw new ReactorException(Invariant($"Failed to process {nameof(ReactionRegistration)} Id: {distinctId}."), ex, operation);
+                    }
+                });
         }
     }
 }
