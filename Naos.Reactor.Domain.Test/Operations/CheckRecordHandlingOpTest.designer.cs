@@ -49,7 +49,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<CheckRecordHandlingOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.CheckRecordHandlingOp: StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, Concern = {systemUnderTest.Concern?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, RecordFilter = {systemUnderTest.RecordFilter?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.CheckRecordHandlingOp: StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, Concern = {systemUnderTest.Concern?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, RecordFilter = {systemUnderTest.RecordFilter?.ToString() ?? "<null>"}, HandlingFilter = {systemUnderTest.HandlingFilter?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -68,7 +68,8 @@ namespace Naos.Reactor.Domain.Test
                         var result = new CheckRecordHandlingOp(
                                              null,
                                              referenceObject.Concern,
-                                             referenceObject.RecordFilter);
+                                             referenceObject.RecordFilter,
+                                             referenceObject.HandlingFilter);
 
                         return result;
                     },
@@ -86,7 +87,8 @@ namespace Naos.Reactor.Domain.Test
                         var result = new CheckRecordHandlingOp(
                                              referenceObject.StreamRepresentation,
                                              null,
-                                             referenceObject.RecordFilter);
+                                             referenceObject.RecordFilter,
+                                             referenceObject.HandlingFilter);
 
                         return result;
                     },
@@ -104,7 +106,8 @@ namespace Naos.Reactor.Domain.Test
                         var result = new CheckRecordHandlingOp(
                                              referenceObject.StreamRepresentation,
                                              Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.RecordFilter);
+                                             referenceObject.RecordFilter,
+                                             referenceObject.HandlingFilter);
 
                         return result;
                     },
@@ -122,12 +125,32 @@ namespace Naos.Reactor.Domain.Test
                         var result = new CheckRecordHandlingOp(
                                              referenceObject.StreamRepresentation,
                                              referenceObject.Concern,
-                                             null);
+                                             null,
+                                             referenceObject.HandlingFilter);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
                     ExpectedExceptionMessageContains = new[] { "recordFilter", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<CheckRecordHandlingOp>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'handlingFilter' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<CheckRecordHandlingOp>();
+
+                        var result = new CheckRecordHandlingOp(
+                                             referenceObject.StreamRepresentation,
+                                             referenceObject.Concern,
+                                             referenceObject.RecordFilter,
+                                             null);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "handlingFilter", },
                 });
 
         private static readonly ConstructorPropertyAssignmentTestScenarios<CheckRecordHandlingOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CheckRecordHandlingOp>()
@@ -144,7 +167,8 @@ namespace Naos.Reactor.Domain.Test
                             SystemUnderTest = new CheckRecordHandlingOp(
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.Concern,
-                                                      referenceObject.RecordFilter),
+                                                      referenceObject.RecordFilter,
+                                                      referenceObject.HandlingFilter),
                             ExpectedPropertyValue = referenceObject.StreamRepresentation,
                         };
 
@@ -165,7 +189,8 @@ namespace Naos.Reactor.Domain.Test
                             SystemUnderTest = new CheckRecordHandlingOp(
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.Concern,
-                                                      referenceObject.RecordFilter),
+                                                      referenceObject.RecordFilter,
+                                                      referenceObject.HandlingFilter),
                             ExpectedPropertyValue = referenceObject.Concern,
                         };
 
@@ -186,13 +211,36 @@ namespace Naos.Reactor.Domain.Test
                             SystemUnderTest = new CheckRecordHandlingOp(
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.Concern,
-                                                      referenceObject.RecordFilter),
+                                                      referenceObject.RecordFilter,
+                                                      referenceObject.HandlingFilter),
                             ExpectedPropertyValue = referenceObject.RecordFilter,
                         };
 
                         return result;
                     },
                     PropertyName = "RecordFilter",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<CheckRecordHandlingOp>
+                {
+                    Name = "HandlingFilter should return same 'handlingFilter' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<CheckRecordHandlingOp>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<CheckRecordHandlingOp>
+                        {
+                            SystemUnderTest = new CheckRecordHandlingOp(
+                                                      referenceObject.StreamRepresentation,
+                                                      referenceObject.Concern,
+                                                      referenceObject.RecordFilter,
+                                                      referenceObject.HandlingFilter),
+                            ExpectedPropertyValue = referenceObject.HandlingFilter,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "HandlingFilter",
                 });
 
         private static readonly DeepCloneWithTestScenarios<CheckRecordHandlingOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CheckRecordHandlingOp>()
@@ -255,6 +303,26 @@ namespace Naos.Reactor.Domain.Test
 
                         return result;
                     },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<CheckRecordHandlingOp>
+                {
+                    Name = "DeepCloneWithHandlingFilter should deep clone object and replace HandlingFilter with the provided handlingFilter",
+                    WithPropertyName = "HandlingFilter",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<CheckRecordHandlingOp>();
+
+                        var referenceObject = A.Dummy<CheckRecordHandlingOp>().ThatIs(_ => !systemUnderTest.HandlingFilter.IsEqualTo(_.HandlingFilter));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<CheckRecordHandlingOp>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.HandlingFilter,
+                        };
+
+                        return result;
+                    },
                 });
 
         private static readonly CheckRecordHandlingOp ReferenceObjectForEquatableTestScenarios = A.Dummy<CheckRecordHandlingOp>();
@@ -270,22 +338,31 @@ namespace Naos.Reactor.Domain.Test
                         new CheckRecordHandlingOp(
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.Concern,
-                                ReferenceObjectForEquatableTestScenarios.RecordFilter),
+                                ReferenceObjectForEquatableTestScenarios.RecordFilter,
+                                ReferenceObjectForEquatableTestScenarios.HandlingFilter),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new CheckRecordHandlingOp[]
                     {
                         new CheckRecordHandlingOp(
                                 A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.StreamRepresentation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StreamRepresentation)).StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.Concern,
-                                ReferenceObjectForEquatableTestScenarios.RecordFilter),
+                                ReferenceObjectForEquatableTestScenarios.RecordFilter,
+                                ReferenceObjectForEquatableTestScenarios.HandlingFilter),
                         new CheckRecordHandlingOp(
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.Concern.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Concern)).Concern,
-                                ReferenceObjectForEquatableTestScenarios.RecordFilter),
+                                ReferenceObjectForEquatableTestScenarios.RecordFilter,
+                                ReferenceObjectForEquatableTestScenarios.HandlingFilter),
                         new CheckRecordHandlingOp(
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.Concern,
-                                A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.RecordFilter.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RecordFilter)).RecordFilter),
+                                A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.RecordFilter.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RecordFilter)).RecordFilter,
+                                ReferenceObjectForEquatableTestScenarios.HandlingFilter),
+                        new CheckRecordHandlingOp(
+                                ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
+                                ReferenceObjectForEquatableTestScenarios.Concern,
+                                ReferenceObjectForEquatableTestScenarios.RecordFilter,
+                                A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.HandlingFilter.IsEqualTo(ReferenceObjectForEquatableTestScenarios.HandlingFilter)).HandlingFilter),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -600,6 +677,18 @@ namespace Naos.Reactor.Domain.Test
                     // a deep clone of a value type object is the same object.
                     actual.RecordFilter.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.RecordFilter);
                 }
+
+                if (systemUnderTest.HandlingFilter == null)
+                {
+                    actual.HandlingFilter.AsTest().Must().BeNull();
+                }
+                else if (!actual.HandlingFilter.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.HandlingFilter.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.HandlingFilter);
+                }
             }
 
             [Fact]
@@ -618,7 +707,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "StreamRepresentation", "Concern", "RecordFilter" };
+                var propertyNames = new string[] { "StreamRepresentation", "Concern", "RecordFilter", "HandlingFilter" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

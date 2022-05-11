@@ -61,7 +61,8 @@ namespace Naos.Reactor.Domain.Test
                 () => new CheckRecordHandlingOp(
                                  A.Dummy<IStreamRepresentation>(),
                                  A.Dummy<string>(),
-                                 A.Dummy<RecordFilter>()));
+                                 A.Dummy<RecordFilter>(),
+                                 A.Dummy<HandlingFilter>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CheckRecordHandlingResult(

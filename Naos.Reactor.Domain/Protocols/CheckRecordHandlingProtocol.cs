@@ -43,7 +43,8 @@ namespace Naos.Reactor.Domain
 
             var getStatusOp = new StandardGetHandlingStatusOp(
                 operation.Concern,
-                operation.RecordFilter);
+                operation.RecordFilter,
+                operation.HandlingFilter);
             var statuses = streamProtocol.Execute(getStatusOp);
 
             var result = new CheckRecordHandlingResult(operation.StreamRepresentation, statuses);

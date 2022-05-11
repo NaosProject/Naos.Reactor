@@ -22,18 +22,22 @@ namespace Naos.Reactor.Domain
         /// <param name="streamRepresentation">The <see cref="IStreamRepresentation"/> to resolve the <see cref="IStream"/> to check handling on.</param>
         /// <param name="concern">The concerns that require handling.</param>
         /// <param name="recordFilter">The filter for the records to examine.</param>
+        /// <param name="handlingFilter">The filter for the handling entries to examine.</param>
         public CheckRecordHandlingOp(
             IStreamRepresentation streamRepresentation,
             string concern,
-            RecordFilter recordFilter)
+            RecordFilter recordFilter,
+            HandlingFilter handlingFilter)
         {
             streamRepresentation.MustForArg(nameof(streamRepresentation)).NotBeNull();
             concern.MustForArg(nameof(concern)).NotBeNullNorWhiteSpace();
             recordFilter.MustForArg(nameof(recordFilter)).NotBeNull();
+            handlingFilter.MustForArg(nameof(handlingFilter)).NotBeNull();
 
             this.StreamRepresentation = streamRepresentation;
             this.Concern = concern;
             this.RecordFilter = recordFilter;
+            this.HandlingFilter = handlingFilter;
         }
 
         /// <summary>
@@ -51,5 +55,10 @@ namespace Naos.Reactor.Domain
         /// Gets the filter for the records to examine.
         /// </summary>
         public RecordFilter RecordFilter { get; private set; }
+
+        /// <summary>
+        /// Gets the filter for the handling entries to examine.
+        /// </summary>
+        public HandlingFilter HandlingFilter { get; private set; }
     }
 }
