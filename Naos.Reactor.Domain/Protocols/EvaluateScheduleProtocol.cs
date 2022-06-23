@@ -31,8 +31,6 @@ namespace Naos.Reactor.Domain
         {
             operation.MustForArg(nameof(operation)).NotBeNull();
 
-            operation.MustForArg(nameof(operation)).NotBeNull();
-
             if (operation.Schedule is DailyScheduleInUtc dailySchedule)
             {
                 var result = (operation.PreviousExecutionTimestampUtc == null
