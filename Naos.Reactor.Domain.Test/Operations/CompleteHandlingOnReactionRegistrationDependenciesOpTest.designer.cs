@@ -35,169 +35,275 @@ namespace Naos.Reactor.Domain.Test
 
     using static global::System.FormattableString;
 
-    public static partial class CheckRecordExistsOpTest
+    public static partial class CompleteHandlingOnReactionRegistrationDependenciesOpTest
     {
-        private static readonly StringRepresentationTestScenarios<CheckRecordExistsOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<CheckRecordExistsOp>()
+        private static readonly StringRepresentationTestScenarios<CompleteHandlingOnReactionRegistrationDependenciesOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<CompleteHandlingOnReactionRegistrationDependenciesOp>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<CheckRecordExistsOp>
+                new StringRepresentationTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CheckRecordExistsOp>();
+                        var systemUnderTest = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<CheckRecordExistsOp>
+                        var result = new SystemUnderTestExpectedStringRepresentation<CompleteHandlingOnReactionRegistrationDependenciesOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.CheckRecordExistsOp: StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, RecordFilter = {systemUnderTest.RecordFilter?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.CompleteHandlingOnReactionRegistrationDependenciesOp: ReactionRegistration = {systemUnderTest.ReactionRegistration?.ToString() ?? "<null>"}, AcceptableHandlingStatuses = {systemUnderTest.AcceptableHandlingStatuses?.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<CheckRecordExistsOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<CheckRecordExistsOp>()
+        private static readonly ConstructorArgumentValidationTestScenarios<CompleteHandlingOnReactionRegistrationDependenciesOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<CompleteHandlingOnReactionRegistrationDependenciesOp>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CheckRecordExistsOp>
+                new ConstructorArgumentValidationTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'streamRepresentation' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'reactionRegistration' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CheckRecordExistsOp>();
+                        var referenceObject = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
-                        var result = new CheckRecordExistsOp(
+                        var result = new CompleteHandlingOnReactionRegistrationDependenciesOp(
                                              null,
-                                             referenceObject.RecordFilter);
+                                             referenceObject.Details,
+                                             referenceObject.AcceptableHandlingStatuses);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "streamRepresentation", },
+                    ExpectedExceptionMessageContains = new[] { "reactionRegistration", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CheckRecordExistsOp>
+                new ConstructorArgumentValidationTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'recordFilter' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'details' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CheckRecordExistsOp>();
+                        var referenceObject = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
-                        var result = new CheckRecordExistsOp(
-                                             referenceObject.StreamRepresentation,
+                        var result = new CompleteHandlingOnReactionRegistrationDependenciesOp(
+                                             referenceObject.ReactionRegistration,
+                                             null,
+                                             referenceObject.AcceptableHandlingStatuses);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "details", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'details' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
+
+                        var result = new CompleteHandlingOnReactionRegistrationDependenciesOp(
+                                             referenceObject.ReactionRegistration,
+                                             Invariant($"  {Environment.NewLine}  "),
+                                             referenceObject.AcceptableHandlingStatuses);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "details", "white space", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'acceptableHandlingStatuses' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
+
+                        var result = new CompleteHandlingOnReactionRegistrationDependenciesOp(
+                                             referenceObject.ReactionRegistration,
+                                             referenceObject.Details,
                                              null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "recordFilter", },
-                });
-
-        private static readonly ConstructorPropertyAssignmentTestScenarios<CheckRecordExistsOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CheckRecordExistsOp>()
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CheckRecordExistsOp>
-                {
-                    Name = "StreamRepresentation should return same 'streamRepresentation' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CheckRecordExistsOp>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<CheckRecordExistsOp>
-                        {
-                            SystemUnderTest = new CheckRecordExistsOp(
-                                                      referenceObject.StreamRepresentation,
-                                                      referenceObject.RecordFilter),
-                            ExpectedPropertyValue = referenceObject.StreamRepresentation,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "StreamRepresentation",
+                    ExpectedExceptionMessageContains = new[] { "acceptableHandlingStatuses", },
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CheckRecordExistsOp>
+                new ConstructorArgumentValidationTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
                 {
-                    Name = "RecordFilter should return same 'recordFilter' parameter passed to constructor when getting",
+                    Name = "constructor should throw ArgumentException when parameter 'acceptableHandlingStatuses' is an empty enumerable scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
+
+                        var result = new CompleteHandlingOnReactionRegistrationDependenciesOp(
+                                             referenceObject.ReactionRegistration,
+                                             referenceObject.Details,
+                                             new List<HandlingStatus>());
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "acceptableHandlingStatuses", "is an empty enumerable", },
+                });
+
+        private static readonly ConstructorPropertyAssignmentTestScenarios<CompleteHandlingOnReactionRegistrationDependenciesOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CompleteHandlingOnReactionRegistrationDependenciesOp>()
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
+                {
+                    Name = "ReactionRegistration should return same 'reactionRegistration' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CheckRecordExistsOp>();
+                        var referenceObject = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<CheckRecordExistsOp>
+                        var result = new SystemUnderTestExpectedPropertyValue<CompleteHandlingOnReactionRegistrationDependenciesOp>
                         {
-                            SystemUnderTest = new CheckRecordExistsOp(
-                                                      referenceObject.StreamRepresentation,
-                                                      referenceObject.RecordFilter),
-                            ExpectedPropertyValue = referenceObject.RecordFilter,
+                            SystemUnderTest = new CompleteHandlingOnReactionRegistrationDependenciesOp(
+                                                      referenceObject.ReactionRegistration,
+                                                      referenceObject.Details,
+                                                      referenceObject.AcceptableHandlingStatuses),
+                            ExpectedPropertyValue = referenceObject.ReactionRegistration,
                         };
 
                         return result;
                     },
-                    PropertyName = "RecordFilter",
+                    PropertyName = "ReactionRegistration",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
+                {
+                    Name = "Details should return same 'details' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<CompleteHandlingOnReactionRegistrationDependenciesOp>
+                        {
+                            SystemUnderTest = new CompleteHandlingOnReactionRegistrationDependenciesOp(
+                                                      referenceObject.ReactionRegistration,
+                                                      referenceObject.Details,
+                                                      referenceObject.AcceptableHandlingStatuses),
+                            ExpectedPropertyValue = referenceObject.Details,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Details",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
+                {
+                    Name = "AcceptableHandlingStatuses should return same 'acceptableHandlingStatuses' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<CompleteHandlingOnReactionRegistrationDependenciesOp>
+                        {
+                            SystemUnderTest = new CompleteHandlingOnReactionRegistrationDependenciesOp(
+                                                      referenceObject.ReactionRegistration,
+                                                      referenceObject.Details,
+                                                      referenceObject.AcceptableHandlingStatuses),
+                            ExpectedPropertyValue = referenceObject.AcceptableHandlingStatuses,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "AcceptableHandlingStatuses",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<CheckRecordExistsOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CheckRecordExistsOp>()
+        private static readonly DeepCloneWithTestScenarios<CompleteHandlingOnReactionRegistrationDependenciesOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CompleteHandlingOnReactionRegistrationDependenciesOp>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CheckRecordExistsOp>
+                new DeepCloneWithTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
                 {
-                    Name = "DeepCloneWithStreamRepresentation should deep clone object and replace StreamRepresentation with the provided streamRepresentation",
-                    WithPropertyName = "StreamRepresentation",
+                    Name = "DeepCloneWithReactionRegistration should deep clone object and replace ReactionRegistration with the provided reactionRegistration",
+                    WithPropertyName = "ReactionRegistration",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CheckRecordExistsOp>();
+                        var systemUnderTest = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
-                        var referenceObject = A.Dummy<CheckRecordExistsOp>().ThatIs(_ => !systemUnderTest.StreamRepresentation.IsEqualTo(_.StreamRepresentation));
+                        var referenceObject = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>().ThatIs(_ => !systemUnderTest.ReactionRegistration.IsEqualTo(_.ReactionRegistration));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CheckRecordExistsOp>
+                        var result = new SystemUnderTestDeepCloneWithValue<CompleteHandlingOnReactionRegistrationDependenciesOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.StreamRepresentation,
+                            DeepCloneWithValue = referenceObject.ReactionRegistration,
                         };
 
                         return result;
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CheckRecordExistsOp>
+                new DeepCloneWithTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
                 {
-                    Name = "DeepCloneWithRecordFilter should deep clone object and replace RecordFilter with the provided recordFilter",
-                    WithPropertyName = "RecordFilter",
+                    Name = "DeepCloneWithAcceptableHandlingStatuses should deep clone object and replace AcceptableHandlingStatuses with the provided acceptableHandlingStatuses",
+                    WithPropertyName = "AcceptableHandlingStatuses",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CheckRecordExistsOp>();
+                        var systemUnderTest = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
-                        var referenceObject = A.Dummy<CheckRecordExistsOp>().ThatIs(_ => !systemUnderTest.RecordFilter.IsEqualTo(_.RecordFilter));
+                        var referenceObject = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>().ThatIs(_ => !systemUnderTest.AcceptableHandlingStatuses.IsEqualTo(_.AcceptableHandlingStatuses));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CheckRecordExistsOp>
+                        var result = new SystemUnderTestDeepCloneWithValue<CompleteHandlingOnReactionRegistrationDependenciesOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.RecordFilter,
+                            DeepCloneWithValue = referenceObject.AcceptableHandlingStatuses,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
+                {
+                    Name = "DeepCloneWithDetails should deep clone object and replace Details with the provided details",
+                    WithPropertyName = "Details",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
+
+                        var referenceObject = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<CompleteHandlingOnReactionRegistrationDependenciesOp>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Details,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly CheckRecordExistsOp ReferenceObjectForEquatableTestScenarios = A.Dummy<CheckRecordExistsOp>();
+        private static readonly CompleteHandlingOnReactionRegistrationDependenciesOp ReferenceObjectForEquatableTestScenarios = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
-        private static readonly EquatableTestScenarios<CheckRecordExistsOp> EquatableTestScenarios = new EquatableTestScenarios<CheckRecordExistsOp>()
+        private static readonly EquatableTestScenarios<CompleteHandlingOnReactionRegistrationDependenciesOp> EquatableTestScenarios = new EquatableTestScenarios<CompleteHandlingOnReactionRegistrationDependenciesOp>()
             .AddScenario(() =>
-                new EquatableTestScenario<CheckRecordExistsOp>
+                new EquatableTestScenario<CompleteHandlingOnReactionRegistrationDependenciesOp>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CheckRecordExistsOp[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CompleteHandlingOnReactionRegistrationDependenciesOp[]
                     {
-                        new CheckRecordExistsOp(
-                                ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.RecordFilter),
+                        new CompleteHandlingOnReactionRegistrationDependenciesOp(
+                                ReferenceObjectForEquatableTestScenarios.ReactionRegistration,
+                                ReferenceObjectForEquatableTestScenarios.Details,
+                                ReferenceObjectForEquatableTestScenarios.AcceptableHandlingStatuses),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new CheckRecordExistsOp[]
+                    ObjectsThatAreNotEqualToReferenceObject = new CompleteHandlingOnReactionRegistrationDependenciesOp[]
                     {
-                        new CheckRecordExistsOp(
-                                A.Dummy<CheckRecordExistsOp>().Whose(_ => !_.StreamRepresentation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StreamRepresentation)).StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.RecordFilter),
-                        new CheckRecordExistsOp(
-                                ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                A.Dummy<CheckRecordExistsOp>().Whose(_ => !_.RecordFilter.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RecordFilter)).RecordFilter),
+                        new CompleteHandlingOnReactionRegistrationDependenciesOp(
+                                A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>().Whose(_ => !_.ReactionRegistration.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ReactionRegistration)).ReactionRegistration,
+                                ReferenceObjectForEquatableTestScenarios.Details,
+                                ReferenceObjectForEquatableTestScenarios.AcceptableHandlingStatuses),
+                        new CompleteHandlingOnReactionRegistrationDependenciesOp(
+                                ReferenceObjectForEquatableTestScenarios.ReactionRegistration,
+                                ReferenceObjectForEquatableTestScenarios.Details,
+                                A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>().Whose(_ => !_.AcceptableHandlingStatuses.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AcceptableHandlingStatuses)).AcceptableHandlingStatuses),
+                        new CompleteHandlingOnReactionRegistrationDependenciesOp(
+                                ReferenceObjectForEquatableTestScenarios.ReactionRegistration,
+                                A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details,
+                                ReferenceObjectForEquatableTestScenarios.AcceptableHandlingStatuses),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -206,8 +312,8 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<CheckRecordExistsOp>(),
                         A.Dummy<CheckRecordHandlingOp>(),
-                        A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>(),
                         A.Dummy<EvaluateReactionRegistrationOp>(),
                         A.Dummy<EvaluateScheduleOp>(),
                         A.Dummy<ExecuteOpOnScheduleOp>(),
@@ -238,12 +344,12 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CheckRecordExistsOp___Should_implement_IModel_of_CheckRecordExistsOp___When_reflecting()
+            public static void CompleteHandlingOnReactionRegistrationDependenciesOp___Should_implement_IModel_of_CompleteHandlingOnReactionRegistrationDependenciesOp___When_reflecting()
             {
                 // Arrange
-                var type = typeof(CheckRecordExistsOp);
+                var type = typeof(CompleteHandlingOnReactionRegistrationDependenciesOp);
 
-                var expectedModelMethods = typeof(IModel<CheckRecordExistsOp>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<CompleteHandlingOnReactionRegistrationDependenciesOp>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -253,7 +359,7 @@ namespace Naos.Reactor.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CheckRecordExistsOp>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CompleteHandlingOnReactionRegistrationDependenciesOp>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -271,10 +377,10 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CheckRecordExistsOp___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void CompleteHandlingOnReactionRegistrationDependenciesOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(CheckRecordExistsOp);
+                var type = typeof(CompleteHandlingOnReactionRegistrationDependenciesOp);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -454,10 +560,10 @@ namespace Naos.Reactor.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CheckRecordExistsOp>();
+                var systemUnderTest = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
                 // Act
-                var actual = (CheckRecordExistsOp)systemUnderTest.Clone();
+                var actual = (CompleteHandlingOnReactionRegistrationDependenciesOp)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -481,7 +587,7 @@ namespace Naos.Reactor.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CheckRecordExistsOp>();
+                var systemUnderTest = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -490,28 +596,28 @@ namespace Naos.Reactor.Domain.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.StreamRepresentation == null)
+                if (systemUnderTest.ReactionRegistration == null)
                 {
-                    actual.StreamRepresentation.AsTest().Must().BeNull();
+                    actual.ReactionRegistration.AsTest().Must().BeNull();
                 }
-                else if (!actual.StreamRepresentation.GetType().IsValueType)
+                else if (!actual.ReactionRegistration.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.StreamRepresentation.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.StreamRepresentation);
+                    actual.ReactionRegistration.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ReactionRegistration);
                 }
 
-                if (systemUnderTest.RecordFilter == null)
+                if (systemUnderTest.AcceptableHandlingStatuses == null)
                 {
-                    actual.RecordFilter.AsTest().Must().BeNull();
+                    actual.AcceptableHandlingStatuses.AsTest().Must().BeNull();
                 }
-                else if (!actual.RecordFilter.GetType().IsValueType)
+                else if (!actual.AcceptableHandlingStatuses.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.RecordFilter.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.RecordFilter);
+                    actual.AcceptableHandlingStatuses.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.AcceptableHandlingStatuses);
                 }
             }
 
@@ -531,7 +637,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "StreamRepresentation", "RecordFilter" };
+                var propertyNames = new string[] { "ReactionRegistration", "AcceptableHandlingStatuses", "Details" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -544,12 +650,12 @@ namespace Naos.Reactor.Domain.Test
                     }
 
                     // Act
-                    var actual = (CheckRecordExistsOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (CompleteHandlingOnReactionRegistrationDependenciesOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(CheckRecordExistsOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(CompleteHandlingOnReactionRegistrationDependenciesOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -611,7 +717,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CheckRecordExistsOp>();
+                var expected = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -640,7 +746,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CheckRecordExistsOp>();
+                var expected = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -669,7 +775,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CheckRecordExistsOp>();
+                var expected = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -698,7 +804,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CheckRecordExistsOp>();
+                var expected = A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -732,8 +838,8 @@ namespace Naos.Reactor.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CheckRecordExistsOp systemUnderTest1 = null;
-                CheckRecordExistsOp systemUnderTest2 = null;
+                CompleteHandlingOnReactionRegistrationDependenciesOp systemUnderTest1 = null;
+                CompleteHandlingOnReactionRegistrationDependenciesOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -763,7 +869,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CheckRecordExistsOp systemUnderTest = null;
+                    CompleteHandlingOnReactionRegistrationDependenciesOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -912,8 +1018,8 @@ namespace Naos.Reactor.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CheckRecordExistsOp systemUnderTest1 = null;
-                CheckRecordExistsOp systemUnderTest2 = null;
+                CompleteHandlingOnReactionRegistrationDependenciesOp systemUnderTest1 = null;
+                CompleteHandlingOnReactionRegistrationDependenciesOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -943,7 +1049,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CheckRecordExistsOp systemUnderTest = null;
+                    CompleteHandlingOnReactionRegistrationDependenciesOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1232,17 +1338,17 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_CheckRecordExistsResult___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_VoidOperationBase___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ReturningOperationBase<CheckRecordExistsResult> systemUnderTest = null;
+                    VoidOperationBase systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordExistsResult>)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((VoidOperationBase)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -1263,14 +1369,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_CheckRecordExistsResult___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_VoidOperationBase___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordExistsResult>)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((VoidOperationBase)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1291,14 +1397,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_CheckRecordExistsResult___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_VoidOperationBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordExistsResult>)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((VoidOperationBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1319,14 +1425,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_CheckRecordExistsResult___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_VoidOperationBase___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordExistsResult>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((VoidOperationBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1347,14 +1453,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_CheckRecordExistsResult___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_VoidOperationBase___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<CheckRecordExistsResult>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((VoidOperationBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1375,14 +1481,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckRecordExistsOp___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_CompleteHandlingOnReactionRegistrationDependenciesOp___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CheckRecordExistsOp systemUnderTest = null;
+                    CompleteHandlingOnReactionRegistrationDependenciesOp systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1406,7 +1512,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckRecordExistsOp___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_CompleteHandlingOnReactionRegistrationDependenciesOp___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1434,7 +1540,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckRecordExistsOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_CompleteHandlingOnReactionRegistrationDependenciesOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1462,7 +1568,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckRecordExistsOp___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_CompleteHandlingOnReactionRegistrationDependenciesOp___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1490,7 +1596,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckRecordExistsOp___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_CompleteHandlingOnReactionRegistrationDependenciesOp___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

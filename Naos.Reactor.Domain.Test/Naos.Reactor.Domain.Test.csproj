@@ -270,6 +270,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Operations\CompleteHandlingOnReactionRegistrationDependenciesOpTest.cs" />
+    <Compile Include="Operations\CompleteHandlingOnReactionRegistrationDependenciesOpTest.designer.cs">
+      <DependentUpon>CompleteHandlingOnReactionRegistrationDependenciesOpTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConsoleAbstraction.cs" />
     <Compile Include="Model\Classes\AnyDependenciesReactorDependencyTest.cs" />
     <Compile Include="Model\Classes\AnyDependenciesReactorDependencyTest.designer.cs">

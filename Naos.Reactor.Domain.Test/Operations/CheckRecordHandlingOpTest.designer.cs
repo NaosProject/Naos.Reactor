@@ -372,6 +372,7 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
                         A.Dummy<CheckRecordExistsOp>(),
+                        A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>(),
                         A.Dummy<EvaluateReactionRegistrationOp>(),
                         A.Dummy<EvaluateScheduleOp>(),
                         A.Dummy<ExecuteOpOnScheduleOp>(),

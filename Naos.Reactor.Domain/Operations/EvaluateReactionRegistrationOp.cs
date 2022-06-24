@@ -8,6 +8,7 @@ namespace Naos.Reactor.Domain
 {
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
+    using static System.FormattableString;
 
     /// <summary>
     /// Operation to evaluate a <see cref="ReactionRegistration"/> and get any applicable.
@@ -40,5 +41,19 @@ namespace Naos.Reactor.Domain
         /// Gets a value indicating whether [override required].  Treat the reaction dependencies as if everything is optional (e.g. if you are triggering a reaction).
         /// </summary>
         public bool OverrideRequired { get; private set; }
+
+        /// <summary>
+        /// Builds the handling concern to use for evaluating dependencies of a <see cref="ReactionRegistration"/>.
+        /// </summary>
+        /// <param name="reactionRegistration">The reaction registration.</param>
+        /// <param name="recordFilterEntry">The record filter entry.</param>
+        /// <returns>Handling concern to use.</returns>
+        public static string BuildHandlingConcern(
+            ReactionRegistration reactionRegistration,
+            RecordFilterEntry recordFilterEntry)
+        {
+            var concern = Invariant($"{reactionRegistration.Id}_{recordFilterEntry.Id}");
+            return concern;
+        }
     }
 }

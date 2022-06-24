@@ -70,7 +70,7 @@ namespace Naos.Reactor.Domain
                     stream.MustForOp(nameof(stream)).BeAssignableToType<ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>>();
                     var streamProtocol = (ISyncReturningProtocol<StandardTryHandleRecordOp, TryHandleRecordResult>)stream;
 
-                    var tryHandleConcern = Invariant($"{operation.ReactionRegistration.Id}_{recordFilterEntry.Id}");
+                    var tryHandleConcern = EvaluateReactionRegistrationOp.BuildHandlingConcern(operation.ReactionRegistration, recordFilterEntry);
 
                     var handledIds = new HashSet<long>(); // this is because we could get duplicates...
                     StreamRecord currentRecord = null;

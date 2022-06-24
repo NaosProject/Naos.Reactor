@@ -70,6 +70,12 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IReadOnlyDictionary<long, HandlingStatus>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CompleteHandlingOnReactionRegistrationDependenciesOp(
+                                 A.Dummy<ReactionRegistration>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<IReadOnlyCollection<HandlingStatus>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new DetailsReactionContext(
                                  A.Dummy<string>()));
 
