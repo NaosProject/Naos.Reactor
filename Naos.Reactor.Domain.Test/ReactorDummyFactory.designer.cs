@@ -118,6 +118,10 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<ISchedule>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new GetReactionRegistrationDependenciesStatusOp(
+                                 A.Dummy<ReactionRegistration>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ReactionEvent(
                                  A.Dummy<string>(),
                                  A.Dummy<string>(),

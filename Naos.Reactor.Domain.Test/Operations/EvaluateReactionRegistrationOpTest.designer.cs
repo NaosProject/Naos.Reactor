@@ -192,6 +192,7 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>(),
                         A.Dummy<EvaluateScheduleOp>(),
                         A.Dummy<ExecuteOpOnScheduleOp>(),
+                        A.Dummy<GetReactionRegistrationDependenciesStatusOp>(),
                         A.Dummy<RunReactorOp>(),
                         A.Dummy<RunScheduleOp>(),
                         A.Dummy<TriggerReactionRegistrationOp>(),
