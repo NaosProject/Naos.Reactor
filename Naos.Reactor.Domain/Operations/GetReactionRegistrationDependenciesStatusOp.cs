@@ -12,9 +12,9 @@ namespace Naos.Reactor.Domain
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Gets the reaction registration dependencies report.
+    /// Gets the reaction registration dependencies report, a map of single dependency entry identifiers to the record to handling status map.
     /// </summary>
-    public partial class GetReactionRegistrationDependenciesStatusOp : ReturningOperationBase<IDictionary<string, Dictionary<string, IReadOnlyDictionary<long, HandlingStatus>>>>
+    public partial class GetReactionRegistrationDependenciesStatusOp : ReturningOperationBase<IReadOnlyDictionary<string, IReadOnlyDictionary<long, HandlingStatus>>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetReactionRegistrationDependenciesStatusOp"/> class.

@@ -20,7 +20,7 @@ namespace Naos.Reactor.Domain
     /// <summary>
     /// Protocol for <see cref="EvaluateScheduleOp"/>.
     /// </summary>
-    public partial class GetReactionRegistrationDependenciesStatusProtocol : SyncSpecificReturningProtocolBase<GetReactionRegistrationDependenciesStatusOp, IDictionary<string, Dictionary<string, IReadOnlyDictionary<long, HandlingStatus>>>>
+    public partial class GetReactionRegistrationDependenciesStatusProtocol : SyncSpecificReturningProtocolBase<GetReactionRegistrationDependenciesStatusOp, IReadOnlyDictionary<string, IReadOnlyDictionary<long, HandlingStatus>>>
     {
         private readonly ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> reactionOperationStreamFactory;
 
@@ -38,7 +38,7 @@ namespace Naos.Reactor.Domain
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = NaosSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
-        public override IDictionary<string, Dictionary<string, IReadOnlyDictionary<long, HandlingStatus>>> Execute(
+        public override IReadOnlyDictionary<string, IReadOnlyDictionary<long, HandlingStatus>> Execute(
             GetReactionRegistrationDependenciesStatusOp operation)
         {
             operation.MustForArg(nameof(operation)).NotBeNull();
@@ -60,7 +60,7 @@ namespace Naos.Reactor.Domain
                     Invariant($"Only {typeof(RecordFilterReactorDependency)} is supported, {dependency?.GetType().ToStringReadable()}."));
             }
 
-            var result = new Dictionary<string, Dictionary<string, IReadOnlyDictionary<long, HandlingStatus>>>();
+            var result = new Dictionary<string, IReadOnlyDictionary<long, HandlingStatus>>();
             foreach (var recordFilterEntry in recordFilterDependency.Entries)
             {
                 var concern = EvaluateReactionRegistrationOp.BuildHandlingConcern(reactionRegistration, recordFilterEntry);
@@ -74,11 +74,7 @@ namespace Naos.Reactor.Domain
                       .BeAssignableToType<ISyncReturningProtocol<StandardGetHandlingStatusOp, IReadOnlyDictionary<long, HandlingStatus>>>();
                 var streamProtocol = (ISyncReturningProtocol<StandardGetHandlingStatusOp, IReadOnlyDictionary<long, HandlingStatus>>)stream;
                 var handlingStatusesForDependency = streamProtocol.Execute(getHandlingStatusOp);
-                var resultMap = new Dictionary<string, IReadOnlyDictionary<long, HandlingStatus>>
-                                {
-                                    { recordFilterEntry.Id, handlingStatusesForDependency },
-                                };
-                result.Add(stream.Name, resultMap);
+                result.Add(recordFilterEntry.Id, handlingStatusesForDependency);
             }
 
             return result;
