@@ -49,7 +49,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<CheckRecordHandlingOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.CheckRecordHandlingOp: StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, Concern = {systemUnderTest.Concern?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, RecordFilter = {systemUnderTest.RecordFilter?.ToString() ?? "<null>"}, HandlingFilter = {systemUnderTest.HandlingFilter?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.CheckRecordHandlingOp: StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, Concern = {systemUnderTest.Concern?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, RecordFilter = {systemUnderTest.RecordFilter?.ToString() ?? "<null>"}, HandlingFilter = {systemUnderTest.HandlingFilter?.ToString() ?? "<null>"}, ExpectedCount = {systemUnderTest.ExpectedCount?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
@@ -69,7 +69,8 @@ namespace Naos.Reactor.Domain.Test
                                              null,
                                              referenceObject.Concern,
                                              referenceObject.RecordFilter,
-                                             referenceObject.HandlingFilter);
+                                             referenceObject.HandlingFilter,
+                                             referenceObject.ExpectedCount);
 
                         return result;
                     },
@@ -88,7 +89,8 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.StreamRepresentation,
                                              null,
                                              referenceObject.RecordFilter,
-                                             referenceObject.HandlingFilter);
+                                             referenceObject.HandlingFilter,
+                                             referenceObject.ExpectedCount);
 
                         return result;
                     },
@@ -107,7 +109,8 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.StreamRepresentation,
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.RecordFilter,
-                                             referenceObject.HandlingFilter);
+                                             referenceObject.HandlingFilter,
+                                             referenceObject.ExpectedCount);
 
                         return result;
                     },
@@ -126,7 +129,8 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.StreamRepresentation,
                                              referenceObject.Concern,
                                              null,
-                                             referenceObject.HandlingFilter);
+                                             referenceObject.HandlingFilter,
+                                             referenceObject.ExpectedCount);
 
                         return result;
                     },
@@ -145,7 +149,8 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.StreamRepresentation,
                                              referenceObject.Concern,
                                              referenceObject.RecordFilter,
-                                             null);
+                                             null,
+                                             referenceObject.ExpectedCount);
 
                         return result;
                     },
@@ -168,7 +173,8 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.Concern,
                                                       referenceObject.RecordFilter,
-                                                      referenceObject.HandlingFilter),
+                                                      referenceObject.HandlingFilter,
+                                                      referenceObject.ExpectedCount),
                             ExpectedPropertyValue = referenceObject.StreamRepresentation,
                         };
 
@@ -190,7 +196,8 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.Concern,
                                                       referenceObject.RecordFilter,
-                                                      referenceObject.HandlingFilter),
+                                                      referenceObject.HandlingFilter,
+                                                      referenceObject.ExpectedCount),
                             ExpectedPropertyValue = referenceObject.Concern,
                         };
 
@@ -212,7 +219,8 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.Concern,
                                                       referenceObject.RecordFilter,
-                                                      referenceObject.HandlingFilter),
+                                                      referenceObject.HandlingFilter,
+                                                      referenceObject.ExpectedCount),
                             ExpectedPropertyValue = referenceObject.RecordFilter,
                         };
 
@@ -234,13 +242,37 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.Concern,
                                                       referenceObject.RecordFilter,
-                                                      referenceObject.HandlingFilter),
+                                                      referenceObject.HandlingFilter,
+                                                      referenceObject.ExpectedCount),
                             ExpectedPropertyValue = referenceObject.HandlingFilter,
                         };
 
                         return result;
                     },
                     PropertyName = "HandlingFilter",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<CheckRecordHandlingOp>
+                {
+                    Name = "ExpectedCount should return same 'expectedCount' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<CheckRecordHandlingOp>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<CheckRecordHandlingOp>
+                        {
+                            SystemUnderTest = new CheckRecordHandlingOp(
+                                                      referenceObject.StreamRepresentation,
+                                                      referenceObject.Concern,
+                                                      referenceObject.RecordFilter,
+                                                      referenceObject.HandlingFilter,
+                                                      referenceObject.ExpectedCount),
+                            ExpectedPropertyValue = referenceObject.ExpectedCount,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "ExpectedCount",
                 });
 
         private static readonly DeepCloneWithTestScenarios<CheckRecordHandlingOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CheckRecordHandlingOp>()
@@ -323,6 +355,26 @@ namespace Naos.Reactor.Domain.Test
 
                         return result;
                     },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<CheckRecordHandlingOp>
+                {
+                    Name = "DeepCloneWithExpectedCount should deep clone object and replace ExpectedCount with the provided expectedCount",
+                    WithPropertyName = "ExpectedCount",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<CheckRecordHandlingOp>();
+
+                        var referenceObject = A.Dummy<CheckRecordHandlingOp>().ThatIs(_ => !systemUnderTest.ExpectedCount.IsEqualTo(_.ExpectedCount));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<CheckRecordHandlingOp>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.ExpectedCount,
+                        };
+
+                        return result;
+                    },
                 });
 
         private static readonly CheckRecordHandlingOp ReferenceObjectForEquatableTestScenarios = A.Dummy<CheckRecordHandlingOp>();
@@ -339,7 +391,8 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.Concern,
                                 ReferenceObjectForEquatableTestScenarios.RecordFilter,
-                                ReferenceObjectForEquatableTestScenarios.HandlingFilter),
+                                ReferenceObjectForEquatableTestScenarios.HandlingFilter,
+                                ReferenceObjectForEquatableTestScenarios.ExpectedCount),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new CheckRecordHandlingOp[]
                     {
@@ -347,22 +400,32 @@ namespace Naos.Reactor.Domain.Test
                                 A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.StreamRepresentation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StreamRepresentation)).StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.Concern,
                                 ReferenceObjectForEquatableTestScenarios.RecordFilter,
-                                ReferenceObjectForEquatableTestScenarios.HandlingFilter),
+                                ReferenceObjectForEquatableTestScenarios.HandlingFilter,
+                                ReferenceObjectForEquatableTestScenarios.ExpectedCount),
                         new CheckRecordHandlingOp(
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.Concern.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Concern)).Concern,
                                 ReferenceObjectForEquatableTestScenarios.RecordFilter,
-                                ReferenceObjectForEquatableTestScenarios.HandlingFilter),
+                                ReferenceObjectForEquatableTestScenarios.HandlingFilter,
+                                ReferenceObjectForEquatableTestScenarios.ExpectedCount),
                         new CheckRecordHandlingOp(
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.Concern,
                                 A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.RecordFilter.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RecordFilter)).RecordFilter,
-                                ReferenceObjectForEquatableTestScenarios.HandlingFilter),
+                                ReferenceObjectForEquatableTestScenarios.HandlingFilter,
+                                ReferenceObjectForEquatableTestScenarios.ExpectedCount),
                         new CheckRecordHandlingOp(
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.Concern,
                                 ReferenceObjectForEquatableTestScenarios.RecordFilter,
-                                A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.HandlingFilter.IsEqualTo(ReferenceObjectForEquatableTestScenarios.HandlingFilter)).HandlingFilter),
+                                A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.HandlingFilter.IsEqualTo(ReferenceObjectForEquatableTestScenarios.HandlingFilter)).HandlingFilter,
+                                ReferenceObjectForEquatableTestScenarios.ExpectedCount),
+                        new CheckRecordHandlingOp(
+                                ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
+                                ReferenceObjectForEquatableTestScenarios.Concern,
+                                ReferenceObjectForEquatableTestScenarios.RecordFilter,
+                                ReferenceObjectForEquatableTestScenarios.HandlingFilter,
+                                A.Dummy<CheckRecordHandlingOp>().Whose(_ => !_.ExpectedCount.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ExpectedCount)).ExpectedCount),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -709,7 +772,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "StreamRepresentation", "Concern", "RecordFilter", "HandlingFilter" };
+                var propertyNames = new string[] { "StreamRepresentation", "Concern", "RecordFilter", "HandlingFilter", "ExpectedCount" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

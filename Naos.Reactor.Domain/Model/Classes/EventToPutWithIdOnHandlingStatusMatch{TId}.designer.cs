@@ -74,7 +74,8 @@ namespace Naos.Reactor.Domain
             var result = this.StatusToMatch.IsEqualTo(other.StatusToMatch)
                       && this.CompositeHandlingStatusMatchStrategy.IsEqualTo(other.CompositeHandlingStatusMatchStrategy)
                       && this.EventToPut.IsEqualTo(other.EventToPut)
-                      && this.ChainOfResponsibilityLinkMatchStrategy.IsEqualTo(other.ChainOfResponsibilityLinkMatchStrategy);
+                      && this.ChainOfResponsibilityLinkMatchStrategy.IsEqualTo(other.ChainOfResponsibilityLinkMatchStrategy)
+                      && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal);
 
             return result;
         }
@@ -88,6 +89,7 @@ namespace Naos.Reactor.Domain
             .Hash(this.CompositeHandlingStatusMatchStrategy)
             .Hash(this.EventToPut)
             .Hash(this.ChainOfResponsibilityLinkMatchStrategy)
+            .Hash(this.Details)
             .Value;
 
         /// <inheritdoc />
@@ -100,7 +102,8 @@ namespace Naos.Reactor.Domain
                                  this.StatusToMatch.DeepClone(),
                                  this.CompositeHandlingStatusMatchStrategy.DeepClone(),
                                  this.EventToPut?.DeepClone(),
-                                 this.ChainOfResponsibilityLinkMatchStrategy.DeepClone());
+                                 this.ChainOfResponsibilityLinkMatchStrategy.DeepClone(),
+                                 this.Details?.DeepClone());
 
             return result;
         }
@@ -133,7 +136,8 @@ namespace Naos.Reactor.Domain
                                  statusToMatch,
                                  this.CompositeHandlingStatusMatchStrategy.DeepClone(),
                                  this.EventToPut?.DeepClone(),
-                                 this.ChainOfResponsibilityLinkMatchStrategy.DeepClone());
+                                 this.ChainOfResponsibilityLinkMatchStrategy.DeepClone(),
+                                 this.Details?.DeepClone());
 
             return result;
         }
@@ -166,7 +170,8 @@ namespace Naos.Reactor.Domain
                                  this.StatusToMatch.DeepClone(),
                                  compositeHandlingStatusMatchStrategy,
                                  this.EventToPut?.DeepClone(),
-                                 this.ChainOfResponsibilityLinkMatchStrategy.DeepClone());
+                                 this.ChainOfResponsibilityLinkMatchStrategy.DeepClone(),
+                                 this.Details?.DeepClone());
 
             return result;
         }
@@ -199,7 +204,8 @@ namespace Naos.Reactor.Domain
                                  this.StatusToMatch.DeepClone(),
                                  this.CompositeHandlingStatusMatchStrategy.DeepClone(),
                                  eventToPut,
-                                 this.ChainOfResponsibilityLinkMatchStrategy.DeepClone());
+                                 this.ChainOfResponsibilityLinkMatchStrategy.DeepClone(),
+                                 this.Details?.DeepClone());
 
             return result;
         }
@@ -232,7 +238,42 @@ namespace Naos.Reactor.Domain
                                  this.StatusToMatch.DeepClone(),
                                  this.CompositeHandlingStatusMatchStrategy.DeepClone(),
                                  this.EventToPut?.DeepClone(),
-                                 chainOfResponsibilityLinkMatchStrategy);
+                                 chainOfResponsibilityLinkMatchStrategy,
+                                 this.Details?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Details" />.
+        /// </summary>
+        /// <param name="details">The new <see cref="Details" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="EventToPutWithIdOnHandlingStatusMatch{TId}" /> using the specified <paramref name="details" /> for <see cref="Details" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public EventToPutWithIdOnHandlingStatusMatch<TId> DeepCloneWithDetails(string details)
+        {
+            var result = new EventToPutWithIdOnHandlingStatusMatch<TId>(
+                                 this.StatusToMatch.DeepClone(),
+                                 this.CompositeHandlingStatusMatchStrategy.DeepClone(),
+                                 this.EventToPut?.DeepClone(),
+                                 this.ChainOfResponsibilityLinkMatchStrategy.DeepClone(),
+                                 details);
 
             return result;
         }
@@ -241,7 +282,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.{this.GetType().ToStringReadable()}: StatusToMatch = {this.StatusToMatch.ToString() ?? "<null>"}, CompositeHandlingStatusMatchStrategy = {this.CompositeHandlingStatusMatchStrategy.ToString() ?? "<null>"}, EventToPut = {this.EventToPut?.ToString() ?? "<null>"}, ChainOfResponsibilityLinkMatchStrategy = {this.ChainOfResponsibilityLinkMatchStrategy.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.{this.GetType().ToStringReadable()}: StatusToMatch = {this.StatusToMatch.ToString() ?? "<null>"}, CompositeHandlingStatusMatchStrategy = {this.CompositeHandlingStatusMatchStrategy.ToString() ?? "<null>"}, EventToPut = {this.EventToPut?.ToString() ?? "<null>"}, ChainOfResponsibilityLinkMatchStrategy = {this.ChainOfResponsibilityLinkMatchStrategy.ToString() ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

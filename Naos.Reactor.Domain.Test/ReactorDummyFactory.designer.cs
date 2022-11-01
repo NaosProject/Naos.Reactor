@@ -62,7 +62,8 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IStreamRepresentation>(),
                                  A.Dummy<string>(),
                                  A.Dummy<RecordFilter>(),
-                                 A.Dummy<HandlingFilter>()));
+                                 A.Dummy<HandlingFilter>(),
+                                 A.Dummy<int?>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CheckRecordHandlingResult(
@@ -103,7 +104,8 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<CompositeHandlingStatus>(),
                                  A.Dummy<CompositeHandlingStatusMatchStrategy>(),
                                  A.Dummy<EventToPutWithId<Version>>(),
-                                 A.Dummy<ChainOfResponsibilityLinkMatchStrategy>()));
+                                 A.Dummy<ChainOfResponsibilityLinkMatchStrategy>(),
+                                 A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new EventToPutWithIdOnRecordFilterMatch<Version>(
