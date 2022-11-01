@@ -56,6 +56,12 @@ namespace Naos.Reactor.Domain
             foreach (var checkRecordHandlingOp in operation.CheckRecordHandlingOps)
             {
                 var result = this.checkRecordHandlingProtocol.Execute(checkRecordHandlingOp);
+                if (checkRecordHandlingOp.ExpectedCount != null
+                 && result.InternalRecordIdToHandlingStatusMap.Count != checkRecordHandlingOp.ExpectedCount)
+                {
+                    throw new SelfCancelRunningExecutionException(Invariant($"Expected {checkRecordHandlingOp.ExpectedCount} statuses and only got back {result.InternalRecordIdToHandlingStatusMap.Count}."));
+                }
+
                 results.Add(checkRecordHandlingOp, result);
             }
 

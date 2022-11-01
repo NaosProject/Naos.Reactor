@@ -23,11 +23,13 @@ namespace Naos.Reactor.Domain
         /// <param name="concern">The concerns that require handling.</param>
         /// <param name="recordFilter">The filter for the records to examine.</param>
         /// <param name="handlingFilter">The filter for the handling entries to examine.</param>
+        /// <param name="expectedCount">Optional expected count of records to be found via filter.</param>
         public CheckRecordHandlingOp(
             IStreamRepresentation streamRepresentation,
             string concern,
             RecordFilter recordFilter,
-            HandlingFilter handlingFilter)
+            HandlingFilter handlingFilter,
+            int? expectedCount = null)
         {
             streamRepresentation.MustForArg(nameof(streamRepresentation)).NotBeNull();
             concern.MustForArg(nameof(concern)).NotBeNullNorWhiteSpace();
@@ -38,6 +40,7 @@ namespace Naos.Reactor.Domain
             this.Concern = concern;
             this.RecordFilter = recordFilter;
             this.HandlingFilter = handlingFilter;
+            this.ExpectedCount = expectedCount;
         }
 
         /// <summary>
@@ -60,5 +63,10 @@ namespace Naos.Reactor.Domain
         /// Gets the filter for the handling entries to examine.
         /// </summary>
         public HandlingFilter HandlingFilter { get; private set; }
+
+        /// <summary>
+        /// Gets the optional expected count of records to be found via filter.
+        /// </summary>
+        public int? ExpectedCount { get; private set; }
     }
 }
