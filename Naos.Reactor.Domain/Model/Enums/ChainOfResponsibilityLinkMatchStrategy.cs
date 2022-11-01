@@ -30,5 +30,10 @@ namespace Naos.Reactor.Domain
         ///  On a match, halt the evaluation of the chain of responsibility and complete handling.
         /// </summary>
         MatchHaltsEvaluationOfChainAndCompletes,
+
+        /// <summary>
+        ///  On a match, halt the evaluation of the chain of responsibility and fail handling.
+        /// </summary>
+        MatchHaltsEvaluationOfChainAndFails,
     }
 }

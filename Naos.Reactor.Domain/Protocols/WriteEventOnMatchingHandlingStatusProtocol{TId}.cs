@@ -111,10 +111,12 @@ namespace Naos.Reactor.Domain
                                 return;
                             case ChainOfResponsibilityLinkMatchStrategy.MatchHaltsEvaluationOfChainAndSelfCancels:
                                 Thread.Sleep(operation.WaitTimeBeforeRetry);
-                                throw new SelfCancelRunningExecutionException("Matched status and wrote record, terminating chain but not terminating execution.");
+                                throw new SelfCancelRunningExecutionException(Invariant($"Matched status and wrote record, terminating chain but not terminating execution; details: {eventToPutWithIdOnMatch.Details}."));
                             case ChainOfResponsibilityLinkMatchStrategy.Continue:
                                 // Keep going through links...
                                 break;
+                            case ChainOfResponsibilityLinkMatchStrategy.MatchHaltsEvaluationOfChainAndFails:
+                                throw new OpExecutionFailedException(Invariant($"Matched status and wrote record, terminating chain and failing execution; details: {eventToPutWithIdOnMatch.Details}."));
                             default:
                                 throw new NotSupportedException(Invariant($"Unsupported {nameof(ChainOfResponsibilityLinkMatchStrategy)}: {eventToPutWithIdOnMatch.ChainOfResponsibilityLinkMatchStrategy}."));
                         }

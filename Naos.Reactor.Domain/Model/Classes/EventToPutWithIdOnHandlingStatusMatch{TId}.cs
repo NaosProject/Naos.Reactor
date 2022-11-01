@@ -14,7 +14,7 @@ namespace Naos.Reactor.Domain
     /// A model to contain an <see cref="EventToPutWithId{TId}"/> to be used when specified match criteria is met around a <see cref="CompositeHandlingStatus"/>.
     /// </summary>
     /// <typeparam name="TId">The type of the identifier used in <see cref="EventToPut"/>.</typeparam>
-    public partial class EventToPutWithIdOnHandlingStatusMatch<TId> : IModelViaCodeGen, IChainOfResponsibilityLink
+    public partial class EventToPutWithIdOnHandlingStatusMatch<TId> : IModelViaCodeGen, IChainOfResponsibilityLink, IHaveDetails
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EventToPutWithIdOnHandlingStatusMatch{TId}"/> class.
@@ -23,11 +23,13 @@ namespace Naos.Reactor.Domain
         /// <param name="compositeHandlingStatusMatchStrategy">The <see cref="CompositeHandlingStatusMatchStrategy"/> to use with <paramref name="statusToMatch"/>.</param>
         /// <param name="eventToPut">The event to put on a match.</param>
         /// <param name="chainOfResponsibilityLinkMatchStrategy">OPTIONAL strategy override to determine what to do in the execution on a match; DEFAULT is Halt and Complete.</param>
+        /// <param name="details">Optional details about the link.</param>
         public EventToPutWithIdOnHandlingStatusMatch(
             CompositeHandlingStatus statusToMatch,
             CompositeHandlingStatusMatchStrategy compositeHandlingStatusMatchStrategy,
             EventToPutWithId<TId> eventToPut,
-            ChainOfResponsibilityLinkMatchStrategy chainOfResponsibilityLinkMatchStrategy = ChainOfResponsibilityLinkMatchStrategy.MatchHaltsEvaluationOfChainAndCompletes)
+            ChainOfResponsibilityLinkMatchStrategy chainOfResponsibilityLinkMatchStrategy = ChainOfResponsibilityLinkMatchStrategy.MatchHaltsEvaluationOfChainAndCompletes,
+            string details = null)
         {
             statusToMatch.MustForArg(nameof(statusToMatch)).NotBeEqualTo(CompositeHandlingStatus.Unknown);
             compositeHandlingStatusMatchStrategy.MustForArg(nameof(compositeHandlingStatusMatchStrategy)).NotBeEqualTo(CompositeHandlingStatusMatchStrategy.Unknown);
@@ -38,6 +40,7 @@ namespace Naos.Reactor.Domain
             this.CompositeHandlingStatusMatchStrategy = compositeHandlingStatusMatchStrategy;
             this.EventToPut = eventToPut;
             this.ChainOfResponsibilityLinkMatchStrategy = chainOfResponsibilityLinkMatchStrategy;
+            this.Details = details;
         }
 
         /// <summary>
@@ -57,5 +60,8 @@ namespace Naos.Reactor.Domain
 
         /// <inheritdoc />
         public ChainOfResponsibilityLinkMatchStrategy ChainOfResponsibilityLinkMatchStrategy { get; private set; }
+
+        /// <inheritdoc />
+        public string Details { get; private set; }
     }
 }
