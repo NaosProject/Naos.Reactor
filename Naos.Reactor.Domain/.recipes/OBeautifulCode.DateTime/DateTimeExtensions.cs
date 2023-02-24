@@ -174,7 +174,7 @@ namespace OBeautifulCode.DateTime.Recipes
         /// </summary>
         /// <param name="dateTime">The date time to use as a base.</param>
         /// <returns>The reduced version of the provided <see cref="DateTime" />.</returns>
-        public static DateTime RoundDownToEvenMinute(
+        public static DateTime RewindToEvenMinute(
             this DateTime dateTime)
         {
             var result = new DateTime(
@@ -190,6 +190,74 @@ namespace OBeautifulCode.DateTime.Recipes
         }
 
         /// <summary>
+        /// Rolls the time backwards to the provided <see cref="DateTime" /> to the next matching provided hour and minute.
+        /// </summary>
+        /// <param name="dateTime">The date time to use as a base.</param>
+        /// <param name="hour">The hour to advance to.</param>
+        /// <param name="minute">The minute to advance to.</param>
+        /// <returns>The advanced <see cref="DateTime" />.</returns>
+        public static DateTime RewindToNextMatchingHourAndMinute(
+            this DateTime dateTime, int hour, int minute)
+        {
+            if (hour < 0)
+            {
+                throw new ArgumentException(Invariant($"The hour of the day cannot be less than 0.  It was {hour}"));
+            }
+
+            if (hour > 23)
+            {
+                throw new ArgumentException(Invariant($"The hour of the day cannot be more than 23.  It was {hour}"));
+            }
+
+            if (minute < 0)
+            {
+                throw new ArgumentException(Invariant($"The minute of the hour cannot be less than 0.  It was {minute}"));
+            }
+
+            if (minute > 59)
+            {
+                throw new ArgumentException(Invariant($"The minute of the hour cannot be more than 59.  It was {minute}"));
+            }
+
+
+            var result = dateTime;
+            while (result.Hour != hour || result.Minute != minute || result == dateTime)
+            {
+                result = result.Subtract(TimeSpan.FromMinutes(1));
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Rolls the time backwards to the provided <see cref="DateTime" /> to the next matching provided minute.
+        /// </summary>
+        /// <param name="dateTime">The date time to use as a base.</param>
+        /// <param name="minute">The minute to advance to.</param>
+        /// <returns>The advanced <see cref="DateTime" />.</returns>
+        public static DateTime RewindToNextMatchingMinute(
+            this DateTime dateTime, int minute)
+        {
+            if (minute < 0)
+            {
+                throw new ArgumentException(Invariant($"The minute of the hour cannot be less than 0.  It was {minute}"));
+            }
+
+            if (minute > 59)
+            {
+                throw new ArgumentException(Invariant($"The minute of the hour cannot be more than 59.  It was {minute}"));
+            }
+
+            var result = dateTime;
+            while (result.Minute != minute || result == dateTime)
+            {
+                result = result.Subtract(TimeSpan.FromMinutes(1));
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Advances to the provided <see cref="DateTime" /> to the next matching provided hour and minute.
         /// </summary>
         /// <param name="dateTime">The date time to use as a base.</param>
@@ -199,6 +267,26 @@ namespace OBeautifulCode.DateTime.Recipes
         public static DateTime AdvanceToNextMatchingHourAndMinute(
             this DateTime dateTime, int hour, int minute)
         {
+            if (hour < 0)
+            {
+                throw new ArgumentException(Invariant($"The hour of the day cannot be less than 0.  It was {hour}"));
+            }
+
+            if (hour > 23)
+            {
+                throw new ArgumentException(Invariant($"The hour of the day cannot be more than 23.  It was {hour}"));
+            }
+
+            if (minute < 0)
+            {
+                throw new ArgumentException(Invariant($"The minute of the hour cannot be less than 0.  It was {minute}"));
+            }
+
+            if (minute > 59)
+            {
+                throw new ArgumentException(Invariant($"The minute of the hour cannot be more than 59.  It was {minute}"));
+            }
+
             var result = dateTime;
             while (result.Hour != hour || result.Minute != minute || result == dateTime)
             {
@@ -217,6 +305,16 @@ namespace OBeautifulCode.DateTime.Recipes
         public static DateTime AdvanceToNextMatchingMinute(
             this DateTime dateTime, int minute)
         {
+            if (minute < 0)
+            {
+                throw new ArgumentException(Invariant($"The minute of the hour cannot be less than 0.  It was {minute}"));
+            }
+
+            if (minute > 59)
+            {
+                throw new ArgumentException(Invariant($"The minute of the hour cannot be more than 59.  It was {minute}"));
+            }
+
             var result = dateTime;
             while (result.Minute != minute || result == dateTime)
             {
