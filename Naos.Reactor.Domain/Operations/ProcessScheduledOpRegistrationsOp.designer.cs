@@ -15,25 +15,24 @@ namespace Naos.Reactor.Domain
     using global::System.Globalization;
     using global::System.Linq;
 
-    using global::Naos.Cron;
-
     using global::OBeautifulCode.Cloning.Recipes;
     using global::OBeautifulCode.Equality.Recipes;
+    using global::OBeautifulCode.Representation.System;
     using global::OBeautifulCode.Type;
     using global::OBeautifulCode.Type.Recipes;
 
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class EvaluateScheduleOp : IModel<EvaluateScheduleOp>
+    public partial class ProcessScheduledOpRegistrationsOp : IModel<ProcessScheduledOpRegistrationsOp>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="EvaluateScheduleOp"/> are equal.
+        /// Determines whether two objects of type <see cref="ProcessScheduledOpRegistrationsOp"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(EvaluateScheduleOp left, EvaluateScheduleOp right)
+        public static bool operator ==(ProcessScheduledOpRegistrationsOp left, ProcessScheduledOpRegistrationsOp right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -51,15 +50,15 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="EvaluateScheduleOp"/> are not equal.
+        /// Determines whether two objects of type <see cref="ProcessScheduledOpRegistrationsOp"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(EvaluateScheduleOp left, EvaluateScheduleOp right) => !(left == right);
+        public static bool operator !=(ProcessScheduledOpRegistrationsOp left, ProcessScheduledOpRegistrationsOp right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(EvaluateScheduleOp other)
+        public bool Equals(ProcessScheduledOpRegistrationsOp other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -71,31 +70,29 @@ namespace Naos.Reactor.Domain
                 return false;
             }
 
-            var result = this.Schedule.IsEqualTo(other.Schedule)
-                      && this.EvaluationTimestampUtc.IsEqualTo(other.EvaluationTimestampUtc)
-                      && this.PreviousExecutionTimestampUtc.IsEqualTo(other.PreviousExecutionTimestampUtc);
+            var result = this.DegreesOfParallelismForDependencyChecks.IsEqualTo(other.DegreesOfParallelismForDependencyChecks)
+                      && this.DeprecatedIdentifierType.IsEqualTo(other.DeprecatedIdentifierType);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as EvaluateScheduleOp);
+        public override bool Equals(object obj) => this == (obj as ProcessScheduledOpRegistrationsOp);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Schedule)
-            .Hash(this.EvaluationTimestampUtc)
-            .Hash(this.PreviousExecutionTimestampUtc)
+            .Hash(this.DegreesOfParallelismForDependencyChecks)
+            .Hash(this.DeprecatedIdentifierType)
             .Value;
 
         /// <inheritdoc />
-        public new EvaluateScheduleOp DeepClone() => (EvaluateScheduleOp)this.DeepCloneInternal();
+        public new ProcessScheduledOpRegistrationsOp DeepClone() => (ProcessScheduledOpRegistrationsOp)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Schedule" />.
+        /// Deep clones this object with a new <see cref="DegreesOfParallelismForDependencyChecks" />.
         /// </summary>
-        /// <param name="schedule">The new <see cref="Schedule" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EvaluateScheduleOp" /> using the specified <paramref name="schedule" /> for <see cref="Schedule" /> and a deep clone of every other property.</returns>
+        /// <param name="degreesOfParallelismForDependencyChecks">The new <see cref="DegreesOfParallelismForDependencyChecks" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ProcessScheduledOpRegistrationsOp" /> using the specified <paramref name="degreesOfParallelismForDependencyChecks" /> for <see cref="DegreesOfParallelismForDependencyChecks" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -113,21 +110,20 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EvaluateScheduleOp DeepCloneWithSchedule(ISchedule schedule)
+        public ProcessScheduledOpRegistrationsOp DeepCloneWithDegreesOfParallelismForDependencyChecks(int degreesOfParallelismForDependencyChecks)
         {
-            var result = new EvaluateScheduleOp(
-                                 schedule,
-                                 this.EvaluationTimestampUtc.DeepClone(),
-                                 this.PreviousExecutionTimestampUtc?.DeepClone());
+            var result = new ProcessScheduledOpRegistrationsOp(
+                                 degreesOfParallelismForDependencyChecks,
+                                 this.DeprecatedIdentifierType?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="EvaluationTimestampUtc" />.
+        /// Deep clones this object with a new <see cref="DeprecatedIdentifierType" />.
         /// </summary>
-        /// <param name="evaluationTimestampUtc">The new <see cref="EvaluationTimestampUtc" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EvaluateScheduleOp" /> using the specified <paramref name="evaluationTimestampUtc" /> for <see cref="EvaluationTimestampUtc" /> and a deep clone of every other property.</returns>
+        /// <param name="deprecatedIdentifierType">The new <see cref="DeprecatedIdentifierType" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ProcessScheduledOpRegistrationsOp" /> using the specified <paramref name="deprecatedIdentifierType" /> for <see cref="DeprecatedIdentifierType" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -145,44 +141,11 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EvaluateScheduleOp DeepCloneWithEvaluationTimestampUtc(DateTime evaluationTimestampUtc)
+        public ProcessScheduledOpRegistrationsOp DeepCloneWithDeprecatedIdentifierType(TypeRepresentation deprecatedIdentifierType)
         {
-            var result = new EvaluateScheduleOp(
-                                 this.Schedule?.DeepClone(),
-                                 evaluationTimestampUtc,
-                                 this.PreviousExecutionTimestampUtc?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="PreviousExecutionTimestampUtc" />.
-        /// </summary>
-        /// <param name="previousExecutionTimestampUtc">The new <see cref="PreviousExecutionTimestampUtc" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="EvaluateScheduleOp" /> using the specified <paramref name="previousExecutionTimestampUtc" /> for <see cref="PreviousExecutionTimestampUtc" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public EvaluateScheduleOp DeepCloneWithPreviousExecutionTimestampUtc(DateTime? previousExecutionTimestampUtc)
-        {
-            var result = new EvaluateScheduleOp(
-                                 this.Schedule?.DeepClone(),
-                                 this.EvaluationTimestampUtc.DeepClone(),
-                                 previousExecutionTimestampUtc);
+            var result = new ProcessScheduledOpRegistrationsOp(
+                                 this.DegreesOfParallelismForDependencyChecks.DeepClone(),
+                                 deprecatedIdentifierType);
 
             return result;
         }
@@ -191,10 +154,9 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override OperationBase DeepCloneInternal()
         {
-            var result = new EvaluateScheduleOp(
-                                 this.Schedule?.DeepClone(),
-                                 this.EvaluationTimestampUtc.DeepClone(),
-                                 this.PreviousExecutionTimestampUtc?.DeepClone());
+            var result = new ProcessScheduledOpRegistrationsOp(
+                                 this.DegreesOfParallelismForDependencyChecks.DeepClone(),
+                                 this.DeprecatedIdentifierType?.DeepClone());
 
             return result;
         }
@@ -203,7 +165,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.EvaluateScheduleOp: Schedule = {this.Schedule?.ToString() ?? "<null>"}, EvaluationTimestampUtc = {this.EvaluationTimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, PreviousExecutionTimestampUtc = {this.PreviousExecutionTimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.ProcessScheduledOpRegistrationsOp: DegreesOfParallelismForDependencyChecks = {this.DegreesOfParallelismForDependencyChecks.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DeprecatedIdentifierType = {this.DeprecatedIdentifierType?.ToString() ?? "<null>"}.");
 
             return result;
         }

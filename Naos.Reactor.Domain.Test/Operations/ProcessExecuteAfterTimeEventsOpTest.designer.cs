@@ -33,117 +33,152 @@ namespace Naos.Reactor.Domain.Test
 
     using static global::System.FormattableString;
 
-    public static partial class TriggerReactionRegistrationOpTest
+    public static partial class ProcessExecuteAfterTimeEventsOpTest
     {
-        private static readonly StringRepresentationTestScenarios<TriggerReactionRegistrationOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<TriggerReactionRegistrationOp>()
+        private static readonly StringRepresentationTestScenarios<ProcessScheduledExecuteOpRequestedEventsOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<ProcessScheduledExecuteOpRequestedEventsOp>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<TriggerReactionRegistrationOp>
+                new StringRepresentationTestScenario<ProcessScheduledExecuteOpRequestedEventsOp>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<TriggerReactionRegistrationOp>();
+                        var systemUnderTest = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<TriggerReactionRegistrationOp>
+                        var result = new SystemUnderTestExpectedStringRepresentation<ProcessScheduledExecuteOpRequestedEventsOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.TriggerReactionRegistrationOp: ReactionRegistrationId = {systemUnderTest.ReactionRegistrationId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.ProcessExecuteAfterTimeEventsOp: DegreesOfParallelismForDependencyChecks = {systemUnderTest.DegreesOfParallelismForDependencyChecks.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DeprecatedIdentifierType = {systemUnderTest.DeprecatedIdentifierType?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<TriggerReactionRegistrationOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<TriggerReactionRegistrationOp>()
+        private static readonly ConstructorArgumentValidationTestScenarios<ProcessScheduledExecuteOpRequestedEventsOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ProcessScheduledExecuteOpRequestedEventsOp>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<TriggerReactionRegistrationOp>
+                new ConstructorArgumentValidationTestScenario<ProcessScheduledExecuteOpRequestedEventsOp>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'reactionRegistrationId' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'deprecatedIdentifierType' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var result = new TriggerReactionRegistrationOp(
+                        var referenceObject = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
+
+                        var result = new ProcessScheduledExecuteOpRequestedEventsOp(
+                                             referenceObject.DegreesOfParallelismForDependencyChecks,
                                              null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "reactionRegistrationId", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<TriggerReactionRegistrationOp>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'reactionRegistrationId' is white space scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var result = new TriggerReactionRegistrationOp(
-                                             Invariant($"  {Environment.NewLine}  "));
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "reactionRegistrationId", "white space", },
+                    ExpectedExceptionMessageContains = new[] { "deprecatedIdentifierType", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<TriggerReactionRegistrationOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<TriggerReactionRegistrationOp>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<ProcessScheduledExecuteOpRequestedEventsOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ProcessScheduledExecuteOpRequestedEventsOp>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<TriggerReactionRegistrationOp>
+                new ConstructorPropertyAssignmentTestScenario<ProcessScheduledExecuteOpRequestedEventsOp>
                 {
-                    Name = "ReactionRegistrationId should return same 'reactionRegistrationId' parameter passed to constructor when getting",
+                    Name = "DegreesOfParallelismForDependencyChecks should return same 'degreesOfParallelismForDependencyChecks' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<TriggerReactionRegistrationOp>();
+                        var referenceObject = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<TriggerReactionRegistrationOp>
+                        var result = new SystemUnderTestExpectedPropertyValue<ProcessScheduledExecuteOpRequestedEventsOp>
                         {
-                            SystemUnderTest = new TriggerReactionRegistrationOp(
-                                                      referenceObject.ReactionRegistrationId),
-                            ExpectedPropertyValue = referenceObject.ReactionRegistrationId,
+                            SystemUnderTest = new ProcessScheduledExecuteOpRequestedEventsOp(
+                                                      referenceObject.DegreesOfParallelismForDependencyChecks,
+                                                      referenceObject.DeprecatedIdentifierType),
+                            ExpectedPropertyValue = referenceObject.DegreesOfParallelismForDependencyChecks,
                         };
 
                         return result;
                     },
-                    PropertyName = "ReactionRegistrationId",
+                    PropertyName = "DegreesOfParallelismForDependencyChecks",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<ProcessScheduledExecuteOpRequestedEventsOp>
+                {
+                    Name = "DeprecatedIdentifierType should return same 'deprecatedIdentifierType' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<ProcessScheduledExecuteOpRequestedEventsOp>
+                        {
+                            SystemUnderTest = new ProcessScheduledExecuteOpRequestedEventsOp(
+                                                      referenceObject.DegreesOfParallelismForDependencyChecks,
+                                                      referenceObject.DeprecatedIdentifierType),
+                            ExpectedPropertyValue = referenceObject.DeprecatedIdentifierType,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "DeprecatedIdentifierType",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<TriggerReactionRegistrationOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<TriggerReactionRegistrationOp>()
+        private static readonly DeepCloneWithTestScenarios<ProcessScheduledExecuteOpRequestedEventsOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ProcessScheduledExecuteOpRequestedEventsOp>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<TriggerReactionRegistrationOp>
+                new DeepCloneWithTestScenario<ProcessScheduledExecuteOpRequestedEventsOp>
                 {
-                    Name = "DeepCloneWithReactionRegistrationId should deep clone object and replace ReactionRegistrationId with the provided reactionRegistrationId",
-                    WithPropertyName = "ReactionRegistrationId",
+                    Name = "DeepCloneWithDegreesOfParallelismForDependencyChecks should deep clone object and replace DegreesOfParallelismForDependencyChecks with the provided degreesOfParallelismForDependencyChecks",
+                    WithPropertyName = "DegreesOfParallelismForDependencyChecks",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<TriggerReactionRegistrationOp>();
+                        var systemUnderTest = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
 
-                        var referenceObject = A.Dummy<TriggerReactionRegistrationOp>().ThatIs(_ => !systemUnderTest.ReactionRegistrationId.IsEqualTo(_.ReactionRegistrationId));
+                        var referenceObject = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>().ThatIs(_ => !systemUnderTest.DegreesOfParallelismForDependencyChecks.IsEqualTo(_.DegreesOfParallelismForDependencyChecks));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<TriggerReactionRegistrationOp>
+                        var result = new SystemUnderTestDeepCloneWithValue<ProcessScheduledExecuteOpRequestedEventsOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.ReactionRegistrationId,
+                            DeepCloneWithValue = referenceObject.DegreesOfParallelismForDependencyChecks,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<ProcessScheduledExecuteOpRequestedEventsOp>
+                {
+                    Name = "DeepCloneWithDeprecatedIdentifierType should deep clone object and replace DeprecatedIdentifierType with the provided deprecatedIdentifierType",
+                    WithPropertyName = "DeprecatedIdentifierType",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
+
+                        var referenceObject = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>().ThatIs(_ => !systemUnderTest.DeprecatedIdentifierType.IsEqualTo(_.DeprecatedIdentifierType));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<ProcessScheduledExecuteOpRequestedEventsOp>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.DeprecatedIdentifierType,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly TriggerReactionRegistrationOp ReferenceObjectForEquatableTestScenarios = A.Dummy<TriggerReactionRegistrationOp>();
+        private static readonly ProcessScheduledExecuteOpRequestedEventsOp ReferenceObjectForEquatableTestScenarios = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
 
-        private static readonly EquatableTestScenarios<TriggerReactionRegistrationOp> EquatableTestScenarios = new EquatableTestScenarios<TriggerReactionRegistrationOp>()
+        private static readonly EquatableTestScenarios<ProcessScheduledExecuteOpRequestedEventsOp> EquatableTestScenarios = new EquatableTestScenarios<ProcessScheduledExecuteOpRequestedEventsOp>()
             .AddScenario(() =>
-                new EquatableTestScenario<TriggerReactionRegistrationOp>
+                new EquatableTestScenario<ProcessScheduledExecuteOpRequestedEventsOp>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new TriggerReactionRegistrationOp[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ProcessScheduledExecuteOpRequestedEventsOp[]
                     {
-                        new TriggerReactionRegistrationOp(
-                                ReferenceObjectForEquatableTestScenarios.ReactionRegistrationId),
+                        new ProcessScheduledExecuteOpRequestedEventsOp(
+                                ReferenceObjectForEquatableTestScenarios.DegreesOfParallelismForDependencyChecks,
+                                ReferenceObjectForEquatableTestScenarios.DeprecatedIdentifierType),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new TriggerReactionRegistrationOp[]
+                    ObjectsThatAreNotEqualToReferenceObject = new ProcessScheduledExecuteOpRequestedEventsOp[]
                     {
-                        new TriggerReactionRegistrationOp(
-                                A.Dummy<TriggerReactionRegistrationOp>().Whose(_ => !_.ReactionRegistrationId.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ReactionRegistrationId)).ReactionRegistrationId),
+                        new ProcessScheduledExecuteOpRequestedEventsOp(
+                                A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>().Whose(_ => !_.DegreesOfParallelismForDependencyChecks.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DegreesOfParallelismForDependencyChecks)).DegreesOfParallelismForDependencyChecks,
+                                ReferenceObjectForEquatableTestScenarios.DeprecatedIdentifierType),
+                        new ProcessScheduledExecuteOpRequestedEventsOp(
+                                ReferenceObjectForEquatableTestScenarios.DegreesOfParallelismForDependencyChecks,
+                                A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>().Whose(_ => !_.DeprecatedIdentifierType.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DeprecatedIdentifierType)).DeprecatedIdentifierType),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -155,12 +190,12 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<CheckRecordExistsOp>(),
                         A.Dummy<CheckRecordHandlingOp>(),
                         A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>(),
+                        A.Dummy<ComputeNextExecutionFromScheduleOp>(),
                         A.Dummy<EvaluateReactionRegistrationOp>(),
-                        A.Dummy<EvaluateScheduleOp>(),
-                        A.Dummy<ExecuteOpOnScheduleOp>(),
                         A.Dummy<GetReactionRegistrationDependenciesStatusOp>(),
+                        A.Dummy<ProcessScheduledOpRegistrationsOp>(),
                         A.Dummy<RunReactorOp>(),
-                        A.Dummy<RunScheduleOp>(),
+                        A.Dummy<TriggerReactionRegistrationOp>(),
                         A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>(),
                         A.Dummy<WriteEventOnMatchingRecordFilterOp<Version>>(),
                         A.Dummy<WriteEventsWithUtcTimestampIdOp>(),
@@ -185,12 +220,12 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void TriggerReactionRegistrationOp___Should_implement_IModel_of_TriggerReactionRegistrationOp___When_reflecting()
+            public static void ProcessExecuteAfterTimeEventsOp___Should_implement_IModel_of_ProcessExecuteAfterTimeEventsOp___When_reflecting()
             {
                 // Arrange
-                var type = typeof(TriggerReactionRegistrationOp);
+                var type = typeof(ProcessScheduledExecuteOpRequestedEventsOp);
 
-                var expectedModelMethods = typeof(IModel<TriggerReactionRegistrationOp>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<ProcessScheduledExecuteOpRequestedEventsOp>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -200,7 +235,7 @@ namespace Naos.Reactor.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<TriggerReactionRegistrationOp>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<ProcessScheduledExecuteOpRequestedEventsOp>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -218,10 +253,10 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void TriggerReactionRegistrationOp___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void ProcessExecuteAfterTimeEventsOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(TriggerReactionRegistrationOp);
+                var type = typeof(ProcessScheduledExecuteOpRequestedEventsOp);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -401,10 +436,10 @@ namespace Naos.Reactor.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<TriggerReactionRegistrationOp>();
+                var systemUnderTest = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
 
                 // Act
-                var actual = (TriggerReactionRegistrationOp)systemUnderTest.Clone();
+                var actual = (ProcessScheduledExecuteOpRequestedEventsOp)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -428,7 +463,7 @@ namespace Naos.Reactor.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<TriggerReactionRegistrationOp>();
+                var systemUnderTest = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -436,6 +471,18 @@ namespace Naos.Reactor.Domain.Test
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
+
+                if (systemUnderTest.DeprecatedIdentifierType == null)
+                {
+                    actual.DeprecatedIdentifierType.AsTest().Must().BeNull();
+                }
+                else if (!actual.DeprecatedIdentifierType.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.DeprecatedIdentifierType.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.DeprecatedIdentifierType);
+                }
             }
 
             [Fact]
@@ -454,7 +501,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "ReactionRegistrationId" };
+                var propertyNames = new string[] { "DegreesOfParallelismForDependencyChecks", "DeprecatedIdentifierType" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -467,12 +514,12 @@ namespace Naos.Reactor.Domain.Test
                     }
 
                     // Act
-                    var actual = (TriggerReactionRegistrationOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (ProcessScheduledExecuteOpRequestedEventsOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(TriggerReactionRegistrationOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(ProcessScheduledExecuteOpRequestedEventsOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -534,7 +581,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<TriggerReactionRegistrationOp>();
+                var expected = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -563,7 +610,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<TriggerReactionRegistrationOp>();
+                var expected = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -592,7 +639,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<TriggerReactionRegistrationOp>();
+                var expected = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -621,7 +668,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<TriggerReactionRegistrationOp>();
+                var expected = A.Dummy<ProcessScheduledExecuteOpRequestedEventsOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -655,8 +702,8 @@ namespace Naos.Reactor.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                TriggerReactionRegistrationOp systemUnderTest1 = null;
-                TriggerReactionRegistrationOp systemUnderTest2 = null;
+                ProcessScheduledExecuteOpRequestedEventsOp systemUnderTest1 = null;
+                ProcessScheduledExecuteOpRequestedEventsOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -686,7 +733,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    TriggerReactionRegistrationOp systemUnderTest = null;
+                    ProcessScheduledExecuteOpRequestedEventsOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -835,8 +882,8 @@ namespace Naos.Reactor.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                TriggerReactionRegistrationOp systemUnderTest1 = null;
-                TriggerReactionRegistrationOp systemUnderTest2 = null;
+                ProcessScheduledExecuteOpRequestedEventsOp systemUnderTest1 = null;
+                ProcessScheduledExecuteOpRequestedEventsOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -866,7 +913,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    TriggerReactionRegistrationOp systemUnderTest = null;
+                    ProcessScheduledExecuteOpRequestedEventsOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1298,14 +1345,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_TriggerReactionRegistrationOp___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_ProcessExecuteAfterTimeEventsOp___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    TriggerReactionRegistrationOp systemUnderTest = null;
+                    ProcessScheduledExecuteOpRequestedEventsOp systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1329,7 +1376,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_TriggerReactionRegistrationOp___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_ProcessExecuteAfterTimeEventsOp___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1357,7 +1404,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_TriggerReactionRegistrationOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_ProcessExecuteAfterTimeEventsOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1385,7 +1432,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_TriggerReactionRegistrationOp___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_ProcessExecuteAfterTimeEventsOp___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1413,7 +1460,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_TriggerReactionRegistrationOp___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_ProcessExecuteAfterTimeEventsOp___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

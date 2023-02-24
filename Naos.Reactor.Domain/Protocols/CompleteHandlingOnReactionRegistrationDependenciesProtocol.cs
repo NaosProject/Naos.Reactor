@@ -20,7 +20,7 @@ namespace Naos.Reactor.Domain
     using static System.FormattableString;
 
     /// <summary>
-    /// Protocol for <see cref="EvaluateScheduleOp"/>.
+    /// Protocol for <see cref="ComputeNextExecutionFromScheduleOp"/>.
     /// </summary>
     public partial class CompleteHandlingOnReactionRegistrationDependenciesProtocol : SyncSpecificVoidProtocolBase<CompleteHandlingOnReactionRegistrationDependenciesOp>
     {

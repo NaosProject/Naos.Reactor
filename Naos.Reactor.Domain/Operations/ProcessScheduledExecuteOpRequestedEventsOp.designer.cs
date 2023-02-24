@@ -24,15 +24,15 @@ namespace Naos.Reactor.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class RunScheduleOp : IModel<RunScheduleOp>
+    public partial class ProcessScheduledExecuteOpRequestedEventsOp : IModel<ProcessScheduledExecuteOpRequestedEventsOp>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="RunScheduleOp"/> are equal.
+        /// Determines whether two objects of type <see cref="ProcessScheduledExecuteOpRequestedEventsOp"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(RunScheduleOp left, RunScheduleOp right)
+        public static bool operator ==(ProcessScheduledExecuteOpRequestedEventsOp left, ProcessScheduledExecuteOpRequestedEventsOp right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -50,15 +50,15 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="RunScheduleOp"/> are not equal.
+        /// Determines whether two objects of type <see cref="ProcessScheduledExecuteOpRequestedEventsOp"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(RunScheduleOp left, RunScheduleOp right) => !(left == right);
+        public static bool operator !=(ProcessScheduledExecuteOpRequestedEventsOp left, ProcessScheduledExecuteOpRequestedEventsOp right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(RunScheduleOp other)
+        public bool Equals(ProcessScheduledExecuteOpRequestedEventsOp other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -70,27 +70,29 @@ namespace Naos.Reactor.Domain
                 return false;
             }
 
-            var result = this.DeprecatedIdentifierType.IsEqualTo(other.DeprecatedIdentifierType);
+            var result = this.DegreesOfParallelismForDependencyChecks.IsEqualTo(other.DegreesOfParallelismForDependencyChecks)
+                      && this.DeprecatedIdentifierType.IsEqualTo(other.DeprecatedIdentifierType);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as RunScheduleOp);
+        public override bool Equals(object obj) => this == (obj as ProcessScheduledExecuteOpRequestedEventsOp);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
+            .Hash(this.DegreesOfParallelismForDependencyChecks)
             .Hash(this.DeprecatedIdentifierType)
             .Value;
 
         /// <inheritdoc />
-        public new RunScheduleOp DeepClone() => (RunScheduleOp)this.DeepCloneInternal();
+        public new ProcessScheduledExecuteOpRequestedEventsOp DeepClone() => (ProcessScheduledExecuteOpRequestedEventsOp)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="DeprecatedIdentifierType" />.
+        /// Deep clones this object with a new <see cref="DegreesOfParallelismForDependencyChecks" />.
         /// </summary>
-        /// <param name="deprecatedIdentifierType">The new <see cref="DeprecatedIdentifierType" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="RunScheduleOp" /> using the specified <paramref name="deprecatedIdentifierType" /> for <see cref="DeprecatedIdentifierType" /> and a deep clone of every other property.</returns>
+        /// <param name="degreesOfParallelismForDependencyChecks">The new <see cref="DegreesOfParallelismForDependencyChecks" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ProcessScheduledExecuteOpRequestedEventsOp" /> using the specified <paramref name="degreesOfParallelismForDependencyChecks" /> for <see cref="DegreesOfParallelismForDependencyChecks" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -108,9 +110,41 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public RunScheduleOp DeepCloneWithDeprecatedIdentifierType(TypeRepresentation deprecatedIdentifierType)
+        public ProcessScheduledExecuteOpRequestedEventsOp DeepCloneWithDegreesOfParallelismForDependencyChecks(int degreesOfParallelismForDependencyChecks)
         {
-            var result = new RunScheduleOp(
+            var result = new ProcessScheduledExecuteOpRequestedEventsOp(
+                                 degreesOfParallelismForDependencyChecks,
+                                 this.DeprecatedIdentifierType?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="DeprecatedIdentifierType" />.
+        /// </summary>
+        /// <param name="deprecatedIdentifierType">The new <see cref="DeprecatedIdentifierType" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ProcessScheduledExecuteOpRequestedEventsOp" /> using the specified <paramref name="deprecatedIdentifierType" /> for <see cref="DeprecatedIdentifierType" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public ProcessScheduledExecuteOpRequestedEventsOp DeepCloneWithDeprecatedIdentifierType(TypeRepresentation deprecatedIdentifierType)
+        {
+            var result = new ProcessScheduledExecuteOpRequestedEventsOp(
+                                 this.DegreesOfParallelismForDependencyChecks.DeepClone(),
                                  deprecatedIdentifierType);
 
             return result;
@@ -120,7 +154,8 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override OperationBase DeepCloneInternal()
         {
-            var result = new RunScheduleOp(
+            var result = new ProcessScheduledExecuteOpRequestedEventsOp(
+                                 this.DegreesOfParallelismForDependencyChecks.DeepClone(),
                                  this.DeprecatedIdentifierType?.DeepClone());
 
             return result;
@@ -130,7 +165,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.RunScheduleOp: DeprecatedIdentifierType = {this.DeprecatedIdentifierType?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.ProcessScheduledExecuteOpRequestedEventsOp: DegreesOfParallelismForDependencyChecks = {this.DegreesOfParallelismForDependencyChecks.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DeprecatedIdentifierType = {this.DeprecatedIdentifierType?.ToString() ?? "<null>"}.");
 
             return result;
         }

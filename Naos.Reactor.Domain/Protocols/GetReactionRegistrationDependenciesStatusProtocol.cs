@@ -18,7 +18,7 @@ namespace Naos.Reactor.Domain
     using static System.FormattableString;
 
     /// <summary>
-    /// Protocol for <see cref="EvaluateScheduleOp"/>.
+    /// Protocol for <see cref="GetReactionRegistrationDependenciesStatusOp"/>.
     /// </summary>
     public partial class GetReactionRegistrationDependenciesStatusProtocol : SyncSpecificReturningProtocolBase<GetReactionRegistrationDependenciesStatusOp, IReadOnlyDictionary<string, IReadOnlyDictionary<long, HandlingStatus>>>
     {

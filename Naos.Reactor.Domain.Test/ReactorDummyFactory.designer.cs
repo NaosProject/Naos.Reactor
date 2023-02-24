@@ -77,6 +77,11 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IReadOnlyCollection<HandlingStatus>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ComputeNextExecutionFromScheduleOp(
+                                 A.Dummy<ISchedule>(),
+                                 A.Dummy<DateTime?>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new DetailsReactionContext(
                                  A.Dummy<string>()));
 
@@ -84,12 +89,6 @@ namespace Naos.Reactor.Domain.Test
                 () => new EvaluateReactionRegistrationOp(
                                  A.Dummy<ReactionRegistration>(),
                                  A.Dummy<bool>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new EvaluateScheduleOp(
-                                 A.Dummy<ISchedule>(),
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<DateTime?>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new EventToPutWithId<Version>(
@@ -114,14 +113,18 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<ChainOfResponsibilityLinkMatchStrategy>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ExecuteOpOnScheduleOp(
-                                 A.Dummy<string>(),
-                                 A.Dummy<IVoidOperation>(),
-                                 A.Dummy<ISchedule>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GetReactionRegistrationDependenciesStatusOp(
                                  A.Dummy<ReactionRegistration>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ProcessScheduledExecuteOpRequestedEventsOp(
+                                 A.Dummy<int>(),
+                                 A.Dummy<TypeRepresentation>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ProcessScheduledOpRegistrationsOp(
+                                 A.Dummy<int>(),
+                                 A.Dummy<TypeRepresentation>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ReactionEvent(
@@ -158,16 +161,23 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<TypeRepresentation>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new RunScheduleOp(
-                                 A.Dummy<TypeRepresentation>()));
+                () => new ScheduledExecuteOpRequestedEvent<CompleteHandlingOnReactionRegistrationDependenciesOp>(
+                                 A.Dummy<string>(),
+                                 A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ScheduledExecutionEvent(
+                () => new ScheduledOpRegistration(
                                  A.Dummy<string>(),
                                  A.Dummy<IVoidOperation>(),
                                  A.Dummy<ISchedule>(),
-                                 A.Dummy<DateTime?>(),
+                                 A.Dummy<IStreamRepresentation>(),
                                  A.Dummy<DateTime>(),
+                                 A.Dummy<ExistingScheduledOpStrategy>(),
+                                 A.Dummy<string>(),
                                  A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(

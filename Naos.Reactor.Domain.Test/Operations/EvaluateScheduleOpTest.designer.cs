@@ -37,37 +37,36 @@ namespace Naos.Reactor.Domain.Test
 
     public static partial class EvaluateScheduleOpTest
     {
-        private static readonly StringRepresentationTestScenarios<EvaluateScheduleOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<EvaluateScheduleOp>()
+        private static readonly StringRepresentationTestScenarios<ComputeNextExecutionFromScheduleOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<ComputeNextExecutionFromScheduleOp>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<EvaluateScheduleOp>
+                new StringRepresentationTestScenario<ComputeNextExecutionFromScheduleOp>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<EvaluateScheduleOp>();
+                        var systemUnderTest = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<EvaluateScheduleOp>
+                        var result = new SystemUnderTestExpectedStringRepresentation<ComputeNextExecutionFromScheduleOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.EvaluateScheduleOp: Schedule = {systemUnderTest.Schedule?.ToString() ?? "<null>"}, EvaluationTimestampUtc = {systemUnderTest.EvaluationTimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, PreviousExecutionTimestampUtc = {systemUnderTest.PreviousExecutionTimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.EvaluateScheduleOp: Schedule = {systemUnderTest.Schedule?.ToString() ?? "<null>"}, PreviousExecutionTimestampUtc = {systemUnderTest.PreviousExecutionTimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<EvaluateScheduleOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<EvaluateScheduleOp>()
+        private static readonly ConstructorArgumentValidationTestScenarios<ComputeNextExecutionFromScheduleOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ComputeNextExecutionFromScheduleOp>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<EvaluateScheduleOp>
+                new ConstructorArgumentValidationTestScenario<ComputeNextExecutionFromScheduleOp>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'schedule' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<EvaluateScheduleOp>();
+                        var referenceObject = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
-                        var result = new EvaluateScheduleOp(
+                        var result = new ComputeNextExecutionFromScheduleOp(
                                              null,
-                                             referenceObject.EvaluationTimestampUtc,
                                              referenceObject.PreviousExecutionTimestampUtc);
 
                         return result;
@@ -76,20 +75,19 @@ namespace Naos.Reactor.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "schedule", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<EvaluateScheduleOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<EvaluateScheduleOp>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<ComputeNextExecutionFromScheduleOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ComputeNextExecutionFromScheduleOp>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<EvaluateScheduleOp>
+                new ConstructorPropertyAssignmentTestScenario<ComputeNextExecutionFromScheduleOp>
                 {
                     Name = "Schedule should return same 'schedule' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<EvaluateScheduleOp>();
+                        var referenceObject = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<EvaluateScheduleOp>
+                        var result = new SystemUnderTestExpectedPropertyValue<ComputeNextExecutionFromScheduleOp>
                         {
-                            SystemUnderTest = new EvaluateScheduleOp(
+                            SystemUnderTest = new ComputeNextExecutionFromScheduleOp(
                                                       referenceObject.Schedule,
-                                                      referenceObject.EvaluationTimestampUtc,
                                                       referenceObject.PreviousExecutionTimestampUtc),
                             ExpectedPropertyValue = referenceObject.Schedule,
                         };
@@ -99,39 +97,17 @@ namespace Naos.Reactor.Domain.Test
                     PropertyName = "Schedule",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<EvaluateScheduleOp>
-                {
-                    Name = "EvaluationTimestampUtc should return same 'evaluationTimestampUtc' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<EvaluateScheduleOp>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<EvaluateScheduleOp>
-                        {
-                            SystemUnderTest = new EvaluateScheduleOp(
-                                                      referenceObject.Schedule,
-                                                      referenceObject.EvaluationTimestampUtc,
-                                                      referenceObject.PreviousExecutionTimestampUtc),
-                            ExpectedPropertyValue = referenceObject.EvaluationTimestampUtc,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "EvaluationTimestampUtc",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<EvaluateScheduleOp>
+                new ConstructorPropertyAssignmentTestScenario<ComputeNextExecutionFromScheduleOp>
                 {
                     Name = "PreviousExecutionTimestampUtc should return same 'previousExecutionTimestampUtc' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<EvaluateScheduleOp>();
+                        var referenceObject = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<EvaluateScheduleOp>
+                        var result = new SystemUnderTestExpectedPropertyValue<ComputeNextExecutionFromScheduleOp>
                         {
-                            SystemUnderTest = new EvaluateScheduleOp(
+                            SystemUnderTest = new ComputeNextExecutionFromScheduleOp(
                                                       referenceObject.Schedule,
-                                                      referenceObject.EvaluationTimestampUtc,
                                                       referenceObject.PreviousExecutionTimestampUtc),
                             ExpectedPropertyValue = referenceObject.PreviousExecutionTimestampUtc,
                         };
@@ -141,19 +117,19 @@ namespace Naos.Reactor.Domain.Test
                     PropertyName = "PreviousExecutionTimestampUtc",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<EvaluateScheduleOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<EvaluateScheduleOp>()
+        private static readonly DeepCloneWithTestScenarios<ComputeNextExecutionFromScheduleOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ComputeNextExecutionFromScheduleOp>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<EvaluateScheduleOp>
+                new DeepCloneWithTestScenario<ComputeNextExecutionFromScheduleOp>
                 {
                     Name = "DeepCloneWithSchedule should deep clone object and replace Schedule with the provided schedule",
                     WithPropertyName = "Schedule",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<EvaluateScheduleOp>();
+                        var systemUnderTest = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
-                        var referenceObject = A.Dummy<EvaluateScheduleOp>().ThatIs(_ => !systemUnderTest.Schedule.IsEqualTo(_.Schedule));
+                        var referenceObject = A.Dummy<ComputeNextExecutionFromScheduleOp>().ThatIs(_ => !systemUnderTest.Schedule.IsEqualTo(_.Schedule));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<EvaluateScheduleOp>
+                        var result = new SystemUnderTestDeepCloneWithValue<ComputeNextExecutionFromScheduleOp>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Schedule,
@@ -163,37 +139,17 @@ namespace Naos.Reactor.Domain.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<EvaluateScheduleOp>
-                {
-                    Name = "DeepCloneWithEvaluationTimestampUtc should deep clone object and replace EvaluationTimestampUtc with the provided evaluationTimestampUtc",
-                    WithPropertyName = "EvaluationTimestampUtc",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<EvaluateScheduleOp>();
-
-                        var referenceObject = A.Dummy<EvaluateScheduleOp>().ThatIs(_ => !systemUnderTest.EvaluationTimestampUtc.IsEqualTo(_.EvaluationTimestampUtc));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<EvaluateScheduleOp>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.EvaluationTimestampUtc,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<EvaluateScheduleOp>
+                new DeepCloneWithTestScenario<ComputeNextExecutionFromScheduleOp>
                 {
                     Name = "DeepCloneWithPreviousExecutionTimestampUtc should deep clone object and replace PreviousExecutionTimestampUtc with the provided previousExecutionTimestampUtc",
                     WithPropertyName = "PreviousExecutionTimestampUtc",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<EvaluateScheduleOp>();
+                        var systemUnderTest = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
-                        var referenceObject = A.Dummy<EvaluateScheduleOp>().ThatIs(_ => !systemUnderTest.PreviousExecutionTimestampUtc.IsEqualTo(_.PreviousExecutionTimestampUtc));
+                        var referenceObject = A.Dummy<ComputeNextExecutionFromScheduleOp>().ThatIs(_ => !systemUnderTest.PreviousExecutionTimestampUtc.IsEqualTo(_.PreviousExecutionTimestampUtc));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<EvaluateScheduleOp>
+                        var result = new SystemUnderTestDeepCloneWithValue<ComputeNextExecutionFromScheduleOp>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.PreviousExecutionTimestampUtc,
@@ -203,35 +159,28 @@ namespace Naos.Reactor.Domain.Test
                     },
                 });
 
-        private static readonly EvaluateScheduleOp ReferenceObjectForEquatableTestScenarios = A.Dummy<EvaluateScheduleOp>();
+        private static readonly ComputeNextExecutionFromScheduleOp ReferenceObjectForEquatableTestScenarios = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
-        private static readonly EquatableTestScenarios<EvaluateScheduleOp> EquatableTestScenarios = new EquatableTestScenarios<EvaluateScheduleOp>()
+        private static readonly EquatableTestScenarios<ComputeNextExecutionFromScheduleOp> EquatableTestScenarios = new EquatableTestScenarios<ComputeNextExecutionFromScheduleOp>()
             .AddScenario(() =>
-                new EquatableTestScenario<EvaluateScheduleOp>
+                new EquatableTestScenario<ComputeNextExecutionFromScheduleOp>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new EvaluateScheduleOp[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ComputeNextExecutionFromScheduleOp[]
                     {
-                        new EvaluateScheduleOp(
+                        new ComputeNextExecutionFromScheduleOp(
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
-                                ReferenceObjectForEquatableTestScenarios.EvaluationTimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.PreviousExecutionTimestampUtc),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new EvaluateScheduleOp[]
+                    ObjectsThatAreNotEqualToReferenceObject = new ComputeNextExecutionFromScheduleOp[]
                     {
-                        new EvaluateScheduleOp(
-                                A.Dummy<EvaluateScheduleOp>().Whose(_ => !_.Schedule.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Schedule)).Schedule,
-                                ReferenceObjectForEquatableTestScenarios.EvaluationTimestampUtc,
+                        new ComputeNextExecutionFromScheduleOp(
+                                A.Dummy<ComputeNextExecutionFromScheduleOp>().Whose(_ => !_.Schedule.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Schedule)).Schedule,
                                 ReferenceObjectForEquatableTestScenarios.PreviousExecutionTimestampUtc),
-                        new EvaluateScheduleOp(
+                        new ComputeNextExecutionFromScheduleOp(
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
-                                A.Dummy<EvaluateScheduleOp>().Whose(_ => !_.EvaluationTimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EvaluationTimestampUtc)).EvaluationTimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.PreviousExecutionTimestampUtc),
-                        new EvaluateScheduleOp(
-                                ReferenceObjectForEquatableTestScenarios.Schedule,
-                                ReferenceObjectForEquatableTestScenarios.EvaluationTimestampUtc,
-                                A.Dummy<EvaluateScheduleOp>().Whose(_ => !_.PreviousExecutionTimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.PreviousExecutionTimestampUtc)).PreviousExecutionTimestampUtc),
+                                A.Dummy<ComputeNextExecutionFromScheduleOp>().Whose(_ => !_.PreviousExecutionTimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.PreviousExecutionTimestampUtc)).PreviousExecutionTimestampUtc),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -244,10 +193,9 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<CheckRecordHandlingOp>(),
                         A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>(),
                         A.Dummy<EvaluateReactionRegistrationOp>(),
-                        A.Dummy<ExecuteOpOnScheduleOp>(),
                         A.Dummy<GetReactionRegistrationDependenciesStatusOp>(),
                         A.Dummy<RunReactorOp>(),
-                        A.Dummy<RunScheduleOp>(),
+                        A.Dummy<ProcessScheduledOpRegistrationsOp>(),
                         A.Dummy<TriggerReactionRegistrationOp>(),
                         A.Dummy<WriteEventOnMatchingHandlingStatusOp<Version>>(),
                         A.Dummy<WriteEventOnMatchingRecordFilterOp<Version>>(),
@@ -276,9 +224,9 @@ namespace Naos.Reactor.Domain.Test
             public static void EvaluateScheduleOp___Should_implement_IModel_of_EvaluateScheduleOp___When_reflecting()
             {
                 // Arrange
-                var type = typeof(EvaluateScheduleOp);
+                var type = typeof(ComputeNextExecutionFromScheduleOp);
 
-                var expectedModelMethods = typeof(IModel<EvaluateScheduleOp>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<ComputeNextExecutionFromScheduleOp>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -288,7 +236,7 @@ namespace Naos.Reactor.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<EvaluateScheduleOp>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<ComputeNextExecutionFromScheduleOp>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -309,7 +257,7 @@ namespace Naos.Reactor.Domain.Test
             public static void EvaluateScheduleOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(EvaluateScheduleOp);
+                var type = typeof(ComputeNextExecutionFromScheduleOp);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -489,10 +437,10 @@ namespace Naos.Reactor.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<EvaluateScheduleOp>();
+                var systemUnderTest = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
                 // Act
-                var actual = (EvaluateScheduleOp)systemUnderTest.Clone();
+                var actual = (ComputeNextExecutionFromScheduleOp)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -516,7 +464,7 @@ namespace Naos.Reactor.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<EvaluateScheduleOp>();
+                var systemUnderTest = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -554,7 +502,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Schedule", "EvaluationTimestampUtc", "PreviousExecutionTimestampUtc" };
+                var propertyNames = new string[] { "Schedule", "PreviousExecutionTimestampUtc" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -567,12 +515,12 @@ namespace Naos.Reactor.Domain.Test
                     }
 
                     // Act
-                    var actual = (EvaluateScheduleOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (ComputeNextExecutionFromScheduleOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(EvaluateScheduleOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(ComputeNextExecutionFromScheduleOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -634,7 +582,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<EvaluateScheduleOp>();
+                var expected = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -663,7 +611,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<EvaluateScheduleOp>();
+                var expected = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -692,7 +640,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<EvaluateScheduleOp>();
+                var expected = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -721,7 +669,7 @@ namespace Naos.Reactor.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<EvaluateScheduleOp>();
+                var expected = A.Dummy<ComputeNextExecutionFromScheduleOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -755,8 +703,8 @@ namespace Naos.Reactor.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                EvaluateScheduleOp systemUnderTest1 = null;
-                EvaluateScheduleOp systemUnderTest2 = null;
+                ComputeNextExecutionFromScheduleOp systemUnderTest1 = null;
+                ComputeNextExecutionFromScheduleOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -786,7 +734,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    EvaluateScheduleOp systemUnderTest = null;
+                    ComputeNextExecutionFromScheduleOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -935,8 +883,8 @@ namespace Naos.Reactor.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                EvaluateScheduleOp systemUnderTest1 = null;
-                EvaluateScheduleOp systemUnderTest2 = null;
+                ComputeNextExecutionFromScheduleOp systemUnderTest1 = null;
+                ComputeNextExecutionFromScheduleOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -966,7 +914,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    EvaluateScheduleOp systemUnderTest = null;
+                    ComputeNextExecutionFromScheduleOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1255,17 +1203,17 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_bool___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_ReturningOperationBase_of_DateTime___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ReturningOperationBase<bool> systemUnderTest = null;
+                    ReturningOperationBase<DateTime> systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<bool>)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<DateTime>)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -1286,14 +1234,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_bool___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_ReturningOperationBase_of_DateTime___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<bool>)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<DateTime>)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1314,14 +1262,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_bool___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_ReturningOperationBase_of_DateTime___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<bool>)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<DateTime>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1342,14 +1290,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_bool___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_ReturningOperationBase_of_DateTime___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<bool>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<DateTime>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1370,14 +1318,14 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase_of_bool___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_ReturningOperationBase_of_DateTime___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<bool>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<DateTime>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1405,7 +1353,7 @@ namespace Naos.Reactor.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    EvaluateScheduleOp systemUnderTest = null;
+                    ComputeNextExecutionFromScheduleOp systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
