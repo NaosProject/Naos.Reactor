@@ -9,7 +9,7 @@ namespace Naos.Reactor.Domain
     /// <summary>
     /// Enumeration of how to deal with the execution of a <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" /> when it's prior one is still running.
     /// </summary>
-    public enum ExistingScheduledOpStrategy
+    public enum ScheduledOpAlreadyRunningStrategy
     {
         /// <summary>
         /// Unknown (default).

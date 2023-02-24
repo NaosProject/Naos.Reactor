@@ -78,7 +78,7 @@ namespace Naos.Reactor.Domain
                       && this.Schedule.IsEqualTo(other.Schedule)
                       && this.Tags.IsEqualTo(other.Tags)
                       && this.StreamRepresentation.IsEqualTo(other.StreamRepresentation)
-                      && this.ExistingScheduledOpStrategy.IsEqualTo(other.ExistingScheduledOpStrategy)
+                      && this.ScheduledOpAlreadyRunningStrategy.IsEqualTo(other.ScheduledOpAlreadyRunningStrategy)
                       && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal);
 
             return result;
@@ -95,7 +95,7 @@ namespace Naos.Reactor.Domain
             .Hash(this.Schedule)
             .Hash(this.Tags)
             .Hash(this.StreamRepresentation)
-            .Hash(this.ExistingScheduledOpStrategy)
+            .Hash(this.ScheduledOpAlreadyRunningStrategy)
             .Hash(this.Details)
             .Value;
 
@@ -128,7 +128,7 @@ namespace Naos.Reactor.Domain
                                  this.Schedule?.DeepClone(),
                                  this.StreamRepresentation?.DeepClone(),
                                  timestampUtc,
-                                 this.ExistingScheduledOpStrategy.DeepClone(),
+                                 this.ScheduledOpAlreadyRunningStrategy.DeepClone(),
                                  this.Details?.DeepClone(),
                                  this.Tags?.DeepClone());
 
@@ -161,7 +161,7 @@ namespace Naos.Reactor.Domain
                                  this.Schedule?.DeepClone(),
                                  this.StreamRepresentation?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
-                                 this.ExistingScheduledOpStrategy.DeepClone(),
+                                 this.ScheduledOpAlreadyRunningStrategy.DeepClone(),
                                  this.Details?.DeepClone(),
                                  this.Tags?.DeepClone());
 
@@ -198,7 +198,7 @@ namespace Naos.Reactor.Domain
                                  this.Schedule?.DeepClone(),
                                  this.StreamRepresentation?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
-                                 this.ExistingScheduledOpStrategy.DeepClone(),
+                                 this.ScheduledOpAlreadyRunningStrategy.DeepClone(),
                                  this.Details?.DeepClone(),
                                  this.Tags?.DeepClone());
 
@@ -235,7 +235,7 @@ namespace Naos.Reactor.Domain
                                  schedule,
                                  this.StreamRepresentation?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
-                                 this.ExistingScheduledOpStrategy.DeepClone(),
+                                 this.ScheduledOpAlreadyRunningStrategy.DeepClone(),
                                  this.Details?.DeepClone(),
                                  this.Tags?.DeepClone());
 
@@ -272,7 +272,7 @@ namespace Naos.Reactor.Domain
                                  this.Schedule?.DeepClone(),
                                  this.StreamRepresentation?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
-                                 this.ExistingScheduledOpStrategy.DeepClone(),
+                                 this.ScheduledOpAlreadyRunningStrategy.DeepClone(),
                                  this.Details?.DeepClone(),
                                  tags);
 
@@ -309,7 +309,7 @@ namespace Naos.Reactor.Domain
                                  this.Schedule?.DeepClone(),
                                  streamRepresentation,
                                  this.TimestampUtc.DeepClone(),
-                                 this.ExistingScheduledOpStrategy.DeepClone(),
+                                 this.ScheduledOpAlreadyRunningStrategy.DeepClone(),
                                  this.Details?.DeepClone(),
                                  this.Tags?.DeepClone());
 
@@ -317,10 +317,10 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="ExistingScheduledOpStrategy" />.
+        /// Deep clones this object with a new <see cref="ScheduledOpAlreadyRunningStrategy" />.
         /// </summary>
-        /// <param name="existingScheduledOpStrategy">The new <see cref="ExistingScheduledOpStrategy" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ScheduledOpRegistration" /> using the specified <paramref name="existingScheduledOpStrategy" /> for <see cref="ExistingScheduledOpStrategy" /> and a deep clone of every other property.</returns>
+        /// <param name="scheduledOpAlreadyRunningStrategy">The new <see cref="ScheduledOpAlreadyRunningStrategy" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ScheduledOpRegistration" /> using the specified <paramref name="scheduledOpAlreadyRunningStrategy" /> for <see cref="ScheduledOpAlreadyRunningStrategy" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -338,7 +338,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ScheduledOpRegistration DeepCloneWithExistingScheduledOpStrategy(ExistingScheduledOpStrategy existingScheduledOpStrategy)
+        public ScheduledOpRegistration DeepCloneWithExistingScheduledOpStrategy(ScheduledOpAlreadyRunningStrategy scheduledOpAlreadyRunningStrategy)
         {
             var result = new ScheduledOpRegistration(
                                  this.Id?.DeepClone(),
@@ -346,7 +346,7 @@ namespace Naos.Reactor.Domain
                                  this.Schedule?.DeepClone(),
                                  this.StreamRepresentation?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
-                                 existingScheduledOpStrategy,
+                                 scheduledOpAlreadyRunningStrategy,
                                  this.Details?.DeepClone(),
                                  this.Tags?.DeepClone());
 
@@ -383,7 +383,7 @@ namespace Naos.Reactor.Domain
                                  this.Schedule?.DeepClone(),
                                  this.StreamRepresentation?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
-                                 this.ExistingScheduledOpStrategy.DeepClone(),
+                                 this.ScheduledOpAlreadyRunningStrategy.DeepClone(),
                                  details,
                                  this.Tags?.DeepClone());
 
@@ -400,7 +400,7 @@ namespace Naos.Reactor.Domain
                                  this.Schedule?.DeepClone(),
                                  this.StreamRepresentation?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
-                                 this.ExistingScheduledOpStrategy.DeepClone(),
+                                 this.ScheduledOpAlreadyRunningStrategy.DeepClone(),
                                  this.Details?.DeepClone(),
                                  this.Tags?.DeepClone());
 
@@ -411,7 +411,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.ScheduledOpRegistration: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, OperationToExecute = {this.OperationToExecute?.ToString() ?? "<null>"}, Schedule = {this.Schedule?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, StreamRepresentation = {this.StreamRepresentation?.ToString() ?? "<null>"}, ExistingScheduledOpStrategy = {this.ExistingScheduledOpStrategy.ToString() ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.ScheduledOpRegistration: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, OperationToExecute = {this.OperationToExecute?.ToString() ?? "<null>"}, Schedule = {this.Schedule?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, StreamRepresentation = {this.StreamRepresentation?.ToString() ?? "<null>"}, ExistingScheduledOpStrategy = {this.ScheduledOpAlreadyRunningStrategy.ToString() ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

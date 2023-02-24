@@ -26,7 +26,7 @@ namespace Naos.Reactor.Domain
         /// <param name="schedule">The <see cref="ISchedule"/> to be used for determining execution cadence.</param>
         /// <param name="streamRepresentation">The <see cref="IStreamRepresentation"/> to be find the appropriate stream for writing the operation wrapped in <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" /> with the correct next execution time per the schedule.</param>
         /// <param name="timestampUtc">The timestamp of the event in UTC format.</param>
-        /// <param name="existingScheduledOpStrategy">The strategy of how to deal an <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" />.</param>
+        /// <param name="scheduledOpAlreadyRunningStrategy">The strategy of how to deal an <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" />.</param>
         /// <param name="details">The optional details.</param>
         /// <param name="tags">The optional tags for the operation.</param>
         public ScheduledOpRegistration(
@@ -35,7 +35,7 @@ namespace Naos.Reactor.Domain
             ISchedule schedule,
             IStreamRepresentation streamRepresentation,
             DateTime timestampUtc,
-            ExistingScheduledOpStrategy existingScheduledOpStrategy,
+            ScheduledOpAlreadyRunningStrategy scheduledOpAlreadyRunningStrategy,
             string details = null,
             IReadOnlyCollection<NamedValue<string>> tags = null) : base(id, timestampUtc)
         {
@@ -46,7 +46,7 @@ namespace Naos.Reactor.Domain
             this.OperationToExecute = operationToExecute;
             this.Schedule = schedule;
             this.StreamRepresentation = streamRepresentation;
-            this.ExistingScheduledOpStrategy = existingScheduledOpStrategy;
+            this.ScheduledOpAlreadyRunningStrategy = scheduledOpAlreadyRunningStrategy;
             this.Details = details;
             this.Tags = tags;
         }
@@ -70,7 +70,7 @@ namespace Naos.Reactor.Domain
         /// <summary>
         /// Gets the strategy of how to deal an <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" />.
         /// </summary>
-        public ExistingScheduledOpStrategy ExistingScheduledOpStrategy { get; private set; }
+        public ScheduledOpAlreadyRunningStrategy ScheduledOpAlreadyRunningStrategy { get; private set; }
 
         /// <inheritdoc />
         public string Details { get; private set; }

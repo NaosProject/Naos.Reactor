@@ -50,7 +50,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ScheduledOpRegistration>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.ScheduledOpRegistration: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, OperationToExecute = {systemUnderTest.OperationToExecute?.ToString() ?? "<null>"}, Schedule = {systemUnderTest.Schedule?.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}, StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, ExistingScheduledOpStrategy = {systemUnderTest.ExistingScheduledOpStrategy.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.ScheduledOpRegistration: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, OperationToExecute = {systemUnderTest.OperationToExecute?.ToString() ?? "<null>"}, Schedule = {systemUnderTest.Schedule?.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}, StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, ExistingScheduledOpStrategy = {systemUnderTest.ScheduledOpAlreadyRunningStrategy.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
@@ -72,7 +72,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.ExistingScheduledOpStrategy,
+                                             referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.Details,
                                              referenceObject.Tags);
 
@@ -95,7 +95,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.ExistingScheduledOpStrategy,
+                                             referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.Details,
                                              referenceObject.Tags);
 
@@ -118,7 +118,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.ExistingScheduledOpStrategy,
+                                             referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.Details,
                                              referenceObject.Tags);
 
@@ -141,7 +141,7 @@ namespace Naos.Reactor.Domain.Test
                                              null,
                                              referenceObject.StreamRepresentation,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.ExistingScheduledOpStrategy,
+                                             referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.Details,
                                              referenceObject.Tags);
 
@@ -164,7 +164,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Schedule,
                                              null,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.ExistingScheduledOpStrategy,
+                                             referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.Details,
                                              referenceObject.Tags);
 
@@ -187,7 +187,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.ExistingScheduledOpStrategy,
+                                             referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              null,
                                              referenceObject.Tags);
 
@@ -210,7 +210,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.ExistingScheduledOpStrategy,
+                                             referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.Tags);
 
@@ -233,7 +233,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.ExistingScheduledOpStrategy,
+                                             referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.Details,
                                              null);
 
@@ -256,7 +256,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.ExistingScheduledOpStrategy,
+                                             referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.Details,
                                              new List<NamedValue<string>>());
 
@@ -279,7 +279,7 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.ExistingScheduledOpStrategy,
+                                             referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.Details,
                                              new NamedValue<string>[0].Concat(referenceObject.Tags).Concat(new NamedValue<string>[] { null }).Concat(referenceObject.Tags).ToList());
 
@@ -306,7 +306,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.ExistingScheduledOpStrategy,
+                                                      referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.Details,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.Id,
@@ -332,7 +332,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.ExistingScheduledOpStrategy,
+                                                      referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.Details,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.OperationToExecute,
@@ -358,7 +358,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.ExistingScheduledOpStrategy,
+                                                      referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.Details,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.Schedule,
@@ -384,7 +384,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.ExistingScheduledOpStrategy,
+                                                      referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.Details,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.StreamRepresentation,
@@ -410,7 +410,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.ExistingScheduledOpStrategy,
+                                                      referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.Details,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.TimestampUtc,
@@ -436,10 +436,10 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.ExistingScheduledOpStrategy,
+                                                      referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.Details,
                                                       referenceObject.Tags),
-                            ExpectedPropertyValue = referenceObject.ExistingScheduledOpStrategy,
+                            ExpectedPropertyValue = referenceObject.ScheduledOpAlreadyRunningStrategy,
                         };
 
                         return result;
@@ -462,7 +462,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.ExistingScheduledOpStrategy,
+                                                      referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.Details,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.Details,
@@ -488,7 +488,7 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.ExistingScheduledOpStrategy,
+                                                      referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.Details,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.Tags,
@@ -629,12 +629,12 @@ namespace Naos.Reactor.Domain.Test
                     {
                         var systemUnderTest = A.Dummy<ScheduledOpRegistration>();
 
-                        var referenceObject = A.Dummy<ScheduledOpRegistration>().ThatIs(_ => !systemUnderTest.ExistingScheduledOpStrategy.IsEqualTo(_.ExistingScheduledOpStrategy));
+                        var referenceObject = A.Dummy<ScheduledOpRegistration>().ThatIs(_ => !systemUnderTest.ScheduledOpAlreadyRunningStrategy.IsEqualTo(_.ScheduledOpAlreadyRunningStrategy));
 
                         var result = new SystemUnderTestDeepCloneWithValue<ScheduledOpRegistration>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.ExistingScheduledOpStrategy,
+                            DeepCloneWithValue = referenceObject.ScheduledOpAlreadyRunningStrategy,
                         };
 
                         return result;
@@ -677,7 +677,7 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.ExistingScheduledOpStrategy,
+                                ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                     },
@@ -689,7 +689,7 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.ExistingScheduledOpStrategy,
+                                ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ScheduledOpRegistration(
@@ -698,7 +698,7 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.ExistingScheduledOpStrategy,
+                                ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ScheduledOpRegistration(
@@ -707,7 +707,7 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.ExistingScheduledOpStrategy,
+                                ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ScheduledOpRegistration(
@@ -716,7 +716,7 @@ namespace Naos.Reactor.Domain.Test
                                 A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.Schedule.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Schedule)).Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.ExistingScheduledOpStrategy,
+                                ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ScheduledOpRegistration(
@@ -725,7 +725,7 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.ExistingScheduledOpStrategy,
+                                ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.Tags.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Tags)).Tags),
                         new ScheduledOpRegistration(
@@ -734,7 +734,7 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.StreamRepresentation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StreamRepresentation)).StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.ExistingScheduledOpStrategy,
+                                ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ScheduledOpRegistration(
@@ -743,7 +743,7 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.ExistingScheduledOpStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ExistingScheduledOpStrategy)).ExistingScheduledOpStrategy,
+                                A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.ScheduledOpAlreadyRunningStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy)).ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new ScheduledOpRegistration(
@@ -752,7 +752,7 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.ExistingScheduledOpStrategy,
+                                ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                     },

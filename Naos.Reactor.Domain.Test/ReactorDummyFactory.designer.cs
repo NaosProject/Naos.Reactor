@@ -176,7 +176,7 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<ISchedule>(),
                                  A.Dummy<IStreamRepresentation>(),
                                  A.Dummy<DateTime>(),
-                                 A.Dummy<ExistingScheduledOpStrategy>(),
+                                 A.Dummy<ScheduledOpAlreadyRunningStrategy>(),
                                  A.Dummy<string>(),
                                  A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
 

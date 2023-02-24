@@ -261,7 +261,7 @@
     <Compile Include="Protocols\CompleteHandlingOnReactionRegistrationDependenciesProtocol.cs" />
     <Compile Include="Protocols\TriggerReactionRegistrationProtocol.cs" />
     <Compile Include="Protocols\WriteEventsWithUtcTimestampIdProtocol.cs" />
-    <Compile Include="Protocols\ProcessExecuteAfterTimeEventsProtocol.cs" />
+    <Compile Include="Protocols\ProcessScheduledExecuteOpRequestedEventsProtocol.cs" />
     <Compile Include="Protocols\ComputeNextExecutionFromScheduleProtocol.cs" />
     <Compile Include="Protocols\CheckRecordExistsProtocol.cs" />
     <Compile Include="Protocols\EvaluateReactionRegistrationProtocol.cs" />
