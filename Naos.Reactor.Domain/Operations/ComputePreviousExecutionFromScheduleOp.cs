@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ComputeNextExecutionFromScheduleOp.cs" company="Naos Project">
+// <copyright file="ComputePreviousExecutionFromScheduleOp.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -12,24 +12,24 @@ namespace Naos.Reactor.Domain
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Operation to check a schedule against a prior time and current time, returns next execution time.
+    /// Operation to check a schedule a reference time, returns the prior execution time.
     /// </summary>
-    public partial class ComputeNextExecutionFromScheduleOp : ReturningOperationBase<DateTime>
+    public partial class ComputePreviousExecutionFromScheduleOp : ReturningOperationBase<DateTime>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ComputeNextExecutionFromScheduleOp"/> class.
+        /// Initializes a new instance of the <see cref="ComputePreviousExecutionFromScheduleOp"/> class.
         /// </summary>
         /// <param name="schedule">The schedule to evaluate.</param>
-        /// <param name="previousExecutionTimestampUtc">The timestamp in UTC of the previous execution.</param>
-        public ComputeNextExecutionFromScheduleOp(
+        /// <param name="referenceTimestampUtc">The reference timestamp to compute from in UTC.</param>
+        public ComputePreviousExecutionFromScheduleOp(
             ISchedule schedule,
-            DateTime? previousExecutionTimestampUtc)
+            DateTime? referenceTimestampUtc)
         {
             schedule.MustForArg(nameof(schedule)).NotBeNull();
-            previousExecutionTimestampUtc.MustForArg(nameof(previousExecutionTimestampUtc)).BeUtcDateTimeWhenNotNull();
+            referenceTimestampUtc.MustForArg(nameof(referenceTimestampUtc)).BeUtcDateTimeWhenNotNull();
 
             this.Schedule = schedule;
-            this.PreviousExecutionTimestampUtc = previousExecutionTimestampUtc;
+            this.ReferenceTimestampUtc = referenceTimestampUtc;
         }
 
         /// <summary>
@@ -38,8 +38,8 @@ namespace Naos.Reactor.Domain
         public ISchedule Schedule { get; private set; }
 
         /// <summary>
-        /// Gets the timestamp in UTC of the previous execution.
+        /// Gets the timestamp in UTC to base the computation on.
         /// </summary>
-        public DateTime? PreviousExecutionTimestampUtc { get; private set; }
+        public DateTime? ReferenceTimestampUtc { get; private set; }
     }
 }

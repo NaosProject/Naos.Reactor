@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EvaluateScheduleProtocol.cs" company="Naos Project">
+// <copyright file="ComputePreviousExecutionFromScheduleProtocol.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,37 +15,37 @@ namespace Naos.Reactor.Domain
     using static System.FormattableString;
 
     /// <summary>
-    /// Protocol for <see cref="ComputeNextExecutionFromScheduleOp"/>.
+    /// Protocol for <see cref="ComputePreviousExecutionFromScheduleOp"/>.
     /// </summary>
-    public partial class ComputeNextExecutionFromScheduleProtocol : SyncSpecificReturningProtocolBase<ComputeNextExecutionFromScheduleOp, DateTime>
+    public partial class ComputePreviousExecutionFromScheduleProtocol : SyncSpecificReturningProtocolBase<ComputePreviousExecutionFromScheduleOp, DateTime>
     {
         private readonly Func<DateTime> nowProvider;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ComputeNextExecutionFromScheduleProtocol"/> class.
+        /// Initializes a new instance of the <see cref="ComputePreviousExecutionFromScheduleProtocol"/> class.
         /// </summary>
-        public ComputeNextExecutionFromScheduleProtocol(Func<DateTime> nowProvider = null)
+        public ComputePreviousExecutionFromScheduleProtocol(Func<DateTime> nowProvider = null)
         {
             this.nowProvider = nowProvider ?? (() => DateTime.UtcNow);
         }
 
         /// <inheritdoc />
         public override DateTime Execute(
-            ComputeNextExecutionFromScheduleOp operation)
+            ComputePreviousExecutionFromScheduleOp operation)
         {
             operation.MustForArg(nameof(operation)).NotBeNull();
 
 
-            var baseTimeRaw = operation.PreviousExecutionTimestampUtc ?? this.nowProvider();
-            var baseTime = baseTimeRaw.RoundDownToEvenMinute();
+            var baseTimeRaw = operation.ReferenceTimestampUtc ?? this.nowProvider();
+            var baseTime = baseTimeRaw.RewindToEvenMinute();
             DateTime result;
             if (operation.Schedule is DailyScheduleInUtc dailySchedule)
             {
-                result = baseTime.AdvanceToNextMatchingHourAndMinute(dailySchedule.Hour, dailySchedule.Minute);
+                result = baseTime.RewindToNextMatchingHourAndMinute(dailySchedule.Hour, dailySchedule.Minute);
             }
             else if (operation.Schedule is HourlySchedule hourlySchedule)
             {
-                result = baseTime.AdvanceToNextMatchingMinute(hourlySchedule.Minute);
+                result = baseTime.RewindToNextMatchingMinute(hourlySchedule.Minute);
             }
             else
             {

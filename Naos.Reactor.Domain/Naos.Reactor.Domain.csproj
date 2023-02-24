@@ -135,9 +135,9 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="Events\ReactionEvent.cs" />
-    <Compile Include="Events\ScheduledExecuteOpRequestedEvent{TOperation}.cs" />
-    <Compile Include="Events\ScheduledExecuteOpRequestedEvent{TOperation}.designer.cs">
-      <DependentUpon>ScheduledExecuteOpRequestedEvent{TOperation}.cs</DependentUpon>
+    <Compile Include="Events\ScheduledExecuteOpRequestedEvent.cs" />
+    <Compile Include="Events\ScheduledExecuteOpRequestedEvent.designer.cs">
+      <DependentUpon>ScheduledExecuteOpRequestedEvent.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Classes\ScheduledOpRegistration.cs" />
     <Compile Include="Events\ReactionEvent.designer.cs">
@@ -186,7 +186,7 @@
       <DependentUpon>ScheduledOpRegistration.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Enums\ChainOfResponsibilityLinkMatchStrategy.cs" />
-    <Compile Include="Model\Enums\ExistingScheduledOpStrategy.cs" />
+    <Compile Include="Model\Enums\ScheduledOpAlreadyRunningStrategy.cs" />
     <Compile Include="Model\Enums\RecordExistsMatchStrategy.cs" />
     <Compile Include="Model\Enums\CompositeHandlingStatusMatchStrategy.cs" />
     <Compile Include="Model\Classes\EventToPutWithIdOnRecordFilterMatch{TId}.cs" />
@@ -206,11 +206,8 @@
     <Compile Include="Operations\CompleteHandlingOnReactionRegistrationDependenciesOp.designer.cs">
       <DependentUpon>CompleteHandlingOnReactionRegistrationDependenciesOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\ComputeNextExecutionFromScheduleOp.designer.cs">
-      <DependentUpon>ComputeNextExecutionFromScheduleOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\ProcessScheduledExecuteOpRequestedEventsOp.designer.cs">
-      <DependentUpon>ProcessScheduledExecuteOpRequestedEventsOp.cs</DependentUpon>
+    <Compile Include="Operations\ComputePreviousExecutionFromScheduleOp.designer.cs">
+      <DependentUpon>ComputePreviousExecutionFromScheduleOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\GetReactionRegistrationDependenciesStatusOp.designer.cs">
       <DependentUpon>GetReactionRegistrationDependenciesStatusOp.cs</DependentUpon>
@@ -223,8 +220,7 @@
       <DependentUpon>TriggerReactionRegistrationOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\WriteEventsWithUtcTimestampIdOp.cs" />
-    <Compile Include="Operations\ComputeNextExecutionFromScheduleOp.cs" />
-    <Compile Include="Operations\ProcessScheduledExecuteOpRequestedEventsOp.cs" />
+    <Compile Include="Operations\ComputePreviousExecutionFromScheduleOp.cs" />
     <Compile Include="Operations\CheckRecordExistsOp.cs" />
     <Compile Include="Operations\CheckRecordExistsOp.designer.cs">
       <DependentUpon>CheckRecordExistsOp.cs</DependentUpon>
@@ -261,8 +257,7 @@
     <Compile Include="Protocols\CompleteHandlingOnReactionRegistrationDependenciesProtocol.cs" />
     <Compile Include="Protocols\TriggerReactionRegistrationProtocol.cs" />
     <Compile Include="Protocols\WriteEventsWithUtcTimestampIdProtocol.cs" />
-    <Compile Include="Protocols\ProcessScheduledExecuteOpRequestedEventsProtocol.cs" />
-    <Compile Include="Protocols\ComputeNextExecutionFromScheduleProtocol.cs" />
+    <Compile Include="Protocols\ComputePreviousExecutionFromScheduleProtocol.cs" />
     <Compile Include="Protocols\CheckRecordExistsProtocol.cs" />
     <Compile Include="Protocols\EvaluateReactionRegistrationProtocol.cs" />
     <Compile Include="Protocols\HandleAndReQueueExecuteOpRequestedProtocol{TOperation}.cs" />

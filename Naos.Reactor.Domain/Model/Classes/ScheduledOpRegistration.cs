@@ -24,9 +24,10 @@ namespace Naos.Reactor.Domain
         /// <param name="id">The identifier.</param>
         /// <param name="operationToExecute">The <see cref="IVoidOperation"/> to be executed.</param>
         /// <param name="schedule">The <see cref="ISchedule"/> to be used for determining execution cadence.</param>
-        /// <param name="streamRepresentation">The <see cref="IStreamRepresentation"/> to be find the appropriate stream for writing the operation wrapped in <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" /> with the correct next execution time per the schedule.</param>
+        /// <param name="streamRepresentation">The <see cref="IStreamRepresentation"/> to be find the appropriate stream for writing the operation wrapped in <see cref="ScheduledExecuteOpRequestedEvent" /> with the correct next execution time per the schedule.</param>
         /// <param name="timestampUtc">The timestamp of the event in UTC format.</param>
-        /// <param name="scheduledOpAlreadyRunningStrategy">The strategy of how to deal an <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" />.</param>
+        /// <param name="scheduledOpAlreadyRunningStrategy">The strategy of how to deal an <see cref="ScheduledExecuteOpRequestedEvent" />.</param>
+        /// <param name="scheduleImmediatelyWhenMissed">Value indicating whether to schedule immediately when missed.</param>
         /// <param name="details">The optional details.</param>
         /// <param name="tags">The optional tags for the operation.</param>
         public ScheduledOpRegistration(
@@ -36,6 +37,7 @@ namespace Naos.Reactor.Domain
             IStreamRepresentation streamRepresentation,
             DateTime timestampUtc,
             ScheduledOpAlreadyRunningStrategy scheduledOpAlreadyRunningStrategy,
+            bool scheduleImmediatelyWhenMissed = false,
             string details = null,
             IReadOnlyCollection<NamedValue<string>> tags = null) : base(id, timestampUtc)
         {
@@ -47,6 +49,7 @@ namespace Naos.Reactor.Domain
             this.Schedule = schedule;
             this.StreamRepresentation = streamRepresentation;
             this.ScheduledOpAlreadyRunningStrategy = scheduledOpAlreadyRunningStrategy;
+            this.ScheduleImmediatelyWhenMissed = scheduleImmediatelyWhenMissed;
             this.Details = details;
             this.Tags = tags;
         }
@@ -68,11 +71,16 @@ namespace Naos.Reactor.Domain
         public IStreamRepresentation StreamRepresentation { get; private set; }
 
         /// <summary>
-        /// Gets the strategy of how to deal an <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" />.
+        /// Gets the strategy of how to deal an <see cref="ScheduledExecuteOpRequestedEvent" />.
         /// </summary>
         public ScheduledOpAlreadyRunningStrategy ScheduledOpAlreadyRunningStrategy { get; private set; }
 
         /// <inheritdoc />
         public string Details { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether to schedule immediately when missed.
+        /// </summary>
+        public bool ScheduleImmediatelyWhenMissed { get;  private set; }
     }
 }

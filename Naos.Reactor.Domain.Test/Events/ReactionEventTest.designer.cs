@@ -633,7 +633,7 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<ScheduledExecuteOpRequestedEvent<CompleteHandlingOnReactionRegistrationDependenciesOp>>(),
+                        A.Dummy<ScheduledExecuteOpRequestedEvent>(),
                         A.Dummy<ScheduledOpRegistration>(),
                     },
                 });

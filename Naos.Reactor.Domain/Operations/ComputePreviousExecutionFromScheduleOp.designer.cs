@@ -25,15 +25,15 @@ namespace Naos.Reactor.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class ComputeNextExecutionFromScheduleOp : IModel<ComputeNextExecutionFromScheduleOp>
+    public partial class ComputePreviousExecutionFromScheduleOp : IModel<ComputePreviousExecutionFromScheduleOp>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="ComputeNextExecutionFromScheduleOp"/> are equal.
+        /// Determines whether two objects of type <see cref="ComputePreviousExecutionFromScheduleOp"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(ComputeNextExecutionFromScheduleOp left, ComputeNextExecutionFromScheduleOp right)
+        public static bool operator ==(ComputePreviousExecutionFromScheduleOp left, ComputePreviousExecutionFromScheduleOp right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -51,15 +51,15 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="ComputeNextExecutionFromScheduleOp"/> are not equal.
+        /// Determines whether two objects of type <see cref="ComputePreviousExecutionFromScheduleOp"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(ComputeNextExecutionFromScheduleOp left, ComputeNextExecutionFromScheduleOp right) => !(left == right);
+        public static bool operator !=(ComputePreviousExecutionFromScheduleOp left, ComputePreviousExecutionFromScheduleOp right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(ComputeNextExecutionFromScheduleOp other)
+        public bool Equals(ComputePreviousExecutionFromScheduleOp other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -72,28 +72,28 @@ namespace Naos.Reactor.Domain
             }
 
             var result = this.Schedule.IsEqualTo(other.Schedule)
-                      && this.PreviousExecutionTimestampUtc.IsEqualTo(other.PreviousExecutionTimestampUtc);
+                      && this.ReferenceTimestampUtc.IsEqualTo(other.ReferenceTimestampUtc);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as ComputeNextExecutionFromScheduleOp);
+        public override bool Equals(object obj) => this == (obj as ComputePreviousExecutionFromScheduleOp);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.Schedule)
-            .Hash(this.PreviousExecutionTimestampUtc)
+            .Hash(this.ReferenceTimestampUtc)
             .Value;
 
         /// <inheritdoc />
-        public new ComputeNextExecutionFromScheduleOp DeepClone() => (ComputeNextExecutionFromScheduleOp)this.DeepCloneInternal();
+        public new ComputePreviousExecutionFromScheduleOp DeepClone() => (ComputePreviousExecutionFromScheduleOp)this.DeepCloneInternal();
 
         /// <summary>
         /// Deep clones this object with a new <see cref="Schedule" />.
         /// </summary>
         /// <param name="schedule">The new <see cref="Schedule" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ComputeNextExecutionFromScheduleOp" /> using the specified <paramref name="schedule" /> for <see cref="Schedule" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="ComputePreviousExecutionFromScheduleOp" /> using the specified <paramref name="schedule" /> for <see cref="Schedule" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -111,20 +111,20 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ComputeNextExecutionFromScheduleOp DeepCloneWithSchedule(ISchedule schedule)
+        public ComputePreviousExecutionFromScheduleOp DeepCloneWithSchedule(ISchedule schedule)
         {
-            var result = new ComputeNextExecutionFromScheduleOp(
+            var result = new ComputePreviousExecutionFromScheduleOp(
                                  schedule,
-                                 this.PreviousExecutionTimestampUtc?.DeepClone());
+                                 this.ReferenceTimestampUtc?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="PreviousExecutionTimestampUtc" />.
+        /// Deep clones this object with a new <see cref="ReferenceTimestampUtc" />.
         /// </summary>
-        /// <param name="previousExecutionTimestampUtc">The new <see cref="PreviousExecutionTimestampUtc" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ComputeNextExecutionFromScheduleOp" /> using the specified <paramref name="previousExecutionTimestampUtc" /> for <see cref="PreviousExecutionTimestampUtc" /> and a deep clone of every other property.</returns>
+        /// <param name="referenceTimestampUtc">The new <see cref="ReferenceTimestampUtc" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ComputePreviousExecutionFromScheduleOp" /> using the specified <paramref name="referenceTimestampUtc" /> for <see cref="ReferenceTimestampUtc" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -142,11 +142,11 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ComputeNextExecutionFromScheduleOp DeepCloneWithPreviousExecutionTimestampUtc(DateTime? previousExecutionTimestampUtc)
+        public ComputePreviousExecutionFromScheduleOp DeepCloneWithReferenceTimestampUtc(DateTime? referenceTimestampUtc)
         {
-            var result = new ComputeNextExecutionFromScheduleOp(
+            var result = new ComputePreviousExecutionFromScheduleOp(
                                  this.Schedule?.DeepClone(),
-                                 previousExecutionTimestampUtc);
+                                 referenceTimestampUtc);
 
             return result;
         }
@@ -155,9 +155,9 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override OperationBase DeepCloneInternal()
         {
-            var result = new ComputeNextExecutionFromScheduleOp(
+            var result = new ComputePreviousExecutionFromScheduleOp(
                                  this.Schedule?.DeepClone(),
-                                 this.PreviousExecutionTimestampUtc?.DeepClone());
+                                 this.ReferenceTimestampUtc?.DeepClone());
 
             return result;
         }
@@ -166,7 +166,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.ComputeNextExecutionFromScheduleOp: Schedule = {this.Schedule?.ToString() ?? "<null>"}, PreviousExecutionTimestampUtc = {this.PreviousExecutionTimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.ComputePreviousExecutionFromScheduleOp: Schedule = {this.Schedule?.ToString() ?? "<null>"}, ReferenceTimestampUtc = {this.ReferenceTimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

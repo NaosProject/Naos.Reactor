@@ -77,7 +77,7 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IReadOnlyCollection<HandlingStatus>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ComputeNextExecutionFromScheduleOp(
+                () => new ComputePreviousExecutionFromScheduleOp(
                                  A.Dummy<ISchedule>(),
                                  A.Dummy<DateTime?>()));
 
@@ -115,11 +115,6 @@ namespace Naos.Reactor.Domain.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GetReactionRegistrationDependenciesStatusOp(
                                  A.Dummy<ReactionRegistration>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ProcessScheduledExecuteOpRequestedEventsOp(
-                                 A.Dummy<int>(),
-                                 A.Dummy<TypeRepresentation>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ProcessScheduledOpRegistrationsOp(
@@ -161,9 +156,9 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<TypeRepresentation>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ScheduledExecuteOpRequestedEvent<CompleteHandlingOnReactionRegistrationDependenciesOp>(
+                () => new ScheduledExecuteOpRequestedEvent(
                                  A.Dummy<string>(),
-                                 A.Dummy<CompleteHandlingOnReactionRegistrationDependenciesOp>(),
+                                 A.Dummy<IVoidOperation>(),
                                  A.Dummy<DateTime>(),
                                  A.Dummy<DateTime>(),
                                  A.Dummy<string>(),
@@ -177,6 +172,7 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IStreamRepresentation>(),
                                  A.Dummy<DateTime>(),
                                  A.Dummy<ScheduledOpAlreadyRunningStrategy>(),
+                                 A.Dummy<bool>(),
                                  A.Dummy<string>(),
                                  A.Dummy<IReadOnlyCollection<NamedValue<string>>>()));
 

@@ -271,9 +271,9 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="Operations\ComputeNextExecutionFromScheduleOpTest.cs" />
-    <Compile Include="Operations\ComputeNextExecutionFromScheduleOpTest.designer.cs">
-      <DependentUpon>ComputeNextExecutionFromScheduleOpTest.cs</DependentUpon>
+    <Compile Include="Operations\ComputePreviousExecutionFromScheduleOpTest.cs" />
+    <Compile Include="Operations\ComputePreviousExecutionFromScheduleOpTest.designer.cs">
+      <DependentUpon>ComputePreviousExecutionFromScheduleOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="ConsoleAbstraction.cs" />
     <Compile Include="Model\Classes\ScheduledOpRegistrationTest.cs" />
@@ -336,14 +336,6 @@
     <Compile Include="Model\Classes\EventToPutWithId{TId}Test.designer.cs">
       <DependentUpon>EventToPutWithId{TId}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\ProcessExecuteAfterTimeEventsOpTest.cs" />
-    <Compile Include="Operations\ProcessExecuteAfterTimeEventsOpTest.designer.cs">
-      <DependentUpon>ProcessExecuteAfterTimeEventsOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\ProcessScheduledExecuteOpRequestedEventsOpTest.cs" />
-    <Compile Include="Operations\ProcessScheduledExecuteOpRequestedEventsOpTest.designer.cs">
-      <DependentUpon>ProcessScheduledExecuteOpRequestedEventsOpTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\ProcessScheduledOpRegistrationsOpTest.cs" />
     <Compile Include="Operations\ProcessScheduledOpRegistrationsOpTest.designer.cs">
       <DependentUpon>ProcessScheduledOpRegistrationsOpTest.cs</DependentUpon>
@@ -371,9 +363,9 @@
     <Compile Include="Model\Classes\RecordFilterEntryTest.designer.cs">
       <DependentUpon>RecordFilterEntryTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\ScheduledExecuteOpRequestedEvent{TOperation}Test.cs" />
-    <Compile Include="Events\ScheduledExecuteOpRequestedEvent{TOperation}Test.designer.cs">
-      <DependentUpon>ScheduledExecuteOpRequestedEvent{TOperation}Test.cs</DependentUpon>
+    <Compile Include="Events\ScheduledExecuteOpRequestedEventTest.cs" />
+    <Compile Include="Events\ScheduledExecuteOpRequestedEventTest.designer.cs">
+      <DependentUpon>ScheduledExecuteOpRequestedEventTest.cs</DependentUpon>
     </Compile>
     <Compile Include="SerializationConfigurationTypes.cs" />
     <Compile Include="GlobalSuppressions.cs" />

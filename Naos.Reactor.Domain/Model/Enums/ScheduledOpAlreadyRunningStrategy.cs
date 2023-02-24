@@ -7,7 +7,7 @@
 namespace Naos.Reactor.Domain
 {
     /// <summary>
-    /// Enumeration of how to deal with the execution of a <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" /> when it's prior one is still running.
+    /// Enumeration of how to deal with the execution of a <see cref="ScheduledExecuteOpRequestedEvent" /> when it's prior one is still running.
     /// </summary>
     public enum ScheduledOpAlreadyRunningStrategy
     {
@@ -25,10 +25,5 @@ namespace Naos.Reactor.Domain
         /// Skip this execution and wait for the schedule to add a new one.
         /// </summary>
         Skip,
-
-        /// <summary>
-        /// Wait until current execution is done and then execute immediately after.
-        /// </summary>
-        ExecuteNewWhenComplete,
     }
 }

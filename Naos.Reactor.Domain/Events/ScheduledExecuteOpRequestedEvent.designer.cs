@@ -23,15 +23,15 @@ namespace Naos.Reactor.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class ScheduledExecuteOpRequestedEvent<TOperation> : IModel<ScheduledExecuteOpRequestedEvent<TOperation>>
+    public partial class ScheduledExecuteOpRequestedEvent : IModel<ScheduledExecuteOpRequestedEvent>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="ScheduledExecuteOpRequestedEvent{TOperation}"/> are equal.
+        /// Determines whether two objects of type <see cref="ScheduledExecuteOpRequestedEvent"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(ScheduledExecuteOpRequestedEvent<TOperation> left, ScheduledExecuteOpRequestedEvent<TOperation> right)
+        public static bool operator ==(ScheduledExecuteOpRequestedEvent left, ScheduledExecuteOpRequestedEvent right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="ScheduledExecuteOpRequestedEvent{TOperation}"/> are not equal.
+        /// Determines whether two objects of type <see cref="ScheduledExecuteOpRequestedEvent"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(ScheduledExecuteOpRequestedEvent<TOperation> left, ScheduledExecuteOpRequestedEvent<TOperation> right) => !(left == right);
+        public static bool operator !=(ScheduledExecuteOpRequestedEvent left, ScheduledExecuteOpRequestedEvent right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(ScheduledExecuteOpRequestedEvent<TOperation> other)
+        public bool Equals(ScheduledExecuteOpRequestedEvent other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -72,7 +72,7 @@ namespace Naos.Reactor.Domain
             var result = this.TimestampUtc.IsEqualTo(other.TimestampUtc)
                       && this.Id.IsEqualTo(other.Id, StringComparer.Ordinal)
                       && this.OperationToExecute.IsEqualTo(other.OperationToExecute)
-                      && this.MinimumTimeBeforeExecutionUtc.IsEqualTo(other.MinimumTimeBeforeExecutionUtc)
+                      && this.TargetExecutionUtc.IsEqualTo(other.TargetExecutionUtc)
                       && this.Tags.IsEqualTo(other.Tags)
                       && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal);
 
@@ -80,20 +80,20 @@ namespace Naos.Reactor.Domain
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as ScheduledExecuteOpRequestedEvent<TOperation>);
+        public override bool Equals(object obj) => this == (obj as ScheduledExecuteOpRequestedEvent);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.TimestampUtc)
             .Hash(this.Id)
             .Hash(this.OperationToExecute)
-            .Hash(this.MinimumTimeBeforeExecutionUtc)
+            .Hash(this.TargetExecutionUtc)
             .Hash(this.Tags)
             .Hash(this.Details)
             .Value;
 
         /// <inheritdoc />
-        public new ScheduledExecuteOpRequestedEvent<TOperation> DeepClone() => (ScheduledExecuteOpRequestedEvent<TOperation>)this.DeepCloneInternal();
+        public new ScheduledExecuteOpRequestedEvent DeepClone() => (ScheduledExecuteOpRequestedEvent)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
@@ -115,10 +115,10 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventBase DeepCloneWithTimestampUtc(DateTime timestampUtc)
         {
-            var result = new ScheduledExecuteOpRequestedEvent<TOperation>(
+            var result = new ScheduledExecuteOpRequestedEvent(
                                  this.Id?.DeepClone(),
-                                 this.OperationToExecute == null ? default : this.OperationToExecute.DeepClone(),
-                                 this.MinimumTimeBeforeExecutionUtc.DeepClone(),
+                                 this.OperationToExecute?.DeepClone(),
+                                 this.TargetExecutionUtc.DeepClone(),
                                  timestampUtc,
                                  this.Details?.DeepClone(),
                                  this.Tags?.DeepClone());
@@ -146,10 +146,10 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventBase<string> DeepCloneWithId(string id)
         {
-            var result = new ScheduledExecuteOpRequestedEvent<TOperation>(
+            var result = new ScheduledExecuteOpRequestedEvent(
                                  id,
-                                 this.OperationToExecute == null ? default : this.OperationToExecute.DeepClone(),
-                                 this.MinimumTimeBeforeExecutionUtc.DeepClone(),
+                                 this.OperationToExecute?.DeepClone(),
+                                 this.TargetExecutionUtc.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
                                  this.Details?.DeepClone(),
                                  this.Tags?.DeepClone());
@@ -161,7 +161,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="OperationToExecute" />.
         /// </summary>
         /// <param name="operationToExecute">The new <see cref="OperationToExecute" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" /> using the specified <paramref name="operationToExecute" /> for <see cref="OperationToExecute" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="ScheduledExecuteOpRequestedEvent" /> using the specified <paramref name="operationToExecute" /> for <see cref="OperationToExecute" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -179,12 +179,12 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ScheduledExecuteOpRequestedEvent<TOperation> DeepCloneWithOperationToExecute(TOperation operationToExecute)
+        public ScheduledExecuteOpRequestedEvent DeepCloneWithOperationToExecute(IVoidOperation operationToExecute)
         {
-            var result = new ScheduledExecuteOpRequestedEvent<TOperation>(
+            var result = new ScheduledExecuteOpRequestedEvent(
                                  this.Id?.DeepClone(),
                                  operationToExecute,
-                                 this.MinimumTimeBeforeExecutionUtc.DeepClone(),
+                                 this.TargetExecutionUtc.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
                                  this.Details?.DeepClone(),
                                  this.Tags?.DeepClone());
@@ -193,10 +193,10 @@ namespace Naos.Reactor.Domain
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="MinimumTimeBeforeExecutionUtc" />.
+        /// Deep clones this object with a new <see cref="TargetExecutionUtc" />.
         /// </summary>
-        /// <param name="minimumTimeBeforeExecutionUtc">The new <see cref="MinimumTimeBeforeExecutionUtc" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" /> using the specified <paramref name="minimumTimeBeforeExecutionUtc" /> for <see cref="MinimumTimeBeforeExecutionUtc" /> and a deep clone of every other property.</returns>
+        /// <param name="targetExecutionUtc">The new <see cref="TargetExecutionUtc" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ScheduledExecuteOpRequestedEvent" /> using the specified <paramref name="targetExecutionUtc" /> for <see cref="TargetExecutionUtc" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -214,12 +214,12 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ScheduledExecuteOpRequestedEvent<TOperation> DeepCloneWithMinimumTimeBeforeExecutionUtc(DateTime minimumTimeBeforeExecutionUtc)
+        public ScheduledExecuteOpRequestedEvent DeepCloneWithTargetExecutionUtc(DateTime targetExecutionUtc)
         {
-            var result = new ScheduledExecuteOpRequestedEvent<TOperation>(
+            var result = new ScheduledExecuteOpRequestedEvent(
                                  this.Id?.DeepClone(),
-                                 this.OperationToExecute == null ? default : this.OperationToExecute.DeepClone(),
-                                 minimumTimeBeforeExecutionUtc,
+                                 this.OperationToExecute?.DeepClone(),
+                                 targetExecutionUtc,
                                  this.TimestampUtc.DeepClone(),
                                  this.Details?.DeepClone(),
                                  this.Tags?.DeepClone());
@@ -231,7 +231,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="Tags" />.
         /// </summary>
         /// <param name="tags">The new <see cref="Tags" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" /> using the specified <paramref name="tags" /> for <see cref="Tags" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="ScheduledExecuteOpRequestedEvent" /> using the specified <paramref name="tags" /> for <see cref="Tags" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -249,12 +249,12 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ScheduledExecuteOpRequestedEvent<TOperation> DeepCloneWithTags(IReadOnlyCollection<NamedValue<string>> tags)
+        public ScheduledExecuteOpRequestedEvent DeepCloneWithTags(IReadOnlyCollection<NamedValue<string>> tags)
         {
-            var result = new ScheduledExecuteOpRequestedEvent<TOperation>(
+            var result = new ScheduledExecuteOpRequestedEvent(
                                  this.Id?.DeepClone(),
-                                 this.OperationToExecute == null ? default : this.OperationToExecute.DeepClone(),
-                                 this.MinimumTimeBeforeExecutionUtc.DeepClone(),
+                                 this.OperationToExecute?.DeepClone(),
+                                 this.TargetExecutionUtc.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
                                  this.Details?.DeepClone(),
                                  tags);
@@ -266,7 +266,7 @@ namespace Naos.Reactor.Domain
         /// Deep clones this object with a new <see cref="Details" />.
         /// </summary>
         /// <param name="details">The new <see cref="Details" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ScheduledExecuteOpRequestedEvent{TOperation}" /> using the specified <paramref name="details" /> for <see cref="Details" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="ScheduledExecuteOpRequestedEvent" /> using the specified <paramref name="details" /> for <see cref="Details" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -284,12 +284,12 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ScheduledExecuteOpRequestedEvent<TOperation> DeepCloneWithDetails(string details)
+        public ScheduledExecuteOpRequestedEvent DeepCloneWithDetails(string details)
         {
-            var result = new ScheduledExecuteOpRequestedEvent<TOperation>(
+            var result = new ScheduledExecuteOpRequestedEvent(
                                  this.Id?.DeepClone(),
-                                 this.OperationToExecute == null ? default : this.OperationToExecute.DeepClone(),
-                                 this.MinimumTimeBeforeExecutionUtc.DeepClone(),
+                                 this.OperationToExecute?.DeepClone(),
+                                 this.TargetExecutionUtc.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
                                  details,
                                  this.Tags?.DeepClone());
@@ -301,10 +301,10 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override EventBase DeepCloneInternal()
         {
-            var result = new ScheduledExecuteOpRequestedEvent<TOperation>(
+            var result = new ScheduledExecuteOpRequestedEvent(
                                  this.Id?.DeepClone(),
-                                 this.OperationToExecute == null ? default : this.OperationToExecute.DeepClone(),
-                                 this.MinimumTimeBeforeExecutionUtc.DeepClone(),
+                                 this.OperationToExecute?.DeepClone(),
+                                 this.TargetExecutionUtc.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
                                  this.Details?.DeepClone(),
                                  this.Tags?.DeepClone());
@@ -316,7 +316,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.{this.GetType().ToStringReadable()}: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, OperationToExecute = {this.OperationToExecute?.ToString() ?? "<null>"}, MinimumTimeBeforeExecutionUtc = {this.MinimumTimeBeforeExecutionUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.ScheduledExecuteOpRequestedEvent: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, OperationToExecute = {this.OperationToExecute?.ToString() ?? "<null>"}, TargetExecutionUtc = {this.TargetExecutionUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }
