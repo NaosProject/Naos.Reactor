@@ -201,13 +201,13 @@
     <Compile Include="Model\Classes\EventToPutWithId{TId}.cs" />
     <Compile Include="Model\Interfaces\IChainOfResponsibilityLink.cs" />
     <Compile Include="Model\Interfaces\IReactionContext.cs" />
+    <Compile Include="Operations\ComputePreviousExecutionFromScheduleOp.designer.cs">
+      <DependentUpon>ComputePreviousExecutionFromScheduleOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\GetReactionRegistrationDependenciesStatusOp.cs" />
     <Compile Include="Operations\CompleteHandlingOnReactionRegistrationDependenciesOp.cs" />
     <Compile Include="Operations\CompleteHandlingOnReactionRegistrationDependenciesOp.designer.cs">
       <DependentUpon>CompleteHandlingOnReactionRegistrationDependenciesOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\ComputePreviousExecutionFromScheduleOp.designer.cs">
-      <DependentUpon>ComputePreviousExecutionFromScheduleOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\GetReactionRegistrationDependenciesStatusOp.designer.cs">
       <DependentUpon>GetReactionRegistrationDependenciesStatusOp.cs</DependentUpon>

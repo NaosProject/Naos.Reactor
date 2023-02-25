@@ -23,10 +23,10 @@ namespace Naos.Reactor.Domain
         /// <param name="referenceTimestampUtc">The reference timestamp to compute from in UTC.</param>
         public ComputePreviousExecutionFromScheduleOp(
             ISchedule schedule,
-            DateTime? referenceTimestampUtc)
+            DateTime referenceTimestampUtc)
         {
             schedule.MustForArg(nameof(schedule)).NotBeNull();
-            referenceTimestampUtc.MustForArg(nameof(referenceTimestampUtc)).BeUtcDateTimeWhenNotNull();
+            referenceTimestampUtc.MustForArg(nameof(referenceTimestampUtc)).BeUtcDateTime();
 
             this.Schedule = schedule;
             this.ReferenceTimestampUtc = referenceTimestampUtc;
@@ -40,6 +40,6 @@ namespace Naos.Reactor.Domain
         /// <summary>
         /// Gets the timestamp in UTC to base the computation on.
         /// </summary>
-        public DateTime? ReferenceTimestampUtc { get; private set; }
+        public DateTime ReferenceTimestampUtc { get; private set; }
     }
 }

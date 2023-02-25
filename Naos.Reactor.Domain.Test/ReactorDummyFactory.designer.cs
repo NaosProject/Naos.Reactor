@@ -79,7 +79,7 @@ namespace Naos.Reactor.Domain.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ComputePreviousExecutionFromScheduleOp(
                                  A.Dummy<ISchedule>(),
-                                 A.Dummy<DateTime?>()));
+                                 A.Dummy<DateTime>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new DetailsReactionContext(

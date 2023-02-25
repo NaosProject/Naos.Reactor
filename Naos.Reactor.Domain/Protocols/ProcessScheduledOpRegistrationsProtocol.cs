@@ -24,6 +24,7 @@ namespace Naos.Reactor.Domain
         private readonly ISyncAndAsyncReturningProtocol<ComputePreviousExecutionFromScheduleOp, DateTime> computePreviousExecutionFromScheduleProtocol;
         private readonly ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory;
         private readonly TimeSpan timeThresholdToScheduleAnExecution;
+        private readonly Func<DateTime> nowProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessScheduledOpRegistrationsProtocol"/> class.
@@ -32,11 +33,13 @@ namespace Naos.Reactor.Domain
         /// <param name="computePreviousExecutionFromScheduleProtocol">The protocol to evaluate schedules into execution times.</param>
         /// <param name="streamFactory">The factory to provide target stream for events yielded by schedule evaluation.</param>
         /// <param name="timeThresholdToScheduleAnExecution">The amount of time after a target execution time that the operation will still be scheduled (unless the <see cref="ScheduledOpRegistration.ScheduleImmediatelyWhenMissed" /> is set to true in which case it is ignored).</param>
+        /// <param name="nowProvider">The optional provider for "now"; default is <see cref="DateTime.UtcNow" />.</param>
         public ProcessScheduledOpRegistrationsProtocol(
             IStandardStream registeredScheduleStream,
             ISyncAndAsyncReturningProtocol<ComputePreviousExecutionFromScheduleOp, DateTime> computePreviousExecutionFromScheduleProtocol,
             ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory,
-            TimeSpan timeThresholdToScheduleAnExecution)
+            TimeSpan timeThresholdToScheduleAnExecution,
+            Func<DateTime> nowProvider = null)
         {
             registeredScheduleStream.MustForArg(nameof(registeredScheduleStream)).NotBeNull();
             computePreviousExecutionFromScheduleProtocol.MustForArg(nameof(computePreviousExecutionFromScheduleProtocol)).NotBeNull();
@@ -47,6 +50,7 @@ namespace Naos.Reactor.Domain
             this.computePreviousExecutionFromScheduleProtocol = computePreviousExecutionFromScheduleProtocol;
             this.streamFactory = streamFactory;
             this.timeThresholdToScheduleAnExecution = timeThresholdToScheduleAnExecution;
+            this.nowProvider = nowProvider ?? (() => DateTime.UtcNow);
         }
 
         /// <inheritdoc />
@@ -56,16 +60,19 @@ namespace Naos.Reactor.Domain
         {
             operation.MustForArg(nameof(operation)).NotBeNull();
 
-            var scheduledOpRegistrations = this.registeredScheduleStream
-                                              .GetDistinctIds<ScheduledOpRegistration>(
-                deprecatedIdTypes: new[]
-                                   {
-                                       operation.DeprecatedIdentifierType,
-                                   });
+            var scheduledOpRegistrationIds = this.registeredScheduleStream
+                                                 .GetDistinctIds<string>(
+                                                      deprecatedIdTypes: operation.DeprecatedIdentifierType == null
+                                                          ? null
+                                                          : new[]
+                                                            {
+                                                                operation.DeprecatedIdentifierType,
+                                                            });
 
-            var referenceTimestampUtc = DateTime.UtcNow;
-            foreach (var registration in scheduledOpRegistrations)
+            var referenceTimestampUtc = this.nowProvider();
+            foreach (var registrationId in scheduledOpRegistrationIds)
             {
+                var registration = this.registeredScheduleStream.GetLatestObjectById<string, ScheduledOpRegistration>(registrationId);
                 var previousTimeOp = new ComputePreviousExecutionFromScheduleOp(registration.Schedule, referenceTimestampUtc);
                 var previousExecutionTime = this.computePreviousExecutionFromScheduleProtocol.Execute(previousTimeOp);
                 if (referenceTimestampUtc.Subtract(previousExecutionTime) <= this.timeThresholdToScheduleAnExecution
@@ -83,7 +90,7 @@ namespace Naos.Reactor.Domain
                             var recordTags = registration
                                             .Tags
                                             .DeepCloneWithAdditionalValue(new NamedValue<string>(TagNames.ScheduledOpRegistrationId, registration.Id))
-                                            .DeepCloneWithAdditionalValue(new NamedValue<string>(TagNames.ScheduledOpExecutionSkipped, skipExecution.ToString()));
+                                            .DeepCloneWithAdditionalValue(new NamedValue<string>(TagNames.ScheduledOpExecutionSkipped, skipExecution.ToString().ToLowerInvariant()));
 
                             var recordOperation = skipExecution ? new NullVoidOp() : registration.OperationToExecute;
 

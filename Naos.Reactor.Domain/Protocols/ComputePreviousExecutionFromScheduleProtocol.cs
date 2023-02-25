@@ -19,16 +19,6 @@ namespace Naos.Reactor.Domain
     /// </summary>
     public partial class ComputePreviousExecutionFromScheduleProtocol : SyncSpecificReturningProtocolBase<ComputePreviousExecutionFromScheduleOp, DateTime>
     {
-        private readonly Func<DateTime> nowProvider;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ComputePreviousExecutionFromScheduleProtocol"/> class.
-        /// </summary>
-        public ComputePreviousExecutionFromScheduleProtocol(Func<DateTime> nowProvider = null)
-        {
-            this.nowProvider = nowProvider ?? (() => DateTime.UtcNow);
-        }
-
         /// <inheritdoc />
         public override DateTime Execute(
             ComputePreviousExecutionFromScheduleOp operation)
@@ -36,7 +26,7 @@ namespace Naos.Reactor.Domain
             operation.MustForArg(nameof(operation)).NotBeNull();
 
 
-            var baseTimeRaw = operation.ReferenceTimestampUtc ?? this.nowProvider();
+            var baseTimeRaw = operation.ReferenceTimestampUtc;
             var baseTime = baseTimeRaw.RewindToEvenMinute();
             DateTime result;
             if (operation.Schedule is DailyScheduleInUtc dailySchedule)

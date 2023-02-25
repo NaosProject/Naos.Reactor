@@ -115,7 +115,7 @@ namespace Naos.Reactor.Domain
         {
             var result = new ComputePreviousExecutionFromScheduleOp(
                                  schedule,
-                                 this.ReferenceTimestampUtc?.DeepClone());
+                                 this.ReferenceTimestampUtc.DeepClone());
 
             return result;
         }
@@ -142,7 +142,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ComputePreviousExecutionFromScheduleOp DeepCloneWithReferenceTimestampUtc(DateTime? referenceTimestampUtc)
+        public ComputePreviousExecutionFromScheduleOp DeepCloneWithReferenceTimestampUtc(DateTime referenceTimestampUtc)
         {
             var result = new ComputePreviousExecutionFromScheduleOp(
                                  this.Schedule?.DeepClone(),
@@ -157,7 +157,7 @@ namespace Naos.Reactor.Domain
         {
             var result = new ComputePreviousExecutionFromScheduleOp(
                                  this.Schedule?.DeepClone(),
-                                 this.ReferenceTimestampUtc?.DeepClone());
+                                 this.ReferenceTimestampUtc.DeepClone());
 
             return result;
         }
@@ -166,7 +166,7 @@ namespace Naos.Reactor.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Reactor.Domain.ComputePreviousExecutionFromScheduleOp: Schedule = {this.Schedule?.ToString() ?? "<null>"}, ReferenceTimestampUtc = {this.ReferenceTimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"Naos.Reactor.Domain.ComputePreviousExecutionFromScheduleOp: Schedule = {this.Schedule?.ToString() ?? "<null>"}, ReferenceTimestampUtc = {this.ReferenceTimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

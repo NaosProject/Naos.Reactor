@@ -49,7 +49,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ComputePreviousExecutionFromScheduleOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.ComputePreviousExecutionFromScheduleOp: Schedule = {systemUnderTest.Schedule?.ToString() ?? "<null>"}, ReferenceTimestampUtc = {systemUnderTest.ReferenceTimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.ComputePreviousExecutionFromScheduleOp: Schedule = {systemUnderTest.Schedule?.ToString() ?? "<null>"}, ReferenceTimestampUtc = {systemUnderTest.ReferenceTimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;

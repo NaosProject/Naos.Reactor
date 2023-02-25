@@ -34,7 +34,7 @@ namespace Naos.Reactor.Domain
             IReadOnlyCollection<NamedValue<string>> tags = null) : base(id, timestampUtc)
         {
             operationToExecute.MustForArg(nameof(operationToExecute)).NotBeNull();
-            targetExecutionUtc.MustForArg(nameof(targetExecutionUtc)).BeUtcDateTimeWhenNotNull();
+            targetExecutionUtc.MustForArg(nameof(targetExecutionUtc)).BeUtcDateTime();
 
             this.OperationToExecute = operationToExecute;
             this.TargetExecutionUtc = targetExecutionUtc;
