@@ -9,6 +9,7 @@ namespace Naos.Reactor.Serialization.Json
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Naos.Cron.Serialization.Json;
     using Naos.Database.Serialization.Json;
     using OBeautifulCode.Serialization.Json;
     using OBeautifulCode.Type;
@@ -28,6 +29,7 @@ namespace Naos.Reactor.Serialization.Json
         protected override IReadOnlyCollection<JsonSerializationConfigurationType> DependentJsonSerializationConfigurationTypes =>
             new[]
             {
+                new JsonSerializationConfigurationType(typeof(CronJsonSerializationConfiguration)),
                 new JsonSerializationConfigurationType(typeof(DatabaseJsonSerializationConfiguration)),
             };
 

@@ -9,6 +9,7 @@ namespace Naos.Reactor.Serialization.Bson
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Naos.Cron.Serialization.Bson;
     using Naos.Database.Serialization.Bson;
     using OBeautifulCode.Serialization.Bson;
     using OBeautifulCode.Type;
@@ -28,6 +29,7 @@ namespace Naos.Reactor.Serialization.Bson
         protected override IReadOnlyCollection<BsonSerializationConfigurationType> DependentBsonSerializationConfigurationTypes =>
             new[]
             {
+                new BsonSerializationConfigurationType(typeof(CronBsonSerializationConfiguration)),
                 new BsonSerializationConfigurationType(typeof(DatabaseBsonSerializationConfiguration)),
             };
 
