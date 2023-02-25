@@ -300,10 +300,6 @@
     <Compile Include="Model\Classes\DetailsReactionContextTest.designer.cs">
       <DependentUpon>DetailsReactionContextTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\EvaluateScheduleOpTest.cs" />
-    <Compile Include="Operations\EvaluateScheduleOpTest.designer.cs">
-      <DependentUpon>EvaluateScheduleOpTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\CheckRecordExistsOpTest.cs" />
     <Compile Include="Operations\CheckRecordExistsOpTest.designer.cs">
       <DependentUpon>CheckRecordExistsOpTest.cs</DependentUpon>
