@@ -58,28 +58,24 @@ namespace Naos.Reactor.Domain.Test
                 });
 
             var realNow = DateTime.UtcNow;
-            var minuteCounter = 0;
-            var hourCounter = 1;
+            var dateCounter = -1;
+            var dates = new[]
+                        {
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 1, 1, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 1, 2, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 1, 3, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 2, 1, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 2, 2, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 2, 3, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 3, 1, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 3, 2, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 3, 3, 0, DateTimeKind.Utc),
+                        };
+
             DateTime NowProvider()
             {
-                if (minuteCounter == 3)
-                {
-                    minuteCounter = 1;
-                    if (hourCounter == 23)
-                    {
-                        hourCounter = 0;
-                    }
-                    else
-                    {
-                        hourCounter = hourCounter + 1;
-                    }
-                }
-                else
-                {
-                    minuteCounter = minuteCounter + 1;
-                }
-
-                return new DateTime(realNow.Year, realNow.Month, realNow.Day, hourCounter, minuteCounter, 0, DateTimeKind.Utc);
+                dateCounter = dateCounter + 1;
+                return dates[dateCounter];
             }
 
             var op = new ProcessScheduledOpRegistrationsOp();
@@ -88,7 +84,7 @@ namespace Naos.Reactor.Domain.Test
                 registrationStream,
                 computeProtocol,
                 streamFactory,
-                TimeSpan.FromMinutes(2),
+                TimeSpan.FromMinutes(5),
                 NowProvider);
 
             // 0101
@@ -124,6 +120,110 @@ namespace Naos.Reactor.Domain.Test
             eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(3);
 
             // 0303
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(3);
+        }
+
+        [Fact]
+        public static void ProcessScheduledOpRegistrationsProtocol___Execute_daily_schedule___Write_events()
+        {
+            var registrationStream = new MemoryStandardStream(
+                "ScheduledOpRegistrations",
+                new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
+                SerializationFormat.String,
+                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+
+            var eventStream = new MemoryStandardStream(
+                "ScheduledOpEvents",
+                new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
+                SerializationFormat.String,
+                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+
+            var schedule = new DailyScheduleInUtc()
+                           {
+                               Hour = 3,
+                               Minute = 1,
+                           };
+
+            var scheduledOpRegistration = new ScheduledOpRegistration(
+                "daily-at-0301Z",
+                new ThrowOpExecutionAbortedExceptionOp("Just for testing."),
+                schedule,
+                eventStream.StreamRepresentation,
+                DateTime.UtcNow,
+                ScheduledOpAlreadyRunningStrategy.Skip);
+
+            registrationStream.PutWithId(scheduledOpRegistration.Id, scheduledOpRegistration);
+
+            var streamFactory = new GetStreamFromRepresentationByNameProtocolFactory(
+                new Dictionary<string, Func<IStream>>
+                {
+                    { eventStream.Name, () => eventStream },
+                });
+
+            var realNow = DateTime.UtcNow;
+            var dateCounter = -1;
+            var dates = new[]
+                        {
+                            new DateTime(realNow.Year, realNow.Month, 1, 3, 1, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, 1, 3, 2, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, 1, 3, 3, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, 2, 3, 1, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, 2, 3, 2, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, 2, 3, 3, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, 3, 3, 1, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, 3, 3, 2, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, 3, 3, 3, 0, DateTimeKind.Utc),
+                        };
+
+            DateTime NowProvider()
+            {
+                dateCounter = dateCounter + 1;
+                return dates[dateCounter];
+            }
+
+            var op = new ProcessScheduledOpRegistrationsOp();
+            var computeProtocol = new ComputePreviousExecutionFromScheduleProtocol();
+            var protocol = new ProcessScheduledOpRegistrationsProtocol(
+                registrationStream,
+                computeProtocol,
+                streamFactory,
+                TimeSpan.FromMinutes(2),
+                NowProvider);
+
+            // 1-0301
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(0);
+
+            // 1-0302
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(1);
+
+            // 1-0303
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(1);
+
+            // 2-0301
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(1);
+
+            // 2-0302
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(2);
+
+            // 2-0303
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(2);
+
+            // 3-0301
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(2);
+
+            // 3-0302
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(3);
+
+            // 3-0303
             protocol.Execute(op);
             eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(3);
         }
