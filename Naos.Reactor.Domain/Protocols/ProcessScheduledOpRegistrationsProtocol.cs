@@ -121,7 +121,7 @@ namespace Naos.Reactor.Domain
                             var existingRecordStatus = targetStream
                                                       .GetStreamRecordHandlingProtocols()
                                                       .Execute(existingRecordStatusOp);
-                            if (existingRecordStatus == CompositeHandlingStatus.SomeRunning)
+                            if (existingRecordStatus.HasFlag(CompositeHandlingStatus.SomeRunning))
                             {
                                 WriteRecord(skipExecution: true);
                             }
