@@ -35,6 +35,7 @@ namespace Naos.Reactor.Domain
         {
             operationToExecute.MustForArg(nameof(operationToExecute)).NotBeNull();
             targetExecutionUtc.MustForArg(nameof(targetExecutionUtc)).BeUtcDateTime();
+            tags.MustForArg(nameof(tags)).NotContainAnyNullElementsWhenNotNull();
 
             this.OperationToExecute = operationToExecute;
             this.TargetExecutionUtc = targetExecutionUtc;

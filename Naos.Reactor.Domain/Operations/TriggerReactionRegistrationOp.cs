@@ -21,7 +21,7 @@ namespace Naos.Reactor.Domain
         public TriggerReactionRegistrationOp(
             string reactionRegistrationId)
         {
-            reactionRegistrationId.MustForOp(nameof(reactionRegistrationId)).NotBeNullNorWhiteSpace();
+            reactionRegistrationId.MustForArg(nameof(reactionRegistrationId)).NotBeNullNorWhiteSpace();
 
             this.ReactionRegistrationId = reactionRegistrationId;
         }

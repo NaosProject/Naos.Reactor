@@ -44,6 +44,8 @@ namespace Naos.Reactor.Domain
             operationToExecute.MustForArg(nameof(operationToExecute)).NotBeNull();
             schedule.MustForArg(nameof(schedule)).NotBeNull();
             streamRepresentation.MustForArg(nameof(streamRepresentation)).NotBeNull();
+            scheduledOpAlreadyRunningStrategy.MustForArg(nameof(scheduledOpAlreadyRunningStrategy)).NotBeEqualTo(ScheduledOpAlreadyRunningStrategy.Unknown);
+            tags.MustForArg(nameof(tags)).NotContainAnyNullElementsWhenNotNull();
 
             this.OperationToExecute = operationToExecute;
             this.Schedule = schedule;
