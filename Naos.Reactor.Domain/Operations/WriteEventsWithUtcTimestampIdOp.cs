@@ -25,6 +25,9 @@ namespace Naos.Reactor.Domain
             string idPrefix,
             IReadOnlyCollection<EventToPutWithId<string>> eventsToPut)
         {
+            idPrefix.MustForArg(nameof(idPrefix)).NotBeNullNorWhiteSpace();
+            eventsToPut.MustForArg(nameof(eventsToPut)).NotBeNullNorEmptyEnumerableNorContainAnyNulls();
+
             this.IdPrefix = idPrefix;
             this.EventsToPut = eventsToPut;
         }

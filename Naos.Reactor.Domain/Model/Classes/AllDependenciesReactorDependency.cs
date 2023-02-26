@@ -22,7 +22,7 @@ namespace Naos.Reactor.Domain
         public AllDependenciesReactorDependency(
             IReadOnlyCollection<IReactorDependency> dependencies)
         {
-            dependencies.MustForArg(nameof(dependencies)).NotBeNull();
+            dependencies.MustForArg(nameof(dependencies)).NotBeNullNorEmptyEnumerableNorContainAnyNulls();
 
             this.Dependencies = dependencies;
         }

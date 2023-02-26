@@ -28,8 +28,8 @@ namespace Naos.Reactor.Domain
             IReadOnlyList<EventToPutWithIdOnRecordFilterMatch<TId>> eventToPutOnMatchChainOfResponsibility,
             TimeSpan waitTimeBeforeRetry)
         {
-            checkRecordExistsOps.MustForArg(nameof(checkRecordExistsOps)).NotBeNullNorEmptyEnumerable();
-            eventToPutOnMatchChainOfResponsibility.MustForArg(nameof(eventToPutOnMatchChainOfResponsibility)).NotBeNullNorEmptyDictionaryNorContainAnyNullValues();
+            checkRecordExistsOps.MustForArg(nameof(checkRecordExistsOps)).NotBeNullNorEmptyEnumerableNorContainAnyNulls();
+            eventToPutOnMatchChainOfResponsibility.MustForArg(nameof(eventToPutOnMatchChainOfResponsibility)).NotBeNullNorEmptyEnumerableNorContainAnyNulls();
 
             this.CheckRecordExistsOps = checkRecordExistsOps;
             this.EventToPutOnMatchChainOfResponsibility = eventToPutOnMatchChainOfResponsibility;

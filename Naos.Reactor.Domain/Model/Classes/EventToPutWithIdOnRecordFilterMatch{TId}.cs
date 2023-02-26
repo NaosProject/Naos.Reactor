@@ -26,7 +26,7 @@ namespace Naos.Reactor.Domain
             EventToPutWithId<TId> eventToPut,
             ChainOfResponsibilityLinkMatchStrategy chainOfResponsibilityLinkMatchStrategy = ChainOfResponsibilityLinkMatchStrategy.MatchHaltsEvaluationOfChainAndCompletes)
         {
-            recordExistsMatchStrategy.MustForArg(nameof(recordExistsMatchStrategy)).NotBeEqualTo(CompositeHandlingStatusMatchStrategy.Unknown);
+            recordExistsMatchStrategy.MustForArg(nameof(recordExistsMatchStrategy)).NotBeEqualTo(RecordExistsMatchStrategy.Unknown);
             eventToPut.MustForArg(nameof(eventToPut)).NotBeNull();
             chainOfResponsibilityLinkMatchStrategy.MustForArg(nameof(chainOfResponsibilityLinkMatchStrategy)).NotBeEqualTo(ChainOfResponsibilityLinkMatchStrategy.Unknown);
 

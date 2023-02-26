@@ -39,6 +39,7 @@ namespace Naos.Reactor.Domain
         {
             streamRepresentation.MustForArg(nameof(streamRepresentation)).NotBeNull();
             eventToPut.MustForArg(nameof(eventToPut)).NotBeNull();
+            tags.MustForArg(nameof(tags)).NotContainAnyNullElementsWhenNotNull();
 
             this.Id = id;
             this.EventToPut = eventToPut;

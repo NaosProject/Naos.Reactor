@@ -33,7 +33,7 @@ namespace Naos.Reactor.Domain
         {
             id.MustForArg(nameof(id)).NotBeNullNorWhiteSpace();
             reactionContext.MustForArg(nameof(reactionContext)).NotBeNull();
-            dependencies.MustForArg(nameof(dependencies)).NotBeNullNorEmptyEnumerable();
+            dependencies.MustForArg(nameof(dependencies)).NotBeNullNorEmptyEnumerableNorContainAnyNulls();
 
             this.Id = id;
             this.ReactionContext = reactionContext;

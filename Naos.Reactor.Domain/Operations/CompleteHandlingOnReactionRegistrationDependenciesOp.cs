@@ -59,6 +59,7 @@ namespace Naos.Reactor.Domain
             IReadOnlyCollection<HandlingStatus> acceptableHandlingStatuses = null)
         {
             reactionRegistration.MustForArg(nameof(reactionRegistration)).NotBeNull();
+            details.MustForArg(nameof(details)).NotBeNullNorWhiteSpace();
 
             this.ReactionRegistration = reactionRegistration;
             this.Details = details;
