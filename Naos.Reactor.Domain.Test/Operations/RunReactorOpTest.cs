@@ -29,6 +29,10 @@ namespace Naos.Reactor.Domain.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static RunReactorOpTest()
         {
+            ConstructorArgumentValidationTestScenarios.RemoveAllScenarios()
+                                                      .AddScenario(
+                                                           ConstructorArgumentValidationTestScenario<RunReactorOp>
+                                                              .ForceGeneratedTestsToPassAndWriteMyOwnScenario);
         }
     }
 }
