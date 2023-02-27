@@ -207,6 +207,9 @@ namespace Naos.Reactor.Domain.Test
             var operationInRecord1 =
                 latestRecord1.Payload.DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory);
             operationInRecord1.OperationToExecute.MustForTest().BeOfType(scheduledOpRegistration.OperationToExecute.GetType());
+            latestRecord1.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionSkipped).Value
+                         .MustForTest()
+                         .BeEqualTo(false.ToString().ToLowerInvariant());
 
             // 0103
             protocol.Execute(op);
@@ -238,6 +241,9 @@ namespace Naos.Reactor.Domain.Test
             var operationInRecord2 =
                 latestRecord2.Payload.DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory);
             operationInRecord2.OperationToExecute.MustForTest().BeOfType(typeof(NullVoidOp));
+            latestRecord2.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionSkipped).Value
+                         .MustForTest()
+                         .BeEqualTo(true.ToString().ToLowerInvariant());
             eventStream.GetStreamRecordHandlingProtocols()
                        .Execute(new CompleteRunningHandleRecordOp(latestRecord1.InternalRecordId, Concerns.DefaultExecutionConcern));
 
