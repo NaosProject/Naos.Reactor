@@ -377,5 +377,77 @@ namespace Naos.Reactor.Domain.Test
             protocol.Execute(op);
             eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(3);
         }
+
+        [Fact]
+        public static void ProcessScheduledOpRegistrationsProtocol___Execute_specific_time_schedule___Write_events()
+        {
+            var registrationStream = new MemoryStandardStream(
+                "ScheduledOpRegistrations",
+                new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
+                SerializationFormat.String,
+                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+
+            var eventStream = new MemoryStandardStream(
+                "ScheduledOpEvents",
+                new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
+                SerializationFormat.String,
+                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+
+            var realNow = DateTime.UtcNow;
+            var schedule = new SpecificDateTimeScheduleInUtc()
+                           {
+                               SpecificDateTimeInUtc = new DateTime(realNow.Year, realNow.Month, realNow.Day, 1, 1, 0, DateTimeKind.Utc),
+                           };
+
+            var scheduledOpRegistration = new ScheduledOpRegistration(
+                "specific-time",
+                new ThrowOpExecutionAbortedExceptionOp("Just for testing."),
+                schedule,
+                eventStream.StreamRepresentation,
+                ScheduledOpAlreadyRunningStrategy.Skip);
+
+            registrationStream.PutWithId(scheduledOpRegistration.Id, scheduledOpRegistration);
+
+            var streamFactory = new GetStreamFromRepresentationByNameProtocolFactory(
+                new Dictionary<string, Func<IStream>>
+                {
+                    { eventStream.Name, () => eventStream },
+                });
+
+            var dateCounter = -1;
+            var dates = new[]
+                        {
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 1, 0, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 1, 1, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 1, 2, 0, DateTimeKind.Utc),
+                        };
+
+            DateTime NowProvider()
+            {
+                dateCounter = dateCounter + 1;
+                return dates[dateCounter];
+            }
+
+            var op = new ProcessScheduledOpRegistrationsOp();
+            var computeProtocol = new ComputePreviousExecutionFromScheduleProtocol();
+            var protocol = new ProcessScheduledOpRegistrationsProtocol(
+                registrationStream,
+                computeProtocol,
+                streamFactory,
+                TimeSpan.FromMinutes(2),
+                NowProvider);
+
+            // 0100
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(0);
+
+            // 0101
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(1);
+            
+            // 0102
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(1);
+        }
     }
 }

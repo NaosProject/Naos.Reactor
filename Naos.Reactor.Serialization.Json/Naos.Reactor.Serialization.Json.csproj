@@ -41,11 +41,11 @@
     <CodeAnalysisRuleSet />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Naos.Cron, Version=1.0.34.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Naos.Cron.1.0.34\lib\net462\Naos.Cron.dll</HintPath>
+    <Reference Include="Naos.Cron, Version=1.0.35.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Naos.Cron.1.0.35\lib\net462\Naos.Cron.dll</HintPath>
     </Reference>
-    <Reference Include="Naos.Cron.Serialization.Json, Version=1.0.34.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Naos.Cron.Serialization.Json.1.0.34\lib\net462\Naos.Cron.Serialization.Json.dll</HintPath>
+    <Reference Include="Naos.Cron.Serialization.Json, Version=1.0.35.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Naos.Cron.Serialization.Json.1.0.35\lib\net462\Naos.Cron.Serialization.Json.dll</HintPath>
     </Reference>
     <Reference Include="Naos.Database.Domain, Version=1.1.383.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Naos.Database.Domain.1.1.383\lib\net462\Naos.Database.Domain.dll</HintPath>

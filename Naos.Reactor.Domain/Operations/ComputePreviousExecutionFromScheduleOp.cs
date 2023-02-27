@@ -12,9 +12,9 @@ namespace Naos.Reactor.Domain
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Operation to check a schedule a reference time, returns the prior execution time.
+    /// Operation to check a schedule a reference time, returns the prior execution time or null if it does not exist given provided reference time.
     /// </summary>
-    public partial class ComputePreviousExecutionFromScheduleOp : ReturningOperationBase<DateTime>
+    public partial class ComputePreviousExecutionFromScheduleOp : ReturningOperationBase<DateTime?>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComputePreviousExecutionFromScheduleOp"/> class.
@@ -26,6 +26,11 @@ namespace Naos.Reactor.Domain
             DateTime referenceTimestampUtc)
         {
             schedule.MustForArg(nameof(schedule)).NotBeNull();
+            if (schedule is ScheduleBase scheduleBase)
+            {
+                scheduleBase.ThrowIfInvalid();
+            }
+
             referenceTimestampUtc.MustForArg(nameof(referenceTimestampUtc)).BeUtcDateTime();
 
             this.Schedule = schedule;

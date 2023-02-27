@@ -45,9 +45,9 @@ namespace Naos.Reactor.Domain.Test
 
             var protocol = new ComputePreviousExecutionFromScheduleProtocol();
 
-            var nextExecutionTimestampUtc = protocol.Execute(op);
+            var priorExecutionTimestampUtc = protocol.Execute(op);
 
-            nextExecutionTimestampUtc.MustForTest().BeEqualTo(expected);
+            priorExecutionTimestampUtc.MustForTest().BeEqualTo(expected);
         }
 
         [Fact]
@@ -81,9 +81,9 @@ namespace Naos.Reactor.Domain.Test
 
             var protocol = new ComputePreviousExecutionFromScheduleProtocol();
 
-            var nextExecutionTimestampUtc = protocol.Execute(op);
+            var priorExecutionTimestampUtc = protocol.Execute(op);
 
-            nextExecutionTimestampUtc.MustForTest().BeEqualTo(expected);
+            priorExecutionTimestampUtc.MustForTest().BeEqualTo(expected);
         }
  
         [Fact]
@@ -116,9 +116,9 @@ namespace Naos.Reactor.Domain.Test
 
             var protocol = new ComputePreviousExecutionFromScheduleProtocol();
 
-            var nextExecutionTimestampUtc = protocol.Execute(op);
+            var priorExecutionTimestampUtc = protocol.Execute(op);
 
-            nextExecutionTimestampUtc.MustForTest().BeEqualTo(expected);
+            priorExecutionTimestampUtc.MustForTest().BeEqualTo(expected);
         }
 
         [Fact]
@@ -151,9 +151,9 @@ namespace Naos.Reactor.Domain.Test
 
             var protocol = new ComputePreviousExecutionFromScheduleProtocol();
 
-            var nextExecutionTimestampUtc = protocol.Execute(op);
+            var priorExecutionTimestampUtc = protocol.Execute(op);
 
-            nextExecutionTimestampUtc.MustForTest().BeEqualTo(expected);
+            priorExecutionTimestampUtc.MustForTest().BeEqualTo(expected);
         }
     }
 }

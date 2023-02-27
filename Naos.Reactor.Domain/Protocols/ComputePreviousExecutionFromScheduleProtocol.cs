@@ -17,10 +17,10 @@ namespace Naos.Reactor.Domain
     /// <summary>
     /// Protocol for <see cref="ComputePreviousExecutionFromScheduleOp"/>.
     /// </summary>
-    public partial class ComputePreviousExecutionFromScheduleProtocol : SyncSpecificReturningProtocolBase<ComputePreviousExecutionFromScheduleOp, DateTime>
+    public partial class ComputePreviousExecutionFromScheduleProtocol : SyncSpecificReturningProtocolBase<ComputePreviousExecutionFromScheduleOp, DateTime?>
     {
         /// <inheritdoc />
-        public override DateTime Execute(
+        public override DateTime? Execute(
             ComputePreviousExecutionFromScheduleOp operation)
         {
             operation.MustForArg(nameof(operation)).NotBeNull();
@@ -28,7 +28,7 @@ namespace Naos.Reactor.Domain
 
             var baseTimeRaw = operation.ReferenceTimestampUtc;
             var baseTime = baseTimeRaw.RewindToEvenMinute();
-            DateTime result;
+            DateTime? result;
             if (operation.Schedule is DailyScheduleInUtc dailySchedule)
             {
                 result = baseTime.RewindToNextMatchingHourAndMinute(dailySchedule.Hour, dailySchedule.Minute);
@@ -36,6 +36,12 @@ namespace Naos.Reactor.Domain
             else if (operation.Schedule is HourlySchedule hourlySchedule)
             {
                 result = baseTime.RewindToNextMatchingMinute(hourlySchedule.Minute);
+            }
+            else if (operation.Schedule is SpecificDateTimeScheduleInUtc specificDateTimeScheduleInUtc)
+            {
+                result = (specificDateTimeScheduleInUtc.SpecificDateTimeInUtc <= baseTime)
+                    ? specificDateTimeScheduleInUtc.SpecificDateTimeInUtc
+                    : (DateTime?)null;
             }
             else
             {

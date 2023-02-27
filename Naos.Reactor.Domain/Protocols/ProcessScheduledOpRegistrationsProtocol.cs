@@ -21,7 +21,7 @@ namespace Naos.Reactor.Domain
     public partial class ProcessScheduledOpRegistrationsProtocol : SyncSpecificVoidProtocolBase<ProcessScheduledOpRegistrationsOp>
     {
         private readonly IStandardStream registeredScheduleStream;
-        private readonly ISyncAndAsyncReturningProtocol<ComputePreviousExecutionFromScheduleOp, DateTime> computePreviousExecutionFromScheduleProtocol;
+        private readonly ISyncAndAsyncReturningProtocol<ComputePreviousExecutionFromScheduleOp, DateTime?> computePreviousExecutionFromScheduleProtocol;
         private readonly ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory;
         private readonly TimeSpan timeThresholdToScheduleAnExecution;
         private readonly Func<DateTime> nowProvider;
@@ -36,7 +36,7 @@ namespace Naos.Reactor.Domain
         /// <param name="nowProvider">The optional provider for "now"; default is <see cref="DateTime.UtcNow" />.</param>
         public ProcessScheduledOpRegistrationsProtocol(
             IStandardStream registeredScheduleStream,
-            ISyncAndAsyncReturningProtocol<ComputePreviousExecutionFromScheduleOp, DateTime> computePreviousExecutionFromScheduleProtocol,
+            ISyncAndAsyncReturningProtocol<ComputePreviousExecutionFromScheduleOp, DateTime?> computePreviousExecutionFromScheduleProtocol,
             ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory,
             TimeSpan timeThresholdToScheduleAnExecution,
             Func<DateTime> nowProvider = null)
@@ -75,10 +75,10 @@ namespace Naos.Reactor.Domain
                 var registration = this.registeredScheduleStream.GetLatestObjectById<string, ScheduledOpRegistration>(registrationId);
                 var previousTimeOp = new ComputePreviousExecutionFromScheduleOp(registration.Schedule, referenceTimestampUtc);
                 var previousExecutionTime = this.computePreviousExecutionFromScheduleProtocol.Execute(previousTimeOp);
-                if (referenceTimestampUtc.Subtract(previousExecutionTime) <= this.timeThresholdToScheduleAnExecution
-                 || registration.ScheduleImmediatelyWhenMissed)
+                if (previousExecutionTime != null && (referenceTimestampUtc.Subtract((DateTime)previousExecutionTime) <= this.timeThresholdToScheduleAnExecution
+                 || registration.ScheduleImmediatelyWhenMissed))
                 {
-                    var eventId = BuildEventId(registration.Id, previousExecutionTime);
+                    var eventId = BuildEventId(registration.Id, (DateTime)previousExecutionTime);
                     var targetStreamOp = new GetStreamFromRepresentationOp(registration.StreamRepresentation);
                     var targetStreamRaw = this.streamFactory.Execute(targetStreamOp);
                     var targetStream = (IStandardStream)targetStreamRaw;
@@ -97,7 +97,7 @@ namespace Naos.Reactor.Domain
                             var eventToWrite = new ScheduledExecuteOpRequestedEvent(
                                 eventId,
                                 recordOperation,
-                                previousExecutionTime,
+                                (DateTime)previousExecutionTime,
                                 referenceTimestampUtc,
                                 registration.Details,
                                 recordTags);
