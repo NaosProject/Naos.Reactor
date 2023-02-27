@@ -105,7 +105,6 @@ namespace Naos.Reactor.Domain.Test
                     new DeleteDatabaseOp(A.Dummy<string>()),
                     A.Dummy<ScheduleBase>(),
                     A.Dummy<StreamRepresentation>(),
-                    A.Dummy<UtcDateTime>(),
                     A.Dummy<ScheduledOpAlreadyRunningStrategy>(),
                     A.Dummy<bool>(),
                     A.Dummy<string>(),

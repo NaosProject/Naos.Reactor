@@ -170,7 +170,6 @@ namespace Naos.Reactor.Domain.Test
                                  A.Dummy<IVoidOperation>(),
                                  A.Dummy<ISchedule>(),
                                  A.Dummy<IStreamRepresentation>(),
-                                 A.Dummy<DateTime>(),
                                  A.Dummy<ScheduledOpAlreadyRunningStrategy>(),
                                  A.Dummy<bool>(),
                                  A.Dummy<string>(),

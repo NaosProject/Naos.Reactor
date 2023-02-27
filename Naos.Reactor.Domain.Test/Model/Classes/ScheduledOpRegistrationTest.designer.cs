@@ -50,7 +50,7 @@ namespace Naos.Reactor.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ScheduledOpRegistration>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.ScheduledOpRegistration: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, OperationToExecute = {systemUnderTest.OperationToExecute?.ToString() ?? "<null>"}, Schedule = {systemUnderTest.Schedule?.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}, StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, ScheduledOpAlreadyRunningStrategy = {systemUnderTest.ScheduledOpAlreadyRunningStrategy.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ScheduleImmediatelyWhenMissed = {systemUnderTest.ScheduleImmediatelyWhenMissed.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Reactor.Domain.ScheduledOpRegistration: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, OperationToExecute = {systemUnderTest.OperationToExecute?.ToString() ?? "<null>"}, Schedule = {systemUnderTest.Schedule?.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}, StreamRepresentation = {systemUnderTest.StreamRepresentation?.ToString() ?? "<null>"}, ScheduledOpAlreadyRunningStrategy = {systemUnderTest.ScheduledOpAlreadyRunningStrategy.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ScheduleImmediatelyWhenMissed = {systemUnderTest.ScheduleImmediatelyWhenMissed.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
@@ -71,7 +71,6 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.OperationToExecute,
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
-                                             referenceObject.TimestampUtc,
                                              referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.ScheduleImmediatelyWhenMissed,
                                              referenceObject.Details,
@@ -95,7 +94,6 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.OperationToExecute,
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
-                                             referenceObject.TimestampUtc,
                                              referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.ScheduleImmediatelyWhenMissed,
                                              referenceObject.Details,
@@ -119,7 +117,6 @@ namespace Naos.Reactor.Domain.Test
                                              null,
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
-                                             referenceObject.TimestampUtc,
                                              referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.ScheduleImmediatelyWhenMissed,
                                              referenceObject.Details,
@@ -143,7 +140,6 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.OperationToExecute,
                                              null,
                                              referenceObject.StreamRepresentation,
-                                             referenceObject.TimestampUtc,
                                              referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.ScheduleImmediatelyWhenMissed,
                                              referenceObject.Details,
@@ -167,7 +163,6 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.OperationToExecute,
                                              referenceObject.Schedule,
                                              null,
-                                             referenceObject.TimestampUtc,
                                              referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.ScheduleImmediatelyWhenMissed,
                                              referenceObject.Details,
@@ -191,7 +186,6 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.OperationToExecute,
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
-                                             referenceObject.TimestampUtc,
                                              referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.ScheduleImmediatelyWhenMissed,
                                              null,
@@ -215,7 +209,6 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.OperationToExecute,
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
-                                             referenceObject.TimestampUtc,
                                              referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.ScheduleImmediatelyWhenMissed,
                                              Invariant($"  {Environment.NewLine}  "),
@@ -239,7 +232,6 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.OperationToExecute,
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
-                                             referenceObject.TimestampUtc,
                                              referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.ScheduleImmediatelyWhenMissed,
                                              referenceObject.Details,
@@ -263,7 +255,6 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.OperationToExecute,
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
-                                             referenceObject.TimestampUtc,
                                              referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.ScheduleImmediatelyWhenMissed,
                                              referenceObject.Details,
@@ -287,7 +278,6 @@ namespace Naos.Reactor.Domain.Test
                                              referenceObject.OperationToExecute,
                                              referenceObject.Schedule,
                                              referenceObject.StreamRepresentation,
-                                             referenceObject.TimestampUtc,
                                              referenceObject.ScheduledOpAlreadyRunningStrategy,
                                              referenceObject.ScheduleImmediatelyWhenMissed,
                                              referenceObject.Details,
@@ -315,7 +305,6 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.OperationToExecute,
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
-                                                      referenceObject.TimestampUtc,
                                                       referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.ScheduleImmediatelyWhenMissed,
                                                       referenceObject.Details,
@@ -342,7 +331,6 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.OperationToExecute,
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
-                                                      referenceObject.TimestampUtc,
                                                       referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.ScheduleImmediatelyWhenMissed,
                                                       referenceObject.Details,
@@ -369,7 +357,6 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.OperationToExecute,
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
-                                                      referenceObject.TimestampUtc,
                                                       referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.ScheduleImmediatelyWhenMissed,
                                                       referenceObject.Details,
@@ -396,7 +383,6 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.OperationToExecute,
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
-                                                      referenceObject.TimestampUtc,
                                                       referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.ScheduleImmediatelyWhenMissed,
                                                       referenceObject.Details,
@@ -407,33 +393,6 @@ namespace Naos.Reactor.Domain.Test
                         return result;
                     },
                     PropertyName = "StreamRepresentation",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ScheduledOpRegistration>
-                {
-                    Name = "TimestampUtc should return same 'timestampUtc' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<ScheduledOpRegistration>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<ScheduledOpRegistration>
-                        {
-                            SystemUnderTest = new ScheduledOpRegistration(
-                                                      referenceObject.Id,
-                                                      referenceObject.OperationToExecute,
-                                                      referenceObject.Schedule,
-                                                      referenceObject.StreamRepresentation,
-                                                      referenceObject.TimestampUtc,
-                                                      referenceObject.ScheduledOpAlreadyRunningStrategy,
-                                                      referenceObject.ScheduleImmediatelyWhenMissed,
-                                                      referenceObject.Details,
-                                                      referenceObject.Tags),
-                            ExpectedPropertyValue = referenceObject.TimestampUtc,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "TimestampUtc",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ScheduledOpRegistration>
@@ -450,7 +409,6 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.OperationToExecute,
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
-                                                      referenceObject.TimestampUtc,
                                                       referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.ScheduleImmediatelyWhenMissed,
                                                       referenceObject.Details,
@@ -477,7 +435,6 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.OperationToExecute,
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
-                                                      referenceObject.TimestampUtc,
                                                       referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.ScheduleImmediatelyWhenMissed,
                                                       referenceObject.Details,
@@ -504,7 +461,6 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.OperationToExecute,
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
-                                                      referenceObject.TimestampUtc,
                                                       referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.ScheduleImmediatelyWhenMissed,
                                                       referenceObject.Details,
@@ -531,7 +487,6 @@ namespace Naos.Reactor.Domain.Test
                                                       referenceObject.OperationToExecute,
                                                       referenceObject.Schedule,
                                                       referenceObject.StreamRepresentation,
-                                                      referenceObject.TimestampUtc,
                                                       referenceObject.ScheduledOpAlreadyRunningStrategy,
                                                       referenceObject.ScheduleImmediatelyWhenMissed,
                                                       referenceObject.Details,
@@ -545,26 +500,6 @@ namespace Naos.Reactor.Domain.Test
                 });
 
         private static readonly DeepCloneWithTestScenarios<ScheduledOpRegistration> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ScheduledOpRegistration>()
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<ScheduledOpRegistration>
-                {
-                    Name = "DeepCloneWithTimestampUtc should deep clone object and replace TimestampUtc with the provided timestampUtc",
-                    WithPropertyName = "TimestampUtc",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<ScheduledOpRegistration>();
-
-                        var referenceObject = A.Dummy<ScheduledOpRegistration>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<ScheduledOpRegistration>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.TimestampUtc,
-                        };
-
-                        return result;
-                    },
-                })
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<ScheduledOpRegistration>
                 {
@@ -741,7 +676,6 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.OperationToExecute,
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.ScheduleImmediatelyWhenMissed,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -750,21 +684,10 @@ namespace Naos.Reactor.Domain.Test
                     ObjectsThatAreNotEqualToReferenceObject = new ScheduledOpRegistration[]
                     {
                         new ScheduledOpRegistration(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.OperationToExecute,
-                                ReferenceObjectForEquatableTestScenarios.Schedule,
-                                ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
-                                ReferenceObjectForEquatableTestScenarios.ScheduleImmediatelyWhenMissed,
-                                ReferenceObjectForEquatableTestScenarios.Details,
-                                ReferenceObjectForEquatableTestScenarios.Tags),
-                        new ScheduledOpRegistration(
                                 A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
                                 ReferenceObjectForEquatableTestScenarios.OperationToExecute,
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.ScheduleImmediatelyWhenMissed,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -774,7 +697,6 @@ namespace Naos.Reactor.Domain.Test
                                 A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.OperationToExecute.IsEqualTo(ReferenceObjectForEquatableTestScenarios.OperationToExecute)).OperationToExecute,
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.ScheduleImmediatelyWhenMissed,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -784,7 +706,6 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.OperationToExecute,
                                 A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.Schedule.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Schedule)).Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.ScheduleImmediatelyWhenMissed,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -794,7 +715,6 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.OperationToExecute,
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.ScheduleImmediatelyWhenMissed,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -804,7 +724,6 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.OperationToExecute,
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.StreamRepresentation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StreamRepresentation)).StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.ScheduleImmediatelyWhenMissed,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -814,7 +733,6 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.OperationToExecute,
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.ScheduledOpAlreadyRunningStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy)).ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.ScheduleImmediatelyWhenMissed,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -824,7 +742,6 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.OperationToExecute,
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 ReferenceObjectForEquatableTestScenarios.ScheduleImmediatelyWhenMissed,
                                 A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details,
@@ -834,7 +751,6 @@ namespace Naos.Reactor.Domain.Test
                                 ReferenceObjectForEquatableTestScenarios.OperationToExecute,
                                 ReferenceObjectForEquatableTestScenarios.Schedule,
                                 ReferenceObjectForEquatableTestScenarios.StreamRepresentation,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.ScheduledOpAlreadyRunningStrategy,
                                 A.Dummy<ScheduledOpRegistration>().Whose(_ => !_.ScheduleImmediatelyWhenMissed.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ScheduleImmediatelyWhenMissed)).ScheduleImmediatelyWhenMissed,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -847,8 +763,6 @@ namespace Naos.Reactor.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<ReactionEvent>(),
-                        A.Dummy<ScheduledExecuteOpRequestedEvent>(),
                     },
                 });
 
@@ -1187,7 +1101,7 @@ namespace Naos.Reactor.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "TimestampUtc", "Id", "OperationToExecute", "Schedule", "Tags", "StreamRepresentation", "ScheduledOpAlreadyRunningStrategy", "Details", "ScheduleImmediatelyWhenMissed" };
+                var propertyNames = new string[] { "Id", "OperationToExecute", "Schedule", "Tags", "StreamRepresentation", "ScheduledOpAlreadyRunningStrategy", "Details", "ScheduleImmediatelyWhenMissed" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1728,292 +1642,6 @@ namespace Naos.Reactor.Domain.Test
                     // Assert
                     actuals1.AsTest().Must().Each().BeFalse(because: scenario.Id);
                     actuals2.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_false___When_parameter_other_is_null()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange
-                    EventBase systemUnderTest = null;
-
-                    // Act
-                    var actual = scenario.ReferenceObject.Equals((EventBase)systemUnderTest);
-
-                    // Assert
-                    actual.AsTest().Must().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_true___When_parameter_other_is_same_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((EventBase)scenario.ReferenceObject);
-
-                    // Assert
-                    actual.AsTest().Must().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_false___When_objects_being_compared_have_different_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_true___When_objects_being_compared_have_same_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase_of_string___Should_return_false___When_parameter_other_is_null()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange
-                    EventBase<string> systemUnderTest = null;
-
-                    // Act
-                    var actual = scenario.ReferenceObject.Equals((EventBase<string>)systemUnderTest);
-
-                    // Assert
-                    actual.AsTest().Must().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase_of_string___Should_return_true___When_parameter_other_is_same_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((EventBase<string>)scenario.ReferenceObject);
-
-                    // Assert
-                    actual.AsTest().Must().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase_of_string___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase<string>)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase_of_string___Should_return_false___When_objects_being_compared_have_different_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase<string>)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase_of_string___Should_return_true___When_objects_being_compared_have_same_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase<string>)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
                 }
             }
 

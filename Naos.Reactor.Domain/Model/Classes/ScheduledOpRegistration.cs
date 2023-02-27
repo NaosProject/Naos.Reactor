@@ -16,7 +16,7 @@ namespace Naos.Reactor.Domain
     /// <summary>
     /// A scheduled operation to be executed on a schedule.
     /// </summary>
-    public partial class ScheduledOpRegistration : EventBase<string>, IHaveTags, IHaveStreamRepresentation, IHaveDetails
+    public partial class ScheduledOpRegistration : IModelViaCodeGen, IHaveStringId, IHaveTags, IHaveStreamRepresentation, IHaveDetails
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ScheduledOpRegistration"/> class.
@@ -25,7 +25,6 @@ namespace Naos.Reactor.Domain
         /// <param name="operationToExecute">The <see cref="IVoidOperation"/> to be executed.</param>
         /// <param name="schedule">The <see cref="ISchedule"/> to be used for determining execution cadence.</param>
         /// <param name="streamRepresentation">The <see cref="IStreamRepresentation"/> to be find the appropriate stream for writing the operation wrapped in <see cref="ScheduledExecuteOpRequestedEvent" /> with the correct next execution time per the schedule.</param>
-        /// <param name="timestampUtc">The timestamp of the event in UTC format.</param>
         /// <param name="scheduledOpAlreadyRunningStrategy">The strategy of how to deal an <see cref="ScheduledExecuteOpRequestedEvent" />.</param>
         /// <param name="scheduleImmediatelyWhenMissed">Value indicating whether to schedule immediately when missed.</param>
         /// <param name="details">The optional details.</param>
@@ -35,18 +34,19 @@ namespace Naos.Reactor.Domain
             IVoidOperation operationToExecute,
             ISchedule schedule,
             IStreamRepresentation streamRepresentation,
-            DateTime timestampUtc,
             ScheduledOpAlreadyRunningStrategy scheduledOpAlreadyRunningStrategy,
             bool scheduleImmediatelyWhenMissed = false,
             string details = null,
-            IReadOnlyCollection<NamedValue<string>> tags = null) : base(id, timestampUtc)
+            IReadOnlyCollection<NamedValue<string>> tags = null)
         {
+            id.MustForArg(nameof(id)).NotBeNullNorWhiteSpace();
             operationToExecute.MustForArg(nameof(operationToExecute)).NotBeNull();
             schedule.MustForArg(nameof(schedule)).NotBeNull();
             streamRepresentation.MustForArg(nameof(streamRepresentation)).NotBeNull();
             scheduledOpAlreadyRunningStrategy.MustForArg(nameof(scheduledOpAlreadyRunningStrategy)).NotBeEqualTo(ScheduledOpAlreadyRunningStrategy.Unknown);
             tags.MustForArg(nameof(tags)).NotContainAnyNullElementsWhenNotNull();
 
+            this.Id = id;
             this.OperationToExecute = operationToExecute;
             this.Schedule = schedule;
             this.StreamRepresentation = streamRepresentation;
@@ -55,6 +55,9 @@ namespace Naos.Reactor.Domain
             this.Details = details;
             this.Tags = tags;
         }
+
+        /// <inheritdoc />
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets the operation to be executed.

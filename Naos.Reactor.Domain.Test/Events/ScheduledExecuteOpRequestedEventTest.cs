@@ -101,7 +101,7 @@ namespace Naos.Reactor.Domain.Test
                                                                                 .Concat(
                                                                                      new NamedValue<string>[]
                                                                                      {
-                                                                                         null
+                                                                                         null,
                                                                                      })
                                                                                 .Concat(referenceObject.Tags)
                                                                                 .ToList());

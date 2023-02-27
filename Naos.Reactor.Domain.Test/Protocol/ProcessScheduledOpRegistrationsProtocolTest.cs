@@ -47,7 +47,6 @@ namespace Naos.Reactor.Domain.Test
                 new ThrowOpExecutionAbortedExceptionOp("Just for testing."),
                 schedule,
                 eventStream.StreamRepresentation,
-                DateTime.UtcNow,
                 ScheduledOpAlreadyRunningStrategy.Skip);
 
             registrationStream.PutWithId(scheduledOpRegistration.Id, scheduledOpRegistration);
@@ -150,7 +149,6 @@ namespace Naos.Reactor.Domain.Test
                 new ThrowOpExecutionAbortedExceptionOp("Just for testing."),
                 schedule,
                 eventStream.StreamRepresentation,
-                DateTime.UtcNow,
                 ScheduledOpAlreadyRunningStrategy.Skip);
 
             registrationStream.PutWithId(scheduledOpRegistration.Id, scheduledOpRegistration);
@@ -297,7 +295,6 @@ namespace Naos.Reactor.Domain.Test
                 new ThrowOpExecutionAbortedExceptionOp("Just for testing."),
                 schedule,
                 eventStream.StreamRepresentation,
-                DateTime.UtcNow,
                 ScheduledOpAlreadyRunningStrategy.Skip);
 
             registrationStream.PutWithId(scheduledOpRegistration.Id, scheduledOpRegistration);

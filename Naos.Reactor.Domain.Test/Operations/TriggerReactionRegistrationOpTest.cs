@@ -36,6 +36,8 @@ namespace Naos.Reactor.Domain.Test
             "Microsoft.Performance",
             "CA1810:InitializeReferenceTypeStaticFieldsInline",
             Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static TriggerReactionRegistrationOpTest() {}
+        static TriggerReactionRegistrationOpTest()
+        {
+        }
     }
 }
