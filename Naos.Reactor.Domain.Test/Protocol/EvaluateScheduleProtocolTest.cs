@@ -26,7 +26,7 @@ namespace Naos.Reactor.Domain.Test
                 33,
                 DateTimeKind.Utc);
 
-            var expected = new DateTime(
+            DateTime? expected = new DateTime(
                 2020,
                 10,
                 10,
@@ -62,7 +62,7 @@ namespace Naos.Reactor.Domain.Test
                 33,
                 DateTimeKind.Utc);
 
-            var expected = new DateTime(
+            DateTime? expected = new DateTime(
                 2020,
                 10,
                 09,
@@ -98,7 +98,7 @@ namespace Naos.Reactor.Domain.Test
                 33,
                 DateTimeKind.Utc);
 
-            var expected = new DateTime(
+            DateTime? expected = new DateTime(
                 2020,
                 10,
                 10,
@@ -133,7 +133,7 @@ namespace Naos.Reactor.Domain.Test
                 33,
                 DateTimeKind.Utc);
 
-            var expected = new DateTime(
+            DateTime? expected = new DateTime(
                 2020,
                 10,
                 10,
