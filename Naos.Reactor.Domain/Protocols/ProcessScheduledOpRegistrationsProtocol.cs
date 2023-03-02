@@ -7,11 +7,14 @@
 namespace Naos.Reactor.Domain
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Representation.System;
     using OBeautifulCode.Serialization;
+    using OBeautifulCode.String.Recipes;
     using OBeautifulCode.Type;
     using static System.FormattableString;
 
@@ -75,8 +78,9 @@ namespace Naos.Reactor.Domain
                 var registration = this.registeredScheduleStream.GetLatestObjectById<string, ScheduledOpRegistration>(registrationId);
                 var previousTimeOp = new ComputePreviousExecutionFromScheduleOp(registration.Schedule, referenceTimestampUtc);
                 var previousExecutionTime = this.computePreviousExecutionFromScheduleProtocol.Execute(previousTimeOp);
-                if (previousExecutionTime != null && (referenceTimestampUtc.Subtract((DateTime)previousExecutionTime) <= this.timeThresholdToScheduleAnExecution
-                 || registration.ScheduleImmediatelyWhenMissed))
+                if (previousExecutionTime != null
+                  && (referenceTimestampUtc.Subtract((DateTime)previousExecutionTime) <= this.timeThresholdToScheduleAnExecution
+                      || registration.ScheduleImmediatelyWhenMissed))
                 {
                     var eventId = BuildEventId(registration.Id, (DateTime)previousExecutionTime);
                     var targetStreamOp = new GetStreamFromRepresentationOp(registration.StreamRepresentation);
@@ -85,12 +89,17 @@ namespace Naos.Reactor.Domain
                     var existingRecord = targetStream.GetLatestRecordById<string, ScheduledExecuteOpRequestedEvent>(eventId);
                     if (existingRecord == null)
                     {
-                        void WriteRecord(bool skipExecution)
+                        void WriteRecord(bool skipExecution, bool hasFailure)
                         {
-                            var recordTags = registration
-                                            .Tags
-                                            .DeepCloneWithAdditionalValue(new NamedValue<string>(TagNames.ScheduledOpRegistrationId, registration.Id))
-                                            .DeepCloneWithAdditionalValue(new NamedValue<string>(TagNames.ScheduledOpExecutionSkipped, skipExecution.ToString().ToLowerInvariant()));
+                            var recordTags = (registration.Tags ?? new List<NamedValue<string>>())
+                                            .Concat(
+                                                 new[]
+                                                 {
+                                                     new NamedValue<string>(TagNames.ScheduledOpRegistrationId, registration.Id),
+                                                     new NamedValue<string>(TagNames.ScheduledOpExecutionSkipped, skipExecution.ToStringInvariantPreferred()),
+                                                     new NamedValue<string>(TagNames.ScheduledOpExecutionInFailedState, hasFailure.ToStringInvariantPreferred()),
+                                                 })
+                                            .ToList();
 
                             var recordOperation = skipExecution ? new NullVoidOp() : registration.OperationToExecute;
 
@@ -105,29 +114,34 @@ namespace Naos.Reactor.Domain
                             targetStream.PutWithId(eventToWrite.Id, eventToWrite, eventToWrite.Tags, ExistingRecordStrategy.ThrowIfFoundById);
                         }
 
-                        if (registration.ScheduledOpAlreadyRunningStrategy == ScheduledOpAlreadyRunningStrategy.ExecuteNewInParallel)
+                        var existingRecordStatusOp = new GetCompositeHandlingStatusByTagsOp(
+                            Concerns.DefaultExecutionConcern,
+                            new[]
+                            {
+                                new NamedValue<string>(TagNames.ScheduledOpRegistrationId, registration.Id),
+                            });
+
+                        var existingRecordStatus = targetStream
+                                                  .GetStreamRecordHandlingProtocols()
+                                                  .Execute(existingRecordStatusOp);
+
+                        if (existingRecordStatus.HasFlag(CompositeHandlingStatus.SomeFailed))
                         {
-                            WriteRecord(skipExecution: false);
+                            WriteRecord(skipExecution: true, hasFailure: true);
+                        }
+                        else if (registration.ScheduledOpAlreadyRunningStrategy == ScheduledOpAlreadyRunningStrategy.ExecuteNewInParallel)
+                        {
+                            WriteRecord(skipExecution: false, hasFailure: false);
                         }
                         else if (registration.ScheduledOpAlreadyRunningStrategy == ScheduledOpAlreadyRunningStrategy.Skip)
                         {
-                            var existingRecordStatusOp = new GetCompositeHandlingStatusByTagsOp(
-                                Concerns.DefaultExecutionConcern,
-                                new[]
-                                {
-                                    new NamedValue<string>(TagNames.ScheduledOpRegistrationId, registration.Id),
-                                });
-
-                            var existingRecordStatus = targetStream
-                                                      .GetStreamRecordHandlingProtocols()
-                                                      .Execute(existingRecordStatusOp);
                             if (existingRecordStatus.HasFlag(CompositeHandlingStatus.SomeRunning))
                             {
-                                WriteRecord(skipExecution: true);
+                                WriteRecord(skipExecution: true, hasFailure: false);
                             }
                             else
                             {
-                                WriteRecord(skipExecution: false);
+                                WriteRecord(skipExecution: false, hasFailure: false);
                             }
                         }
                         else

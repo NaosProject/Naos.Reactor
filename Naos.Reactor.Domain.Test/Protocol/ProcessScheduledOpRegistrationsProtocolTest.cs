@@ -210,6 +210,9 @@ namespace Naos.Reactor.Domain.Test
             latestRecord1.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionSkipped).Value
                          .MustForTest()
                          .BeEqualTo(false.ToString().ToLowerInvariant());
+            latestRecord1.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionInFailedState)
+                         .Value.MustForTest()
+                         .BeEqualTo(false.ToString().ToLowerInvariant());
 
             // 0103
             protocol.Execute(op);
@@ -244,8 +247,170 @@ namespace Naos.Reactor.Domain.Test
             latestRecord2.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionSkipped).Value
                          .MustForTest()
                          .BeEqualTo(true.ToString().ToLowerInvariant());
+            latestRecord2.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionInFailedState)
+                         .Value.MustForTest()
+                         .BeEqualTo(false.ToString().ToLowerInvariant());
             eventStream.GetStreamRecordHandlingProtocols()
                        .Execute(new CompleteRunningHandleRecordOp(latestRecord1.InternalRecordId, Concerns.DefaultExecutionConcern));
+
+            // 0203
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(2);
+
+            // 0301
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(2);
+
+            // 0302
+            protocol.Execute(op);
+            var recordIds3 = eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter()));
+            recordIds3.MustForTest().HaveCount(3);
+            eventStream.Execute(
+                            new StandardGetLatestRecordOp(
+                                new RecordFilter(
+                                    internalRecordIds: new[]
+                                                       {
+                                                           recordIds3.Max(),
+                                                       })))
+                       .Payload.DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory)
+                       .OperationToExecute.MustForTest()
+                       .BeOfType(scheduledOpRegistration.OperationToExecute.GetType());
+
+            // 0303
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(3);
+        }
+
+        [Fact]
+        public static void ProcessScheduledOpRegistrationsProtocol___Execute_hourly_schedule___Skips_events_when_in_failed_state()
+        {
+            var registrationStream = new MemoryStandardStream(
+                "ScheduledOpRegistrations",
+                new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
+                SerializationFormat.String,
+                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+
+            var eventStream = new MemoryStandardStream(
+                "ScheduledOpEvents",
+                new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
+                SerializationFormat.String,
+                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+
+            var schedule = new HourlySchedule
+                           {
+                               Minute = 1,
+                           };
+
+            var scheduledOpRegistration = new ScheduledOpRegistration(
+                "hourly-at-01-after",
+                new ThrowOpExecutionAbortedExceptionOp("Just for testing."),
+                schedule,
+                eventStream.StreamRepresentation,
+                ScheduledOpAlreadyRunningStrategy.Skip);
+
+            registrationStream.PutWithId(scheduledOpRegistration.Id, scheduledOpRegistration);
+
+            var streamFactory = new GetStreamFromRepresentationByNameProtocolFactory(
+                new Dictionary<string, Func<IStream>>
+                {
+                    { eventStream.Name, () => eventStream },
+                });
+
+            var realNow = DateTime.UtcNow;
+            var dateCounter = -1;
+            var dates = new[]
+                        {
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 1, 1, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 1, 2, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 1, 3, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 2, 1, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 2, 2, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 2, 3, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 3, 1, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 3, 2, 0, DateTimeKind.Utc),
+                            new DateTime(realNow.Year, realNow.Month, realNow.Day, 3, 3, 0, DateTimeKind.Utc),
+                        };
+
+            DateTime NowProvider()
+            {
+                dateCounter = dateCounter + 1;
+                return dates[dateCounter];
+            }
+
+            var op = new ProcessScheduledOpRegistrationsOp();
+            var computeProtocol = new ComputePreviousExecutionFromScheduleProtocol();
+            var protocol = new ProcessScheduledOpRegistrationsProtocol(
+                registrationStream,
+                computeProtocol,
+                streamFactory,
+                TimeSpan.FromMinutes(5),
+                NowProvider);
+
+            // 0101
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(0);
+
+            // 0102
+            protocol.Execute(op);
+            var recordIds1 = eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter()));
+            recordIds1.MustForTest().HaveCount(1);
+            var latestRecord1 = eventStream.Execute(
+                new StandardGetLatestRecordOp(
+                    new RecordFilter(
+                        internalRecordIds: new[]
+                                           {
+                                               recordIds1.Max(),
+                                           })));
+            var operationInRecord1 =
+                latestRecord1.Payload.DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory);
+            operationInRecord1.OperationToExecute.MustForTest().BeOfType(scheduledOpRegistration.OperationToExecute.GetType());
+            latestRecord1.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionSkipped).Value
+                         .MustForTest()
+                         .BeEqualTo(false.ToString().ToLowerInvariant());
+            latestRecord1.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionInFailedState)
+                         .Value.MustForTest()
+                         .BeEqualTo(false.ToString().ToLowerInvariant());
+
+            // 0103
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(1);
+
+            // 0201
+            protocol.Execute(op);
+            eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(1);
+
+            // 0202
+            eventStream.Execute(
+                new StandardTryHandleRecordOp(
+                    Concerns.DefaultExecutionConcern,
+                    new RecordFilter(
+                        new[]
+                        {
+                            latestRecord1.InternalRecordId,
+                        })));
+            eventStream.GetStreamRecordHandlingProtocols()
+                       .Execute(new FailRunningHandleRecordOp(latestRecord1.InternalRecordId, Concerns.DefaultExecutionConcern, "Simulate failure."));
+            protocol.Execute(op);
+            var recordIds2 = eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter()));
+            recordIds2.MustForTest().HaveCount(2);
+            var latestRecord2 = eventStream.Execute(
+                new StandardGetLatestRecordOp(
+                    new RecordFilter(
+                        internalRecordIds: new[]
+                                           {
+                                               recordIds2.Max(),
+                                           })));
+            var operationInRecord2 =
+                latestRecord2.Payload.DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory);
+            operationInRecord2.OperationToExecute.MustForTest().BeOfType(typeof(NullVoidOp));
+            latestRecord2.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionSkipped)
+                         .Value.MustForTest()
+                         .BeEqualTo(true.ToString().ToLowerInvariant());
+            latestRecord2.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionInFailedState)
+                         .Value.MustForTest()
+                         .BeEqualTo(true.ToString().ToLowerInvariant());
+            eventStream.GetStreamRecordHandlingProtocols()
+                       .Execute(new ArchiveFailureToHandleRecordOp(latestRecord1.InternalRecordId, Concerns.DefaultExecutionConcern, "Simulate failure addressed."));
 
             // 0203
             protocol.Execute(op);

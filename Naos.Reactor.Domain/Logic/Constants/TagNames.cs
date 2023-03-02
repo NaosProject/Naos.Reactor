@@ -6,6 +6,8 @@
 
 namespace Naos.Reactor.Domain
 {
+    using Naos.Database.Domain;
+
     /// <summary>
     /// The names of various tags used in the reactor system.
     /// </summary>
@@ -35,5 +37,10 @@ namespace Naos.Reactor.Domain
         /// The name of the tag for an indicator of the <see cref="ScheduledOpRegistration" /> yielding an execution but skipping due to existing execution running.
         /// </summary>
         public const string ScheduledOpExecutionSkipped = "ScheduledOpExecutionSkipped";
+
+        /// <summary>
+        /// The name of the tag for an indicator of the <see cref="ScheduledOpRegistration" /> yielding an execution but a prior execution is currently in the <see cref="HandlingStatus.Failed" /> status.
+        /// </summary>
+        public const string ScheduledOpExecutionInFailedState = "ScheduledOpExecutionInFailedState";
     }
 }
