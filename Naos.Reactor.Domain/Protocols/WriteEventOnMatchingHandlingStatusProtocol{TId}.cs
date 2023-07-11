@@ -55,30 +55,16 @@ namespace Naos.Reactor.Domain
             var results = new Dictionary<CheckRecordHandlingOp, CheckRecordHandlingResult>();
             foreach (var checkRecordHandlingOp in operation.CheckRecordHandlingOps)
             {
-                try
+                var result = this.checkRecordHandlingProtocol.Execute(checkRecordHandlingOp);
+                if (checkRecordHandlingOp.ExpectedCount              != null
+                 && result.InternalRecordIdToHandlingStatusMap.Count != checkRecordHandlingOp.ExpectedCount)
                 {
-                    var result = this.checkRecordHandlingProtocol.Execute(checkRecordHandlingOp);
-                    if (checkRecordHandlingOp.ExpectedCount              != null
-                     && result.InternalRecordIdToHandlingStatusMap.Count != checkRecordHandlingOp.ExpectedCount)
-                    {
-                        throw new SelfCancelRunningExecutionException(
-                            Invariant(
-                                $"Expected {checkRecordHandlingOp.ExpectedCount} statuses and only got back {result.InternalRecordIdToHandlingStatusMap.Count}."));
-                    }
+                    throw new SelfCancelRunningExecutionException(
+                        Invariant(
+                            $"Expected {checkRecordHandlingOp.ExpectedCount} statuses and only got back {result.InternalRecordIdToHandlingStatusMap.Count}."));
+                }
 
-                    results.Add(checkRecordHandlingOp, result);
-                }
-                catch (InvalidOperationException possibleEmptyStatusSetException)
-                {
-                    if (possibleEmptyStatusSetException.Message.StartsWith(CheckRecordHandlingProtocol.EmptyStatusSetExceptionMessagePrefix, StringComparison.OrdinalIgnoreCase))
-                    {
-                        throw new SelfCancelRunningExecutionException(possibleEmptyStatusSetException.Message);
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                results.Add(checkRecordHandlingOp, result);
             }
 
             if (results.Any())

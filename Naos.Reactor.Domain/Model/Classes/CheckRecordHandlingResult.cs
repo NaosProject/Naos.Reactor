@@ -26,7 +26,7 @@ namespace Naos.Reactor.Domain
             IReadOnlyDictionary<long, HandlingStatus> internalRecordIdToHandlingStatusMap)
         {
             streamRepresentation.MustForArg(nameof(streamRepresentation)).NotBeNull();
-            internalRecordIdToHandlingStatusMap.MustForArg(nameof(internalRecordIdToHandlingStatusMap)).NotBeNullNorEmptyDictionary();
+            internalRecordIdToHandlingStatusMap.MustForArg(nameof(internalRecordIdToHandlingStatusMap)).NotBeNull();
 
             this.StreamRepresentation = streamRepresentation;
             this.InternalRecordIdToHandlingStatusMap = internalRecordIdToHandlingStatusMap;
