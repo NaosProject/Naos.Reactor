@@ -11,6 +11,7 @@ namespace Naos.Reactor.Domain
     using Naos.CodeAnalysis.Recipes;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Cloning.Recipes;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -28,6 +29,7 @@ namespace Naos.Reactor.Domain
         private readonly IStandardStream requeueStream;
         private readonly ExistingRecordStrategy existingRecordStrategyOnRequeue;
         private readonly int? recordRetentionCountOnRequeue;
+        private readonly Func<ExecuteOpRequestedEvent<TOperation>, ExecuteOpRequestedEvent<TOperation>> prepareEventBeforeRequeueFunc;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RunReactorProtocol"/> class.
@@ -37,6 +39,7 @@ namespace Naos.Reactor.Domain
         /// <param name="waitTimeBeforeQueuing">The time to wait before operation is re-queued.</param>
         /// <param name="existingRecordStrategyOnRequeue">The strategy to use during the Put of the operation when re-queued.</param>
         /// <param name="recordRetentionCountOnRequeue">The record retention count (if applicable) to use during the Put of the operation when re-queued.</param>
+        /// <param name="prepareEventBeforeRequeueFunc">Optional lambda to make changes to the event before it is re-queued; if null passed then DEFAULT will be to DeepCloneWithTimestampUtc passing DateTime.UtcNow so that the new <see cref="ExecuteOpRequestedEvent{TId,TOperation}" /> will have the correct timestamp.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Requeue", Justification = NaosSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "requeue", Justification = NaosSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
         public HandleAndReQueueExecuteOpRequestedProtocol(
@@ -44,7 +47,8 @@ namespace Naos.Reactor.Domain
             ISyncVoidProtocol<TOperation> executeOperationProtocol,
             TimeSpan waitTimeBeforeQueuing,
             ExistingRecordStrategy existingRecordStrategyOnRequeue,
-            int? recordRetentionCountOnRequeue)
+            int? recordRetentionCountOnRequeue,
+            Func<ExecuteOpRequestedEvent<TOperation>, ExecuteOpRequestedEvent<TOperation>> prepareEventBeforeRequeueFunc = null)
         {
             requeueStream.MustForArg(nameof(requeueStream)).NotBeNull();
             executeOperationProtocol.MustForArg(nameof(executeOperationProtocol)).NotBeNull();
@@ -55,6 +59,13 @@ namespace Naos.Reactor.Domain
             this.waitTimeBeforeQueuing = waitTimeBeforeQueuing;
             this.existingRecordStrategyOnRequeue = existingRecordStrategyOnRequeue;
             this.recordRetentionCountOnRequeue = recordRetentionCountOnRequeue;
+            this.prepareEventBeforeRequeueFunc = prepareEventBeforeRequeueFunc ?? DefaultPrepareEventBeforeRequeue;
+        }
+
+        private static ExecuteOpRequestedEvent<TOperation> DefaultPrepareEventBeforeRequeue(
+            ExecuteOpRequestedEvent<TOperation> providedOperation)
+        {
+            return (ExecuteOpRequestedEvent<TOperation>)providedOperation.DeepCloneWithTimestampUtc(DateTime.UtcNow);
         }
 
         /// <inheritdoc />
@@ -65,9 +76,11 @@ namespace Naos.Reactor.Domain
             this.executeOperationProtocol.Execute(operationToExecute);
             Thread.Sleep(this.waitTimeBeforeQueuing);
 
-            var operationClone = operation.RecordToHandle.Payload.DeepClone();
+            var preparedEventToRequeue =
+                this.prepareEventBeforeRequeueFunc(operation.RecordToHandle.Payload);
+
             this.requeueStream.Put(
-                operationClone,
+                preparedEventToRequeue,
                 existingRecordStrategy: this.existingRecordStrategyOnRequeue,
                 recordRetentionCount: this.recordRetentionCountOnRequeue);
         }
