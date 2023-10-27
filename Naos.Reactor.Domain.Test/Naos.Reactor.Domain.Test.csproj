@@ -344,8 +344,6 @@
     <Compile Include="Events\ReactionEventTest.designer.cs">
       <DependentUpon>ReactionEventTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Protocol\ProcessScheduledOpRegistrationsProtocolTest.cs" />
-    <Compile Include="Protocol\EvaluateScheduleProtocolTest.cs" />
     <Compile Include="ReactorDummyFactoryTest.designer.cs">
       <DependentUpon>ReactorDummyFactoryTest.cs</DependentUpon>
     </Compile>

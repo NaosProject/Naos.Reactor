@@ -20,6 +20,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naos.Reactor.Serialization.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naos.Reactor.Serialization.Json", "Naos.Reactor.Serialization.Json\Naos.Reactor.Serialization.Json.csproj", "{71F76AC0-1AD9-48DD-A920-164B18C45AFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naos.Reactor.Protocol", "Naos.Reactor.Protocol\Naos.Reactor.Protocol.csproj", "{887EB78D-E5B7-44C4-AA8A-0203DAB082A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naos.Reactor.Protocol.Test", "Naos.Reactor.Protocol.Test\Naos.Reactor.Protocol.Test.csproj", "{53996B92-2AA3-4978-BB40-F1B29CACAD1E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +46,14 @@ Global
 		{71F76AC0-1AD9-48DD-A920-164B18C45AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71F76AC0-1AD9-48DD-A920-164B18C45AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71F76AC0-1AD9-48DD-A920-164B18C45AFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{887EB78D-E5B7-44C4-AA8A-0203DAB082A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{887EB78D-E5B7-44C4-AA8A-0203DAB082A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{887EB78D-E5B7-44C4-AA8A-0203DAB082A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{887EB78D-E5B7-44C4-AA8A-0203DAB082A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53996B92-2AA3-4978-BB40-F1B29CACAD1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53996B92-2AA3-4978-BB40-F1B29CACAD1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53996B92-2AA3-4978-BB40-F1B29CACAD1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53996B92-2AA3-4978-BB40-F1B29CACAD1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
