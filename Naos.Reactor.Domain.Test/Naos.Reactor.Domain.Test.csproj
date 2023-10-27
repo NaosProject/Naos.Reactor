@@ -272,11 +272,11 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="ConsoleAbstraction.cs" />
     <Compile Include="Operations\ComputePreviousExecutionFromScheduleOpTest.cs" />
     <Compile Include="Operations\ComputePreviousExecutionFromScheduleOpTest.designer.cs">
       <DependentUpon>ComputePreviousExecutionFromScheduleOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConsoleAbstraction.cs" />
     <Compile Include="Model\Classes\ScheduledOpRegistrationTest.cs" />
     <Compile Include="Model\Classes\ScheduledOpRegistrationTest.designer.cs">
       <DependentUpon>ScheduledOpRegistrationTest.cs</DependentUpon>
