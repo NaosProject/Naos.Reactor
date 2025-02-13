@@ -14,6 +14,7 @@ namespace Naos.Database.Domain.Test
     using System.Linq;
     using FakeItEasy;
     using Naos.CodeAnalysis.Recipes;
+    using Naos.Diagnostics.Domain;
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.Math.Recipes;
     using OBeautifulCode.Serialization;
@@ -40,123 +41,46 @@ namespace Naos.Database.Domain.Test
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = NaosSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         public DatabaseDummyFactory()
         {
-            // ------------------------------- EVENTS -------------------------------------
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new HandlingForStreamDisabledEvent(
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new HandlingForStreamEnabledEvent(
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new HandlingForRecordDisabledEvent(
-                    A.Dummy<long>(),
-                    A.Dummy<string>(),
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var record = A.Dummy<StreamRecord>();
-
-                    return new RecordHandlingAvailableEvent(
-                        record.InternalRecordId,
-                        A.Dummy<string>(),
-                        record,
-                        A.Dummy<UtcDateTime>(),
-                        A.Dummy<string>());
-                });
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new RecordHandlingCanceledEvent(
-                    A.Dummy<long>(),
-                    A.Dummy<string>(),
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new RecordHandlingCompletedEvent(
-                    A.Dummy<long>(),
-                    A.Dummy<string>(),
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new RecordHandlingFailedEvent(
-                    A.Dummy<long>(),
-                    A.Dummy<string>(),
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new RecordHandlingFailureResetEvent(
-                    A.Dummy<long>(),
-                    A.Dummy<string>(),
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new RecordHandlingRunningEvent(
-                    A.Dummy<long>(),
-                    A.Dummy<string>(),
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new RecordHandlingSelfCanceledEvent(
-                    A.Dummy<long>(),
-                    A.Dummy<string>(),
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new PruneOperationExecutedEvent(
-                    A.Dummy<IPruneOp>(),
-                    A.Dummy<PruneSummary>(),
-                    A.Dummy<UtcDateTime>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new PruneOperationRequestedEvent(
-                    A.Dummy<IPruneOp>(),
-                    A.Dummy<UtcDateTime>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new PruneRequestCanceledEvent(
-                    A.Dummy<string>(),
-                    A.Dummy<UtcDateTime>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new UniqueLongIssuedEvent(
-                    A.Dummy<long>(),
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var result = new IdDeprecatedEvent(
-                        A.Dummy<UtcDateTime>(),
-                        A.Dummy<string>());
-
-                    return result;
-                });
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new IdDeprecatedEvent<Version, Version>(
-                    A.Dummy<Version>(),
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new IdDeprecatedEvent<Version>(
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
             // ------------------------------- MODELS -------------------------------------
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => (IJobInformation)new NullJobInformation(
+                    A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ExpectedJobWithinThreshold(
+                    A.Dummy<string>(),
+                    TimeSpan.FromMinutes(A.Dummy<PositiveInteger>())));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ExpectedRecordWithinThreshold(
+                    A.Dummy<string>(),
+                    A.Dummy<RecordFilter>(),
+                    TimeSpan.FromMinutes(A.Dummy<PositiveInteger>()),
+                    A.Dummy<bool>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new RecordExpectedToBeHandled(
+                    A.Dummy<string>(),
+                    A.Dummy<string>(),
+                    A.Dummy<RecordFilter>(),
+                    A.Dummy<HandlingFilter>(),
+                    TimeSpan.FromMinutes(A.Dummy<PositiveInteger>())));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new RecordExpectedToBeHandledReport(
+                    A.Dummy<CheckStatus>(),
+                    A.Dummy<RecordExpectedToBeHandled>(),
+                    A.Dummy<IReadOnlyDictionary<long, HandlingStatus>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new RecordToCheckForExcessiveHandling(
+                    A.Dummy<string>(),
+                    A.Dummy<string>(),
+                    A.Dummy<RecordFilter>(),
+                    A.Dummy<HandlingFilter>(),
+                    A.Dummy<PositiveInteger>()));
+
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new StreamConfig(
                     A.Dummy<string>(),
@@ -164,16 +88,6 @@ namespace Naos.Database.Domain.Test
                     A.Dummy<SerializerRepresentation>(),
                     A.Dummy<SerializationFormat>(),
                     A.Dummy<IReadOnlyCollection<IResourceLocator>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new StreamRecordHandlingEntry(
-                    A.Dummy<long>(),
-                    A.Dummy<long>(),
-                    A.Dummy<string>(),
-                    A.Dummy<HandlingStatus>(),
-                    A.Dummy<IReadOnlyCollection<NamedValue<string>>>(),
-                    A.Dummy<string>(),
-                    A.Dummy<UtcDateTime>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
@@ -195,27 +109,11 @@ namespace Naos.Database.Domain.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new StreamRecordMetadata(
-                    A.Dummy<string>(),
-                    A.Dummy<SerializerRepresentation>(),
-                    A.Dummy<TypeRepresentationWithAndWithoutVersion>(),
-                    A.Dummy<TypeRepresentationWithAndWithoutVersion>(),
-                    A.Dummy<IReadOnlyCollection<NamedValue<string>>>(),
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<UtcDateTime>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new StreamRecordMetadata<Version>(
-                    A.Dummy<Version>(),
-                    A.Dummy<SerializerRepresentation>(),
-                    A.Dummy<TypeRepresentationWithAndWithoutVersion>(),
-                    A.Dummy<TypeRepresentationWithAndWithoutVersion>(),
-                    A.Dummy<IReadOnlyCollection<NamedValue<string>>>(),
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<UtcDateTime>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GetStreamFromRepresentationOp<FileStreamRepresentation, MemoryStandardStream>(
+                    A.Dummy<FileStreamRepresentation>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new GetStreamFromRepresentationOp<FileStreamRepresentation, RecordingStandardStream>(
                     A.Dummy<FileStreamRepresentation>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -265,6 +163,7 @@ namespace Naos.Database.Domain.Test
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ExistingDatabaseStrategy.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ExistingRecordStrategy.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ExistingStreamStrategy.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FilteredRecordsSelectionStrategy.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(HandlingStatus.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(OrderRecordsBy.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(RecordNotFoundStrategy.Unknown);
@@ -276,19 +175,21 @@ namespace Naos.Database.Domain.Test
             AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IResourceLocator>();
             AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IStreamRepresentation>();
 
+            // ---------------------------------- EVENTS ----------------------------------------
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var record = A.Dummy<StreamRecord>();
+
+                    return new RecordHandlingAvailableEvent(
+                        record.InternalRecordId,
+                        A.Dummy<string>(),
+                        record,
+                        A.Dummy<UtcDateTime>(),
+                        A.Dummy<string>());
+                });
+
             // ------------------------------- OPERATIONS -------------------------------------
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new PruneBeforeInternalRecordDateOp(
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new StandardPruneStreamOp(
-                    A.Dummy<long>(),
-                    A.Dummy<UtcDateTime>(),
-                    A.Dummy<string>(),
-                    A.Dummy<IResourceLocator>()));
-
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new StandardUpdateHandlingStatusForRecordOp(
                     A.Dummy<long>(),
@@ -399,15 +300,11 @@ namespace Naos.Database.Domain.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var result = new PruneAfterInternalRecordDateOp(A.Dummy<UtcDateTime>(), A.Dummy<string>());
-
-                    return result;
-                });
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var result = new PruneBeforeInternalRecordDateOp(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+                    var result = new WaitOneOp(
+                        A.Dummy<string>(),
+                        A.Dummy<string>(),
+                        A.Dummy<string>(),
+                        A.Dummy<TimeSpan>().Whose(_=> _.TotalMilliseconds >= 0));
 
                     return result;
                 });

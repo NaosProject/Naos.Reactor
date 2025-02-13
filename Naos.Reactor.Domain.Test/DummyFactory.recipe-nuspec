@@ -6,7 +6,7 @@
     <tags>dummyfactory dummy factory fakeiteasy autofixture snippet codeinclude utility shared recipe Reactor</tags>
     <dependencies>
       <dependency id="Naos.Reactor.Domain" version="$version$" />
-      <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.127" />
+      <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.141" />
     </dependencies>
   </metadata>
   <files>
