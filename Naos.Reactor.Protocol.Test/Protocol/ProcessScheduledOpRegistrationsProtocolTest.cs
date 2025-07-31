@@ -21,6 +21,7 @@ namespace Naos.Reactor.Protocol.Test
     using OBeautifulCode.Representation.System;
     using OBeautifulCode.Serialization;
     using OBeautifulCode.Serialization.Json;
+    using OBeautifulCode.Serialization.Recipes;
     using OBeautifulCode.Type;
     using Xunit;
     using IStream = Naos.Database.Domain.IStream;
@@ -34,13 +35,13 @@ namespace Naos.Reactor.Protocol.Test
                 "ScheduledOpRegistrations",
                 new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
                 SerializationFormat.String,
-                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+                SerializerFactories.StandardSimplifying);
 
             var eventStream = new MemoryStandardStream(
                 "ScheduledOpEvents",
                 new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
                 SerializationFormat.String,
-                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+                SerializerFactories.StandardSimplifying);
 
             var schedule = new HourlySchedule
                            {
@@ -137,13 +138,13 @@ namespace Naos.Reactor.Protocol.Test
                 "ScheduledOpRegistrations",
                 new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
                 SerializationFormat.String,
-                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+                SerializerFactories.StandardSimplifying);
 
             var eventStream = new MemoryStandardStream(
                 "ScheduledOpEvents",
                 new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
                 SerializationFormat.String,
-                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+                SerializerFactories.StandardSimplifying);
 
             var schedule = new HourlySchedule
                            {
@@ -295,13 +296,13 @@ namespace Naos.Reactor.Protocol.Test
                 "ScheduledOpRegistrations",
                 new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
                 SerializationFormat.String,
-                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+                SerializerFactories.StandardSimplifying);
 
             var eventStream = new MemoryStandardStream(
                 "ScheduledOpEvents",
                 new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
                 SerializationFormat.String,
-                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+                SerializerFactories.StandardSimplifying);
 
             var schedule = new HourlySchedule
                            {
@@ -454,13 +455,13 @@ namespace Naos.Reactor.Protocol.Test
                 "ScheduledOpRegistrations",
                 new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
                 SerializationFormat.String,
-                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+                SerializerFactories.StandardSimplifying);
 
             var eventStream = new MemoryStandardStream(
                 "ScheduledOpEvents",
                 new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
                 SerializationFormat.String,
-                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+                SerializerFactories.StandardSimplifying);
 
             var schedule = new DailyScheduleInUtc()
                            {
@@ -557,13 +558,13 @@ namespace Naos.Reactor.Protocol.Test
                 "ScheduledOpRegistrations",
                 new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
                 SerializationFormat.String,
-                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+                SerializerFactories.StandardSimplifying);
 
             var eventStream = new MemoryStandardStream(
                 "ScheduledOpEvents",
                 new SerializerRepresentation(SerializationKind.Json, typeof(ReactorJsonSerializationConfiguration).ToRepresentation()),
                 SerializationFormat.String,
-                new ObcSimplifyingSerializerFactory(new JsonSerializerFactory()));
+                SerializerFactories.StandardSimplifying);
 
             var realNow = DateTime.UtcNow;
             var schedule = new SpecificDateTimeScheduleInUtc()
@@ -616,7 +617,7 @@ namespace Naos.Reactor.Protocol.Test
             // 0101
             protocol.Execute(op);
             eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(1);
-            
+
             // 0102
             protocol.Execute(op);
             eventStream.Execute(new StandardGetInternalRecordIdsOp(new RecordFilter())).MustForTest().HaveCount(1);

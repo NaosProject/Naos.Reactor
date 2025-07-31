@@ -8,12 +8,10 @@ namespace Naos.Reactor.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using System.Diagnostics.CodeAnalysis;
     using Naos.CodeAnalysis.Recipes;
     using Naos.Database.Domain;
     using OBeautifulCode.Assertion.Recipes;
-    using OBeautifulCode.Reflection.Recipes;
-    using OBeautifulCode.Representation.System;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -29,7 +27,7 @@ namespace Naos.Reactor.Domain
         /// <param name="streamRepresentation">The stream representation to retrieve the stream to write the <paramref name="eventToPut"/> into.</param>
         /// <param name="updateTimestampOnPut">The optional switch to deep clone the <paramref name="eventToPut"/> with a new <see cref="DateTime.UtcNow"/>.</param>
         /// <param name="tags">The optional tags.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "object", Justification = NaosSuppressBecause.CA1720_IdentifiersShouldNotContainTypeNames_TypeNameAddsClarityToIdentifierAndAlternativesDegradeClarity)]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "object", Justification = NaosSuppressBecause.CA1720_IdentifiersShouldNotContainTypeNames_TypeNameAddsClarityToIdentifierAndAlternativesDegradeClarity)]
         public EventToPutWithId(
             TId id,
             IEvent eventToPut,
