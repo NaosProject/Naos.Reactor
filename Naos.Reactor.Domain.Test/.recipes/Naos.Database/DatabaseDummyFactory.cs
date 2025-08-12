@@ -82,7 +82,7 @@ namespace Naos.Database.Domain.Test
                     A.Dummy<PositiveInteger>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new StreamConfig(
+                () => new StandardStreamConfig(
                     A.Dummy<string>(),
                     A.Dummy<StreamAccessKinds>().ThatIsNot(StreamAccessKinds.None),
                     A.Dummy<SerializerRepresentation>(),
@@ -285,7 +285,7 @@ namespace Naos.Database.Domain.Test
 
                     var result = new StandardPutRecordOp(
                         A.Dummy<StreamRecordMetadata>(),
-                        A.Dummy<DescribedSerializationBase>(),
+                        A.Dummy<StreamRecordPayloadBase>(),
                         existingRecordStrategy,
                         existingRecordStrategy == ExistingRecordStrategy.PruneIfFoundById || existingRecordStrategy == ExistingRecordStrategy.PruneIfFoundByIdAndType
                             ? (int?)A.Dummy<ZeroOrPositiveInteger>()

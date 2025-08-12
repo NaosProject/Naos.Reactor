@@ -57,7 +57,7 @@ namespace Naos.Reactor.Protocol.Test
 
             registrationStream.PutWithId(scheduledOpRegistration.Id, scheduledOpRegistration);
 
-            var streamFactory = new GetStreamFromRepresentationByNameProtocolFactory(
+            var streamFactory = new GetStreamFromRepresentationByNameProtocol(
                 new Dictionary<string, Func<IStream>>
                 {
                     { eventStream.Name, () => eventStream },
@@ -160,7 +160,7 @@ namespace Naos.Reactor.Protocol.Test
 
             registrationStream.PutWithId(scheduledOpRegistration.Id, scheduledOpRegistration);
 
-            var streamFactory = new GetStreamFromRepresentationByNameProtocolFactory(
+            var streamFactory = new GetStreamFromRepresentationByNameProtocol(
                 new Dictionary<string, Func<IStream>>
                 {
                     { eventStream.Name, () => eventStream },
@@ -212,7 +212,7 @@ namespace Naos.Reactor.Protocol.Test
                                                recordIds1.Max(),
                                            })));
             var operationInRecord1 =
-                latestRecord1.Payload.DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory);
+                latestRecord1.GetDescribedSerialization().DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory);
             operationInRecord1.OperationToExecute.MustForTest().BeOfType(scheduledOpRegistration.OperationToExecute.GetType());
             latestRecord1.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionSkipped).Value
                          .MustForTest()
@@ -249,7 +249,7 @@ namespace Naos.Reactor.Protocol.Test
                                                recordIds2.Max(),
                                            })));
             var operationInRecord2 =
-                latestRecord2.Payload.DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory);
+                latestRecord2.GetDescribedSerialization().DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory);
             operationInRecord2.OperationToExecute.MustForTest().BeOfType(typeof(NullVoidOp));
             latestRecord2.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionSkipped).Value
                          .MustForTest()
@@ -279,7 +279,7 @@ namespace Naos.Reactor.Protocol.Test
                                                        {
                                                            recordIds3.Max(),
                                                        })))
-                       .Payload.DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory)
+                       .GetDescribedSerialization().DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory)
                        .OperationToExecute.MustForTest()
                        .BeOfType(scheduledOpRegistration.OperationToExecute.GetType());
 
@@ -318,7 +318,7 @@ namespace Naos.Reactor.Protocol.Test
 
             registrationStream.PutWithId(scheduledOpRegistration.Id, scheduledOpRegistration);
 
-            var streamFactory = new GetStreamFromRepresentationByNameProtocolFactory(
+            var streamFactory = new GetStreamFromRepresentationByNameProtocol(
                 new Dictionary<string, Func<IStream>>
                 {
                     { eventStream.Name, () => eventStream },
@@ -370,7 +370,7 @@ namespace Naos.Reactor.Protocol.Test
                                                recordIds1.Max(),
                                            })));
             var operationInRecord1 =
-                latestRecord1.Payload.DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory);
+                latestRecord1.GetDescribedSerialization().DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory);
             operationInRecord1.OperationToExecute.MustForTest().BeOfType(scheduledOpRegistration.OperationToExecute.GetType());
             latestRecord1.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionSkipped).Value
                          .MustForTest()
@@ -409,7 +409,7 @@ namespace Naos.Reactor.Protocol.Test
                                                recordIds2.Max(),
                                            })));
             var operationInRecord2 =
-                latestRecord2.Payload.DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory);
+                latestRecord2.GetDescribedSerialization().DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory);
             operationInRecord2.OperationToExecute.MustForTest().BeOfType(typeof(NullVoidOp));
             latestRecord2.Metadata.Tags.Single(_ => _.Name == TagNames.ScheduledOpExecutionSkipped)
                          .Value.MustForTest()
@@ -439,7 +439,7 @@ namespace Naos.Reactor.Protocol.Test
                                                        {
                                                            recordIds3.Max(),
                                                        })))
-                       .Payload.DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory)
+                       .GetDescribedSerialization().DeserializePayloadUsingSpecificFactory<ScheduledExecuteOpRequestedEvent>(eventStream.SerializerFactory)
                        .OperationToExecute.MustForTest()
                        .BeOfType(scheduledOpRegistration.OperationToExecute.GetType());
 
@@ -478,7 +478,7 @@ namespace Naos.Reactor.Protocol.Test
 
             registrationStream.PutWithId(scheduledOpRegistration.Id, scheduledOpRegistration);
 
-            var streamFactory = new GetStreamFromRepresentationByNameProtocolFactory(
+            var streamFactory = new GetStreamFromRepresentationByNameProtocol(
                 new Dictionary<string, Func<IStream>>
                 {
                     { eventStream.Name, () => eventStream },
@@ -581,7 +581,7 @@ namespace Naos.Reactor.Protocol.Test
 
             registrationStream.PutWithId(scheduledOpRegistration.Id, scheduledOpRegistration);
 
-            var streamFactory = new GetStreamFromRepresentationByNameProtocolFactory(
+            var streamFactory = new GetStreamFromRepresentationByNameProtocol(
                 new Dictionary<string, Func<IStream>>
                 {
                     { eventStream.Name, () => eventStream },

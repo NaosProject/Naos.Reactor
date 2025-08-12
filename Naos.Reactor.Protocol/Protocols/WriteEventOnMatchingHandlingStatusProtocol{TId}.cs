@@ -15,7 +15,6 @@ namespace Naos.Reactor.Protocol
     using Naos.Database.Domain;
     using Naos.Reactor.Domain;
     using OBeautifulCode.Assertion.Recipes;
-    using OBeautifulCode.Enum.Recipes;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
     using static System.FormattableString;
@@ -24,9 +23,11 @@ namespace Naos.Reactor.Protocol
     /// Check on sagas, write records under certain handling scenarios of groups of records.
     /// </summary>
     /// <typeparam name="TId">Type of the identifier.</typeparam>
-    public partial class WriteEventOnMatchingHandlingStatusProtocol<TId> : SyncSpecificVoidProtocolBase<WriteEventOnMatchingHandlingStatusOp<TId>>
+    public class WriteEventOnMatchingHandlingStatusProtocol<TId> : SyncSpecificVoidProtocolBase<WriteEventOnMatchingHandlingStatusOp<TId>>
     {
-        private static readonly IStreamRepresentation NullStreamRepresentation = new NullStandardStream().StreamRepresentation;
+        // ReSharper disable once StaticMemberInGenericType - There's only one possible representation.
+        private static readonly IStreamRepresentation NullStandardStreamRepresentation = new NullStandardStream().StreamRepresentation;
+
         private readonly ISyncAndAsyncReturningProtocol<CheckRecordHandlingOp, CheckRecordHandlingResult> checkRecordHandlingProtocol;
         private readonly ISyncAndAsyncReturningProtocol<GetStreamFromRepresentationOp, IStream> streamFactory;
 
@@ -107,7 +108,7 @@ namespace Naos.Reactor.Protocol
                             ? eventToPutWithTags.Tags
                             : null;
 
-                        if (!NullStreamRepresentation.Equals(eventToPutWithId.StreamRepresentation))
+                        if (!NullStandardStreamRepresentation.Equals(eventToPutWithId.StreamRepresentation))
                         {
                             var targetStream = this.streamFactory.Execute(new GetStreamFromRepresentationOp(eventToPutWithId.StreamRepresentation));
                             targetStream.MustForOp("targetStreamMustBeIWriteOnlyStream").BeAssignableToType<IWriteOnlyStream>();

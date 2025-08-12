@@ -11,7 +11,6 @@ namespace Naos.Reactor.Protocol
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
     using Naos.CodeAnalysis.Recipes;
     using Naos.Database.Domain;
@@ -20,14 +19,13 @@ namespace Naos.Reactor.Protocol
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Representation.System;
     using OBeautifulCode.Serialization;
-    using OBeautifulCode.String.Recipes;
     using OBeautifulCode.Type;
     using static System.FormattableString;
 
     /// <summary>
-    /// Protocol for <see cref="RunReactorOp"/>.
+    /// Executes a <see cref="RunReactorOp"/>.
     /// </summary>
-    public partial class RunReactorProtocol : SyncSpecificVoidProtocolBase<RunReactorOp>
+    public class RunReactorProtocol : SyncSpecificVoidProtocolBase<RunReactorOp>
     {
         private static readonly TypeRepresentation ReactionRegistrationTypeRepWithoutVersion = typeof(ReactionRegistration).ToRepresentation().RemoveAssemblyVersions();
         private static readonly ConcurrentDictionary<StringSerializedIdentifier, DateTime> ReactionRegistrationIdToNextEvaluationCutoffMap = new ConcurrentDictionary<StringSerializedIdentifier, DateTime>();
@@ -89,14 +87,14 @@ namespace Naos.Reactor.Protocol
 
                     var reactionRegistrationRecord = this.reactionRegistrationStream.Execute(getLatestRecordOp);
                     reactionRegistrationRecord
-                       .Payload
-                       .PayloadTypeRepresentation
-                       .RemoveAssemblyVersions()
+                       .Metadata
+                       .TypeRepresentationOfObject
+                       .WithoutVersion
                        .MustForOp("recordFromReactionRegistrationStreamExpectedToBeRegisteredReaction")
                        .BeEqualTo(ReactionRegistrationTypeRepWithoutVersion);
 
                     var reactionRegistration =
-                        reactionRegistrationRecord.Payload.DeserializePayloadUsingSpecificFactory<ReactionRegistration>(
+                        reactionRegistrationRecord.GetDescribedSerialization().DeserializePayloadUsingSpecificFactory<ReactionRegistration>(
                             this.reactionRegistrationStream.SerializerFactory);
 
                     var evaluateReactionRegistrationOp = new EvaluateReactionRegistrationOp(reactionRegistration);
